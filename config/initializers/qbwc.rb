@@ -1,8 +1,8 @@
 QBWC.configure do |c|
 
   # Credentials to be entered in QuickBooks Web Connector.
-  #c.username = "foo"
-  #c.password = "bar"
+  c.username = "natejd04"
+  c.password = "GolfTango12"
 
   # Path to QuickBooks company file on the client. Empty string to use whatever file is open when the connector runs.
   #c.company_file_path = ""
@@ -10,14 +10,14 @@ QBWC.configure do |c|
   # Instead of using hard coded username, password, and path, use a proc
   # to determine who has access to what. Useful for multiple users or
   # multiple company files.
-   c.authenticator = Proc.new{|username, password|
+   #c.authenticator = Proc.new{|username, password|
   #   # qubert can access Oceanic
-     next "D:\\SharedQB\\ZingBars2013.QBW" if username == "nate" && password == "93WDwuTS"
-     # quimby can access Veridian
+    # next "D:\\SharedQB\\ZingBars2013.QBW" if username == "nate" && password == "93WDwuTS"
+     # quimby can access Veridian   
      #next "C:\\QuickBooks\\Veridian.QBW" if username == "quimby" && password == "bethany"
   #   # no one else has access
-     next nil
-   }
+   #  next nil
+   #}
 
   # Code to execute after each session is authenticated
   # Can be re-assigned by calling QBWC.set_session_initializer
