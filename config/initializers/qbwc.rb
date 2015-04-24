@@ -1,29 +1,29 @@
 QBWC.configure do |c|
 
   # Credentials to be entered in QuickBooks Web Connector.
-  c.username = "foo"
-  c.password = "bar"
+  #c.username = "foo"
+  #c.password = "bar"
 
   # Path to QuickBooks company file on the client. Empty string to use whatever file is open when the connector runs.
-  c.company_file_path = ""
+  #c.company_file_path = ""
 
   # Instead of using hard coded username, password, and path, use a proc
   # to determine who has access to what. Useful for multiple users or
   # multiple company files.
-  # c.authenticator = Proc.new{|username, password|
+   c.authenticator = Proc.new{|username, password|
   #   # qubert can access Oceanic
-  #   next "C:\\QuickBooks\\Oceanic.QBW" if username == "qubert" && password == "brittany"
-  #   # quimby can access Veridian
-  #   next "C:\\QuickBooks\\Veridian.QBW" if username == "quimby" && password == "bethany"
+     next "D:\\SharedQb\\ZingBars2013.QBW" if username == "nate" && password == "93WDwuTS"
+     # quimby can access Veridian
+     #next "C:\\QuickBooks\\Veridian.QBW" if username == "quimby" && password == "bethany"
   #   # no one else has access
-  #   next nil
-  # }
+     next nil
+   }
 
   # Code to execute after each session is authenticated
   # Can be re-assigned by calling QBWC.set_session_initializer
-  # c.session_initializer = Proc.new{|session|
-  #   puts "New QuickBooks Web Connector session has been established"
-  # }
+   c.session_initializer = Proc.new{|session|
+     puts "New QuickBooks Web Connector session has been established"
+   }
 
   # QBXML version to use. Check the "Implementation" column in the QuickBooks Onscreen Reference to see which fields are supported in which versions. Newer versions of QuickBooks are backwards compatible with older QBXML versions.
   c.min_version = "7.0"
