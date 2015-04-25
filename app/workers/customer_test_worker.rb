@@ -19,6 +19,7 @@ class CustomerTestWorker < QBWC::Worker
             qb_id = qb_cus['list_id']
             qb_name = qb_cus['name']
             Customer.new(name: qb_name)
+            Rails.logger.info "Here is a test line"
         end
     end
 
