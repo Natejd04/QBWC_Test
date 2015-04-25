@@ -18,7 +18,7 @@ class CustomerTestWorker < QBWC::Worker
         r['customer_ret'].each do |qb_cus|
             qb_id = qb_cus['list_id']
             qb_name = qb_cus['name']
-            qb_address = qb_cus['billaddress']
+            qb_address = qb_cus['bill_address']
             Rails.logger.info (qb_address)
 #            customer = Customer.find_by name: qb_name
 #            if customer
