@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc
+  get 'qbwc/action' => 'qbwc#_generate_wsdl'
+  get 'qbwc/qwc' => 'qbwc#qwc'
+  wash_out :qbwc
     root 'welcome#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
