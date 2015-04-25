@@ -18,7 +18,7 @@ class CustomerTestWorker < QBWC::Worker
         r['customer_ret'].each do |qb_cus|
             qb_id = qb_cus['list_id']
             qb_name = qb_cus['name']
-            Customer.new(name: qb_name)
+            Customer.create(name: qb_name)
             Rails.logger.info "Here is a test line"
         end
     end
