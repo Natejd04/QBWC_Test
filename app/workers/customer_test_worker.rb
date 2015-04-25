@@ -16,18 +16,21 @@ class CustomerTestWorker < QBWC::Worker
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
         r['customer_ret'].each do |qb_cus|
-            qb_id = qb_cus['list_id']
-            qb_name = qb_cus['name']
-            qb_address1 = qb_cus['bill_address']['addr1']
-            qb_address2 = qb_cus['bill_address']['addr2']
-            qb_city = qb_cus['bill_address']['city']
-            qb_state = qb_cus['bill_address']['state']
-            qb_postal = qb_cus['bill_address']['postal_code']
+            customer_data = {}
+#            customer_data[:id] = qb_cus['list_id']
+            customer_data[:name] = qb_cus['name']
+            if qb_cus['bill_address']
+                customer_data[:address] = qb_cus['bill_address']['addr1']
+                customer_data[:address2] = qb_cus['bill_address']['addr2']
+                customer_data[:city] = qb_cus['bill_address']['city']
+                customer_data[:state] = qb_cus['bill_address']['state']
+                customer_data[:zip] = qb_cus['bill_address']['postal_code']
+            end
             customer = Customer.find_by name: qb_name
             if customer
-                customer.update(address: qb_address1, address2: qb_address2, city: qb_city, state: qb_state, zip: qb_postal)
+                customer.update(customer_data)
             else
-                Customer.create(name: qb_name, address: qb_address1, address2: qb_address2, city: qb_city, state: qb_state, zip: qb_postal)
+                Customer.create(customer_data)
             end
 #            Rails.logger.info "Here is a test line"
         end
