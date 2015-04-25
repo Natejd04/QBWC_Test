@@ -1,15 +1,5 @@
 Rails.application.routes.draw do
-  get 'customers/index'
-
-  get 'qbwc/action' => 'qbwc#_generate_wsdl'
-  get 'qbwc/qwc' => 'qbwc#qwc'
-  wash_out :qbwc
-  get 'qbwc/action' => 'qbwc#_generate_wsdl'
-  get 'qbwc/qwc' => 'qbwc#qwc'
-  wash_out :qbwc
-  get 'qbwc/action' => 'qbwc#_generate_wsdl'
-  get 'qbwc/qwc' => 'qbwc#qwc'
-  wash_out :qbwc
+  resources :customers
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc

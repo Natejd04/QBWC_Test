@@ -18,8 +18,15 @@ class CustomerTestWorker < QBWC::Worker
         r['customer_ret'].each do |qb_cus|
             qb_id = qb_cus['list_id']
             qb_name = qb_cus['name']
-            Customer.create(name: qb_name)
-            Rails.logger.info "Here is a test line"
+            qb_address = qb_cus['billaddress']
+            Rails.logger.info (qb_address)
+#            customer = Customer.find_by name: qb_name
+#            if customer
+#                customer.update(address: qb_address)
+#            else
+#                Customer.create(name: qb_name, address: qb_address)
+#            end
+#            Rails.logger.info "Here is a test line"
         end
     end
 
