@@ -7,4 +7,9 @@ class CustomersController < ApplicationController
      @customer = Customer.find(params[:id]) 
       
   end
+    
+  def edit
+     @customer = Customer.find(params[:id]) 
+      
+  end
 end
