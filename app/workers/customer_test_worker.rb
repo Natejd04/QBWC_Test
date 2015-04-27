@@ -17,7 +17,7 @@ class CustomerTestWorker < QBWC::Worker
 
         r['customer_ret'].each do |qb_cus|
             customer_data = {}
-#            customer_data[:id] = qb_cus['list_id']
+           customer_data[:listid] = qb_cus['list_id']
             customer_data[:name] = qb_cus['name']
             if qb_cus['bill_address']
                 customer_data[:address] = qb_cus['bill_address']['addr1']
