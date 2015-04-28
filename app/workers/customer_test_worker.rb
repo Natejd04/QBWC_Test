@@ -19,6 +19,7 @@ class CustomerTestWorker < QBWC::Worker
             customer_data = {}
            customer_data[:listid] = qb_cus['list_id']
             customer_data[:name] = qb_cus['name']
+            customer_data[:edit_sq] = qb_cus['edit_sequence']
             if qb_cus['bill_address']
                 customer_data[:address] = qb_cus['bill_address']['addr1']
                 customer_data[:address2] = qb_cus['bill_address']['addr2']
@@ -35,5 +36,31 @@ class CustomerTestWorker < QBWC::Worker
 #            Rails.logger.info "Here is a test line"
         end
     end
-
+    
+#    def update_billing
+#        
+#        QBWC.add_job('update_billing') do
+#
+#        '<QBXML>
+#
+#       <QBXMLMsgsRq onError="continueOnError">
+#<CustomerModRq>
+#<CustomerMod>
+#<ListID >IDTYPE</ListID>
+#<EditSequence >STRTYPE</EditSequence>
+#<BillAddress>
+#<Addr1 >STRTYPE</Addr1>
+#<Addr2 >STRTYPE</Addr2> 
+#<City >STRTYPE</City>
+#<State >STRTYPE</State>
+#<PostalCode >STRTYPE</PostalCode>
+#</BillAddress>
+#</CustomerModRq>
+#</CustomerMod>
+#       </QBXMLMsgsRq>
+#
+#        </QBXML>'
+#
+#    end
+    
 end

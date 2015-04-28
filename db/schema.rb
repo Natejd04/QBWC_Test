@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427173119) do
+ActiveRecord::Schema.define(version: 20150428223732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150427173119) do
     t.string   "state"
     t.integer  "zip"
     t.integer  "listid"
+    t.string   "edit_sq"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|
