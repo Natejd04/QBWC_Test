@@ -1,6 +1,6 @@
 require 'qbwc'
 
-class CustomerTestWorker < QBWC::Worker
+class CustomerModifyWorker < QBWC::Worker
 
     def requests(job)
         {
@@ -28,43 +28,17 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:zip] = qb_cus['bill_address']['postal_code']
             end
 
-            customer_edit = Customer.find_by listid: customer_data[:listid]
-            if customer_edit :updated_at > customer_data[:modified]
-                Rails.logger.info "Quickbooks user was updated most recently"
                 customer = Customer.find_by name: customer_data[:name]
                     if customer
                         customer.update(customer_data)
                     else
                         Customer.create(customer_data)
                     end
-            else
-                
-                '<QBXML>
-
-                   <QBXMLMsgsRq onError="continueOnError">
-            <CustomerModRq>
-            <CustomerMod>
-            <ListID >'+ customer_edit[:listid] +'</ListID>
-            <EditSequence >'+ customer_edit[:edit_sq] +'</EditSequence>
-            <BillAddress>
-            <Addr1 >'+ customer_edit[:address] +'</Addr1>
-            <Addr2 >'+ customer_edit[:address2] +'</Addr2> 
-            <City >'+ customer_edit[:city] +'</City>
-            <State >'+ customer_edit[:state] +'</State>
-            <PostalCode >'+ customer_edit[:zip] +'</PostalCode>
-            </BillAddress>
-            </CustomerModRq>
-            </CustomerMod>
-                   </QBXMLMsgsRq>
-
-                    </QBXML>'
-                
-            end
+        
         end
-    end
     
       
- 
+ end
 
     
 end
