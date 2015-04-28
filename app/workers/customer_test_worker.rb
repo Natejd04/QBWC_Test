@@ -27,40 +27,44 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:state] = qb_cus['bill_address']['state']
                 customer_data[:zip] = qb_cus['bill_address']['postal_code']
             end
-            customer = Customer.find_by name: customer_data[:name]
-            if customer
-                customer.update(customer_data)
+
+            customer_edit = Customer.find_by listid: customer_data[:listid]
+            if customer_edit :updated_at > customer_data[:modified]
+                Rails.logger.info "Quickbooks user was updated most recently"
+                customer = Customer.find_by name: customer_data[:name]
+                    if customer
+                        customer.update(customer_data)
+                    else
+                        Customer.create(customer_data)
+                    end
             else
-                Customer.create(customer_data)
+                
+                '<QBXML>
+
+                   <QBXMLMsgsRq onError="continueOnError">
+            <CustomerModRq>
+            <CustomerMod>
+            <ListID >'+ customer_edit[:listid] +'</ListID>
+            <EditSequence >'+ customer_edit[:edit_sq] +'</EditSequence>
+            <BillAddress>
+            <Addr1 >'+ customer_edit[:address] +'</Addr1>
+            <Addr2 >'+ customer_edit[:address2] +'</Addr2> 
+            <City >'+ customer_edit[:city] +'</City>
+            <State >'+ customer_edit[:state] +'</State>
+            <PostalCode >'+ customer_edit[:zip] +'</PostalCode>
+            </BillAddress>
+            </CustomerModRq>
+            </CustomerMod>
+                   </QBXMLMsgsRq>
+
+                    </QBXML>'
+                
             end
-#            Rails.logger.info "Here is a test line"
         end
     end
     
-#    def update_billing
-#        
-#        QBWC.add_job('update_billing') do
-#
-#        '<QBXML>
-#
-#       <QBXMLMsgsRq onError="continueOnError">
-#<CustomerModRq>
-#<CustomerMod>
-#<ListID >IDTYPE</ListID>
-#<EditSequence >STRTYPE</EditSequence>
-#<BillAddress>
-#<Addr1 >STRTYPE</Addr1>
-#<Addr2 >STRTYPE</Addr2> 
-#<City >STRTYPE</City>
-#<State >STRTYPE</State>
-#<PostalCode >STRTYPE</PostalCode>
-#</BillAddress>
-#</CustomerModRq>
-#</CustomerMod>
-#       </QBXMLMsgsRq>
-#
-#        </QBXML>'
-#
-#    end
+      
+ 
+
     
 end
