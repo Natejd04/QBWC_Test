@@ -25,7 +25,7 @@ class CustomerModifyWorker < QBWC::Worker
 
                     </QBXML>'
                 
-                    },
+                    }
             
         }
     end
