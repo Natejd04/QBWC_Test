@@ -5,10 +5,12 @@ class CustomerModifyWorker < QBWC::Worker
     def requests(job)
         {
             :customer_mod_rq => {
-            :list_id => 80000079,
-            :edit_sequence => 1576443701,
-            :bill_address => { "Addr1" => "1234 Seasme St", "Addr2" => "apt 103", "City" => "Seattle", "State" => "WA", "PostalCode" => "98125"}
+            :customer_mod => {
+            :list_id => "80000079",
+            :edit_sequence => "1576443701",
+            :bill_address => { :addr1 => "1234 Seasme St", :Addr2 => "apt 103", :City => "Seattle", :State => "WA", :PostalCode => "98125"}
                 }
+            }
 #                
 #                '<QBXML>
 #                   <QBXMLMsgsRq onError="continueOnError">
