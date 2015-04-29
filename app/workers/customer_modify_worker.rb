@@ -4,28 +4,28 @@ class CustomerModifyWorker < QBWC::Worker
 
     def requests(job)
         {
-            :customer_mod_rq => {
-                
-                '<QBXML>
-                   <QBXMLMsgsRq onError="continueOnError">
-            <CustomerModRq>
-            <CustomerMod>
-            <ListID >80000079</ListID>
-            <EditSequence >1576443701</EditSequence>
-            <BillAddress>
-            <Addr1 >1234 Seasme St</Addr1>
-            <Addr2 >Apt 103</Addr2> 
-            <City >Seattle</City>
-            <State >WA</State>
-            <PostalCode >98125</PostalCode>
-            </BillAddress>
-            </CustomerModRq>
-            </CustomerMod>
-                   </QBXMLMsgsRq>
-
-                    </QBXML>'
-                
-                    }
+#            :customer_mod_rq => {
+#                
+#                '<QBXML>
+#                   <QBXMLMsgsRq onError="continueOnError">
+#            <CustomerModRq>
+#            <CustomerMod>
+#            <ListID >80000079</ListID>
+#            <EditSequence >1576443701</EditSequence>
+#            <BillAddress>
+#            <Addr1 >1234 Seasme St</Addr1>
+#            <Addr2 >Apt 103</Addr2> 
+#            <City >Seattle</City>
+#            <State >WA</State>
+#            <PostalCode >98125</PostalCode>
+#            </BillAddress>
+#            </CustomerModRq>
+#            </CustomerMod>
+#                   </QBXMLMsgsRq>
+#
+#                    </QBXML>'
+#                
+#                    }
             
         }
     end
