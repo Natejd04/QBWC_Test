@@ -5,6 +5,8 @@ class CustomerModifyWorker < QBWC::Worker
     def requests(job)
         {
             :customer_mod_rq => {
+                }
+            }
             
 #            :customer_mod_rq => {
 #            :customer_mod => {
@@ -33,9 +35,6 @@ class CustomerModifyWorker < QBWC::Worker
 #
 #                    </QBXML>'
 #                
-                    }
-            
-        }
     end
 
     def handle_response(r, session, job, request, data)
@@ -51,16 +50,15 @@ class CustomerModifyWorker < QBWC::Worker
             <ListID >80000079</ListID>\r
             <EditSequence >1576443701</EditSequence>\r
             <BillAddress>\r
-            <Addr1 >1234 Seasme St</Addr1>\r
-            <Addr2 >Apt 103</Addr2>\r
-            <City >Seattle</City>\r
-            <State >WA</State>\r
+            <Addr1>1234 Seasme St</Addr1>\r
+            <Addr2>Apt 103</Addr2>\r
+            <City>Seattle</City>\r
+            <State>WA</State>\r
             <PostalCode >98125</PostalCode>\r
             </BillAddress>\r
             </CustomerModRq>\r
             </CustomerMod>\r
-                   </QBXMLMsgsRq>\r
-
+            </QBXMLMsgsRq>\r
                     </QBXML>\r"
         
       
