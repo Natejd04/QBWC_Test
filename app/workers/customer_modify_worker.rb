@@ -5,12 +5,14 @@ class CustomerModifyWorker < QBWC::Worker
     def requests(job)
         {
             :customer_mod_rq => {
-            :customer_mod => {
-            :list_id => "80000079",
-            :edit_sequence => "1576443701",
-            :bill_address => { :addr1 => "1234 Seasme St", :Addr2 => "apt 103", :City => "Seattle", :State => "WA", :PostalCode => "98125"}
-                }
-            }
+            
+#            :customer_mod_rq => {
+#            :customer_mod => {
+#            :list_id => "80000079",
+#            :edit_sequence => "1576443701",
+#            :bill_address => { :addr1 => "1234 Seasme St", :Addr2 => "apt 103", :City => "Seattle", :State => "WA", :PostalCode => "98125"}
+#                }
+#            }
 #                
 #                '<QBXML>
 #                   <QBXMLMsgsRq onError="continueOnError">
@@ -31,14 +33,36 @@ class CustomerModifyWorker < QBWC::Worker
 #
 #                    </QBXML>'
 #                
-#                    }
+                    }
             
         }
     end
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
-        Rails.logger.info("This completes the Customer Mod Worker")
+        Rails.logger.info("This is the start of the customer mod")
+        
+        QBWC_CUSTOMER_MOD_RQ = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r
+            <?qbxml version=\"7.0\"?>\r
+            <QBXML>\r
+            <QBXMLMsgsRq onError=\"continueOnError\">\r
+            <CustomerModRq>\r
+            <CustomerMod>\r
+            <ListID >80000079</ListID>\r
+            <EditSequence >1576443701</EditSequence>\r
+            <BillAddress>\r
+            <Addr1 >1234 Seasme St</Addr1>\r
+            <Addr2 >Apt 103</Addr2>\r
+            <City >Seattle</City>\r
+            <State >WA</State>\r
+            <PostalCode >98125</PostalCode>\r
+            </BillAddress>\r
+            </CustomerModRq>\r
+            </CustomerMod>\r
+                   </QBXMLMsgsRq>\r
+
+                    </QBXML>\r"
+        
       
     end
 
