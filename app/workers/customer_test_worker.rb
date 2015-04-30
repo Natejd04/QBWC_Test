@@ -31,9 +31,9 @@ class CustomerTestWorker < QBWC::Worker
             if customer.blank?
                 Customer.create(customer_data)
             elsif customer.updated_at > customer.created_at
-                customer.update(customer_data[:edit_sq])
+                customer.update(edit_sq: customer_data[:edit_sq])
             else customer.updated_at = customer.created_at
-                customer.update(customer_data)
+                customer.update(edit_sq: customer_data[:edit_sq])
                 Rails.logger.info("Customer info is the same")
             end
 #            Rails.logger.info(customer_data[:listid])
