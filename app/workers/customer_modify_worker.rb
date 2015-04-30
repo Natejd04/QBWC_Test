@@ -4,28 +4,19 @@ class CustomerModifyWorker < QBWC::Worker
 
     def requests(job)
          Rails.logger.info("This is the start --------- START")
-#         Rails.logger.info("the start of customers ------------ Customers " + customer.name + " " + customer.address)
-#        customers = Customer.where("updated_at > created_at")
-#            customers.each do |customer|
-        {
-                    :customer_mod_rq => {
-                        :customer_mod => {
-                            :list_id => "600000-1045612576",
-                            :edit_sequence => "1544875287",
-                            :bill_address => { :addr1 => "01 First Try", :Addr2 => "010", :City => "Snoho", :State => "WA", :PostalCode => "98104"}
+        customers = Customer.where("updated_at > created_at")
+            updated_customers = []   
+                customers.each do |customer|
+                        updated_customers << {
+                            :customer_mod_rq => {
+                                :customer_mod => {
+                                    :list_id => customer.listid,
+                                    :edit_sequence => customer.edit_sq,
+                                    :bill_address => { :addr1 => customer.address, :Addr2 => customer.address2, :City => customer.city, :State => customer.state, :PostalCode => customer.zip}
+                                        }
                             }
-                        }
-            }
-        {
-                    :customer_mod_rq => {
-                        :customer_mod => {
-                            :list_id => "610000-1045612618",
-                            :edit_sequence => "1544875287",
-                            :bill_address => { :addr1 => "02 Second Try", :Addr2 => "010", :City => "Snoho", :State => "WA", :PostalCode => "98104"}
-                            }
-                        }
                 }
-                
+            return updated_customers
     end
 
     def handle_response(r, session, job, request, data)
