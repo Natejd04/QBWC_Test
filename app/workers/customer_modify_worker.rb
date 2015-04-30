@@ -4,8 +4,8 @@ class CustomerModifyWorker < QBWC::Worker
 
     def requests(job)
          Rails.logger.info("This is the start --------- START")
-         customers = Customer.where("updated_at > created_at")
-            customers.find_each do |customer|
+         @customers = Customer.where("updated_at > created_at")
+            @customers.find_each do |customer|
             {
                     :customer_mod_rq => {
                         :customer_mod => {
