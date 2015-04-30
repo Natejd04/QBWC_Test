@@ -4,8 +4,8 @@ class CustomerModifyWorker < QBWC::Worker
 
     def requests(job)
          Rails.logger.info("This is the start --------- START")
-         @customers = Customer.all.order "id ASC"
-            @customers.each do |customer|
+         customers = Customer.all.order "id ASC"
+            customers.each do |customer|
                     if customer.updated_at > customer.created_at
                         
             {
