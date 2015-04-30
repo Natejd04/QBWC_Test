@@ -10,8 +10,8 @@ class CustomerModifyWorker < QBWC::Worker
         {
                     :customer_mod_rq => {
                         :customer_mod => {
-                            :list_id => "80000079-1576443701",
-                            :edit_sequence => "1576443701",
+                            :list_id => "3D0000-1040150817",
+                            :edit_sequence => "1576431701",
                             :bill_address => { :addr1 => "1234", :Addr2 => "010", :City => "Snoho", :State => "WA", :PostalCode => "98104"}
                             }
                         }
