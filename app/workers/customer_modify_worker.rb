@@ -19,6 +19,7 @@ class CustomerModifyWorker < QBWC::Worker
                     else
                         Rails.logger.info("No update required on *" + customer.name + "*")
                     end
+                end
     end
 
     def handle_response(r, session, job, request, data)
