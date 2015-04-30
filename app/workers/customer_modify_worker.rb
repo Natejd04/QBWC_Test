@@ -15,7 +15,8 @@ class CustomerModifyWorker < QBWC::Worker
                             :bill_address => { :addr1 => "01 First Try", :Addr2 => "010", :City => "Snoho", :State => "WA", :PostalCode => "98104"}
                             }
                         }
-                
+            }
+        {
                     :customer_mod_rq => {
                         :customer_mod => {
                             :list_id => "610000-1045612618",
