@@ -16,7 +16,7 @@ class CustomerModifyWorker < QBWC::Worker
                             }
                         }
                 }
-                end
+                
     end
 
     def handle_response(r, session, job, request, data)
