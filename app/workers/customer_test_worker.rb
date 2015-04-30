@@ -28,7 +28,7 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:zip] = qb_cus['bill_address']['postal_code']
             end
 
-            customer = Customer.find_by :listid customer_data[:listid]
+            customer = Customer.find_by listid: customer_data[:listid]
             if customer.updated_at > customer.created_at
                 Rails.logger.info("Customer has been updated, cannot change")
             elsif customer.updated_at = customer.created_at
