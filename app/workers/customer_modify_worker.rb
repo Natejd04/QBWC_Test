@@ -41,7 +41,7 @@ class CustomerModifyWorker < QBWC::Worker
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         Rails.logger.info("This is the start of the customer mod")
         
-#        QBWC_CUSTOMER_MOD_RQ = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        QBWC_CUSTOMER_MOD_RQ = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
 #            <?qbxml version=\"7.0\"?>\r
 #            <QBXML>\r
 #            <QBXMLMsgsRq onError=\"continueOnError\">\r

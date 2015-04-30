@@ -1,6 +1,6 @@
 require 'qbwc'
 
-class CustomerModifyWorker < QBWC::Worker
+class CustomerTestWorker < QBWC::Worker
 
     def requests(job)
         {
