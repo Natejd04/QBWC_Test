@@ -4,10 +4,8 @@ class CustomerModifyWorker < QBWC::Worker
 
     def requests(job)
          Rails.logger.info("This is the start --------- START")
-         customers = Customer.all.order "id ASC"
-            customers.each do |customer|
-                    if customer.updated_at.to_time.to_i > customer.created_at.to_time.to_i
-                        
+         customers = Customer.where("updated_at > created_at")
+            customers.find_each do |customer|
             {
                     :customer_mod_rq => {
                         :customer_mod => {
@@ -17,9 +15,6 @@ class CustomerModifyWorker < QBWC::Worker
                             }
                         }
             }
-                    else
-                        Rails.logger.info("No update required on *" + customer.name + "*")
-                    end
                 end
     end
 
