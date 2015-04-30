@@ -27,14 +27,13 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:state] = qb_cus['bill_address']['state']
                 customer_data[:zip] = qb_cus['bill_address']['postal_code']
             end
-
             customer = Customer.find_by listid: customer_data[:listid]
-            if customer.updated_at > customer.created_at
-                Rails.logger.info("Customer has been updated, cannot change")
-            elsif customer.updated_at = customer.created_at
-                Rails.logger.info("Customer info is the same")
-            else
+            if customer.blank?
                 Customer.create(customer_data)
+            elsif customer.updated_at > customer.created_at
+                Rails.logger.info("Customer has been updated, cannot change")
+            else customer.updated_at = customer.created_at
+                Rails.logger.info("Customer info is the same")
             end
 #            Rails.logger.info(customer_data[:listid])
         end
