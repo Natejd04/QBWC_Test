@@ -6,7 +6,7 @@ class CustomerModifyWorker < QBWC::Worker
          Rails.logger.info("This is the start --------- START")
          customers = Customer.all.order "id ASC"
             customers.each do |customer|
-                    if customer.updated_at > customer.created_at
+                    if customer.updated_at.to_time.to_i > customer.created_at.to_time.to_i
                         
             {
                     :customer_mod_rq => {
