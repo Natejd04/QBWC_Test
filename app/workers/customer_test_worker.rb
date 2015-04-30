@@ -29,9 +29,9 @@ class CustomerTestWorker < QBWC::Worker
             end
 
             customer = Customer.find_by listid: customer_data[:listid]
-            if customer.updated_at.to_time.to_i > customer.created_at.to_time.to_i
+            if customer.updated_at > customer.created_at
                 Rails.logger.info("Customer has been updated, cannot change")
-            elsif customer.updated_at.to_time.to_i = customer.created_at.to_time.to_i
+            elsif customer.updated_at = customer.created_at
                 Rails.logger.info("Customer info is the same")
             else
                 Customer.create(customer_data)
