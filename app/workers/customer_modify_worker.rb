@@ -13,10 +13,12 @@ class CustomerModifyWorker < QBWC::Worker
                                     :list_id => customer.listid,
                                     :edit_sequence => customer.edit_sq,
                                     :bill_address => { :addr1 => customer.address, :Addr2 => customer.address2, :City => customer.city, :State => customer.state, :PostalCode => customer.zip}
-                                        }
+                                    }
+                                }
                             }
-                }
+                end
             return updated_customers
+                    
     end
 
     def handle_response(r, session, job, request, data)
