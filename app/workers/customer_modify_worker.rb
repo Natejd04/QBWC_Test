@@ -5,9 +5,9 @@ class CustomerModifyWorker < QBWC::Worker
     def requests(job)
          Rails.logger.info("This is the start --------- START")
 #         Rails.logger.info("the start of customers ------------ Customers " + customer.name + " " + customer.address)
-            {
-            customers = Customer.where("updated_at > created_at")
+        customers = Customer.where("updated_at > created_at")
             customers.each do |customer|
+        {
                     :customer_mod_rq => {
                         :customer_mod => {
                             :list_id => customer.listid,
@@ -15,9 +15,8 @@ class CustomerModifyWorker < QBWC::Worker
                             :bill_address => { :addr1 => customer.address, :Addr2 => customer.address2, :City => customer.city, :State => customer.state, :PostalCode => customer.zip}
                             }
                         }
-            end
                 }
-                
+                end
     end
 
     def handle_response(r, session, job, request, data)
