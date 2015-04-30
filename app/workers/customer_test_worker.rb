@@ -34,6 +34,8 @@ class CustomerTestWorker < QBWC::Worker
                     else
                         Customer.create(customer_data)
                     end
+            Rails.logger.info(customer_data[:listid]) if customer.name = "Nate Davis"
+                
         
         end
     
