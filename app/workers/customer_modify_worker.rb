@@ -13,8 +13,8 @@ class CustomerModifyWorker < QBWC::Worker
 #            }
             
             :customer_mod => {
-            :list_id => "80000079",
-            :edit_sequence => "1576443701",
+            :list_id => 80000079,
+            :edit_sequence => 1576443701,
             :bill_address => { :addr1 => "1234 Seasme St", :Addr2 => "apt 103", :City => "Seattle", :State => "WA", :PostalCode => "98125"}
                 }
             }
