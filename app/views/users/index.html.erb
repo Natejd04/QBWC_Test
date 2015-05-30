@@ -1,0 +1,7 @@
+<h1>Current Users</h1>
+<% i=1 %>
+<% @user.each do |user| %>
+    <%= i %> .  
+    <% i=i+1 %>
+    <%= link_to user.name, user %> - <%= user.role %><br />
+<% end %>

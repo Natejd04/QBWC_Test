@@ -1,0 +1,18 @@
+<h1><%= @user.id %></h1>
+
+<%= simple_form_for @user, url: user_path do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <br />
+   
+    <%= f.label :role %>
+    <%= f.text_field :role %>
+    <br />
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+
+    <%= f.input :avatar, as: :file %>
+        
+<%= f.submit "Save Changes" %>
+<% end %>
+

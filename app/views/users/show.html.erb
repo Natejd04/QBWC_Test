@@ -1,0 +1,8 @@
+<h1>User <%= @user.id %></h1>
+<!--
+<%= image_tag @user.avatar.url %>
+<%= image_tag @user.avatar.url(:medium) %>
+-->
+    <%= image_tag @user.avatar.url(:thumb) %>
+    <br />
+  <%= link_to "Sign Out", logout_path, method: :delete %>

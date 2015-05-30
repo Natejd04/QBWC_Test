@@ -1,0 +1,4 @@
+<%= simple_form_for @order, url: orders_path do |f| %>
+<%= f.input :docs, as: :file %>
+<%= f.button :submit %>
+<% end %>

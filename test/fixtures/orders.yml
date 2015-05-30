@@ -1,0 +1,61 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  c_name: 
+  c_file,: MyString
+  c_total: 
+  ab: 
+  cc: 
+  ccc: 
+  co: 
+  cpb: 
+  dch: 
+  dcm: 
+  dnb: 
+  moc: 
+  lcc: 
+  occ: 
+  pbcc: 
+  c_po: 
+  c_edit: 
+  c_qbid: 
+  c_date: 
+  c_ack: 
+  c_conf: 
+  c_pro: 
+  c_scac: 
+  c_bol: 
+  c_ship: 
+  c_deliver: 
+  c_via: 
+  c_memo: MyString
+
+two:
+  c_name: 
+  c_file,: MyString
+  c_total: 
+  ab: 
+  cc: 
+  ccc: 
+  co: 
+  cpb: 
+  dch: 
+  dcm: 
+  dnb: 
+  moc: 
+  lcc: 
+  occ: 
+  pbcc: 
+  c_po: 
+  c_edit: 
+  c_qbid: 
+  c_date: 
+  c_ack: 
+  c_conf: 
+  c_pro: 
+  c_scac: 
+  c_bol: 
+  c_ship: 
+  c_deliver: 
+  c_via: 
+  c_memo: MyString

@@ -1,0 +1,11 @@
+<h1>Sign In</h1>
+
+<% if flash[:error] %>
+    <p><%= flash[:error] %></p>
+<% end %>
+
+<%= simple_form_for(:session, :url => sessions_path) do |f| %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+    <%= f.button :submit %>
+<% end %>
