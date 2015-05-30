@@ -15,7 +15,7 @@ class CustomersController < ApplicationController
     
   def update
       @customer = Customer.find(params[:id])
-      if @customer.update_attributes(customer_params)
+      if @customer.update(customer_params)
           Rails.logger.info "Updated"
       else
 #          render "customers/"

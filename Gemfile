@@ -25,7 +25,19 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+
+#Footnotes Gem
+gem 'rails-footnotes', '~> 4.0', group: :development
+
+#simple form rails gem
+gem 'simple_form'
+
+#SASS Bootstrap
+gem 'bootstrap-sass', '~> 2.3.1.0'
+
+#paperclip gem for uploading files
+gem "paperclip", "~> 4.2"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -43,6 +55,9 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  
+  gem 'qbwc'
+
 
  
   

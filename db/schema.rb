@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430051024) do
+ActiveRecord::Schema.define(version: 20150515001215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,55 @@ ActiveRecord::Schema.define(version: 20150430051024) do
     t.integer  "zip"
     t.string   "listid"
     t.string   "edit_sq"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string   "c_name"
+    t.decimal  "c_total"
+    t.integer  "m_ab"
+    t.integer  "m_cc"
+    t.integer  "m_ccc"
+    t.integer  "m_co"
+    t.integer  "m_cpb"
+    t.integer  "m_dch"
+    t.integer  "m_dcm"
+    t.integer  "m_dnb"
+    t.integer  "m_moc"
+    t.integer  "m_lcc"
+    t.integer  "m_occ"
+    t.integer  "m_pbcc"
+    t.integer  "c_ab"
+    t.integer  "c_cc"
+    t.integer  "c_ccc"
+    t.integer  "c_co"
+    t.integer  "c_cpb"
+    t.integer  "c_dch"
+    t.integer  "c_dcm"
+    t.integer  "c_dnb"
+    t.integer  "c_moc"
+    t.integer  "c_lcc"
+    t.integer  "c_occ"
+    t.integer  "c_pbcc"
+    t.string   "c_po"
+    t.string   "c_edit"
+    t.string   "c_qbid"
+    t.date     "c_date"
+    t.string   "c_ack"
+    t.string   "c_conf"
+    t.string   "c_pro"
+    t.string   "c_scac"
+    t.string   "c_bol"
+    t.date     "c_ship"
+    t.date     "c_deliver"
+    t.string   "c_via"
+    t.string   "c_memo"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "docs_file_name"
+    t.string   "docs_content_type"
+    t.integer  "docs_file_size"
+    t.datetime "docs_updated_at"
+    t.boolean  "remove_docs",       default: false
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|
@@ -53,6 +102,20 @@ ActiveRecord::Schema.define(version: 20150430051024) do
     t.string   "pending_jobs", limit: 1000, default: "", null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "role"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
 end

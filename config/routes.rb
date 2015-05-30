@@ -1,9 +1,24 @@
 Rails.application.routes.draw do
+  get 'order/index'
+
+#  get 'users/new'
+  resources :users
   resources :customers
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc
-    root 'welcome#index'
+  root 'welcome#index'
+  
+  resources :sessions
+    
+  delete 'logout' => 'sessions#destroy'
+  get 'signin' => 'sessions#new'
+    
+  resources :orders
+  get 'wds' => 'orders#wds'
+  get 'art' => 'orders#art'
+  get 'admin' => 'orders#admin'
+    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
