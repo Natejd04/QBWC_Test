@@ -3,6 +3,9 @@
 <% if flash[:error] %>
     <p><%= flash[:error] %></p>
 <% end %>
+<% if flash[:notice] %>
+    <p><%= flash[:notice] %></p>
+<% end %>
 
 <%= simple_form_for(:session, :url => sessions_path) do |f| %>
     <%= f.input :email %>

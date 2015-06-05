@@ -6,7 +6,7 @@ class CustomerTestWorker < QBWC::Worker
         {
             :customer_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 100
+                :max_returned => 50
             }
         }
     end
