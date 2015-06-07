@@ -32,8 +32,9 @@ class OrdersController < ApplicationController
     
   def update
       @docs = Order.find(params[:id])
-        @docs.docs = nil if
-            order_params[:remove_docs]
+      if order_params[:remove_docs] == "1"
+          @docs.docs = nil
+      end
       @docs.update(order_params)
   end
 
