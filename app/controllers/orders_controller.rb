@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   
     #checks to make sure a user is logged in before allowing access to files
     before_filter :authenticate_user
+    
 
   def create
      @order = Order.create( order_params )
@@ -9,11 +10,11 @@ class OrdersController < ApplicationController
   end
 
   def delete_docs
-      @order = Order.find_by_id(params[:id])
-      @order.docs = nil
-      @order.save
+      @orders = Order.find_by_id(params[:id])
+      @orders.docs = nil
+      @orders.save
       respond to do |format|
-          format.html {redirect_to @order, notice: "Document was deleted"}
+          format.html {redirect_to @orders, notice: "Document was deleted"}
       end
   end
   
@@ -22,21 +23,23 @@ class OrdersController < ApplicationController
 #      If you are a WDS user, you only see the WDS page.
 #      This is not quite what I am looking for, this means I will need three
 #      template pages, one for each location and an admin (all) view. 
-      
+      @orders = Order.all.order "id ASC"
+  end
+    
+  def edit
+      @docs = Order.find(params[:id])
   end
     
   def update
-      if @order.update(order_params)
-          if @order.remove_docs == true
-              @order.docs = nil
-              @order.save
-          end
-      end
+      @docs = Order.find(params[:id])
+        @docs.docs = nil if
+            order_params[:remove_docs]
+      @docs.update(order_params)
   end
 
   def show
       @docs = Order.find(params[:id])
-      send_file @docs.docs.path, :type => @docs.docs_content_type, :disposition => 'inline'
+#      send_file @docs.docs.path, :type => @docs.docs_content_type, :disposition => 'inline'
   end
 
   def new
@@ -63,6 +66,6 @@ class OrdersController < ApplicationController
   private
     
   def order_params
-      params.require(:order).permit(:docs)
+      params.require(:order).permit(:docs, :remove_docs)
   end
 end

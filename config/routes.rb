@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   get 'wds' => 'orders#wds'
   get 'art' => 'orders#art'
   get 'admin' => 'orders#admin'
-    
+
+#  delete 'docs/:id'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -9,4 +9,20 @@ class Order < ActiveRecord::Base
     
     #add more of this crazy model, like validation's and such. You know you want to.
     
+#    This was a test from SO, no succes so far
+#    before_save :destroy_doc?
+#    
+#    def doc_delete
+#        @doc_delete ||= "0"
+#    end
+#    
+#    def doc_delete=(value)
+#        @doc_delete = value
+#    end
+#    
+#private
+#    def destroy_doc?
+#        self.doc.clear if @doc_delete == "1"
+#    end
+#    
 end
