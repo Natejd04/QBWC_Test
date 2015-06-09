@@ -61,6 +61,8 @@ class OrdersController < ApplicationController
 
   def new
       @order = Order.new
+      @customers = Customer.all
+      @items = Item.all
   end
       
   def download
@@ -83,6 +85,6 @@ class OrdersController < ApplicationController
   private
     
   def order_params
-      params.require(:order).permit(:docs, :remove_docs)
+      params.require(:order).permit(:docs, :remove_docs, :customer_id, :items)
   end
 end
