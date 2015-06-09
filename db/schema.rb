@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515001215) do
+ActiveRecord::Schema.define(version: 20150609192550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 20150515001215) do
     t.integer  "zip"
     t.string   "listid"
     t.string   "edit_sq"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "code"
+    t.integer  "packsize"
+    t.integer  "qty"
+    t.string   "unit"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "orders", force: :cascade do |t|
