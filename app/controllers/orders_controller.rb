@@ -5,8 +5,24 @@ class OrdersController < ApplicationController
     
 
   def create
-     @order = Order.create( order_params )
+#    Use me when testing the multipart upload
+#      @order = Order.new(order_params)
+#      respond_to do |format|
+#        if @order.save
+#         
+#         if params[:docs]
+#             params[:docs].each { |docs|
+#                 @order.docs.create(docs: docs)
+#                 }
+#             end
+#        redirect_to :action => :index
+#        end
+#    end
+      
+#      I am meant to be used for single upload, working
+      @order = Order.create(order_params)
       redirect_to :action => :index
+      
   end
 
   def delete_docs
