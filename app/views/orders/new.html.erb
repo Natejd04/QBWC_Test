@@ -1,13 +1,4 @@
-<!-- I work as a single upload -->
-<%= simple_form_for @order, url: orders_path, :html => {multipart: true} do |f| %>
-<%= f.input :docs, as: :file, :html => { multipart: true } %>
-<%= f.button :submit %>
-<% end %>
-
-<!-- I don't work quite yet -->
-<%= form_for @order, url: orders_path, :html => { multipart: true } do |f| %>
-<%= file_field_tag "docs[]", type: :file, multiple: true %>
-<%= f.submit nil %>
-<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-        orders_path %>
-<% end %>
+<h1>New Order Creation</h1>
+    <div>
+        <%= render :partial => 'docform' %>
+    </div>
