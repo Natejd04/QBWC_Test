@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609192550) do
+ActiveRecord::Schema.define(version: 20150609212149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,33 +40,16 @@ ActiveRecord::Schema.define(version: 20150609192550) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.string   "order_id"
+    t.string   "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string   "c_name"
     t.decimal  "c_total"
-    t.integer  "m_ab"
-    t.integer  "m_cc"
-    t.integer  "m_ccc"
-    t.integer  "m_co"
-    t.integer  "m_cpb"
-    t.integer  "m_dch"
-    t.integer  "m_dcm"
-    t.integer  "m_dnb"
-    t.integer  "m_moc"
-    t.integer  "m_lcc"
-    t.integer  "m_occ"
-    t.integer  "m_pbcc"
-    t.integer  "c_ab"
-    t.integer  "c_cc"
-    t.integer  "c_ccc"
-    t.integer  "c_co"
-    t.integer  "c_cpb"
-    t.integer  "c_dch"
-    t.integer  "c_dcm"
-    t.integer  "c_dnb"
-    t.integer  "c_moc"
-    t.integer  "c_lcc"
-    t.integer  "c_occ"
-    t.integer  "c_pbcc"
     t.string   "c_po"
     t.string   "c_edit"
     t.string   "c_qbid"
