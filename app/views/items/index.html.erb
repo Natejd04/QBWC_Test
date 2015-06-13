@@ -1,0 +1,5 @@
+<h1>Current Items</h1>
+<% @item.each do |item| %>  
+    <%= item.id %>.
+    <%= link_to item.name, item %> : <%= item.code %><br />
+<% end %>

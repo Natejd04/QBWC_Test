@@ -13,7 +13,7 @@ Ship Date: <%= @order.c_ship.strftime("%m/%d/%Y") %><br />
     <table style="border:solid 1px black;">
         <th>ID</th><th>Product</th><th>QTY</th><th>Amount</th>
         <% @order.line_items.each do |o| %>
-        <tr><td><%= link_to o.id, order_path(o.id) %></td>
+        <tr><td><%= link_to o.product_id, item_path(o.product_id) %></td>
             <td><%= o.product_id %></td>
             <td><%= o.qty %></td>
             <td><%= number_to_currency(o.amount) %></td>
