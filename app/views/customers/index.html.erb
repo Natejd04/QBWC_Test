@@ -1,8 +1,6 @@
 <h1>Customers#index</h1>
-<% i=1 %>
 <% @customers.each do |customer| %>
-<%= i %> .  
-<% i=i+1 %>
+<%= customer.id %>. 
 <%= link_to customer.name, customer %><br />
 <% end %>
 

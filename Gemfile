@@ -58,6 +58,7 @@ group :development, :test do
   
   gem 'qbwc'
 
+  gem 'pry-rails'
 
  
   

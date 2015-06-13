@@ -63,3 +63,18 @@ label.collection_check_boxes {
 form, div {
     float:  none;
 }
+th {
+    background-color: beige;   
+}
+
+.name a {
+    font-size: 20px;
+    color: cornflowerblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.order {
+    width:50%;
+    padding:1%;
+}

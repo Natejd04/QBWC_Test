@@ -6,3 +6,17 @@
 <%= @customer.listid %><br />
 <%= @customer.edit_sq %>
 </p>
+
+<div style="width:60%;padding:10px;">
+    <table>
+    <tr colspan=5>Here is a Title bar</tr>    
+        <% @customer.orders.each do |o| %>
+        <tr><td>ID: <%= link_to o.id, order_path(o.id) %></td>
+            <td>Date: <%= o.c_date %></td>
+            <td>Total: $<%= o.c_total %></td>
+            <td>Memo Field: <%= o.c_memo %></td>
+            <td>Ship Date: <%= o.c_ship %></td>
+            </tr>
+        <% end %>
+    </table>
+</div>

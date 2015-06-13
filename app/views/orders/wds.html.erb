@@ -1,2 +1,7 @@
 <h1>The WDS Page</h1>
 <%= link_to "Sign Out", logout_path, method: :delete %>
+
+<% @orders.each do |order| %>
+<%= order.id %> .  
+<%= link_to order.c_name, order %><br />
+<% end %>

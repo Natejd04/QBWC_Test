@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
     has_many :docs, :dependent => :destroy
     has_many :line_items
     has_many :items
+#    belongs_to :customer, foreign_key: "listid"
     belongs_to :customer
     has_attached_file :docs, :url => "/:class/:attachment/:id/:basename.:extension", :path => ":rails_root/public/:class/:attachment/:id/:basename.:extension"
 #        :url => "/documents/:id/download"

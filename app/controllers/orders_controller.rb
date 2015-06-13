@@ -20,7 +20,14 @@ class OrdersController < ApplicationController
 #    end
       
 #      I am meant to be used for single upload, working
+#    binding.pry
       @order = Order.create(order_params)
+      @qty = params[:qty].to_i
+    
+      @product = params[:order][:item_ids][1]
+            LineItem.create(qty: @qty, order_id: @order.id, product_id:                        @product)
+                @item = Item.find(@product)
+                    @item.update(qty: @item.qty - @qty)
       redirect_to :action => :index
       
   end
@@ -55,7 +62,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-      @docs = Order.find(params[:id])
+      @order = Order.find(params[:id])
 #      send_file @docs.docs.path, :type => @docs.docs_content_type, :disposition => 'inline'
   end
 
@@ -76,6 +83,7 @@ class OrdersController < ApplicationController
 
   def wds
       authenticate_wds
+      @orders = Order.where(c_class: "Wholesale Direct")
   end
     
   def admin
@@ -85,6 +93,6 @@ class OrdersController < ApplicationController
   private
     
   def order_params
-      params.require(:order).permit(:docs, :remove_docs, :customer_id, :items)
+      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id)
   end
 end

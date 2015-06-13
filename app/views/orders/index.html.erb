@@ -1,5 +1,5 @@
 <h1>Hello this is the orders page</h1>
 <% @orders.each do |order| %>
 <%= order.id %> .  
-<%= link_to "Order", order %><br />
+<%= link_to order.c_name, order %><br />
 <% end %>

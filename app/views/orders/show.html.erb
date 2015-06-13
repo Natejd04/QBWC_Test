@@ -1,3 +1,24 @@
-<%= link_to "Download", @docs.docs.url(:docs, false) %>
-<br />    
+<div class="order">
+<span class="name"><%= link_to @order.c_name, customer_path(@order.customer.id) %><br /></span>
+ID: <%= @order.id %><br />
+Date: <%= @order.c_date.strftime("%m/%d/%Y") %><br />
+Memo Field: <%= @order.c_memo %><br />
+Ship Date: <%= @order.c_ship.strftime("%m/%d/%Y") %><br />
+<%= link_to "Download Attachment", @order.docs.url(:docs, false) %> |
 <%= link_to "Edit", edit_order_path %>
+
+</div>
+
+<div style="width:60%;padding:10px;">
+    <table style="border:solid 1px black;">
+        <th>ID</th><th>Product</th><th>QTY</th><th>Amount</th>
+        <% @order.line_items.each do |o| %>
+        <tr><td><%= link_to o.id, order_path(o.id) %></td>
+            <td><%= o.product_id %></td>
+            <td><%= o.qty %></td>
+            <td><%= number_to_currency(o.amount) %></td>
+            </tr>
+        <% end %>
+        <tr><td style="padding-right:2%;" align="right" colspan="4"><b>Total: <%= number_to_currency(@order.c_total) %></b></td></tr>
+    </table>
+</div>
