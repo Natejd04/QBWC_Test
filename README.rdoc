@@ -7,18 +7,19 @@ This application is being created to communicate with any open quickbooks connec
 * Issues that need to be resolved are flagged <tt><></tt>:
 
   <tt># <> Need to correct formula here.</tt>
-
-== Enable Workers
-
-You need to list the name, true flag for running job, <tt>''</tt> to enable open QB and the name of your worker.
-
-<tt>QBWC.add_job(:list_customers, true, '', CustomerTestWorker)</tt>
+  <tt># ** Need to make decision before production server </tt>
 
 == Download QWC file
 
 You will need to visit this on your localhost, once you have launched your rails server.
 
     http://www.localhost:3000/qbwc/qwc
+
+== Enable Workers
+
+You need to list the name, true flag for running job, <tt>''</tt> to enable open QB and the name of your worker.
+
+<tt>QBWC.add_job(:list_customers, true, '', CustomerTestWorker)</tt>
 
 == General Requirements
 

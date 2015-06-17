@@ -3,6 +3,8 @@ require 'qbwc'
 
 class ItemAssemblyWorker < QBWC::Worker
 
+#    This worker will grab only active items, in the assembly section of QB.
+#    We will use this to populate our item table, so that we can refernce orders and track inventory
     def requests(job)
         {
             :item_query_rq => {
@@ -16,24 +18,20 @@ class ItemAssemblyWorker < QBWC::Worker
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-#        Rails.logger.info ("---->Attempting Response")
-            r['item_inventory_assembly_ret'].each do |qb_item|
+
+#        we will loop through each item and insert it into the Items table.
+#        <> ideally fix this so that it only updates, when a new item is added
+        r['item_inventory_assembly_ret'].each do |qb_item|
             item_data = {}
             item_data[:list_id] = qb_item['list_id']
             item_data[:edit_sq] = qb_item['edit_sequence']
             item_data[:name] = qb_item['name']
             item_data[:description] = qb_item['full_name']
             item_data[:qty] = qb_item['quantity_on_hand'].to_f
-#            @active = qb_item['is_active']
-            
-#            if @active == "t"
+                
+#                create the item record
                 Item.create(item_data)
-#            end
         
         end
-    
-      
- end
-
-    
+    end
 end

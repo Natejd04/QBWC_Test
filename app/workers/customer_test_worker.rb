@@ -2,6 +2,8 @@ require 'qbwc'
 
 class CustomerTestWorker < QBWC::Worker
 
+#    This worker is used to grab customer info and create records in rails server.
+#    currently only grabbing 50 results at a time
     def requests(job)
         {
             :customer_query_rq => {
@@ -15,6 +17,7 @@ class CustomerTestWorker < QBWC::Worker
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
+#        We will then loop through each customer and create records.
         r['customer_ret'].each do |qb_cus|
             customer_data = {}
             customer_data[:listid] = qb_cus['list_id']
@@ -28,15 +31,21 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:zip] = qb_cus['bill_address']['postal_code']
             end
             customer = Customer.find_by listid: customer_data[:listid]
+            
+#            if customer doesn't exist create record.
             if customer.blank?
                 Customer.create(customer_data)
+            
+#           was the customer updated after created, if so we need a new edit_sq
+#            <> ideally if we can get updated in QB, then we could check updated in QB vs. Update in database and preform accurately.
             elsif customer.updated_at > customer.created_at
                 customer.update(edit_sq: customer_data[:edit_sq])
+            
+#            if the customer update and created are the same, let's update edit sequence anyways. 
             else customer.updated_at = customer.created_at
                 customer.update(edit_sq: customer_data[:edit_sq])
                 Rails.logger.info("Customer info is the same")
             end
-#            Rails.logger.info(customer_data[:listid])
         end
     
       

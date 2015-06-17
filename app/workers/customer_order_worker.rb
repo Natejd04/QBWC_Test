@@ -3,6 +3,9 @@ require 'qbwc'
 
 class CustomerOrderWorker < QBWC::Worker
 
+#    This is the start of the quickbooks job.
+#    The webconnector will ask the QBWC database what worker to run
+#    If this is enabled, it will start asking what to do
     def requests(job)
     Rails.logger.info("Starting QBWC Order Worker")
         {
@@ -18,10 +21,12 @@ class CustomerOrderWorker < QBWC::Worker
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
+        
+#        We will now handle all the responses we received, one at a time
         Rails.logger.info ("---->Attempting Response")
         r['sales_order_ret'].each do |qb_cus|
-            order_data = {}
-            lineitem_data = {}
+        order_data = {}
+        lineitem_data = {}
             order_data[:c_qbid] = qb_cus['list_id']
             order_data[:c_name] = qb_cus['customer_ref']['full_name']
             order_data[:customer_id] = Customer.find_by(listid: qb_cus['customer_ref']['list_id']).id
@@ -29,12 +34,12 @@ class CustomerOrderWorker < QBWC::Worker
             order_data[:c_edit] = qb_cus['edit_sequence']
             order_data[:c_po] = qb_cus['po_number']
             order_data[:c_date] = qb_cus['txn_date']
-#            order_data[:c_ack] = qb_cus['edit_sequence']
-#            order_data[:c_conf] = qb_cus['edit_sequence']
-#            order_data[:c_pro] = qb_cus['edit_sequence']
-#            order_data[:c_scac] = qb_cus['edit_sequence']
+#           <> order_data[:c_ack] = qb_cus['edit_sequence']
+#           <> order_data[:c_conf] = qb_cus['edit_sequence']
+#           <> order_data[:c_pro] = qb_cus['edit_sequence']
+#           <> order_data[:c_scac] = qb_cus['edit_sequence']
             order_data[:c_ship] = qb_cus['ship_date']
-        order_data[:c_class] = qb_cus['class_ref'].nil? ? nil : qb_cus['class_ref']['full_name']
+            order_data[:c_class] = qb_cus['class_ref'].nil? ? nil : qb_cus['class_ref']['full_name']
             order_data[:c_ship1] = qb_cus['ship_address']['addr1']
             order_data[:c_ship2] = qb_cus['ship_address']['addr2']
             order_data[:c_shipcity] = qb_cus['ship_address']['city']
