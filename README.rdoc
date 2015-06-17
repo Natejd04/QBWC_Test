@@ -21,14 +21,14 @@ You need to list the name, true flag for running job, <tt>''</tt> to enable open
 * Rails version - Currently works on 4.2.1
 
 * System dependencies
-** Requires QBWC gem
-** Requires Simple Form
+    * Requires QBWC gem
+    * Requires Simple Form
 
 * Workers
-** customer_modify_worker
-** customer_order_worker
-** customer_test_worker
-** item_assembly_worker
+    * customer_modify_worker
+    * customer_order_worker
+    * customer_test_worker
+    * item_assembly_worker
 
 
 This will continue to be updated as it continues to push forward.
