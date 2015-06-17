@@ -1,34 +1,34 @@
 == README
 
+This application is being created to communicate with any open quickbooks connection. You will need to start by downloading the original QWC file. Then you can use the workers created here, and reference the QBWC gem. This is still in BETA and hasn't been fully completed yet.
+
 == Comment Rule
 
-* <> Needs to be resolved
+* Comments that need to be resolved look like:
 
-  <code># <>Need to correct formula here.</code>
+  <tt># <>Need to correct formula here.</tt>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+== Enable Workers
 
-Things you may want to cover:
+You need to list the name, true flag for running job, <tt>''</tt> to enable open QB and the name of your worker.
 
-* Ruby version
+<tt>QBWC.add_job(:list_customers, true, '', CustomerTestWorker)</tt>
+
+== General Requirements
+
+* Ruby version - Currently works on Ruby 2.2.2
+
+* Rails version - Currently works on 4.2.1
 
 * System dependencies
+** Requires QBWC gem
+** Requires Simple Form
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Workers
+** customer_modify_worker
+** customer_order_worker
+** customer_test_worker
+** item_assembly_worker
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+This will continue to be updated as it continues to push forward.
