@@ -4,15 +4,21 @@ This application is being created to communicate with any open quickbooks connec
 
 == Comment Rule
 
-* Comments that need to be resolved look like:
+* Issues that need to be resolved are flagged <tt><></tt>:
 
-  <tt># <>Need to correct formula here.</tt>
+  <tt># <> Need to correct formula here.</tt>
 
 == Enable Workers
 
 You need to list the name, true flag for running job, <tt>''</tt> to enable open QB and the name of your worker.
 
 <tt>QBWC.add_job(:list_customers, true, '', CustomerTestWorker)</tt>
+
+== Download QWC file
+
+You will need to visit this on your localhost, once you have launched your rails server.
+
+    http://www.localhost:3000/qbwc/qwc
 
 == General Requirements
 
@@ -21,14 +27,14 @@ You need to list the name, true flag for running job, <tt>''</tt> to enable open
 * Rails version - Currently works on 4.2.1
 
 * System dependencies
-    * Requires QBWC gem
-    * Requires Simple Form
+    Requires QBWC gem
+    Requires Simple Form
 
 * Workers
-    * customer_modify_worker
-    * customer_order_worker
-    * customer_test_worker
-    * item_assembly_worker
+    customer_modify_worker
+    customer_order_worker
+    customer_test_worker
+    item_assembly_worker
 
 
 This will continue to be updated as it continues to push forward.
