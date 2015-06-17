@@ -1,5 +1,9 @@
 == README
 
+* Comment Rule
+  <> Needs to be resolved
+  ex. <code># <>Need to correct formula here.</code>
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

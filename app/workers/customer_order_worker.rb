@@ -56,53 +56,34 @@ class CustomerOrderWorker < QBWC::Worker
             qb_cus['sales_order_line_ret'].each do |li|
                 
                 lineitem_data[:order_id] = @order.id
-#                li['item_ref']['full_name'] if li['item_ref']
-#                Rails.logger.info(qb_cus)
-#                Rails.logger.info("------------ NEXT -----------")
-#                Rails.logger.info("Item Ref (single), " + li['item_ref'])
-                    
-                    #####_<<<<<<< Need to fix List_Id ref #######
-                    
+    
+#                This will weed out wether or not item_ref has a value
+                li['item_ref']['full_name'] if li['item_ref']
+                lineitem_data[:description] = li['item_ref']['full_name']
                 
+#                Figure out if item_ref is empty
                 listid = li['item_ref']['list_id'] if li['item_ref']    
+                
+#                does the line_item id match the item field?
                 if Item.find_by(list_id: listid).present?
                     lineitem_data[:product_id] = Item.find_by(list_id:                            listid).id
+#                It doesn't match, or isn't an inventory item, add it to other
                 else
+#                    79 represents an other item
                     lineitem_data[:product_id] = 79
                 end
                     
+#                make sure that there is a quantity before adding to database
                 lineitem_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
+                
+#                does this lineitem have an amount?
                 lineitem_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
+#                Create a lineitem entry for the variables above.
+#                <>Need to add fields that check to see if this order already exsits
                 @lineitem = LineItem.create(lineitem_data)
+            
             end
-#        qb_cus['sales_order_line_group_ret']['full_name']
-#            lineitem_data[:qty] = qb_cus['sales_order_line_group_ret']['quantity']
-#            
-##            if qb_cus['bill_address']
-##                order_data[:address] = qb_cus['bill_address']['addr1']
-##                order_data[:address2] = qb_cus['bill_address']['addr2']
-##                order_data[:city] = qb_cus['bill_address']['city']
-##                order_data[:state] = qb_cus['bill_address']['state']
-##                order_data[:zip] = qb_cus['bill_address']['postal_code']
-##            end
-#            
-#           
-           
-#            order = Order.find_by c_qbid: order_data[:c_qbid]
-#            if order.blank?
-#                Order.create(order_data)
-#            elsif order.updated_at > order.created_at
-#                order.update(c_edit: order_data[:c_edit])
-#            else order.updated_at = order.created_at
-#                order.update(c_edit: order_data[:c_edit])
-#                Rails.logger.info("Customer info is the same")
-#            end
-#            Rails.logger.info(order_data[:c_name] + " @ " + order_data[:c_date])
         end
-    
-      
- end
-
-    
+    end
 end
