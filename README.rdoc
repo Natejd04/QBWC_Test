@@ -7,7 +7,10 @@ This application is being created to communicate with any open quickbooks connec
 * Issues that need to be resolved are flagged <tt><></tt>:
 
   <tt># <> Need to correct formula here.</tt>
-  <tt># ** Need to make decision before production server </tt>
+
+* Changes that need to be made prior to production are flagged <tt>**</tt>: 
+ 
+  <tt># ** Need to make decision before production mode </tt>
 
 == Download QWC file
 
