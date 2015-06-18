@@ -12,7 +12,7 @@ QBWC.configure do |c|
   # multiple company files.
    #c.authenticator = Proc.new{|username, password|
   #   # qubert can access Oceanic
-    # next "D:\\SharedQB\\ZingBars2013.QBW" if username == "nate" && password == "93WDwuTS"
+    # next "D:\\SharedQB\\ZingBars2013.QBW" if username == "nate" && password == "******"
      # quimby can access Veridian   
      #next "C:\\QuickBooks\\Veridian.QBW" if username == "quimby" && password == "bethany"
   #   # no one else has access
@@ -26,7 +26,7 @@ QBWC.configure do |c|
    }
 
   # QBXML version to use. Check the "Implementation" column in the QuickBooks Onscreen Reference to see which fields are supported in which versions. Newer versions of QuickBooks are backwards compatible with older QBXML versions.
-  c.min_version = "7.0"
+  c.min_version = "10.0"
   
   # Quickbooks type (either :qb or :qbpos).
   c.api = :qb
