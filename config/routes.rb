@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'admin' => 'orders#admin'
   
   resources :items
+  resources :sites
     
 #  delete 'docs/:id'
   # The priority is based upon order of creation: first created -> highest priority.
