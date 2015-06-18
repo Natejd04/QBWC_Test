@@ -7,7 +7,8 @@ class ItemSiteWorker < QBWC::Worker
     def requests(job)
         {
             :inventory_site_query_rq => {
-                :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" }
+                :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
+                :max_returned => 100
             }
         }
     end
