@@ -18,6 +18,18 @@ class ItemsController < ApplicationController
     def index
         @item = Item.all
     end
+    
+    def edit
+      @item = Item.find(params[:id])
+    end
+    
+    def update
+      @items = Item.find(params[:id])
+      @items.update(items_params)
+        redirect_to @items
+    end
+
+    
 end
 
     private

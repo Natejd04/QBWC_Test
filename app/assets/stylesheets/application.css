@@ -66,15 +66,39 @@ form, div {
 th {
     background-color: beige;   
 }
-
-.name a {
+.name {
     font-size: 20px;
-    color: cornflowerblue;
-    text-decoration: none;
     font-weight: bold;
 }
+.name a {
+    color: cornflowerblue;
+    text-decoration: none;
+}
 
-.order {
-    width:50%;
+.order-left {
+    float: left;
+    width:28%;
     padding:1%;
+}
+.order-right {
+    float: left;
+    width: 68%;
+    padding: 1%;
+}
+.order-table {
+    float: left;
+    width:100%;
+    padding:1%;
+}
+.code {
+    color: crimson;
+    font-size: 18px;
+}
+.inv table {
+    width: 100%;
+}
+.inv td{
+  padding: 1%;
+    width: 4%;
+  border: aliceblue solid 3px
 }

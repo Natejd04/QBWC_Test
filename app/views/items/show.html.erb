@@ -1,0 +1,9 @@
+<h2>Item Detail</h2>
+<span class="code">Code: <%= @item.code %><br /></span>
+Name: <%= @item.name %><br />
+Description: <%= @item.description %><br />
+QOH: <%= @item.qty %><br />
+PackSize: <%= @item.packsize %><br />
+Unit: <%= @item.unit %><br />
+
+<p><%= link_to "Edit", edit_item_path %></p>

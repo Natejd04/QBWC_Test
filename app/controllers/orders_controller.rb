@@ -46,7 +46,13 @@ class OrdersController < ApplicationController
 #      If you are a WDS user, you only see the WDS page.
 #      This is not quite what I am looking for, this means I will need three
 #      template pages, one for each location and an admin (all) view. 
-      @orders = Order.all.order "id ASC"
+      @orders = Order.where('c_via=? OR c_via=?', 'LTL from WDS', 'UPS from WDS')
+      @order_zing = Order.where('c_via=? OR c_via=?', 'UPS from Zing', 'USPS from Zing')
+      @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART')
+      
+#      Now we need to grab the inventory data
+      @inventory_master = Item.where(unit: "Master")
+      @inventory_caddie = Item.where(unit: "Caddie")
   end
     
   def edit

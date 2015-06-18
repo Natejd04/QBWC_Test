@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613232815) do
+ActiveRecord::Schema.define(version: 20150617213859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,9 @@ ActiveRecord::Schema.define(version: 20150613232815) do
     t.integer  "qty"
     t.float    "amount"
     t.string   "product_name"
+    t.string   "description"
+    t.string   "site_id"
+    t.string   "site_name"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -87,6 +90,9 @@ ActiveRecord::Schema.define(version: 20150613232815) do
     t.string   "c_invoiced"
     t.string   "c_closed"
     t.string   "c_template"
+    t.string   "c_ship3"
+    t.string   "c_ship4"
+    t.string   "c_ship5"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|

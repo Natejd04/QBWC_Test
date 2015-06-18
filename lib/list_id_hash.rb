@@ -1,3 +1,5 @@
+#This should be it's own gem. 
+#Tim Heuett helped create a way to hash strings into integers for id's and back
 module ListIdHash
    def self.hash_id(string)
        string.each_char.inject("") do |memo, char|

@@ -1,5 +1,73 @@
-<h1>Hello this is the orders page</h1>
-<% @orders.each do |order| %>
-<%= order.id %> .  
-<%= link_to order.c_name, order %><br />
-<% end %>
+<table class="inv">
+    <th colspan="16">Masters - All Locations</th>
+    <tr>
+    <% @inventory_master.each do |mast| %>
+        <td>
+            <%= mast.code %><br />
+            <%= number_with_precision(mast.qty, precision: 2) %>
+        </td>
+    <% end %>    
+    </tr>
+</table>
+
+<h3>Ship from WDS</h3>
+<% i=0 %>
+
+<table>
+    <th></th>
+    <th>Customer</th>
+    <th>Ship Date</th>
+    <th>Shipping Method</th>
+    <th>Attachment</th>
+    <th>Acknowledged</th>
+    <% @orders.each do |order| %>
+    <tr>
+        <td><%= i = i+1 %> .  </td>
+        <td><%= link_to order.c_name, order %><br /></td>
+        <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
+        <td><%= order.c_via %></td>
+        <td><%= link_to "Download", order.docs.url(:docs, false) %></td>
+        <td><%= order.c_ack %></td>
+        <% end %>
+    </tr>
+</table>
+
+<h3>Ship From Zing</h3>
+<table>
+    <th></th>
+    <th>Customer</th>
+    <th>Ship Date</th>
+    <th>Shipping Method</th>
+    <th>Attachment</th>
+    <th>Acknowledged</th>
+    <% @order_zing.each do |order| %>
+    <tr>
+        <td><%= i = i+1 %> .  </td>
+        <td><%= link_to order.c_name, order %><br /></td>
+        <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
+        <td><%= order.c_via %></td>
+        <td><%= link_to "Download", order.docs.url(:docs, false) %></td>
+        <td><%= order.c_ack %></td>
+        <% end %>
+    </tr>
+</table>
+
+<h3>Ship From ART</h3>
+<table>
+    <th></th>
+    <th>Customer</th>
+    <th>Ship Date</th>
+    <th>Shipping Method</th>
+    <th>Attachment</th>
+    <th>Acknowledged</th>
+    <% @order_art.each do |order| %>
+    <tr>
+        <td><%= i = i+1 %> .  </td>
+        <td><%= link_to order.c_name, order %><br /></td>
+        <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
+        <td><%= order.c_via %></td>
+        <td><%= link_to "Download", order.docs.url(:docs, false) %></td>
+        <td><%= order.c_ack %></td>
+        <% end %>
+    </tr>
+</table>

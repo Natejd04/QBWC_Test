@@ -1,0 +1,24 @@
+<h1>ID:<%= @item.id %></h1>
+
+<%= simple_form_for @item, url: item_path do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <br />
+   
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+    <br />
+    <%= f.label :code %>
+    <%= f.text_field :code %>
+    <br />
+    <%= f.label :unit %>
+    <%= f.text_field :unit %>
+    <br />
+    <%= f.label :packsize %>
+    <%= f.text_field :packsize %>
+    <br />
+    <%= f.input :qty, as: :integer %>
+        
+<%= f.submit "Save Changes" %>
+<% end %>
+

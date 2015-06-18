@@ -42,6 +42,9 @@ class CustomerOrderWorker < QBWC::Worker
             order_data[:c_class] = qb_cus['class_ref'].nil? ? nil : qb_cus['class_ref']['full_name']
             order_data[:c_ship1] = qb_cus['ship_address']['addr1']
             order_data[:c_ship2] = qb_cus['ship_address']['addr2']
+            order_data[:c_ship3] = qb_cus['ship_address']['addr3']
+            order_data[:c_ship4] = qb_cus['ship_address']['addr4']
+            order_data[:c_ship5] = qb_cus['ship_address']['addr5']
             order_data[:c_shipcity] = qb_cus['ship_address']['city']
             order_data[:c_shipstate] = qb_cus['ship_address']['state']
             order_data[:c_shippostal] = qb_cus['ship_address']['postal_code']
@@ -63,8 +66,8 @@ class CustomerOrderWorker < QBWC::Worker
                 lineitem_data[:order_id] = @order.id
     
 #                This will weed out wether or not item_ref has a value
-                li['item_ref']['full_name'] if li['item_ref']
-                lineitem_data[:description] = li['item_ref']['full_name']
+                lineitem_data[:description] = li['item_ref']['full_name'] if li['item_ref']
+#                lineitem_data[:description] = li['item_ref']['full_name']
                 
 #                Figure out if item_ref is empty
                 listid = li['item_ref']['list_id'] if li['item_ref']    
@@ -78,6 +81,11 @@ class CustomerOrderWorker < QBWC::Worker
                     lineitem_data[:product_id] = 79
                 end
                     
+#                need to assign all items a site
+#                ** site ref doesn't work. eliminate and work of ship location
+#                lineitem_data[:site_id] = li['inventory_site_ref']['list_id']
+#                lineitem_data[:site_name] = li['inventory_site_location_ref']['full_name'] if li['inventory_site_ref'] 
+                
 #                make sure that there is a quantity before adding to database
                 lineitem_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                 
