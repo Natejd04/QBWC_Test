@@ -1,37 +1,44 @@
 require 'qbwc'
 
-#    <> This Worker isn't functioning, for some reason. Parsing XML error?
+#   We will use this to pull site location data.
 
 class ItemSiteWorker < QBWC::Worker
-
+#    You cannot use iterator above Qbxml7.0, forced QBxml10.0
     def requests(job)
         {
             :inventory_site_query_rq => {
-                :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 100
+                :xml_attributes => { "requestID" =>"1" }
             }
         }
     end
 
     def handle_response(r, session, job, request, data)
-        # handle_response will get customers in groups of 100. When this is 0, we're done.
-        complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-
-#        we will loop through each item and insert it into the Items table.
+#        We will loop through each item and insert it into the Site table.
 #        <> ideally fix this so that it only updates, when a new item is added
-        r['inventory_site_query_rs'].each do |qb_item|
+        r['inventory_site_ret'].each do |qb_item|
 #            Rails.logger.info("the start")
-            item = {}
-#            item_data[:list_id] = qb_item['list_id']
-#            item_data[:edit_sq] = qb_item['edit_sequence']
-#            item_data[:name] = qb_item['name']
-#            item_data[:description] = qb_item['full_name']
-#            item_data[:qty] = qb_item['quantity_on_hand'].to_f
-             item = qb_item['txn_id']   
-##                create the item record
-#                Item.create(item_data)
-        
-#        
+            site = {}
+            site[:list_id] = qb_item['list_id']
+            site[:edit_sq] = qb_item['edit_sequence']
+            site[:name] = qb_item['name']
+            site[:description] = qb_item['site_desc']
+            site[:contact] = qb_item['contact']
+            site[:phone] = qb_item['phone']
+            site[:email] = qb_item['email']
+            site[:address] = qb_cus['site_address']['addr1']
+            site[:address2] = qb_cus['site_address']['addr2']
+            site[:address3] = qb_cus['site_address']['addr3']
+            site[:address4] = qb_cus['site_address']['addr4']
+            site[:address5] = qb_cus['site_address']['addr5']
+            site[:city] = qb_cus['site_address']['city']
+            site[:state] = qb_cus['site_address']['state']
+            site[:postal] = qb_cus['site_address']['postal_code']
+             
+            site = Site.find_by list_id: site[:list_id]
+#             if site doesn't exist create the site record
+             if site.blank?
+                Site.create(site)
+             end
         end
     end
 end
