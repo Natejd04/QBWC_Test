@@ -3,12 +3,13 @@
     <tr>
     <% @inventory_master.each do |mast| %>
         <td>
-            <%= mast.code %><br />
+            <%= mast.item.code %><br />
             <%= number_with_precision(mast.qty, precision: 2) %>
         </td>
     <% end %>    
     </tr>
 </table>
+
 
 <h3>Ship from WDS</h3>
 <% i=0 %>

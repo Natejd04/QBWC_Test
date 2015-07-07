@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618201000) do
+ActiveRecord::Schema.define(version: 20150624054720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,15 @@ ActiveRecord::Schema.define(version: 20150618201000) do
     t.string   "pending_jobs", limit: 1000, default: "", null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+  end
+
+  create_table "site_inventories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "qty"
+    t.float    "qty_so"
+    t.integer  "site_id"
+    t.integer  "item_id"
   end
 
   create_table "sites", force: :cascade do |t|

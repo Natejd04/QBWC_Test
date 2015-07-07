@@ -1,0 +1,7 @@
+<h1>Current Sites</h1>
+<% @siteinv.each do |inv| %>
+    <%= inv.id %> .      
+    <%= inv.item.code %> | <%= inv.qty %> | <%= inv.site.name %>
+    <br />
+    
+<% end %>

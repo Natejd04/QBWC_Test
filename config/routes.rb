@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   
   resources :items
   resources :sites
+  resources :site_inventories
     
 #  delete 'docs/:id'
   # The priority is based upon order of creation: first created -> highest priority.
