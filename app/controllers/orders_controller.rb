@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
       @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART')
       
 #      Now we need to grab the inventory data
-      @inventory_master = Site.where(id: 20)
+      @inventory_master = SiteInventory.where(site_id: 20)
       @inventory_caddie = Item.where(unit: "Caddie")
   end
     

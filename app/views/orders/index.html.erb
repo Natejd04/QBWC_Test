@@ -1,11 +1,13 @@
 <table class="inv">
-    <th colspan="16">Masters - All Locations</th>
+    <th colspan="16">Masters/Caddies - WDS</th>
     <tr>
     <% @inventory_master.each do |mast| %>
-        <td>
-            <%= mast.item.code %><br />
-            <%= number_with_precision(mast.qty, precision: 2) %>
-        </td>
+        <% if !mast.item.code.nil? and !mast.qty.nil? %>
+            <td>
+                <%= mast.item.code %><br />
+                <%= number_with_precision(mast.qty, precision: 2) %>
+            </td>
+        <% end %>
     <% end %>    
     </tr>
 </table>
