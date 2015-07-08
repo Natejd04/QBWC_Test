@@ -51,7 +51,8 @@ class OrdersController < ApplicationController
       @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART')
       
 #      Now we need to grab the inventory data
-      @inventory_master = SiteInventory.where(site_id: 20)
+#      Thanks to @timhugh for coming up with the map solution to this. 
+      @inventory_master = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
       @inventory_caddie = Item.where(unit: "Caddie")
   end
     
