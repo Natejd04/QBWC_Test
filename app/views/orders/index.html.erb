@@ -2,13 +2,23 @@
     <th colspan="16">Masters/Caddies - WDS</th>
     <tr>
     <% @inventory_master.each do |mast| %>
-        <% if !mast.item.code.nil? and !mast.qty.nil? %>
+        <% if !mast.item.code.nil? and mast.item.unit == "Master" %>
             <td>
                 <%= mast.item.code %><br />
                 <%= number_with_precision(mast.qty, precision: 2) %>
             </td>
         <% end %>
     <% end %>    
+    </tr>
+    <tr>
+    <% @inventory_master.each do |mast| %>
+        <% if mast.item.unit == "Caddie" %>
+            <td>   
+                <%= mast.item.code %><br />
+                <%= number_with_precision(mast.qty, precision: 2) %>
+            </td>
+        <% end %>
+    <% end %>
     </tr>
 </table>
 
