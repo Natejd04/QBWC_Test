@@ -1,24 +1,10 @@
 <table class="inv">
     <th colspan="16">Masters/Caddies - WDS</th>
     <tr>
-    <% @inventory_master.each do |item, qty| %>
-        <% if !item.code.nil? and item.unit == "Master" %>
-            <td>
-                <%= item.code %><br />
-                <%= number_with_precision(qty, precision: 2) %>
-            </td>
-        <% end %>
-    <% end %>    
+        <%= render :partial => 'wdsmast' %> 
     </tr>
     <tr>
-    <% @inventory_master.each do |item, qty| %>
-        <% if item.unit == "Caddie" %>
-            <td>   
-                <%= item.code %><br />
-                <%= number_with_precision(qty, precision: 2) %>
-            </td>
-        <% end %>
-    <% end %>
+        <%= render :partial => 'wdscad' %>
     </tr>
 </table>
 

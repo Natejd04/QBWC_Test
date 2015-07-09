@@ -53,7 +53,6 @@ class OrdersController < ApplicationController
 #      Now we need to grab the inventory data
 #      Thanks to @timhugh for coming up with the map solution to this. 
       @inventory_master = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
-      @inventory_caddie = Item.where(unit: "Caddie")
   end
     
   def edit

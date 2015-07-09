@@ -1,0 +1,8 @@
+    <% @inventory_master.each do |item, qty| %>
+        <% if !item.code.nil? and item.unit == "Master" %>
+            <td>
+                <%= item.code %><br />
+                <%= number_with_precision(qty, precision: 2) %>
+            </td>
+        <% end %>
+    <% end %>   
