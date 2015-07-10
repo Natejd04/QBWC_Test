@@ -8,7 +8,7 @@ class CustomerTestWorker < QBWC::Worker
         {
             :customer_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 50
+                :max_returned => 100
             }
         }
     end
@@ -30,6 +30,16 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:state] = qb_cus['bill_address']['state']
                 customer_data[:zip] = qb_cus['bill_address']['postal_code']
             end
+            if qb_cus['ship_address']
+                customer_data[:ship_address] = qb_cus['ship_address']['addr1']
+                customer_data[:ship_address2] = qb_cus['ship_address']['addr2']
+                customer_data[:ship_address3] = qb_cus['ship_address']['addr3']
+                customer_data[:ship_address4] = qb_cus['ship_address']['addr4']
+                customer_data[:ship_address5] = qb_cus['ship_address']['addr5']
+                customer_data[:ship_city] = qb_cus['ship_address']['city']
+                customer_data[:ship_state] = qb_cus['ship_address']['state']
+                customer_data[:ship_zip] = qb_cus['ship_address']['postal_code']
+            end
             customer = Customer.find_by listid: customer_data[:listid]
             
 #            if customer doesn't exist create record.
@@ -38,12 +48,12 @@ class CustomerTestWorker < QBWC::Worker
             
 #           was the customer updated after created, if so we need a new edit_sq
 #            <> ideally if we can get updated in QB, then we could check updated in QB vs. Update in database and preform accurately.
-            elsif customer.updated_at > customer.created_at
-                customer.update(edit_sq: customer_data[:edit_sq])
-            
+#            elsif customer.updated_at > customer.created_at
+#                customer.update(edit_sq: customer_data[:edit_sq])
+#            
 #            if the customer update and created are the same, let's update edit sequence anyways. 
-            else customer.updated_at = customer.created_at
-                customer.update(edit_sq: customer_data[:edit_sq])
+            else 
+                customer.update(customer_data)
                 Rails.logger.info("Customer info is the same")
             end
         end
