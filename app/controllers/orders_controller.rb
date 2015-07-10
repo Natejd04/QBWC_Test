@@ -20,16 +20,8 @@ class OrdersController < ApplicationController
 #    end
       
 #      I am meant to be used for single upload, working
-#    binding.pry
       @order = Order.create(order_params)
-      @qty = params[:qty].to_i
-    
-      @product = params[:order][:item_ids][1]
-            LineItem.create(qty: @qty, order_id: @order.id, product_id:                        @product)
-                @item = Item.find(@product)
-                    @item.update(qty: @item.qty - @qty)
-      redirect_to :action => :index
-      
+      redirect_to :action => :index      
   end
 
   def delete_docs
@@ -74,8 +66,9 @@ class OrdersController < ApplicationController
 
   def new
       @order = Order.new
+      10.times {@order.line_items.build}
       @customers = Customer.all
-      @items = Item.all
+      @items = Item.where("code IS NOT ?", nil)
   end
       
   def download
@@ -99,6 +92,10 @@ class OrdersController < ApplicationController
   private
     
   def order_params
-      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id)
+      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id, line_items_attributes: [ :product_id, :order_id, :qty ])
+  end
+
+  def line_item_params
+      params.require(:line_item).permt(:product_id, :order_id, :qty)
   end
 end

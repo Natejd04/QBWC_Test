@@ -4,6 +4,9 @@ class Order < ActiveRecord::Base
     has_many :items
 #    belongs_to :customer, foreign_key: "listid"
     belongs_to :customer
+    accepts_nested_attributes_for :line_items
+    
+#    this is used for the paperclip gem, in order to upload pdfs
     has_attached_file :docs, :url => "/:class/:attachment/:id/:basename.:extension", :path => ":rails_root/public/:class/:attachment/:id/:basename.:extension"
 #        :url => "/documents/:id/download"
 #    
