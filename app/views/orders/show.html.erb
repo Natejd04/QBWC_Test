@@ -22,7 +22,7 @@
     <table style="border:solid 1px black;">
         <th>ID</th><th>Product</th><th>QTY</th><th>Site</th><th>Amount</th>
         <% @order.line_items.each do |o| %>
-        <tr><td><%= link_to o.product_id, item_path(o.product_id) %></td>
+        <tr><td><%= link_to o.item_id, item_path(o.item_id) %></td>
             <td><%= o.item.description %></td>
             <td><%= o.qty %></td>
             <td><%= o.site_name %></td>

@@ -69,6 +69,7 @@ class OrdersController < ApplicationController
       10.times {@order.line_items.build}
       @customers = Customer.all
       @items = Item.where("code IS NOT ?", nil)
+      @sites = Site.all
   end
       
   def download
@@ -96,6 +97,6 @@ class OrdersController < ApplicationController
   end
 
   def line_item_params
-      params.require(:line_item).permt(:product_id, :order_id, :qty)
+      params.require(:line_item).permt(:item_id, :order_id, :qty, :site, :amount)
   end
 end

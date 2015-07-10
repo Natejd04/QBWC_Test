@@ -2,11 +2,16 @@
 <%= simple_form_for @order, url: orders_path, :html => {multipart: true} do |f| %>
 <%= f.input :docs, as: :file, :html => { multipart: true } %>
 <%= f.input :customer_id, collection: @customers, group_method: :name %>
-
+        <table>
         <%= f.simple_fields_for :line_items do |line_item| %>
-            <%= line_item.input :product_id, collection: @items, group_method: :code, value_method: :id %>
-            <%= line_item.input :qty, as: :integer %>
+            <tr>
+                <td><%= line_item.input :item_id, collection: @items, group_method: :code, value_method: :id %></td>
+                <td><%= line_item.input :qty, as: :integer %></td>
+                <td><%= line_item.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td>
+                <td><%= line_item.input :amount, as: :float %></td>
         <% end %>
+            </tr>
+                </table>
 <%= f.button :submit %>
 <% end %>
 

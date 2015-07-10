@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150624054720) do
+ActiveRecord::Schema.define(version: 20150710194320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "customers", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "address"
     t.string   "address2"
     t.string   "city"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20150624054720) do
     t.integer  "zip"
     t.string   "listid"
     t.string   "edit_sq"
+    t.string   "ship_address"
+    t.string   "ship_address2"
+    t.string   "ship_address3"
+    t.string   "ship_address4"
+    t.string   "ship_city"
+    t.string   "ship_state"
+    t.integer  "ship_zip"
   end
 
   create_table "items", force: :cascade do |t|
@@ -44,7 +51,7 @@ ActiveRecord::Schema.define(version: 20150624054720) do
 
   create_table "line_items", force: :cascade do |t|
     t.string   "order_id"
-    t.string   "product_id"
+    t.string   "item_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "qty"

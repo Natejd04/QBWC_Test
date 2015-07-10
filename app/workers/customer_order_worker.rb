@@ -74,11 +74,11 @@ class CustomerOrderWorker < QBWC::Worker
                 
 #                does the line_item id match the item field?
                 if Item.find_by(list_id: listid).present?
-                    lineitem_data[:product_id] = Item.find_by(list_id:                            listid).id
+                    lineitem_data[:item_id] = Item.find_by(list_id:                            listid).id
 #                It doesn't match, or isn't an inventory item, add it to other
                 else
 #                    79 represents an other item
-                    lineitem_data[:product_id] = 79
+                    lineitem_data[:item_id] = 79
                 end
                     
 #                need to assign all items a site
