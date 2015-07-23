@@ -1,4 +1,4 @@
-    <% @inventory_wds.each do |item, qty| %>
+    <% @inventory_zing.each do |item, qty| %>
         <% if !item.code.nil? and item.unit == "Master" %>
             <td id="<%= item.id %>">
                 <%= item.code %><br />

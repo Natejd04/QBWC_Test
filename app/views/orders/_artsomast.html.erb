@@ -1,6 +1,6 @@
-    <% @inventory_wds.each do |item, qty| %>
+    <% @inventory_so_art.each do |item, qty| %>
         <% if !item.code.nil? and item.unit == "Master" %>
-            <td id="<%= item.id %>">
+            <td>
                 <%= item.code %><br />
                 <%= number_with_precision(qty, precision: 2) %>
             </td>

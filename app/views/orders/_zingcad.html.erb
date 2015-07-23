@@ -1,6 +1,6 @@
-<% @inventory_wds.each do |item, qty| %>
+<% @inventory_zing.each do |item, qty| %>
         <% if item.unit == "Caddie" %>
-            <td>   
+            <td id="<%= item.id %>">
                 <%= item.code %><br />
                 <%= number_with_precision(qty, precision: 2) %>
             </td>

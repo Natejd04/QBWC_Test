@@ -44,8 +44,16 @@ class OrdersController < ApplicationController
       
 #      Now we need to grab the inventory data
 #      Thanks to @timhugh for coming up with the map solution to this. 
-      @inventory_master = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
-      @inventory_so_master = Hash[LineItem.uninvoiced.where(site_id: 20).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+     @inventory_wds = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
+    @inventory_art = Hash[SiteInventory.select("item_id, qty").where(site_id: 21).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]  
+    @inventory_zing = Hash[SiteInventory.select("item_id, qty").where(site_id: 22).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]  
+     
+#      These queries are to be used for sales order uninvoiced items
+      @inventory_so_wds = Hash[LineItem.uninvoiced.where(site_id: 20).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+      @inventory_so_art = Hash[LineItem.uninvoiced.where(site_id: 21).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+      @inventory_so_zing = Hash[LineItem.uninvoiced.where(site_id: 22).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+      
+      
   end
     
   def edit
@@ -85,6 +93,7 @@ class OrdersController < ApplicationController
   def wds
       authenticate_wds
       @orders = Order.where(c_class: "Wholesale Direct")
+      
   end
     
   def admin

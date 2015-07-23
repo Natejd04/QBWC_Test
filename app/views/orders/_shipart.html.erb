@@ -1,0 +1,17 @@
+<h3>Ship From ART</h3>
+<table>
+    <th>Customer</th>
+    <th>Ship Date</th>
+    <th>Shipping Method</th>
+    <th>Attachment</th>
+    <th>Acknowledged</th>
+    <% @order_art.each do |order| %>
+    <tr>
+        <td><%= link_to order.customer.name, order %><br /></td>
+        <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
+        <td><%= order.c_via %></td>
+        <td><%= link_to "Download", order.docs.url(:docs, false) %></td>
+        <td><%= order.c_ack %></td>
+        <% end %>
+    </tr>
+</table>
