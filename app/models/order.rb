@@ -5,6 +5,9 @@ class Order < ActiveRecord::Base
 #    belongs_to :customer, foreign_key: "listid"
     belongs_to :customer
     accepts_nested_attributes_for :line_items, :reject_if => :reject_blank_items
+    validates :customer_id, presence: true
+    
+    scope :uninvoiced, -> {Order.where(c_invoiced: nil)}
     
 #    this is used for the paperclip gem, in order to upload pdfs
     has_attached_file :docs, :url => "/:class/:attachment/:id/:basename.:extension", :path => ":rails_root/public/:class/:attachment/:id/:basename.:extension"
@@ -22,6 +25,9 @@ class Order < ActiveRecord::Base
       attributes[:qty].blank?
     end
     
+    def reject_no_customer(attributes)
+        attributes[:customer_id].blank?
+    end
     
 #    This was a test from SO, no succes so far
 #    before_save :destroy_doc?

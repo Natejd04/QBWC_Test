@@ -1,0 +1,92 @@
+<!-- I work as a single upload -->
+<%= simple_form_for @order, url: orders_path, :html => {multipart: true} do |f| %>
+<%= f.input :docs, as: :file, :html => { multipart: true } %>
+<%= f.input :customer_id, collection: @customers, group_method: :name %>
+<%= f.input :c_date, as: :date, label: "Date:", order: [:month, :day, :year] %>
+<%= f.input :c_ship, as: :date, label: "Ship Date:", order: [:month, :day, :year] %>
+<%= f.input :c_deliver, as: :date, label: "Delivery Date:", order: [:month, :day, :year] %>
+<%= f.input :c_via, collection: ["UPS from Zing", "UPS from ART", "UPS from WDS", "FedEx from Zing", "FedEx from ART", "FedEx from WDS", "LTL from ART", "LTL from WDS", "Pickup at ART", "Pickup at WDS"], label: "Ship Via" %>
+
+<div id="shipping-address"></div>
+<div id="shipping-address-dynamic"class="order-right" style="display:none;">
+    <u>Shipping Address</u><br />
+    <span class="name"><%= f.input :c_ship1, label: false %><br /></span>
+        <%= f.input :c_ship2, label: false%>
+         <%= f.input :c_ship3, label: false %>
+         <%= f.input :c_ship4, label: false %>
+         <%= f.input :c_ship5, label: false %>
+        <%= f.input :c_shipcity, label: false %>
+        <%= f.input :c_shipstate, label: false %> 
+        <%= f.input :c_shippostal, label: false %>
+</div>
+<button id="shipping-address-button">Edit Ship</button>
+
+        <table>
+        <%= f.simple_fields_for :line_items do |line_item| %>
+            <tr>
+                <td><%= line_item.input :item_id, collection: @items, group_method: :code, value_method: :id %></td>
+                <td><%= line_item.input :qty, as: :integer %></td>
+                <td><%= line_item.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td>
+                <td><%= line_item.input :amount, as: :float %></td>
+        <% end %>
+            </tr>
+                </table>
+<%= f.input :c_total, id: 'total-amount', label: "Total:" %>
+<%= f.button :submit %>
+<% end %>
+
+<!-- I don't work quite yet -->
+<!-- ** Commented Out - for Multiple uploads
+<%= form_for @order, url: orders_path, :html => { multipart: true } do |f| %>
+<%= file_field_tag "docs[]", type: :file, multiple: true %>
+<%= f.submit nil %>
+<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        orders_path %>
+<% end %>
+
+-->
+
+<div id="jquery_enter"></div>
+<script>
+    $(function() { 
+       
+        
+    });
+    $('.order_line_items_amount').change(function() {
+            SumAmount();
+        });
+    
+    $('#shipping-address-button').on("click", function(e) {
+        e.preventDefault();
+        $('#shipping-address-dynamic').toggle();
+        $('#shipping-address').toggle();
+    });
+                                        
+                    $('#order_customer_id').change(function(event){
+                        $.get(
+      '/customer_details',
+      {id: $(event.target).val()},
+      function(response) {
+      });
+                });        
+
+function SumAmount () {
+    var fields = (-1 + $('.order_line_items_amount').length);
+    var sum = 0;
+    var amount = 0;
+        while (fields > -1) {
+                        
+                    amount = $("#order_line_items_attributes_" +fields+"_amount").val();
+            if (typeof amount === "undefined" || amount === "") {
+                amount = 0 
+                }
+                else
+                {
+                    sum = parseFloat(sum) + parseFloat(amount);
+                }
+                fields = parseInt(fields-1);    
+            }
+        $('#order_c_total').val(sum);
+    }
+                    
+    </script>

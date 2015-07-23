@@ -38,13 +38,14 @@ class OrdersController < ApplicationController
 #      If you are a WDS user, you only see the WDS page.
 #      This is not quite what I am looking for, this means I will need three
 #      template pages, one for each location and an admin (all) view. 
-      @orders = Order.where('c_via=? OR c_via=?', 'LTL from WDS', 'UPS from WDS')
-      @order_zing = Order.where('c_via=? OR c_via=?', 'UPS from Zing', 'USPS from Zing')
-      @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART')
+      @orders = Order.where('c_via=? OR c_via=?', 'LTL from WDS', 'UPS from WDS').where(c_invoiced: nil)
+      @order_zing = Order.where('c_via=? OR c_via=?', 'UPS from Zing', 'USPS from Zing').where(c_invoiced: nil)
+      @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART').where(c_invoiced: nil)
       
 #      Now we need to grab the inventory data
 #      Thanks to @timhugh for coming up with the map solution to this. 
-      @inventory_master = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
+      @inventory_master = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
+      @inventory_so_master = Hash[LineItem.uninvoiced.where(site_id: 20).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
   end
     
   def edit
@@ -90,13 +91,17 @@ class OrdersController < ApplicationController
       authenticate_admin
   end
     
+  def customer_details
+      @cust = Customer.find(params[:id])
+      respond_to do |format|
+          format.js
+      end
+  end
+    
   private
     
   def order_params
-      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id, line_items_attributes: [ :product_id, :order_id, :qty ])
+      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, line_items_attributes: [ :item_id, :order_id, :qty, :amount, :site_id ])
   end
 
-  def line_item_params
-      params.require(:line_item).permt(:item_id, :order_id, :qty, :site, :amount)
-  end
 end

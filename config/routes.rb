@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   resources :sites
   resources :site_inventories
     
+  get '/customer_details' => 'orders#customer_details'
+    
 #  delete 'docs/:id'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

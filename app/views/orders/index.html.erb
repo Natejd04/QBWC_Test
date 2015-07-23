@@ -6,6 +6,9 @@
     <tr>
         <%= render :partial => 'wdscad' %>
     </tr>
+    <tr>
+        <%= render :partial => 'wdssomast' %>
+    </tr>
 </table>
 
 
@@ -22,7 +25,7 @@
     <% @orders.each do |order| %>
     <tr>
         <td><%= i = i+1 %> .  </td>
-        <td><%= link_to order.c_name, order %><br /></td>
+        <td><%= link_to order.customer.name, order %><br /></td>
         <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
         <td><%= order.c_via %></td>
         <td><%= link_to "Download", order.docs.url(:docs, false) %></td>
@@ -42,7 +45,7 @@
     <% @order_zing.each do |order| %>
     <tr>
         <td><%= i = i+1 %> .  </td>
-        <td><%= link_to order.c_name, order %><br /></td>
+        <td><%= link_to order.customer.name, order %><br /></td>
         <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
         <td><%= order.c_via %></td>
         <td><%= link_to "Download", order.docs.url(:docs, false) %></td>
@@ -62,7 +65,7 @@
     <% @order_art.each do |order| %>
     <tr>
         <td><%= i = i+1 %> .  </td>
-        <td><%= link_to order.c_name, order %><br /></td>
+        <td><%= link_to order.customer.name, order %><br /></td>
         <td><%= order.c_ship.strftime("%m/%d/%Y") %></td>
         <td><%= order.c_via %></td>
         <td><%= link_to "Download", order.docs.url(:docs, false) %></td>

@@ -1,5 +1,5 @@
 <div class="order-left">
-    <span class="name"><%= link_to @order.c_name, customer_path(@order.customer.id) %><br /></span>
+    <span class="name"><%= link_to @order.customer.name, customer_path(@order.customer.id) %><br /></span>
     ID: <%= @order.id %><br />
     Date: <%= @order.c_date.strftime("%m/%d/%Y") if @order.c_date %><br />
     Memo Field: <%= @order.c_memo %><br />
