@@ -2,7 +2,27 @@
         <% if !item.code.nil? and item.unit == "Master" %>
             <td>
                 <%= item.code %><br />
-                <%= number_with_precision(qty, precision: 2) %>
+                <div id="<%= item.id %>">
+                    <%= number_with_precision(qty, precision: 2) %>
+                </div>
             </td>
         <% end %>
     <% end %>   
+</tr>
+<tr id="art_so_total">
+     <% @inventory_so_art.each do |item, qty| %>
+        <% if item.unit == "Master" %>    
+            <td id="<%= item.id %>">
+                <%= item.code %><br />
+                <div id="<%= item.id %>"></div>
+            </td>
+        <% end %>
+    <% end %>
+<script>
+    $('#art_so > td > div').each(function() {
+        var id = $(this).attr("id");
+        var so = $('#art_so >> #' + id).text();
+        var inv = $('#art >> #'+ id).text();
+        $('#art_so_total >> #'+ id).html(parseFloat(inv) - parseFloat(so));
+    });
+</script>   

@@ -1,8 +1,29 @@
     <% @inventory_so_wds.each do |item, qty| %>
         <% if !item.code.nil? and item.unit == "Master" %>    
+            <td>
+                <%= item.code %>
+                    <div id="<%= item.id %>">
+                        <%= number_with_precision(qty, precision: 2) %>
+                    </div>
+            </td>
+        <% end %>
+    <% end %>  
+</tr>
+<tr id="wds_so_total">
+    <% @inventory_so_wds.each do |item, qty| %>
+        <% if item.unit == "Master" %>    
             <td id="<%= item.id %>">
                 <%= item.code %><br />
-                <%= number_with_precision(qty, precision: 2) %>
+                <div id="<%= item.id %>"></div>
             </td>
         <% end %>
     <% end %>   
+
+<script>
+    $('#wds_so > td > div').each(function() {
+        var id = $(this).attr("id");
+        var so = $('#wds_so >> #' + id).text();
+        var inv = $('#wds >> #'+ id).text();
+        $('#wds_so_total >> #'+ id).html(parseFloat(inv) - parseFloat(so));
+    });
+</script>

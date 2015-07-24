@@ -57,7 +57,10 @@ class OrdersController < ApplicationController
   end
     
   def edit
-      @docs = Order.find(params[:id])
+      @order = Order.find(params[:id])
+      @customers = Customer.all
+      @items = Item.where("code IS NOT ?", nil)
+      @sites = Site.all
   end
     
   def update

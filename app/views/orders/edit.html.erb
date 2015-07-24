@@ -1,17 +1,1 @@
-<p><span>
-<% if @docs.docs_file_name.nil?  %>
-No Files, Please Add One Below
-<p>
-<%= simple_form_for @docs, url: order_path do |f| %>
-<%= f.input :docs, as: :file %>
-<%= f.button :submit %>
-<% end %>    
-</p>
-<% else %>
-    <%= simple_form_for @docs, url: order_path do |f| %>
-    <%= @docs.docs_file_name %>
-    <%= f.check_box :remove_docs, :checked => false %> Remove 
-    <%= f.button :submit %>
-    <% end %>    
-<% end %>
-</span></p>
+<%= render :partial => 'salesorderedit' %>
