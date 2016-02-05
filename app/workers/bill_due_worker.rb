@@ -10,7 +10,7 @@ class BillDueWorker < QBWC::Worker
             :bill_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 10,
-                :txn_date_range_filter => { "from_txn_date" => "2016-01-01", "to_txn_date" => "2016-02-20"}
+                :txn_date_range_filter => { "from_txn_date" => "2015-10-01", "to_txn_date" => "2016-02-20"}
             }
         }
     end
