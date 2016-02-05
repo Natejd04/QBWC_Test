@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ref_number: MyString
+  full_name: MyString
+  txt_date: MyString
+  due_date: MyString
+  amount_due: MyString
+
+two:
+  ref_number: MyString
+  full_name: MyString
+  txt_date: MyString
+  due_date: MyString
+  amount_due: MyString

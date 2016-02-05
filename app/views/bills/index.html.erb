@@ -1,0 +1,9 @@
+<h1>Current Bills</h1>
+<table>
+	<th>Vendor Name</th><th>Due Date</th><th>Amount</th><th>Memo</th>
+<% @billsdue.each do |bi| %>
+      <tr>
+       <td><%= bi.name %></td><td><%= bi.due_date %></td><td><%= bi.amount_due %></td>
+   </tr>
+<% end %>
+</table>
