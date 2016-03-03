@@ -37,8 +37,17 @@ class InvSiteWorker < QBWC::Worker
                 site[:postal] = qb_item['site_address']['postal_code']
             end
             
-##             <> need to make this so it won't add unless new sites.
+            site_ref = Site.find_by listid: site[:listid]
+        if site_ref.blank?
                 Site.create(site)
+
+        # Has the item in QB been updated? If so, we need to update in Rails  
+        elsif site_ref.updated_at < qb_item['time_modified']
+            Site.update_all(site)
+        else
+            Rails.logger.info("Item info is the same, no changes were made")
+        end
+
         end
     end
 end

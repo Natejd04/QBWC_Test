@@ -30,8 +30,17 @@ class ItemAssemblyWorker < QBWC::Worker
             item_data[:qty] = qb_item['quantity_on_hand'].to_f
                 
 #                create the item record
+        item = Item.find_by listid: item_data[:listid]
+        if item.blank?
                 Item.create(item_data)
-        
+
+        # Has the item in QB been updated? If so, we need to update in Rails  
+        elsif item.updated_at < qb_item['time_modified']
+            Item.update_all(customer_data)
+        else
+            Rails.logger.info("Item info is the same, no changes were made")
+        end
+
         end
     end
 end

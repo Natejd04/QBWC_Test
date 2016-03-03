@@ -1,14 +1,17 @@
 require 'qbwc'
 
-class CustomerTestWorker < QBWC::Worker
+class CustomerUpdateWorker < QBWC::Worker
 
-#    This worker is used to grab customer info and create records in rails server.
-#    currently only grabbing 50 results at a time
+#    This is the secondary worker that will be ran to keep the rails db updated with new records.
+#    If this is the first time setting up this server, do not run this worker first.
+#    currently only grabbing 100 results at a time (more like batches of 100)
     def requests(job)
         {
             :customer_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 100
+                :max_returned => 100,
+                :from_modified_date => Customer.last[:updated_at],
+                :to_modified_date => DateTime.now
             }
         }
     end
