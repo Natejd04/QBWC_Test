@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303020230) do
+ActiveRecord::Schema.define(version: 20160316232039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160303020230) do
     t.string   "ship_address5"
     t.string   "class_id"
     t.string   "class_name"
+    t.string   "listid_last"
   end
 
   create_table "items", force: :cascade do |t|

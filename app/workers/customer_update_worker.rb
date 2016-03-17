@@ -10,8 +10,8 @@ class CustomerUpdateWorker < QBWC::Worker
             :customer_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 100,
-                :from_modified_date => Customer.last[:updated_at],
-                :to_modified_date => DateTime.now
+                :from_modified_date => Customer.order("updated_at").last[:updated_at].strftime("%Y-%m-%d"),
+                :to_modified_date => DateTime.now.strftime("%Y-%m-%d")
             }
         }
     end
@@ -48,7 +48,9 @@ class CustomerUpdateWorker < QBWC::Worker
                 customer_data[:ship_zip] = qb_cus['ship_address']['postal_code']
             end
             customer = Customer.find_by listid: customer_data[:listid]
-            
+            # if customer_data[:listid_last] = "1356985334"
+            #     binding.pry
+            # end
 #            if customer doesn't exist create record.
             if customer.blank?
                 Customer.create(customer_data)
@@ -56,7 +58,7 @@ class CustomerUpdateWorker < QBWC::Worker
 #           was the customer updated after created, if so we need a new edit_sq
 #            <> ideally if we can get updated in QB, then we could check updated in QB vs. Update in database and preform accurately.
            elsif customer.updated_at < qb_cus['time_modified']
-               Customer.update_all(customer_data)
+               customer.update(customer_data)
 #            
 #            if the customer update and created are the same, let's update edit sequence anyways. 
             else 
@@ -64,8 +66,9 @@ class CustomerUpdateWorker < QBWC::Worker
                 Rails.logger.info("Customer info is the same")
             end
         end
-    
-      
+
+        # Customer.last[:updated_at].strftime("%Y-%m-%d")
+              
  end
 
     
