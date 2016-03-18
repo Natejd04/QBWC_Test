@@ -1,7 +1,7 @@
 require 'qbwc'
 
 
-class MonthlUnitForecastWorker < QBWC::Worker
+class MonthlyUnitForecastWorker < QBWC::Worker
 
 #    This worker will grab only active items, in the assembly section of QB.
 #    We will use this to populate our item table, so that we can refernce orders and track inventory

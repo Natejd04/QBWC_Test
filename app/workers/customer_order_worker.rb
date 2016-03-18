@@ -11,8 +11,8 @@ class CustomerOrderWorker < QBWC::Worker
         {
             :sales_order_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 50,
-                :txn_date_range_filter => { "from_txn_date" => "2015-04-01", "to_txn_date" => "2015-04-02"},
+                :max_returned => 500,
+                :txn_date_range_filter => { "from_txn_date" => "2016-03-11", "to_txn_date" => "2016-03-15"},
                 :include_line_items => true
             }
         }
@@ -21,9 +21,12 @@ class CustomerOrderWorker < QBWC::Worker
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
+
+    # if no responses are returned we need to skip
+    if r['sales_order_ret']
+        
         
 #        We will now handle all the responses we received, one at a time
-        Rails.logger.info ("---->Attempting Response")
         r['sales_order_ret'].each do |qb_cus|
         order_data = {}
         lineitem_data = {}
@@ -58,34 +61,37 @@ class CustomerOrderWorker < QBWC::Worker
             order_data[:c_total] = qb_cus['total_amount']
             
 #            submit order create for value
-            @order = Order.create(order_data)
+            order_ref = Order.create(order_data)
             
-#            Start lineitem process
+#            Start lineitem process, if no lineitems existed it will ignore.
+        if qb_cus['sales_order_line_ret']
+
             qb_cus['sales_order_line_ret'].each do |li|
                 
-                lineitem_data[:order_id] = @order.id
+                # We need to match the lineitem with order id
+                lineitem_data[:order_id] = order_ref.id
     
 #                This will weed out wether or not item_ref has a value
                 lineitem_data[:description] = li['item_ref']['full_name'] if li['item_ref']
-#                lineitem_data[:description] = li['item_ref']['full_name']
                 
 #                Figure out if item_ref is empty
                 listid = li['item_ref']['list_id'] if li['item_ref']    
                 
 #                does the line_item id match the item field?
                 if Item.find_by(list_id: listid).present?
-                    lineitem_data[:item_id] = Item.find_by(list_id:                            listid).id
+                    lineitem_data[:item_id] = Item.find_by(list_id: listid).id
 #                It doesn't match, or isn't an inventory item, add it to other
                 else
-#                    79 represents an other item
-                    lineitem_data[:item_id] = 79
+#                   87 represents an other item
+                    lineitem_data[:item_id] = 87
                 end
                     
 #                need to assign all items a site
-#                ** site ref doesn't work. eliminate and work of ship location
-#                lineitem_data[:site_id] = li['inventory_site_ref']['list_id']
-#                lineitem_data[:site_name] = li['inventory_site_location_ref']['full_name'] if li['inventory_site_ref'] 
-                
+                if li['inventory_site_ref']
+                  lineitem_data[:site_id] = li['inventory_site_ref']['list_id']
+                  lineitem_data[:site_name] = li['inventory_site_ref']['full_name'] 
+                end
+
 #                make sure that there is a quantity before adding to database
                 lineitem_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                 
@@ -96,6 +102,8 @@ class CustomerOrderWorker < QBWC::Worker
 #                <>Need to add fields that check to see if this order already exsits
                 @lineitem = LineItem.create(lineitem_data)
             
+            end
+        end
             end
         end
     end
