@@ -79,7 +79,7 @@ class InvoiceWorker < QBWC::Worker
                 invoice_ref2 = Order.find_by txn_id: invoice_data[:txn_id]
                 li_data[:order_id] = invoice_ref2[:id]
                 
-# It's still breaking in here somehwere.                 
+# It's still breaking in here somehwere. Nil Nilclass,                 
 
             if li != {"xml_attributes"=>{}}
                 if li['item_ref']
