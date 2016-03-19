@@ -10,7 +10,8 @@ class InvoiceWorker < QBWC::Worker
             :invoice_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 100,
-                :modified_date_range_filter => {"from_modified_date" => "2016-03-01", "to_modified_date" => "2016-03-04"}                
+                :modified_date_range_filter => {"from_modified_date" => "2016-03-02", "to_modified_date" => "2016-03-02"},
+                :include_line_items => true
             }
         }
     end
@@ -28,37 +29,36 @@ class InvoiceWorker < QBWC::Worker
         r['invoice_ret'].each do |qb_inv|
             invoice_data = {}
             invoice_data[:txn_id] = qb_inv['txn_id']
-            invoice_data[:edit_sq] = qb_inv['edit_sequence']
+            invoice_data[:invoice_number] = qb_inv['txn_number']
+            invoice_data[:c_edit] = qb_inv['edit_sequence']
+            invoice_data[:c_date] = qb_inv['txn_date']
+
+            if qb_inv['po_number']
+                invoice_data[:c_po] = qb_inv['po_number']
+            end
 
             if qb_inv['customer_ref']
                 invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
-                invoice_data[:name] = qb_inv['customer_ref']['full_name']
+                invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
             end
           
-            if qb_inv['bill_address']
-                invoice_data[:address] = qb_inv['bill_address']['addr1']
-                invoice_data[:address2] = qb_inv['bill_address']['addr2']
-                invoice_data[:city] = qb_inv['bill_address']['city']
-                invoice_data[:state] = qb_inv['bill_address']['state']
-                invoice_data[:zip] = qb_inv['bill_address']['postal_code']
-            end
-            
             if qb_inv['ship_address']
-                invoice_data[:ship_address] = qb_inv['ship_address']['addr1']
-                invoice_data[:ship_address2] = qb_inv['ship_address']['addr2']
-                invoice_data[:ship_address3] = qb_inv['ship_address']['addr3']
-                invoice_data[:ship_address4] = qb_inv['ship_address']['addr4']
-                invoice_data[:ship_address5] = qb_inv['ship_address']['addr5']
-                invoice_data[:ship_city] = qb_inv['ship_address']['city']
-                invoice_data[:ship_state] = qb_inv['ship_address']['state']
-                invoice_data[:ship_zip] = qb_inv['ship_address']['postal_code']
+                invoice_data[:c_ship1] = qb_inv['ship_address']['addr1']
+                invoice_data[:c_ship2] = qb_inv['ship_address']['addr2']
+                invoice_data[:c_ship3] = qb_inv['ship_address']['addr3']
+                invoice_data[:c_ship4] = qb_inv['ship_address']['addr4']
+                invoice_data[:c_ship5] = qb_inv['ship_address']['addr5']
+                invoice_data[:c_shipcity] = qb_inv['ship_address']['city']
+                invoice_data[:c_shipstate] = qb_inv['ship_address']['state']
+                invoice_data[:c_shippostal] = qb_inv['ship_address']['postal_code']
+                invoice_data[:c_shipcountry] = qb_inv['ship_address']['country']
             end
             
             if qb_inv['sales_rep_ref']
-                invoice_data[:rep] = qb_inv['sales_rep_ref']['full_name']
+                invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
             end
             
-            invoice_ref = Order.find_by list_id: invoice_data[:list_id]
+            invoice_ref = Order.find_by txn_id: invoice_data[:txn_id]
             if invoice_ref.blank?
                 Order.create(invoice_data)
             
@@ -70,13 +70,21 @@ class InvoiceWorker < QBWC::Worker
             
             # This will be for the line item section
             if qb_inv['invoice_line_ret']
+                # binding.pry
                 
                 qb_inv['invoice_line_ret'].each do |li|
                 # We need to match the lineitem with order id
-                li_data[:order_id] = invoice_ref.id
+                li_data = {}
 
+                invoice_ref2 = Order.find_by txn_id: invoice_data[:txn_id]
+                li_data[:order_id] = invoice_ref2[:id]
+                
+# It's still breaking in here somehwere.                 
+
+            if li != {"xml_attributes"=>{}}
                 if li['item_ref']
-                    list_id = qb_inv['item_ref']['list_id']
+                    # binding.pry
+                    list_id = li['item_ref']['list_id']
                     if Item.find_by(list_id: list_id).present?
                         li_data[:item_id] = Item.find_by(list_id: list_id).id
 #                    It doesn't match, or isn't an inventory item, add it to other
@@ -87,8 +95,11 @@ class InvoiceWorker < QBWC::Worker
 
                     li_data[:product_name] = li['item_ref']['full_name']
                 end
+            end
                 
-                li_data[:description] = li['description']
+                if li['description']
+                    li_data[:description] = li['description']
+                end
                     # Does the line item have a quantity
                 li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                     # Does this li have an amount?
@@ -100,6 +111,7 @@ class InvoiceWorker < QBWC::Worker
                     li_data[:site_name] = li['inventory_site_ref']['full_name']
                 end
 
+               
                 # Now we need to record these line items
                 li_ref = LineItem.find_by txn_id: li['txn_line_id']
                 if li_ref.blank?
@@ -110,8 +122,7 @@ class InvoiceWorker < QBWC::Worker
                 else
                     Rails.logger.info("Invoice hasn't been changed")
                 end
-
-
+             
 
             end
 
