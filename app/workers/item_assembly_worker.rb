@@ -10,7 +10,9 @@ class ItemAssemblyWorker < QBWC::Worker
             :item_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 500,
-                :active_status => "ActiveOnly"
+                :active_status => "ActiveOnly",
+                :from_modified_date => Item.order("updated_at").last[:updated_at].strftime("%Y-%m-%d"),
+                :to_modified_date => DateTime.now.strftime("%Y-%m-%d")
             }
         }
     end
@@ -18,6 +20,9 @@ class ItemAssemblyWorker < QBWC::Worker
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
+
+        # if no results are returned we skip the following steps
+        if r['item_inventory_assembly_ret']
 
 #        we will loop through each item and insert it into the Items table.
 #        <> ideally fix this so that it only updates, when a new item is added
@@ -30,8 +35,18 @@ class ItemAssemblyWorker < QBWC::Worker
             item_data[:qty] = qb_item['quantity_on_hand'].to_f
                 
 #                create the item record
+        item = Item.find_by list_id: item_data[:list_id]
+        if item.blank?
                 Item.create(item_data)
-        
+
+        # Has the item in QB been updated? If so, we need to update in Rails  
+        elsif item.updated_at < qb_item['time_modified']
+            item.update(item_data)
+        else
+            Rails.logger.info("Item info is the same, no changes were made")
+        end
+
+    end
         end
     end
 end

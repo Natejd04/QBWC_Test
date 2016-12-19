@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :items
   resources :sites
   resources :site_inventories
+  resources :bills
     
   get '/customer_details' => 'orders#customer_details'
     
