@@ -1,0 +1,7 @@
+Things that need to be completed. 
+	1) Tracking worker, will break if 1 result or fewer. 
+	2) Need to add RegEx for tracking to eliminate accidents.
+
+
+Changes in QB
+	* Email needs to be first or second line, with tracking before or after it.

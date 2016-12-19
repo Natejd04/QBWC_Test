@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  txn_id: MyString
+  time_created: 2016-12-18
+  name: MyText
+  template_ref: MyString
+  email: MyString
+  tracking: MyString
+
+two:
+  txn_id: MyString
+  time_created: 2016-12-18
+  name: MyText
+  template_ref: MyString
+  email: MyString
+  tracking: MyString
