@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user, except:[:new, :create, :edit]
+    before_action :authenticate_user, except:[:new, :create, :edit, :update]
   
   def index
       if current_user.role = "admin"

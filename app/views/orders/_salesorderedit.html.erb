@@ -1,5 +1,5 @@
 <!-- I work as a single upload -->
-<%= simple_form_for @order, url: orders_path, :html => {multipart: true} do |f| %>
+<%= simple_form_for @order, :html => {multipart: true} do |f| %>
     <% if @order.docs_file_name.nil?  %>
         No Files, Please Add One Below
         <%= f.input :docs, as: :file %>   
@@ -34,6 +34,7 @@
                 <td><%= line_item.input :qty, as: :integer %></td>
                 <td><%= line_item.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td>
                 <td><%= line_item.input :amount, as: :float %></td>
+                <td class="delete_row"><input type="checkbox" /></td>
         <% end %>
             </tr>
                 </table>
@@ -55,9 +56,12 @@
 <div id="jquery_enter"></div>
 <script>
     $(function() { 
-       
+        DeleteRow();
+        SumAmount();
         
     });
+    
+    
     $('.order_line_items_amount').change(function() {
             SumAmount();
         });
@@ -77,6 +81,7 @@
                 });        
 
 function SumAmount () {
+    //we will use this to calculate the sum of the items.
     var fields = (-1 + $('.order_line_items_amount').length);
     var sum = 0;
     var amount = 0;
@@ -94,5 +99,18 @@ function SumAmount () {
             }
         $('#order_c_total').val(sum);
     }
+function DeleteRow () {
+    //We will grab the item id for this row in order to delete it.
+    $('.delete_row').on("change", function() {
+        $(this).closest('tr').hide();
+        var lineitem = $(this).next('input').attr("id");
+        lineitem = lineitem.slice(0,-2) + "item_id";
+        $("#" + lineitem).val("");
+    });
+}
+
+function AddRow() {
+ //we will use this to add extra line item rows.   
+}
                     
     </script>

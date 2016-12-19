@@ -128,3 +128,12 @@ th {
     top: 0;
     z-index: 1;
 }
+.extra-space {
+    padding: 20px;
+}
+#invoice-button {
+    width: 100px;
+    background-color: azure;
+    opacity: 0.70;
+    font-size: 1.0em;
+}

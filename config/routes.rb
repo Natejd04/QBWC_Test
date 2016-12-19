@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   root 'welcome#index'
   
   resources :sessions
-    
+
+    get 'invoice' => 'orders#invoice'
   delete 'logout' => 'sessions#destroy'
   get 'signin' => 'sessions#new'
     

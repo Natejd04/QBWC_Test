@@ -12,10 +12,13 @@
     <u>Shipping Address</u><br />
     <span class="name"><%= @order.c_ship1 %><br /></span>
         <%= @order.c_ship2 %><br />
-         <%= raw(@order.c_ship3 + '<br />') if @order.c_ship3 %>
-        <%= raw(@order.c_ship4 + '<br />') if @order.c_ship4 %>
-         <%= raw(@order.c_ship5 + '<br />') if @order.c_ship5 %>
+         <%= raw(@order.c_ship3 + '<br />') if !@order.c_ship3.blank? %>
+        <%= raw(@order.c_ship4 + '<br />') if !@order.c_ship4.blank? %>
+         <%= raw(@order.c_ship5 + '<br />') if !@order.c_ship5.blank? %>
         <%= @order.c_shipcity %>, <%= @order.c_shipstate %> <%= @order.c_shippostal %>
+    <div class="extra-space">
+        <button id="invoice-button">Invoice</button>
+    </div>
 </div>
 
 <div class="order-table">
@@ -32,3 +35,17 @@
         <tr><td style="padding-right:2%;" align="right" colspan="5"><b>Total: <%= number_to_currency(@order.c_total) %></b></td></tr>
     </table>
 </div>
+<script>
+$(function() { 
+    $('#invoice-button').click(function(event){
+        $.ajax({
+            url: '../invoice/',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ id: '2782'})
+        });
+    });
+});
+
+</script>

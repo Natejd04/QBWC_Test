@@ -64,11 +64,13 @@ class OrdersController < ApplicationController
   end
     
   def update
-      @docs = Order.find(params[:id])
+      @order = Order.find(params[:id])
       if order_params[:remove_docs] == "1"
-          @docs.docs = nil
+          @order.docs = nil
       end
-      @docs.update(order_params)
+      @order.update(order_params)
+      redirect_to :action => :index
+      
   end
 
   def show
@@ -109,11 +111,20 @@ class OrdersController < ApplicationController
           format.js
       end
   end
+
+    def invoice
+        @invoice = Order.find(params[:id])
+        @invoice.c_invoiced = "y"
+        @invoice.save
+        respond_to do |format|
+            format.js 
+        end
+    end
     
   private
     
   def order_params
-      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, line_items_attributes: [ :item_id, :order_id, :qty, :amount, :site_id ])
+      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id ])
   end
 
 end
