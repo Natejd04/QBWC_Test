@@ -1,6 +1,7 @@
 Things that need to be completed. 
 	1) Tracking worker, will break if 1 result or fewer. 
 	2) Need to add RegEx for tracking to eliminate accidents.
+	3) Only pull Today's invoices. 
 
 
 Changes in QB

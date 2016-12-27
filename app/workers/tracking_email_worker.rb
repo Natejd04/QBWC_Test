@@ -23,7 +23,7 @@ class TrackingEmailWorker < QBWC::Worker
         # Rails.logger.info("This is the end of the customer mod")
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
-        # if no customer updates occured we skip this.
+        # if no invoices from current day, we skip this.
       if r['invoice_ret']
 
         r['invoice_ret'].each do |qb_item|
@@ -31,28 +31,48 @@ class TrackingEmailWorker < QBWC::Worker
             item_data[:txn_id] = qb_item['txn_number']
             item_data[:time_created] = qb_item['time_created']
             item_data[:name] = qb_item['customer_ref']['full_name']
-            item_data[:template_ref] = qb_item['template_ref']['full_name']        
+            item_data[:template_ref] = qb_item['template_ref']['full_name']
+                if qb_item['po_number']                    
+                    email = qb_item['po_number']
+                        if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                            item_data[:email] = email                           
+                        end
+                end
+            
+            item_data[:tracking] = qb_item['other']
+                
+                if qb_item['other']
+                    tracking = qb_item['other']
+                        if tracking =~ /^1Z/
+                            item_data[:ship_method] = "UPS"
+                        elsif tracking =~ /\d{20,22}/
+                                item_data[:ship_method] = "USPS"
+                        else
+                            item_data[:ship_method] = "FedEx"
+                        end
+                end
+
        
          # binding.pry
 
 
-            if qb_item['invoice_line_ret']
-               qb_item['invoice_line_ret'].each_with_index do |list_item, index|            
-                        if qb_item['invoice_line_ret'][0]['desc']                             
-                                email = qb_item['invoice_line_ret'][0]['desc']
-                                if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-                                    item_data[:email] = qb_item['invoice_line_ret'][0]['desc']
-                                    item_data[:tracking] = qb_item['invoice_line_ret'][1]['desc']
-                                end
-                                   email_1 = qb_item['invoice_line_ret'][1]['desc']
-                                if email_1 =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-                                    item_data[:email] = qb_item['invoice_line_ret'][1]['desc']
-                                    item_data[:tracking] = qb_item['invoice_line_ret'][0]['desc']
-                                end
-                        end
-                        # i = i + 1
-                end
-            end
+            # if qb_item['invoice_line_ret']
+            #    qb_item['invoice_line_ret'].each_with_index do |list_item, index|            
+            #             if qb_item['invoice_line_ret'][0]['desc']                             
+            #                     email = qb_item['invoice_line_ret'][0]['desc']
+            #                     if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+            #                         item_data[:email] = qb_item['invoice_line_ret'][0]['desc']
+            #                         item_data[:tracking] = qb_item['invoice_line_ret'][1]['desc']
+            #                     end
+            #                        email_1 = qb_item['invoice_line_ret'][1]['desc']
+            #                     if email_1 =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+            #                         item_data[:email] = qb_item['invoice_line_ret'][1]['desc']
+            #                         item_data[:tracking] = qb_item['invoice_line_ret'][0]['desc']
+            #                     end
+            #             end
+            #             # i = i + 1
+            #     end
+            # end
             # binding.pry
             Tracking.create(item_data)  
 
