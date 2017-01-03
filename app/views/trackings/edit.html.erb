@@ -20,6 +20,10 @@
     <%= f.label :memo %>
     <%= f.text_field :memo %>
     <br />
+
+    <%= f.label :emailed %>
+    <%= f.input_field :emailed, as: :boolean %>
+    <br />
         
 <%= f.submit "Save Changes" %>
 <% end %>
