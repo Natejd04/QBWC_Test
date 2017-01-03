@@ -1,0 +1,25 @@
+<h1><%= @track.name %></h1>
+
+<%= simple_form_for @track, url: tracking_path do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <br />
+   
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+    <br />
+    
+    <%= f.label :tracking %>
+    <%= f.text_field :tracking %>
+    <br />
+    
+    <%= f.label :ship_method %>
+    <%= f.text_field :ship_method %>
+    <br />
+
+    <%= f.label :memo %>
+    <%= f.text_field :memo %>
+    <br />
+        
+<%= f.submit "Save Changes" %>
+<% end %>

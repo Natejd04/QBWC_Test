@@ -23,37 +23,74 @@ class TrackingEmailWorker < QBWC::Worker
         # Rails.logger.info("This is the end of the customer mod")
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
-        # if no invoices from current day, we skip this.
-      if r['invoice_ret']
+        # We need to confirm that our results are an array           
+        
+        if r['invoice_ret'].is_a? Array
 
-
-        r['invoice_ret'].each do |qb_item|
-            item_data = {}
-            item_data[:txn_id] = qb_item['txn_number']
-            item_data[:time_created] = qb_item['txn_created']
-            item_data[:txn_date] = qb_item['txn_date']
-            item_data[:name] = qb_item['customer_ref']['full_name']
-            item_data[:template_ref] = qb_item['template_ref']['full_name']
-                if qb_item['po_number']                    
-                    email = qb_item['po_number']
-                        if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-                            item_data[:email] = email                           
-                        end
-                end
-            
-            item_data[:tracking] = qb_item['other']
+            r['invoice_ret'].each do |qb_item|
+                item_data = {}
+                item_data[:txn_id] = qb_item['txn_number']
+                item_data[:time_created] = qb_item['time_created']
+                item_data[:txn_date] = qb_item['txn_date']
+                item_data[:name] = qb_item['customer_ref']['full_name']
+                item_data[:template_ref] = qb_item['template_ref']['full_name']
+                item_data[:memo] = qb_item["fob"]
+                    if qb_item['po_number']                    
+                        email = qb_item['po_number']
+                            if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                                item_data[:email] = email     
+                            end
+                    end
                 
-                if qb_item['other']
-                    tracking = qb_item['other']
-                        if tracking =~ /^1Z/
-                            item_data[:ship_method] = "UPS"
-                        elsif tracking =~ /\d{20,22}/
-                                item_data[:ship_method] = "USPS"
-                        else
-                            item_data[:ship_method] = "FedEx"
-                        end
-                end
+                item_data[:tracking] = qb_item['other']
+                    
+                    if qb_item['other']
+                        tracking = qb_item['other']
+                            if tracking =~ /^1Z/
+                                item_data[:ship_method] = "UPS"
+                            elsif tracking =~ /\d{20,22}/
+                                    item_data[:ship_method] = "USPS"
+                            else
+                                item_data[:ship_method] = "FedEx"
+                            end
+                    end
+                    
+                Tracking.create(item_data)
+            end
 
+         # Now we will check to make sure the object isn't empty.   
+        elsif !r['invoice_ret'].blank? 
+            item_data = {}
+                item_data[:txn_id] = r['invoice_ret']['txn_number']
+                item_data[:time_created] = r['invoice_ret']['time_created']
+                item_data[:txn_date] = r['invoice_ret']['txn_date']
+                item_data[:name] = r['invoice_ret']['customer_ref']['full_name']
+                item_data[:template_ref] = r['invoice_ret']['template_ref']['full_name']
+                item_data[:memo] = r['invoice_ret']["fob"]
+                    if r['invoice_ret']['po_number']                    
+                        email = r['invoice_ret']['po_number']
+                            if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                                item_data[:email] = email     
+                            end
+                    end
+                
+                item_data[:tracking] = r['invoice_ret']['other']
+                    
+                    if r['invoice_ret']['other']
+                        tracking = r['invoice_ret']['other']
+                            if tracking =~ /^1Z/
+                                item_data[:ship_method] = "UPS"
+                            elsif tracking =~ /\d{20,22}/
+                                    item_data[:ship_method] = "USPS"
+                            else
+                                item_data[:ship_method] = "FedEx"
+                            end
+                    end
+            Tracking.create(item_data)
+        end
+
+    end  
+end
        
          # binding.pry
 
@@ -76,13 +113,7 @@ class TrackingEmailWorker < QBWC::Worker
             #     end
             # end
             # binding.pry
-            Tracking.create(item_data)  
-        end
-    else
-        Rails.logger.info("Invoice hasn't been changed")
-    end  
-end
+            
 
-    
-end
+
  # Template Ref ID 8000001A-1357145643

@@ -1,7 +1,8 @@
 Things that need to be completed. 
-	1) Tracking worker, will break if 1 result or fewer. 
-	2) Need to add RegEx for tracking to eliminate accidents.
-	3) Only pull Today's invoices. 
+X	1) Tracking worker, will break if 1 result or fewer. (fixed)
+X	2) Need to add RegEx for tracking to eliminate accidents. (fixed)
+X	3) Only pull Today's invoices. (fixed)
+	4) Add a way to check if you want to send the email.
 
 
 Changes in QB
