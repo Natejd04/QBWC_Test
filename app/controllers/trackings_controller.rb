@@ -20,6 +20,23 @@ class TrackingsController < ApplicationController
       @track_today = Tracking.where(:txn_date => Date.today)
       render action: "index"
   end
+
+  def destroy
+  	  Tracking.find(params[:id]).destroy
+  	  flash[:success] = "Shipment deleted"
+      render action: "index"
+  end
+
+  def email_send
+    # @recipient = Tracking.last
+    # Emailer.sample_email(@recipient).deliver
+     @recipients = Tracking.where(:txn_date => Date.today)
+     @recipients.each do |recipient|
+       @name = recipient.name
+       Emailer.sample_email(recipient).deliver
+    end
+    render action: "index"
+  end
     
     def track_params
       params.require(:tracking).permit(:memo, :ship_method, :email, :emailed)

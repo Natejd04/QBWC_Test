@@ -12,3 +12,5 @@
 !/log/.keep
 /tmp
 uploads/*
+/config/secrets.yml
+/config/local_env.yml

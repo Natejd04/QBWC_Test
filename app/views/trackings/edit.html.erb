@@ -1,5 +1,6 @@
 <h1><%= @track.name %></h1>
 
+<%= link_to "Back", trackings_path %>
 <%= simple_form_for @track, url: tracking_path do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -27,3 +28,5 @@
         
 <%= f.submit "Save Changes" %>
 <% end %>
+<%= button_to "Delete Record", @track, method: :delete,
+                                  data: { confirm: "You sure?" } %>
