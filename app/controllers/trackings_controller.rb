@@ -3,7 +3,8 @@ class TrackingsController < ApplicationController
  def index
         @track = Tracking.all.order "id ASC"
         @grouped = Tracking.all.group_by {}
-        @track_today = Tracking.where(:txn_date => Date.today)
+        @track_today = Tracking.where(:txn_date => Date.today).where(:emailsent => nil)
+        @emailed = Tracking.where(:txn_date => Date.today).where.not(:emailsent => nil)
     end
 
  def edit
@@ -14,11 +15,17 @@ class TrackingsController < ApplicationController
       @track = Tracking.find(params[:id])
     end
  def update
-      @track = Tracking.find(params[:id])
-      @track.update(track_params)
-      p @track
-      @track_today = Tracking.where(:txn_date => Date.today)
-      render action: "index"
+      respond_to do |format|
+        format.html {
+          @track = Tracking.find(params[:id])
+          @track.update(track_params)
+          redirect_to trackings_path}
+        format.js
+        format.json {
+          @track = Tracking.find(params[:id])
+          @track.update(email_params)
+          render json: @track}
+      end
   end
 
   def destroy
@@ -28,17 +35,15 @@ class TrackingsController < ApplicationController
   end
 
   def email_send
-    # @recipient = Tracking.last
-    # Emailer.sample_email(@recipient).deliver
-     @recipients = Tracking.where(:txn_date => Date.today)
-     @recipients.each do |recipient|
-       @name = recipient.name
-       Emailer.sample_email(recipient).deliver
-    end
-    render action: "index"
+    @recipients = Tracking.where(:txn_date => Date.today).where(:emailed => true)
+    Emailer.prep_email().deliver 
+    # render action: "index"
   end
     
-    def track_params
-      params.require(:tracking).permit(:memo, :ship_method, :email, :emailed)
+    def email_params
+      params.permit(:emailed)
+  end
+  def track_params
+      params.require(:tracking).permit(:memo, :ship_method, :email, :emailed, :name, :packages, :ship1, :ship2, :ship3, :shipcity, :shipstate, :shippostal, :shipcountry)
   end
 end

@@ -4,9 +4,34 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hi <%= @name %></h1>
-    <p>
-      Sample mail sent using smtp.
-    </p>
+	<div class="top">
+	  	Insert Logo Here
+	</div>
+	  
+	<div class="middle">
+		<h1>Hi <%= @recipient.name %>,</h1>
+	    <p>
+	    	Your recent order shipped on <%= Time.now %>. Details about your order can be found below.
+	    </p>
+  	</div>
+  	<div class="shipping-details">
+	  	<p>
+	  		<%= @recipient.ship1 %><br />
+	  		<%= @recipient.ship2 %><br />
+	  		<%= @recipient.ship3 %><br />
+	  		<%= @recipient.shipcity %>, <%= @recipient.shipstate %> <%= @recipient.shippostal %>
+	  	</p>
+  		<p>
+  		<% if @recipient.ship_method = "UPS" %>
+  			<a href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>"><%= @recipient.tracking %></a>
+  		<% elsif @receipient.ship_method = "USPS" %>
+  			<a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>"><%= @recipient.tracking %></a>
+  			<%= @recipient.tracking %>
+  		<% else %>
+  			<a href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><%= @recipient.tracking %></a>  			
+		<% end %>  			
+  		</p>
+  	</div>
+
   </body>
 </html>

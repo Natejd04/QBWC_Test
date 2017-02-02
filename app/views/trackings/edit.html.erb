@@ -22,6 +22,38 @@
     <%= f.text_field :memo %>
     <br />
 
+    <%= f.label "# of Packages" %>
+    <%= f.text_field :packages %>
+    <br />
+
+    <%= f.label "Address 1" %>
+    <%= f.text_field :ship1 %>
+    <br />
+
+    <%= f.label "Address 2" %>
+    <%= f.text_field :ship2 %>
+    <br />
+
+    <%= f.label "Address 3" %>
+    <%= f.text_field :ship3 %>
+    <br />
+
+    <%= f.label "City" %>
+    <%= f.text_field :shipcity %>
+    <br />
+
+    <%= f.label "State" %>
+    <%= f.text_field :shipstate %>
+    <br />
+
+    <%= f.label "Postal Code" %>
+    <%= f.text_field :shippostal %>
+    <br />
+
+    <%= f.label "Country" %>
+    <%= f.text_field :shipcountry %>
+    <br />
+
     <%= f.label :emailed %>
     <%= f.input_field :emailed, as: :boolean %>
     <br />

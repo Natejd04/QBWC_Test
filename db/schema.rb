@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103054544) do
+ActiveRecord::Schema.define(version: 20170202220603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,17 @@ ActiveRecord::Schema.define(version: 20170103054544) do
     t.date     "txn_date"
     t.boolean  "emailed"
     t.string   "memo"
+    t.date     "emailsent"
+    t.string   "ship1"
+    t.string   "ship2"
+    t.string   "ship3"
+    t.string   "ship4"
+    t.string   "ship5"
+    t.string   "shipcity"
+    t.string   "shipstate"
+    t.string   "shippostal"
+    t.string   "shipcountry"
+    t.string   "packages"
   end
 
   create_table "users", force: :cascade do |t|

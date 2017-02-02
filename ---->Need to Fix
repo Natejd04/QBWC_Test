@@ -14,5 +14,5 @@ X	3) Only pull Today's invoices. (fixed)
 
 Changes in QB
 	Irrelevant 01/02/2016 -->	* Email needs to be first or second line, with tracking before or after it.
-	* FOB needs to be the memo field in Wholesale/template
+	* Memo Field needs to be the new broker/office (quick explination of what this was).
 	* Add the "other" field for Tracking instead of the currently used field.
