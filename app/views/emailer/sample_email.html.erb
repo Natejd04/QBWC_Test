@@ -3,19 +3,26 @@
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
-  <body>
+  <body width="600px">
 	<div class="top">
-	  	Insert Logo Here
-	</div>
+	  	<%= image_tag("zing_logo.jpg", :alt => "zing logo", :width => "100px") %>
+  </div>
 	  
-	<div class="middle">
-		<h1>Hi <%= @recipient.name %>,</h1>
-	    <p>
-	    	Your recent order shipped on <%= Time.now %>. Details about your order can be found below.
+	<div class="ribbon" style="color:#732412">
+		<h2 align="left">Shipping Confirmation</h2>
+	</div>
+  <div class="top"> 
+      <p>
+	    	Hi <%= @recipient.name %>,
+      </p>
+      We appreciate your business with Zing Bars. Your most recent order was shipped on <%= Time.now.strftime("%m/%d/%Y") %>. 
 	    </p>
   	</div>
-  	<div class="shipping-details">
-	  	<p><b>Shipping Location</b><br />
+  <div class="ribbon" style="color:#732412">
+    <h2 align="left">Shipping Details</h2>
+  </div>  
+    <div class="shipping-details">
+	  	<p><b><font style="color:#D9D2C5">Shipping Location</font></b><br />
 	  		<%= @recipient.ship1 %><br />
 	  		<% if @recipient.ship2.present? %>
 	  			<%= @recipient.ship2 %><br />

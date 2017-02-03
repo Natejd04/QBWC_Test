@@ -7,7 +7,7 @@ X	5) Add a way to check if you want to send the email.
 X	6) Make the Send Tracking Today button work. Use Action Mailer
 	7) Create Email template (one template for all, memo field only on UPP)
 	8) Currently importing line items, do we want this? (maybe for next step)
-	9) Emails will not send if a customer is missing a name, email, tracking# or method.
+	9) Emails will not send if a customer is missing a name, email, tracking# or method. (is that true?)
 X	10) Add ShipTo information for all UPP tracking pulls.
 	11) Pull customer email address if not a UPP instead of "PO Field"
 	12) Prevent Reload on the email submit page.
