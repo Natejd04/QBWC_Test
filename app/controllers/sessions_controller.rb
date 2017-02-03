@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
         else
             sign_in user
             role = user.role
-            redirect_to(:controller => 'orders', :action => role)
+            redirect_to trackings_path
         end
     end
     

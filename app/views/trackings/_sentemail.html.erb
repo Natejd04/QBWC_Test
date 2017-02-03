@@ -1,5 +1,5 @@
 <table>
-	<th>Customer Name</th><th>Email Address</th><th>Ship Date</th><th>Packages</th><th>Tracking Number</th><th>Ship Method</th><th>Memo</th><th>Email Sent</th>
+	<th>Customer Name</th><th>Email Address</th><th>Ship Date</th><th>Tracking Number</th><th>Packages</th><th>Ship Method</th><th>Memo</th><th>Email Sent</th>
 <% @emailed.each do |bi| %>
       <tr>
        <td><%= link_to bi.name, edit_tracking_path(bi.id) %></td><td><%= bi.email %></td><td><%= bi.txn_date %></td><td><%= bi.tracking %></td><td><%= bi.packages %></td><td><%= bi.ship_method %></td><td><%= bi.memo %></td><td><%= bi.emailsent %></td>   

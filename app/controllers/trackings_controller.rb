@@ -1,5 +1,6 @@
 class TrackingsController < ApplicationController
- 
+ before_action :authenticate_user, except:[:show]
+
  def index
         @track = Tracking.all.order "id ASC"
         @grouped = Tracking.all.group_by {}
@@ -31,7 +32,7 @@ class TrackingsController < ApplicationController
   def destroy
   	  Tracking.find(params[:id]).destroy
   	  flash[:success] = "Shipment deleted"
-      render action: "index"
+      redirect_to trackings_path
   end
 
   def email_send

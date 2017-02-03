@@ -15,21 +15,31 @@
 	    </p>
   	</div>
   	<div class="shipping-details">
-	  	<p>
+	  	<p><b>Shipping Location</b><br />
 	  		<%= @recipient.ship1 %><br />
-	  		<%= @recipient.ship2 %><br />
-	  		<%= @recipient.ship3 %><br />
+	  		<% if @recipient.ship2.present? %>
+	  			<%= @recipient.ship2 %><br />
+	  		<% end %>
+	  		<% if @recipient.ship3.present? %>
+	  			<%= @recipient.ship3 %><br />
+	  		<% end %>
 	  		<%= @recipient.shipcity %>, <%= @recipient.shipstate %> <%= @recipient.shippostal %>
 	  	</p>
+
   		<p>
-  		<% if @recipient.ship_method = "UPS" %>
-  			<a href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>"><%= @recipient.tracking %></a>
-  		<% elsif @receipient.ship_method = "USPS" %>
-  			<a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>"><%= @recipient.tracking %></a>
-  			<%= @recipient.tracking %>
+  		<% if @recipient.ship_method == "UPS" %>
+  			Tracking Number: <a href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
+  		<% elsif @recipient.ship_method == "USPS" %>
+  			Tracking Number: <a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
   		<% else %>
-  			<a href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><%= @recipient.tracking %></a>  			
+  			Tracking Number: <a href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />			
 		<% end %>  			
+  		Number Of Packages: <%= @recipient.packages %><br />
+  		</p>
+  		<p>
+  		<% if !@recipient.memo.nil? %>
+  			Order Notes: <%= @recipient.memo %>
+  		<% end %>
   		</p>
   	</div>
 

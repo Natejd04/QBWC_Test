@@ -2,14 +2,16 @@ Things that need to be completed.
 X	1) Tracking worker, will break if 1 result or fewer. (fixed)
 X	2) Need to add RegEx for tracking to eliminate accidents. (fixed)
 X	3) Only pull Today's invoices. (fixed)
-	4) Should there be a way to delete shipments?
-	5) Add a way to check if you want to send the email.
-	6) Make the Send Tracking Today button work. Use Action Mailer
+X	4) Should there be a way to delete shipments?
+X	5) Add a way to check if you want to send the email.
+X	6) Make the Send Tracking Today button work. Use Action Mailer
 	7) Create Email template (one template for all, memo field only on UPP)
 	8) Currently importing line items, do we want this? (maybe for next step)
 	9) Emails will not send if a customer is missing a name, email, tracking# or method.
-	10) Add ShipTo information for all UPP tracking pulls.
+X	10) Add ShipTo information for all UPP tracking pulls.
 	11) Pull customer email address if not a UPP instead of "PO Field"
+	12) Prevent Reload on the email submit page.
+	13) Add loader, to signfy emails are being sent when someone presses button.
 
 
 Changes in QB
