@@ -1,54 +1,290 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body width="600px">
-	<div class="top">
-	  	<%= image_tag("zing_logo.jpg", :alt => "zing logo", :width => "100px") %>
-  </div>
-	  
-	<div class="ribbon" style="color:#732412">
-		<h2 align="left">Shipping Confirmation</h2>
-	</div>
-  <div class="top"> 
-      <p>
-	    	Hi <%= @recipient.name %>,
-      </p>
-      We appreciate your business with Zing Bars. Your most recent order was shipped on <%= Time.now.strftime("%m/%d/%Y") %>. 
-	    </p>
-  	</div>
-  <div class="ribbon" style="color:#732412">
-    <h2 align="left">Shipping Details</h2>
-  </div>  
-    <div class="shipping-details">
-	  	<p><b><font style="color:#D9D2C5">Shipping Location</font></b><br />
-	  		<%= @recipient.ship1 %><br />
-	  		<% if @recipient.ship2.present? %>
-	  			<%= @recipient.ship2 %><br />
-	  		<% end %>
-	  		<% if @recipient.ship3.present? %>
-	  			<%= @recipient.ship3 %><br />
-	  		<% end %>
-	  		<%= @recipient.shipcity %>, <%= @recipient.shipstate %> <%= @recipient.shippostal %>
-	  	</p>
+<!DOCTYPE html><html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Thank you for your purchase! </title>
+  
+  <meta name="viewport" content="width=device-width">
+  
+  
+</head>
 
-  		<p>
-  		<% if @recipient.ship_method == "UPS" %>
-  			Tracking Number: <a href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
-  		<% elsif @recipient.ship_method == "USPS" %>
-  			Tracking Number: <a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
-  		<% else %>
-  			Tracking Number: <a href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />			
-		<% end %>  			
-  		Number Of Packages: <%= @recipient.packages %><br />
-  		</p>
-  		<p>
-  		<% if !@recipient.memo.nil? %>
-  			Order Notes: <%= @recipient.memo %>
-  		<% end %>
-  		</p>
-  	</div>
+  <body style="margin: 0">
+<style type="text/css">
+body {
+margin: 0;
+}
+h1 a:hover {
+font-size: 30px; color: #333;
+}
+h1 a:active {
+font-size: 30px; color: #333;
+}
+h1 a:visited {
+font-size: 30px; color: #333;
+}
+a:hover {
+text-decoration: none;
+}
+a:active {
+text-decoration: none;
+}
+a:visited {
+text-decoration: none;
+}
+.button__text:hover {
+color: #fff; text-decoration: none;
+}
+.button__text:active {
+color: #fff; text-decoration: none;
+}
+.button__text:visited {
+color: #fff; text-decoration: none;
+}
+a:hover {
+color: #1990c6;
+}
+a:active {
+color: #1990c6;
+}
+a:visited {
+color: #1990c6;
+}
+@media (max-width: 600px) {
+  .container {
+    width: 94% !important;
+  }
+  .main-action-cell {
+    float: none !important; margin-right: 0 !important;
+  }
+  .secondary-action-cell {
+    text-align: center; width: 100%;
+  }
+  .header {
+    margin-top: 20px !important; margin-bottom: 2px !important;
+  }
+  .shop-name__cell {
+    display: block;
+  }
+  .order-number__cell {
+    display: block; text-align: left !important; margin-top: 20px;
+  }
+  .button {
+    width: 100%;
+  }
+  .or {
+    margin-right: 0 !important;
+  }
+  .apple-wallet-button {
+    text-align: center;
+  }
+  .customer-info__item {
+    display: block; width: 100% !important;
+  }
+  .spacer {
+    display: none;
+  }
+  .subtotal-spacer {
+    display: none;
+  }
+}
+</style>
+    <table class="body" style="border-collapse: collapse; border-spacing: 0; height: 100% !important; width: 100% !important">
+      <tr>
+        <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+          
+<table class="header row" style="border-collapse: collapse; border-spacing: 0; margin: 40px 0 20px; width: 100%">
+  <tr>
+    <td class="header__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+      <center>
 
+        <table class="container" style="border-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: left; width: 560px">
+          <tr>
+            <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+
+              <table class="row" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+                <tr>
+                  <td class="shop-name__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+                    
+                      <img src="https://cdn.shopify.com/s/files/1/1449/5868/email_settings/Zing_Bar.png?11316048446596216516" alt="Zing Bars" width="180">
+                    
+                  </td>
+
+                    <td class="order-number__cell" style="color: #999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 14px; text-align: right; text-transform: uppercase" align="right">
+                      <span class="order-number__text" style="font-size: 16px">
+                        Order <%= @recipient.txn_id %>
+                      </span>
+                    </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row content" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+  <tr>
+    <td class="content__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px">
+      <center>
+        <table class="container" style="border-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: left; width: 560px">
+          <tr>
+            <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+              
+            <h2 style="font-size: 24px; font-weight: normal; margin: 0 0 10px">Your order is on the way! </h2>
+            <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+  
+    Hi <%= @recipient.name %>, your order is on the way to you. Track your shipment to see the delivery status.
+  
+</p>
+            
+              <table class="row actions" style="border-collapse: collapse; border-spacing: 0; margin-top: 20px; width: 100%">
+  <tr>
+    <td class="actions__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+      <table class="button main-action-cell" style="border-collapse: collapse; border-spacing: 0; float: left; margin-right: 15px">
+        <tr>
+          <td class="button__cell" style="background: #1990c6; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; text-align: center" align="center" bgcolor="#1990c6">
+            <% if @recipient.ship_method == "UPS" %>
+        <a class="button__text" style="color: #fff; display: block; font-size: 16px; padding: 20px 25px; text-decoration: none" href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>">Track your order</a></td>
+      <% elsif @recipient.ship_method == "USPS" %>
+        <a class="button__text" style="color: #fff; display: block; font-size: 16px; padding: 20px 25px; text-decoration: none" href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>">Track your order</a></td>
+      <% else %>
+        <a class="button__text" style="color: #fff; display: block; font-size: 16px; padding: 20px 25px; text-decoration: none" href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><Track your order</a></td>
+    <% end %>                    
+
+        
+        </tr>
+      </table>
+      
+    <table class="link secondary-action-cell" style="border-collapse: collapse; border-spacing: 0; margin-top: 19px">
+      <tr>
+        <td class="link__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"><a href="https://zingbars.com" class="link__text" style="color: #1990c6; font-size: 16px; text-decoration: none"><span class="or" style="color: #999; display: inline-block; font-size: 16px; margin-right: 10px">or</span> Visit our store</a></td>
+      </tr>
+    </table>
+
+
+    </td>
+  </tr>
+</table>
+
+            
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+  
+ 
+
+          <table class="row section" style="border-collapse: collapse; border-spacing: 0; border-top-color: #e5e5e5; border-top-style: solid; border-top-width: 1px; width: 100%">
+  <tr>
+    <td class="section__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding: 40px 0">
+      <center>
+        <table class="container" style="border-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: left; width: 560px">
+          <tr>
+            <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+              <h3 style="font-size: 20px; font-weight: normal; margin: 0 0 25px">Customer information</h3>
+            </td>
+          </tr>
+        </table>
+        <table class="container" style="border-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: left; width: 560px">
+          <tr>
+            <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+              
+            <table class="row" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+              <tr>
+                
+                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
+                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Shipping address</h4>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+<%= @recipient.ship1 %><br />
+        <% if @recipient.ship2.present? %>
+          <%= @recipient.ship2 %><br />
+        <% end %>
+        <% if @recipient.ship3.present? %>
+          <%= @recipient.ship3 %><br />
+        <% end %>
+        <%= @recipient.shipcity %>, <%= @recipient.shipstate %> <%= @recipient.shippostal %>
+</p>
+
+                </td>
+                
+              </tr>
+            </table>
+            <table class="row" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+              <tr>
+                
+                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
+                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Shipping method</h4>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+                    <% if @recipient.ship_method == "UPS" %>
+        Tracking Number: <a style="color:#1990c6" href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
+      <% elsif @recipient.ship_method == "USPS" %>
+        Tracking Number: <a style="color:#1990c6" href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
+      <% else %>
+        Tracking Number: <a style="color:#1990c6" href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />     
+    <% end %>                    
+                  </p>
+                </td></tr>
+                 <tr>
+                
+                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
+                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Number of packages</h4>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+                  <%= @recipient.packages %><br />
+                  </p>
+      </td></tr>
+
+ <% if !@recipient.memo.nil? %>
+       <tr>
+                
+                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
+                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Special Order Notes</h4>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+     
+        <%= @recipient.memo %>
+      </td>
+                
+                
+                
+              </tr>
+      <% end %>
+
+                
+            </table>
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row footer" style="border-collapse: collapse; border-spacing: 0; border-top-color: #e5e5e5; border-top-style: solid; border-top-width: 1px; width: 100%">
+  <tr>
+    <td class="footer__cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding: 35px 0">
+      <center>
+        <table class="container" style="border-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: left; width: 560px">
+          <tr>
+            <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif">
+              <p class="disclaimer__subtext" style="color: #999; font-size: 14px; line-height: 150%; margin: 0">If you have any questions, reply to this email or contact us at <a href="mailto:info@zingbars.com" style="color: #1990c6; font-size: 14px; text-decoration: none">info@zingbars.com</a></p>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+<img src="https://cdn.shopify.com/s/assets/themes_support/notifications/spacer-33e666f8be758a80f13b842e18a51d065cf0c87d45a9b56c7a03d6a109b58669.png" class="spacer" height="1" style="height: 0; min-width: 600px">
+
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

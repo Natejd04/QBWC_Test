@@ -29,7 +29,7 @@ class TrackingEmailWorker < QBWC::Worker
 
             r['invoice_ret'].each do |qb_item|
                 item_data = {}
-                item_data[:txn_id] = qb_item['txn_number']
+                item_data[:txn_id] = qb_item['ref_number']
                 item_data[:time_created] = qb_item['time_created']
                 item_data[:txn_date] = qb_item['txn_date']
                 item_data[:name] = qb_item['customer_ref']['full_name']
@@ -82,31 +82,31 @@ class TrackingEmailWorker < QBWC::Worker
          # Now we will check to make sure the object isn't empty.   
         elsif !r['invoice_ret'].blank? 
             item_data = {}
-                item_data[:txn_id] = r['invoice_ret']['txn_number']
+                item_data[:txn_id] = r['invoice_ret']['ref_number']
                 item_data[:time_created] = r['invoice_ret']['time_created']
                 item_data[:txn_date] = r['invoice_ret']['txn_date']
                 item_data[:name] = r['invoice_ret']['customer_ref']['full_name']
                 item_data[:template_ref] = r['invoice_ret']['template_ref']['full_name']
                 
-                if qb_item['memo']
-                    item_data[:memo] = qb_item['memo']
+                if r['invoice_ret']['memo']
+                    item_data[:memo] = r['invoice_ret']['memo']
                 end
-                if qb_item['fob']
-                    item_data[:packages] = qb_item['fob']
+                if r['invoice_ret']['fob']
+                    item_data[:packages] = r['invoice_ret']['fob']
                 end
                 item_data[:emailed] = false
 
                 # This is the block for the ship to info
-                if qb_item['ship_address']
-                    item_data[:ship1] = qb_item['ship_address']['addr1']
-                    item_data[:ship2] = qb_item['ship_address']['addr2']
-                    item_data[:ship3] = qb_item['ship_address']['addr3']
-                    item_data[:ship4] = qb_item['ship_address']['addr4']
-                    item_data[:ship5] = qb_item['ship_address']['addr5']
-                    item_data[:shipcity] = qb_item['ship_address']['city']
-                    item_data[:shipstate] = qb_item['ship_address']['state']
-                    item_data[:shippostal] = qb_item['ship_address']['postal_code']
-                    item_data[:shipcountry] = qb_item['ship_address']['country']
+                if r['invoice_ret']['ship_address']
+                    item_data[:ship1] = r['invoice_ret']['ship_address']['addr1']
+                    item_data[:ship2] = r['invoice_ret']['ship_address']['addr2']
+                    item_data[:ship3] = r['invoice_ret']['ship_address']['addr3']
+                    item_data[:ship4] = r['invoice_ret']['ship_address']['addr4']
+                    item_data[:ship5] = r['invoice_ret']['ship_address']['addr5']
+                    item_data[:shipcity] = r['invoice_ret']['ship_address']['city']
+                    item_data[:shipstate] = r['invoice_ret']['ship_address']['state']
+                    item_data[:shippostal] = r['invoice_ret']['ship_address']['postal_code']
+                    item_data[:shipcountry] = r['invoice_ret']['ship_address']['country']
                 end
 
                     if r['invoice_ret']['po_number']                    
