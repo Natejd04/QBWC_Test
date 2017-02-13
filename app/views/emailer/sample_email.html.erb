@@ -239,7 +239,7 @@ color: #1990c6;
                   </p>
       </td></tr>
 
- <% if !@recipient.memo.nil? %>
+ <% if @recipient.memo.present? %>
        <tr>
                 
                 <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">

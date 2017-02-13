@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  
+  before_action :authenticate_user, except:[:show]
     #checks to make sure a user is logged in before allowing access to files
     #before_filter :authenticate_user
     

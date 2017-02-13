@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+  before_action :authenticate_user, except:[:show]
   def index
       @customers = Customer.all.order "id ASC"
   end
