@@ -1,8 +1,8 @@
 QBWC.configure do |c|
 
   # Credentials to be entered in QuickBooks Web Connector.
-  c.username = "natejd04"
-  c.password = "GolfTango12"
+  c.username = ENV['QB_USERNAME'],
+  c.password = ENV['QB_PASSWORD'],
 
   # Path to QuickBooks company file on the client. Empty string to use whatever file is open when the connector runs.
   #c.company_file_path = ""
