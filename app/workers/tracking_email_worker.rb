@@ -58,9 +58,13 @@ class TrackingEmailWorker < QBWC::Worker
 
                     if qb_item['po_number']                    
                         email = qb_item['po_number']
-                            if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-                                item_data[:email] = email     
-                            end
+                        if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                            item_data[:email] = email     
+                        end
+                    end
+                    if item_data[:email].nil?    
+                        customer = Customer.find_by listid: qb_item['customer_ref']['list_id']
+                        item_data[:email] = customer.email
                     end
                 
                 item_data[:tracking] = qb_item['other']
@@ -114,6 +118,10 @@ class TrackingEmailWorker < QBWC::Worker
                             if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
                                 item_data[:email] = email     
                             end
+                    end    
+                    if item_data[:email].nil?
+                        customer = Customer.find_by listid: r['invoice_ret']['customer_ref']['list_id']
+                        item_data[:email] = customer.email
                     end
                 
                 item_data[:tracking] = r['invoice_ret']['other']

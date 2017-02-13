@@ -23,6 +23,7 @@ class CustomerTestWorker < QBWC::Worker
             customer_data[:listid] = qb_cus['list_id']
             customer_data[:name] = qb_cus['name']
             customer_data[:edit_sq] = qb_cus['edit_sequence']
+            customer_data[:email] = qb_cus['email']
             if qb_cus['class_ref']
             customer_data[:class_id] = qb_cus['class_ref']['list_id']
             customer_data[:class_name] = qb_cus['class_ref']['full_name']

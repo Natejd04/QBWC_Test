@@ -192,28 +192,14 @@ color: #1990c6;
                 <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
                   <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Shipping address</h4>
                   <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
-  Nate Davis<br>
-  10228 Fischer PL NE
-  
-  <br>
-  
-  <br>Seattle, Washington 98125
-  <br>United States
-</p>
-
-                </td>
-                
-                
-                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
-                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Billing address</h4>
-                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
-  Nate Davis<br>
-  10228 Fischer PL NE
-  
-  <br>
-  
-  <br>Seattle, Washington 98125
-  <br>United States
+<%= @recipient.ship1 %><br />
+        <% if @recipient.ship2.present? %>
+          <%= @recipient.ship2 %><br />
+        <% end %>
+        <% if @recipient.ship3.present? %>
+          <%= @recipient.ship3 %><br />
+        <% end %>
+        <%= @recipient.shipcity %>, <%= @recipient.shipstate %> <%= @recipient.shippostal %>
 </p>
 
                 </td>
@@ -225,12 +211,41 @@ color: #1990c6;
                 
                 <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
                   <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Shipping method</h4>
-                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">Standard Shipping</p>
-                </td>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+                    <% if @recipient.ship_method == "UPS" %>
+        Tracking Number: <a href="https://wwwapps.ups.com/tracking/tracking.cgi?tracknum=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
+      <% elsif @recipient.ship_method == "USPS" %>
+        Tracking Number: <a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />
+      <% else %>
+        Tracking Number: <a href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=<%= @recipient.tracking %>"><%= @recipient.tracking %></a><br />     
+    <% end %>                    
+                  </p>
+                </td></tr>
+                 <tr>
+                
+                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
+                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Number of packages</h4>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+                  <%= @recipient.packages %><br />
+                  </p>
+      </td></tr>
+
+ <% if !@recipient.memo.nil? %>
+       <tr>
+                
+                <td class="customer-info__item" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding-bottom: 40px; width: 50%">
+                  <h4 style="color: #555; font-size: 16px; font-weight: 500; margin: 0 0 5px">Special Order Notes</h4>
+                  <p style="color: #777; font-size: 16px; line-height: 150%; margin: 0">
+     
+        <%= @recipient.memo %>
+      </td>
                 
                 
                 
               </tr>
+      <% end %>
+
+                
             </table>
 
             </td>

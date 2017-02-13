@@ -1,10 +1,13 @@
 <h1><%= link_to @customer.name, edit_customer_path %></h1>
+<%= @customer.email %> <br />
 <%= @customer.address %> <br />
 <%= @customer.address2 %> <br />
 <%= @customer.city %>, <%= @customer.state %> <%= @customer.zip %>
 <p>
 <%= @customer.listid %><br />
-<%= @customer.edit_sq %>
+<%= @customer.edit_sq %><br />
+Created at:<%= @customer.created_at %><br />
+Updated at:<%= @customer.updated_at %>
 </p>
 
 <div style="width:60%;padding:10px;">
