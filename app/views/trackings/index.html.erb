@@ -1,5 +1,6 @@
 <h1>Today's Shipments | <%= Date.today %></h1>
 <p>
+<%= image_tag("animal.gif", :style => "display:none", :id => "loader") %>
 </p>
 <%= link_to "Send Today's Selected Emails", email_send_path, :class => "button-me" %>
 

@@ -30,4 +30,8 @@ $(function(){
       dataType: 'JSON'
     });
   });
+  $(".button-me").click(function(event){
+    $('#loader').show();
+    $(".button-me").hide();
+  });
 });

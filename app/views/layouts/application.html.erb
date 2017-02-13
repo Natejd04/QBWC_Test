@@ -7,7 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id="header"></div>
+<div id="header">
+	<% if @current_user.nil? %>
+		<div id="sign-out-link" style="margin-right:2%;"><%= link_to "Sign In", signin_path %></div>
+	<% else %>
+	<div id="sign-out-link" style="margin-right:2%;"><%= @current_user.name %> | <%= link_to "Sign Out", logout_path, method: :delete %></div>
+	<% end %>
+</div>
     <div id="wrapper">
         <%= yield %>
     </div>

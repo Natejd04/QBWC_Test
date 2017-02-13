@@ -127,6 +127,7 @@ th {
     left: 0;
     top: 0;
     z-index: 1;
+    text-align: right;
 }
 .extra-space {
     padding: 20px;
