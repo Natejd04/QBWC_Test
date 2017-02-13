@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user, except:[:new, :create, :edit, :update]
+    before_action :authenticate_user
+    # you can use this to make exceptions ", except:[:new, :create, :edit, :update]"
   
   def index
       if current_user.role = "admin"
@@ -14,14 +15,14 @@ class UsersController < ApplicationController
   end
     
   def create
-      @user = User.new(user_params)
-      if @user.save
-        redirect_to @user, notice: "User was successfully created."
-        sign_in @user
-      else
-        #render :text => "here"
-        render action: "new"
-      end
+        @user = User.new(user_params)
+        if @user.save
+          redirect_to @user, notice: "User was successfully created."
+          sign_in @user
+        else
+          #render :text => "here"
+          render action: "new"
+        end
   end
 
   def show

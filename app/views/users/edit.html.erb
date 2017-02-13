@@ -1,5 +1,5 @@
 <h1><%= @user.id %></h1>
-
+<% if @current_user.role == "admin" %>
 <%= simple_form_for @track, url: user_path do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -15,4 +15,8 @@
         
 <%= f.submit "Save Changes" %>
 <% end %>
+<% else %>
+<h4>You are not an admin and do not have access to this page.</h4>
+<% end %>
+
 
