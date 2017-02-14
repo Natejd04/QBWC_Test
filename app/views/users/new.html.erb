@@ -1,5 +1,5 @@
 <h1>New Users</h1>
-
+<% if current_user.role == "admin" %>	
 	<%= simple_form_for(@user) do |f| %>
 	    <%= f.input :name %>
 	    <%= f.input :email %>
@@ -9,3 +9,6 @@
 	    <%= f.input :avatar, as: :file %>
 	    <%= f.button :submit %>
 	<% end %>
+<% else %>
+<h4>You are not an admin and do not have access to this page.</h4>
+<% end %>
