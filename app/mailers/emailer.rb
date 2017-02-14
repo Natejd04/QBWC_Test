@@ -1,5 +1,5 @@
 class Emailer < ActionMailer::Base
-	default from: "natejd05@gmail.com"
+	default from: "shipping@zingbars.com"
 
 
 	def prep_email()

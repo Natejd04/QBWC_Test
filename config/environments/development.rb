@@ -41,14 +41,15 @@ Rails.application.configure do
 # This is for gmail, SMTP Settings
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
+config.action_mailer.raise_delivery_errors = false
 # SMTP settings for gmail
 config.action_mailer.smtp_settings = {
- :address              => "smtp.gmail.com",
- :port                 => 587,
- :user_name            => ENV['GMAIL_USERNAME'],
- :password             => ENV['GMAIL_PASSWORD'],
- :authentication       => "plain",
+ :address              => 'smtp.office365.com',
+ :port                 => '587',
+ :authentication       => :login,
+ :user_name            => ENV['OUTLOOK_USERNAME'],
+ :password             => ENV['OUTLOOK_PASSWORD'],
+ :domain               => 'zingbars.com',
 :enable_starttls_auto => true
 }
-
 end
