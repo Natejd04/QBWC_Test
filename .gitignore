@@ -14,3 +14,4 @@
 uploads/*
 /config/secrets.yml
 /config/local_env.yml
+/config/initializers/qbwc.rb
