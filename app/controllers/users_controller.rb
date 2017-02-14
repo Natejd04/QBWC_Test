@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user
+    before_action :authenticate_user, except:[:new, :create]
     # you can use this to make exceptions ", except:[:new, :create, :edit, :update]"
   
   def index
