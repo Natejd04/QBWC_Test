@@ -9,6 +9,3 @@
 	    <%= f.input :avatar, as: :file %>
 	    <%= f.button :submit %>
 	<% end %>
-<% if current_user.role == "admin" %>
-	<h4>You are not an admin and do not have access to this page.</h4>
-<% end %>
