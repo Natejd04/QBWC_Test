@@ -4,8 +4,8 @@ class TrackingsController < ApplicationController
  def index
         @track = Tracking.all.order "id ASC"
         @grouped = Tracking.all.group_by {}
-        @track_today = Tracking.where(:txn_date => Date.today - (1.0)).where(:emailsent => nil)
-        @emailed = Tracking.where(:txn_date => Date.today - (1.0)).where.not(:emailsent => nil)
+        @track_today = Tracking.where(:txn_date => Date.today).where(:emailsent => nil)
+        @emailed = Tracking.where(:txn_date => Date.today).where.not(:emailsent => nil)
     end
 
  def edit
@@ -36,7 +36,7 @@ class TrackingsController < ApplicationController
   end
 
   def email_send
-    @recipients = Tracking.where(:txn_date => Date.today - (1.0)).where(:emailed => true)
+    @recipients = Tracking.where(:txn_date => Date.today).where(:emailed => true)
     Emailer.prep_email().deliver 
     # render action: "index"
   end

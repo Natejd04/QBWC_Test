@@ -12,7 +12,7 @@ class TrackingEmailWorker < QBWC::Worker
             :invoice_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 10,
-                :txn_date_range_filter => {"from_txn_date" => "2017-03-14", "to_txn_date" => Date.today + (1.0)},
+                :txn_date_range_filter => {"from_txn_date" => Date.today, "to_txn_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
