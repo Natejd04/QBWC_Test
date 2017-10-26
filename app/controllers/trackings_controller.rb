@@ -36,7 +36,7 @@ class TrackingsController < ApplicationController
   end
 
   def email_send
-    @recipients = Tracking.where(:txn_date => Date.today).where(:emailed => true)
+    @recipients = Tracking.where(:txn_date => 1.week.ago..Date.today).where(:emailed => true)
     Emailer.prep_email().deliver 
     # render action: "index"
   end
