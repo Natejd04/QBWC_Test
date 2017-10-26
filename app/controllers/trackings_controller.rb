@@ -45,6 +45,6 @@ class TrackingsController < ApplicationController
       params.permit(:emailed)
   end
   def track_params
-      params.require(:tracking).permit(:memo, :tracking, :ship_method, :email, :emailed, :name, :packages, :ship1, :ship2, :ship3, :shipcity, :shipstate, :shippostal, :shipcountry)
+      params.require(:name).permit(:memo, :tracking, :ship_method, :email, :emailed, :packages, :ship1, :ship2, :ship3, :shipcity, :shipstate, :shippostal, :shipcountry)
   end
 end
