@@ -80,7 +80,7 @@ class TrackingEmailWorker < QBWC::Worker
                                     item_data[:ship_method] = "FedEx"
                                 end
                         end
-                    if Tracking.exists?(item_data[:txn_id])
+                    if Tracking.exists?(txn_id: item_data[:txn_id])
                     else
                         Tracking.create(item_data)
                     end
@@ -141,7 +141,7 @@ class TrackingEmailWorker < QBWC::Worker
                                 item_data[:ship_method] = "FedEx"
                             end
                     end
-                if Tracking.exists?(item_data[:txn_id])
+                if Tracking.exists?(txn_id: item_data[:txn_id])
                 else
                     Tracking.create(item_data)
                 end
