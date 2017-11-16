@@ -4,7 +4,7 @@ class TrackingsController < ApplicationController
  def index
         @track = Tracking.all.order "id ASC"
         @grouped = Tracking.all.group_by {}
-        @track_today = Tracking.where(:txn_date => 1.week.ago..Date.today).where(:emailsent => nil)
+        @track_today = Tracking.where(:txn_date => 1.week.ago..Date.today+1).where(:emailsent => nil)
         @emailed = Tracking.where(:txn_date => 1.week.ago..Date.today).where.not(:emailsent => nil)
     end
 
