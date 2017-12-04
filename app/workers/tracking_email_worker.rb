@@ -81,6 +81,7 @@ class TrackingEmailWorker < QBWC::Worker
                                 end
                         end
                     if Tracking.exists?(txn_id: item_data[:txn_id])
+                        Tracking.update(item_data)
                     else
                         Tracking.create(item_data)
                     end
@@ -142,6 +143,7 @@ class TrackingEmailWorker < QBWC::Worker
                             end
                     end
                 if Tracking.exists?(txn_id: item_data[:txn_id])
+                    Tracking.update(item_data)
                 else
                     Tracking.create(item_data)
                 end
