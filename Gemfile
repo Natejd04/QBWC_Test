@@ -37,7 +37,7 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 
 #paperclip gem for uploading files
-gem "paperclip", "~> 4.2"
+gem "paperclip", "~> 5.1"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
