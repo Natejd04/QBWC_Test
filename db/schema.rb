@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227003230) do
+ActiveRecord::Schema.define(version: 20180227011539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20180227003230) do
     t.string   "txn_id"
     t.string   "c_rep"
     t.decimal  "c_balance_due"
+    t.decimal  "c_subtotal"
   end
 
   create_table "items", force: :cascade do |t|

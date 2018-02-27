@@ -3,14 +3,14 @@ require 'qbwc'
 class InvoiceWorker < QBWC::Worker
 
     # This worker is going to be used to test. It will pre-load, with 2017 invoices.
-    # The goal is to enable this worker to update all invoices once loaded.
+    # This worker will update all invoices that were modified, to set date in request.
     # Currently set for no line-item import, that will be phase 2.
     
     def requests(job)
         {
             :invoice_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => "2017-01-01", "to_modified_date" => "2017-12-31"},
+                :modified_date_range_filter => {"from_modified_date" => "2018-02-01", "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => false
             }
         }
@@ -23,18 +23,37 @@ class InvoiceWorker < QBWC::Worker
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
-        if r['invoice_ret']
 
 #        We will then loop through each invoice and create records.
+        if r['invoice_ret'].is_a? Array 
+
             r['invoice_ret'].each do |qb_inv|
                 invoice_data = {}
                 invoice_data[:txn_id] = qb_inv['txn_id']
                 invoice_data[:invoice_number] = qb_inv['txn_number']
                 invoice_data[:c_edit] = qb_inv['edit_sequence']
                 invoice_data[:c_date] = qb_inv['txn_date']
+                invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
+                invoice_data[:c_subtotal] = qb_inv['sub_total']
 
                 if qb_inv['po_number']
                     invoice_data[:c_po] = qb_inv['po_number']
+                end
+
+                if qb_inv['class_ref']
+                    invoice_data[:c_class] = qb_inv['class_ref']['full_name']
+                end
+
+                if qb_inv['ship_date']
+                    invoice_data[:c_ship] = qb_inv['ship_date']
+                end
+
+                if qb_inv['due_date']
+                    invoice_data[:c_duedate] = qb_inv['due_date']
+                end
+
+                if qb_inv ['ship_method_ref']
+                    invoice_data[:c_via] = qb_inv['ship_method_ref']['full_name']
                 end
 
                 # <>2 We will use this eventually
@@ -58,8 +77,81 @@ class InvoiceWorker < QBWC::Worker
                 if qb_inv['sales_rep_ref']
                     invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
                 end
-                
+
+
+
+                if Invoice.exists?(txn_id: invoice_data[:txn_id])
+                    invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
+                    invoiceupdate.update(invoice_data)
+                else
+                    Invoice.create(invoice_data)
+                end
             end
+        end
+
+       
+        # If the obect wasn't an array and only one record was present we will record that
+        # No loop or each process
+    elsif !r['invoice_ret'].blank? 
+        invoice_data = {}
+        invoice_data[:txn_id] = qb_inv['txn_id']
+        invoice_data[:invoice_number] = qb_inv['txn_number']
+        invoice_data[:c_edit] = qb_inv['edit_sequence']
+        invoice_data[:c_date] = qb_inv['txn_date']
+        invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
+        invoice_data[:c_subtotal] = qb_inv['sub_total']
+
+        if qb_inv['po_number']
+            invoice_data[:c_po] = qb_inv['po_number']
+        end
+
+        if qb_inv['class_ref']
+            invoice_data[:c_class] = qb_inv['class_ref']['full_name']
+        end
+
+        if qb_inv['ship_date']
+            invoice_data[:c_ship] = qb_inv['ship_date']
+        end
+
+        if qb_inv['due_date']
+            invoice_data[:c_duedate] = qb_inv['due_date']
+        end
+
+        if qb_inv ['ship_method_ref']
+            invoice_data[:c_via] = qb_inv['ship_method_ref']['full_name']
+        end
+
+        # <>2 We will use this eventually
+        # if qb_inv['customer_ref']
+        #     invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
+        #     invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
+        # end
+
+        # <>2 Need to figure out a way to execute on lineitems
+      
+        if qb_inv['ship_address']
+            invoice_data[:c_ship1] = qb_inv['ship_address']['addr1']
+            invoice_data[:c_ship2] = qb_inv['ship_address']['addr2']
+            invoice_data[:c_ship3] = qb_inv['ship_address']['addr3']
+            invoice_data[:c_ship4] = qb_inv['ship_address']['addr4']
+            invoice_data[:c_ship5] = qb_inv['ship_address']['addr5']
+            invoice_data[:c_shipcity] = qb_inv['ship_address']['city']
+            invoice_data[:c_shipstate] = qb_inv['ship_address']['state']
+            invoice_data[:c_shippostal] = qb_inv['ship_address']['postal_code']
+            invoice_data[:c_shipcountry] = qb_inv['ship_address']['country']
+        end
+        
+        if qb_inv['sales_rep_ref']
+            invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
+        end
+
+
+
+        if Invoice.exists?(txn_id: invoice_data[:txn_id])
+            invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
+            invoiceupdate.update(invoice_data)
+        else
+            Invoice.create(invoice_data)
         end
     end
 end
