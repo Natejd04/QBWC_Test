@@ -71,11 +71,10 @@ class InvoiceNodetailLoader < QBWC::Worker
                     invoice_data[:c_via] = qb_inv['ship_method_ref']['full_name']
                 end
 
-                # <>2 We will use this eventually
-                # if qb_inv['customer_ref']
-                #     invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
-                #     invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
-                # end
+                if qb_inv['customer_ref']
+                    invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
+                    invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
+                end
               
                 if qb_inv['ship_address']
                     invoice_data[:c_ship1] = qb_inv['ship_address']['addr1']
@@ -140,11 +139,11 @@ class InvoiceNodetailLoader < QBWC::Worker
                 invoice_data[:c_via] = qb_inv['ship_method_ref']['full_name']
             end
 
-            # <>2 We will use this eventually
-            # if qb_inv['customer_ref']
-            #     invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
-            #     invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
-            # end
+            
+            if qb_inv['customer_ref']
+                invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
+                invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
+            end
 
             # <>2 Need to figure out a way to execute on lineitems
           
