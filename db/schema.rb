@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227011539) do
+ActiveRecord::Schema.define(version: 20180228001732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20180227011539) do
     t.date     "c_deliver"
     t.date     "c_duedate"
     t.string   "c_terms"
-    t.string   "c_sonumber"
+    t.string   "c_invoicenumber"
     t.string   "c_via"
     t.string   "c_memo"
     t.string   "docs_file_name"
