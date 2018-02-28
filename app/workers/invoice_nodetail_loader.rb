@@ -2,6 +2,19 @@ require 'qbwc'
 
 class InvoiceNodetailLoader < QBWC::Worker
 
+    # Pre-load all data from 2017-Present, only if no data exists in the Log table.
+    # If data exists in the Log table, we take the last pull date as a sort filter
+    # We will limit this to 1, the most recent entry
+    if Log.exists?(worker_name: 'InvoiceNodetailLoader')
+
+        LastUpdate = Log.where(worker_name: 'InvoiceNodetailLoader').order(created_at: :desc).limit(1)
+        LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+    else
+        # This is preloading data based on no records in the log table
+        LastUpdate = "2018-02-20"
+    
+    end
+
     # This worker is going to be used to test. It will pre-load, with 2017 invoices.
     # This worker will update all invoices that were modified, to set date in request.
     # Currently set for no line-item import, that will be phase 2.
@@ -10,7 +23,7 @@ class InvoiceNodetailLoader < QBWC::Worker
         {
             :invoice_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => "2018-02-01", "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => false
             }
         }
@@ -35,6 +48,8 @@ class InvoiceNodetailLoader < QBWC::Worker
                 invoice_data[:c_date] = qb_inv['txn_date']
                 invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
                 invoice_data[:c_subtotal] = qb_inv['subtotal']
+                invoice_data[:c_qbcreate] = qb_inv['time_created']
+                invoice_data[:c_qbupdate] = qb_inv['time_modified']
 
                 if qb_inv['po_number']
                     invoice_data[:c_po] = qb_inv['po_number']
@@ -94,13 +109,16 @@ class InvoiceNodetailLoader < QBWC::Worker
         # If the obect wasn't an array and only one record was present we will record that
         # No loop or each process
         elsif !r['invoice_ret'].blank? 
+            qb_inv = r['invoice_ret']
             invoice_data = {}
-            invoice_data[:txn_id] = qb_inv['txn_id']
-            invoice_data[:c_invoicenumber] = qb_inv['ref_number']
-            invoice_data[:c_edit] = qb_inv['edit_sequence']
-            invoice_data[:c_date] = qb_inv['txn_date']
-            invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
-            invoice_data[:c_subtotal] = qb_inv['subtotal']
+                invoice_data[:txn_id] = qb_inv['txn_id']
+                invoice_data[:c_invoicenumber] = qb_inv['ref_number']
+                invoice_data[:c_edit] = qb_inv['edit_sequence']
+                invoice_data[:c_date] = qb_inv['txn_date']
+                invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
+                invoice_data[:c_subtotal] = qb_inv['subtotal']
+                invoice_data[:c_qbcreate] = qb_inv['time_created']
+                invoice_data[:c_qbupdate] = qb_inv['time_modified']
 
             if qb_inv['po_number']
                 invoice_data[:c_po] = qb_inv['po_number']
@@ -159,4 +177,6 @@ class InvoiceNodetailLoader < QBWC::Worker
             end
         end
     end
+    # let's record that this worker was ran, so that it's timestamped in logs
+    Log.create(worker_name: "InvoiceNodetailLoader")
 end
