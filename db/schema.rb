@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228012013) do
+ActiveRecord::Schema.define(version: 20180228030546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20180228012013) do
     t.string   "customer_type"
     t.string   "rep"
     t.string   "email"
+    t.date     "qbcreate"
+    t.date     "qbupdate"
   end
 
   create_table "invoices", force: :cascade do |t|

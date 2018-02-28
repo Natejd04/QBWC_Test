@@ -2,16 +2,27 @@ require 'qbwc'
 
 class CustomerUpdateWorker < QBWC::Worker
 
-#    This is the secondary worker that will be ran to keep the rails db updated with new records.
-#    If this is the first time setting up this server, do not run this worker first.
-#    currently only grabbing 100 results at a time (more like batches of 100)
+    # Pre-load all customer data, only if no data exists in the Log table.
+    # If data exists in the Log table, we take the last pull date as a sort filter
+    # We will limit this to 1, the most recent entry
+    if Log.exists?(worker_name: 'CustomerUpdateWorker')
+
+        LastUpdate = Log.where(worker_name: 'CustomerUpdateWorker').order(created_at: :desc).limit(1)
+        LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+    else
+        # This is preloading data based on no records in the log table
+        LastUpdate = "2017-01-01"
+    
+    end
+
+    # Modified this worker, you can use this to load all data, and have it continually run.
     def requests(job)
         {
             :customer_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 100,
-                :from_modified_date => Customer.order("updated_at").last[:updated_at].strftime("%Y-%m-%d"),
-                :to_modified_date => DateTime.now.strftime("%Y-%m-%d")          
+                :max_returned => 1000,
+                :from_modified_date => LastUpdate,
+                :to_modified_date => Date.today + (1.0)          
             }
         }
     end
@@ -31,6 +42,8 @@ class CustomerUpdateWorker < QBWC::Worker
                 customer_data[:name] = qb_cus['name']
                 customer_data[:edit_sq] = qb_cus['edit_sequence']
                 customer_data[:email] = qb_cus['email']
+                customer_data[:qbcreate] = qb_cus['time_created']
+                customer_data[:qbupdate] = qb_cus['time_modified']
                
                 if qb_cus['customer_type_ref']
                     customer_data[:customer_type_id] = qb_cus['customer_type_ref']['list_id']
@@ -60,26 +73,26 @@ class CustomerUpdateWorker < QBWC::Worker
                     customer_data[:ship_zip] = qb_cus['ship_address']['postal_code']
                 end
                 
-                customer = Customer.find_by listid: customer_data[:listid]
+
+                if Customer.exists?(listid: qb_cus['list_id'])
+                customerid = Customer.find_by(listid: customer_data[:listid])
+                    
+                    # We want to confirm that it's neccessary to update this record first.
+                    if customerid.edit_sq != qb_cus['edit_sequence']
+                        customerid.update(customer_data)
+                    end
                 
-                # if customer doesn't exist create record.
-                if customer.blank?
+                else
+                   
+                    # the customer didn't exists so we will create
                     Customer.create(customer_data)
                 
-                # was the customer updated after created, if so we need a new edit_sq
-                # <> ideally if we can get updated in QB, then we could check updated in QB vs. Update in database and preform accurately.
-                elsif customer.updated_at < qb_cus['time_modified']
-                    
-                    customer.update(customer_data)
-                
-                # if the customer update and created are the same, let's update edit sequence anyways. 
-                else 
-                    
-                    # customer.update(customer_data)
-                    Rails.logger.info("Customer info is the same")
                 end
             end
-            
+            # let's record that this worker was ran, so that it's timestamped in logs
+            # Moved the log creating to be within the handle response incase the response errors, I don't want a log.
+            Log.create(worker_name: "CustomerUpdateWorker")
+
                 # Now we will check to make sure the object isn't empty.   
         elsif !r['customer_ret'].blank? 
             customer_data = {}
@@ -87,6 +100,8 @@ class CustomerUpdateWorker < QBWC::Worker
             customer_data[:name] = r['customer_ret']['name']
             customer_data[:edit_sq] = r['customer_ret']['edit_sequence']
             customer_data[:email] = r['customer_ret']['email']
+            customer_data[:qbcreate] = r['customer_ret']['time_created']
+            customer_data[:qbupdate] = r['customer_ret']['time_modified']
              
             if r['customer_ret']['customer_type_ref']
                 customer_data[:customer_type_id] = r['customer_ret']['customer_type_ref']['list_id']
@@ -116,23 +131,22 @@ class CustomerUpdateWorker < QBWC::Worker
                 customer_data[:ship_zip] = r['customer_ret']['ship_address']['postal_code']
             end
             
-            customer = Customer.find_by listid: customer_data[:listid]
-            # if customer doesn't exist create record.
-            if customer.blank?
-                Customer.create(customer_data)
+            # We are checking to see if this customer already exists
+            if Customer.exists?(listid: r['customer_ret']['list_id'])
+                customerid = Customer.find_by(listid: customer_data[:listid])
+                    
+                # we know they exists, but is it neccessary to update this record.
+                if customerid.edit_sq != r['customer_ret']['edit_sequence']
+                    customerid.update(customer_data)
+                end
                 
-            # was the customer updated after created, if so we need a new edit_sq
-            # <> ideally if we can get updated in QB, then we could check updated in QB vs. Update in database and preform accurately.
-            elsif customer.updated_at < r['customer_ret']['time_modified']
-                customer.update(customer_data)
-
-            # if the customer update and created are the same, let's update edit sequence anyways. 
-            else 
-                # customer.update(customer_data)
-                Rails.logger.info("Customer info is the same")
+            else
+                # the customer didn't exists so we will create
+                Customer.create(customer_data) 
             end
-            
+            # let's record that this worker was ran, so that it's timestamped in logs
+            # Moved the log create to be within the handle response incase the response has errors and I don't want it to log.
+            Log.create(worker_name: "CustomerUpdateWorker")
         end
     end
-        # Customer.last[:updated_at].strftime("%Y-%m-%d")
 end
