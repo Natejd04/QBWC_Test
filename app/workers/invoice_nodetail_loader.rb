@@ -176,7 +176,10 @@ class InvoiceNodetailLoader < QBWC::Worker
                 Invoice.create(invoice_data)
             end
         end
-    end
+
     # let's record that this worker was ran, so that it's timestamped in logs
+    # Moved the log creating to be within the handle response incase the response errors, I don't want a log.
     Log.create(worker_name: "InvoiceNodetailLoader")
+
+    end
 end
