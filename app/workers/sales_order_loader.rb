@@ -90,7 +90,7 @@ class InvoiceNodetailLoader < QBWC::Worker
 
                 if qb_inv['is_fully_invoiced'] = true
                     invoice_data[:c_invoiced] = 'yes'
-                elsif qb_inv['is_manually_closed' = true]
+                elsif qb_inv['is_manually_closed'] = true]
                     invoice_data[:c_invoiced] = 'yes'
                 else
                     invoice_data[:c_invoiced] = 'no'
@@ -164,7 +164,7 @@ class InvoiceNodetailLoader < QBWC::Worker
 
             if qb_inv['is_fully_invoiced'] = true
                 invoice_data[:c_invoiced] = 'yes'
-            elsif qb_inv['is_manually_closed' = true]
+            elsif qb_inv['is_manually_closed'] = true]
                 invoice_data[:c_invoiced] = 'yes'
             else
                 invoice_data[:c_invoiced] = 'no'
