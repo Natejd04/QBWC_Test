@@ -24,14 +24,14 @@ class OrdersController < ApplicationController
       redirect_to :action => :index      
   end
 
-  def delete_docs
-      @orders = Order.find_by_id(params[:id])
-      @orders.docs = nil
-      @orders.save
-      respond to do |format|
-          format.html {redirect_to @orders, notice: "Document was deleted"}
-      end
-  end
+  # def delete_docs
+  #     # @orders = Order.find_by_id(params[:id])
+  #     @orders.docs = nil
+  #     @orders.save
+  #     respond to do |format|
+  #         format.html {redirect_to @orders, notice: "Document was deleted"}
+  #     end
+  # end
   
   def index
 #      Need to create a better way to redirect users.
@@ -65,9 +65,9 @@ class OrdersController < ApplicationController
     
   def update
       @order = Order.find(params[:id])
-      if order_params[:remove_docs] == "1"
-          @order.docs = nil
-      end
+      # if order_params[:remove_docs] == "1"
+          # @order.docs = nil
+      # end
       @order.update(order_params)
       redirect_to :action => :index
       
@@ -86,10 +86,10 @@ class OrdersController < ApplicationController
       @sites = Site.all
   end
       
-  def download
-      @docs = Order.find(params[:id])
-      send_file @docs.document.path, :type => @docs.document_content_type, :disposition => 'inline'
-  end
+  # def download
+  #     # @docs = Order.find(params[:id])
+  #     # send_file @docs.document.path, :type => @docs.document_content_type, :disposition => 'inline'
+  # end
     
   def art
       authenticate_art
