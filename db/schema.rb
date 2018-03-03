@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228030546) do
+ActiveRecord::Schema.define(version: 20180303005402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,8 @@ ActiveRecord::Schema.define(version: 20180228030546) do
     t.string   "txn_id"
     t.string   "c_rep"
     t.string   "invoice_number"
+    t.date     "qbcreate"
+    t.date     "qbupdate"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|

@@ -1,6 +1,6 @@
 require 'qbwc'
 
-class InvoiceNodetailLoader < QBWC::Worker
+class SalesOrderLoader < QBWC::Worker
 
     # Pre-load all data from 2017-Present, only if no data exists in the Log table.
     # If data exists in the Log table, we take the last pull date as a sort filter
@@ -35,17 +35,17 @@ class InvoiceNodetailLoader < QBWC::Worker
 
 
         # We will then loop through each invoice and create records.
-        if r['invoice_ret'].is_a? Array 
+        if r['sales_order_ret'].is_a? Array 
 
-            r['invoice_ret'].each do |qb_inv|
+            r['sales_order_ret'].each do |qb_inv|
                 invoice_data = {}
                 invoice_data[:txn_id] = qb_inv['txn_id']
-                invoice_data[:c_invoicenumber] = qb_inv['ref_number']
+                invoice_data[:invoice_number] = qb_inv['ref_number']
                 invoice_data[:c_edit] = qb_inv['edit_sequence']
                 invoice_data[:c_date] = qb_inv['txn_date']
                 invoice_data[:c_total] = qb_inv['total_amount']
-                invoice_data[:c_qbcreate] = qb_inv['time_created']
-                invoice_data[:c_qbupdate] = qb_inv['time_modified']
+                invoice_data[:qbcreate] = qb_inv['time_created']
+                invoice_data[:qbupdate] = qb_inv['time_modified']
 
                 if qb_inv['po_number']
                     invoice_data[:c_po] = qb_inv['po_number']
@@ -59,14 +59,11 @@ class InvoiceNodetailLoader < QBWC::Worker
                     invoice_data[:c_ship] = qb_inv['ship_date']
                 end
 
-                if qb_inv['due_date']
-                    invoice_data[:c_duedate] = qb_inv['due_date']
-                end
-
                 if qb_inv ['ship_method_ref']
                     invoice_data[:c_via] = qb_inv['ship_method_ref']['full_name']
                 end
 
+                # binding.pry
                 if qb_inv['customer_ref']
                     invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
                     invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
@@ -110,16 +107,16 @@ class InvoiceNodetailLoader < QBWC::Worker
        
         # If the obect wasn't an array and only one record was present we will record that
         # No loop or each process
-        elsif !r['invoice_ret'].blank? 
-            qb_inv = r['invoice_ret']
+        elsif !r['sales_order_ret'].blank? 
+            qb_inv = r['sales_order_ret']
             invoice_data = {}
             invoice_data[:txn_id] = qb_inv['txn_id']
             invoice_data[:c_invoicenumber] = qb_inv['ref_number']
             invoice_data[:c_edit] = qb_inv['edit_sequence']
             invoice_data[:c_date] = qb_inv['txn_date']
             invoice_data[:c_total] = qb_inv['total_amount']
-            invoice_data[:c_qbcreate] = qb_inv['time_created']
-            invoice_data[:c_qbupdate] = qb_inv['time_modified']
+            invoice_data[:qbcreate] = qb_inv['time_created']
+            invoice_data[:qbupdate] = qb_inv['time_modified']
 
             if qb_inv['po_number']
                 invoice_data[:c_po] = qb_inv['po_number']
@@ -131,10 +128,6 @@ class InvoiceNodetailLoader < QBWC::Worker
 
             if qb_inv['ship_date']
                 invoice_data[:c_ship] = qb_inv['ship_date']
-            end
-
-            if qb_inv['due_date']
-                invoice_data[:c_duedate] = qb_inv['due_date']
             end
 
             if qb_inv ['ship_method_ref']
