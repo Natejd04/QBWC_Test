@@ -7,7 +7,7 @@ class InvoiceNodetailLoader < QBWC::Worker
     # We will limit this to 1, the most recent entry
     if Log.exists?(worker_name: 'SalesOrderLoader')
 
-        LastUpdate = Log.where(worker_name: 'InvoiceNodetailLoader').order(created_at: :desc).limit(1)
+        LastUpdate = Log.where(worker_name: 'SalesOrderLoader').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
@@ -28,9 +28,6 @@ class InvoiceNodetailLoader < QBWC::Worker
             }
         }
     end
-    # old code, that i don't think is supported anymore
-    # :from_modified_date => Customer.order("updated_at").last[:updated_at].strftime("%Y-%m-%d"),
-    # :to_modified_date => DateTime.now.strftime("%Y-%m-%d")
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
@@ -46,8 +43,7 @@ class InvoiceNodetailLoader < QBWC::Worker
                 invoice_data[:c_invoicenumber] = qb_inv['ref_number']
                 invoice_data[:c_edit] = qb_inv['edit_sequence']
                 invoice_data[:c_date] = qb_inv['txn_date']
-                invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
-                invoice_data[:c_subtotal] = qb_inv['subtotal']
+                invoice_data[:c_total] = qb_inv['total_amount']
                 invoice_data[:c_qbcreate] = qb_inv['time_created']
                 invoice_data[:c_qbupdate] = qb_inv['time_modified']
 
@@ -92,16 +88,23 @@ class InvoiceNodetailLoader < QBWC::Worker
                     invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
                 end
 
+                if qb_inv['is_fully_invoiced'] = true
+                    invoice_data[:c_invoiced] = 'yes'
+                elsif qb_inv['is_manually_closed' = true]
+                    invoice_data[:c_invoiced] = 'yes'
+                else
+                    invoice_data[:c_invoiced] = 'no'
+                end
 
 
-                if Invoice.exists?(txn_id: invoice_data[:txn_id])
-                    invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
+                if Order.exists?(txn_id: invoice_data[:txn_id])
+                    orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
-                        if invoiceupdate.c_edit != qb_inv['edit_sequence']
-                            invoiceupdate.update(invoice_data)
+                        if orderupdate.c_edit != qb_inv['edit_sequence']
+                            orderupdate.update(invoice_data)
                         end
                 else
-                    Invoice.create(invoice_data)
+                    Order.create(invoice_data)
                 end
             end
        
@@ -110,14 +113,13 @@ class InvoiceNodetailLoader < QBWC::Worker
         elsif !r['invoice_ret'].blank? 
             qb_inv = r['invoice_ret']
             invoice_data = {}
-                invoice_data[:txn_id] = qb_inv['txn_id']
-                invoice_data[:c_invoicenumber] = qb_inv['ref_number']
-                invoice_data[:c_edit] = qb_inv['edit_sequence']
-                invoice_data[:c_date] = qb_inv['txn_date']
-                invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
-                invoice_data[:c_subtotal] = qb_inv['subtotal']
-                invoice_data[:c_qbcreate] = qb_inv['time_created']
-                invoice_data[:c_qbupdate] = qb_inv['time_modified']
+            invoice_data[:txn_id] = qb_inv['txn_id']
+            invoice_data[:c_invoicenumber] = qb_inv['ref_number']
+            invoice_data[:c_edit] = qb_inv['edit_sequence']
+            invoice_data[:c_date] = qb_inv['txn_date']
+            invoice_data[:c_total] = qb_inv['total_amount']
+            invoice_data[:c_qbcreate] = qb_inv['time_created']
+            invoice_data[:c_qbupdate] = qb_inv['time_modified']
 
             if qb_inv['po_number']
                 invoice_data[:c_po] = qb_inv['po_number']
@@ -139,13 +141,10 @@ class InvoiceNodetailLoader < QBWC::Worker
                 invoice_data[:c_via] = qb_inv['ship_method_ref']['full_name']
             end
 
-            
             if qb_inv['customer_ref']
                 invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
                 invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
             end
-
-            # <>2 Need to figure out a way to execute on lineitems
           
             if qb_inv['ship_address']
                 invoice_data[:c_ship1] = qb_inv['ship_address']['addr1']
@@ -163,22 +162,29 @@ class InvoiceNodetailLoader < QBWC::Worker
                 invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
             end
 
+            if qb_inv['is_fully_invoiced'] = true
+                invoice_data[:c_invoiced] = 'yes'
+            elsif qb_inv['is_manually_closed' = true]
+                invoice_data[:c_invoiced] = 'yes'
+            else
+                invoice_data[:c_invoiced] = 'no'
+            end
 
 
-            if Invoice.exists?(txn_id: invoice_data[:txn_id])
-                invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
+            if Order.exists?(txn_id: invoice_data[:txn_id])
+                orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                     # before updating, lets find out if it's neccessary by filtering by modified
-                    if invoiceupdate.c_edit != qb_inv['edit_sequence']
-                        invoiceupdate.update(invoice_data)
+                    if orderupdate.c_edit != qb_inv['edit_sequence']
+                        orderupdate.update(invoice_data)
                     end
             else
-                Invoice.create(invoice_data)
+                Order.create(invoice_data)
             end
         end
 
     # let's record that this worker was ran, so that it's timestamped in logs
     # Moved the log creating to be within the handle response incase the response errors, I don't want a log.
-    Log.create(worker_name: "InvoiceNodetailLoader")
+    Log.create(worker_name: "SalesOrderLoader")
 
     end
 end
