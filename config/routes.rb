@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get '/email_send' => 'trackings#email_send'
     
   get '/customer_details' => 'orders#customer_details'
+
+  get '/dashboard' => 'dashboard#index'
     
 #  delete 'docs/:id'
   # The priority is based upon order of creation: first created -> highest priority.
