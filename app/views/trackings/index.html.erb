@@ -1,17 +1,23 @@
-<h1>Today's Shipments | <%= Date.today %></h1>
-Current Range = <%= Date.today - 7 %> thru <%= Date.today + 1 %>
-<p>
-<%= image_tag("animal.gif", :style => "display:none", :id => "loader") %>
-</p>
-<%= link_to "Send Today's Selected Emails", email_send_path, :class => "button-me" %>
+ <div id="page-wrapper" style="min-height: 629px;">
+	 <div class="row">
+	 	<div class="col-lg-8">
+			<h1>Today's Shipments | <%= Date.today %></h1>
+			Current Range = <%= Date.today - 7 %> thru <%= Date.today + 1 %>
+			<p>
+			<%= image_tag("animal.gif", :style => "display:none", :id => "loader") %>
+			</p>
+			<%= link_to "Send Today's Selected Emails", email_send_path, :class => "button-me" %>
 
-<p><h3><u>Emails That Need To Be Sent</u></h3></p>
+			<p><h3><u>Emails That Need To Be Sent</u></h3></p>
 
-<%= render "tracktable" %>
+			<%= render "tracktable" %>
 
 
-<p>&nbsp;</p>
+			<p>&nbsp;</p>
 
-<p><h3><u>Emails That Were Already Sent</u></h3></p>
-	
-<%= render "sentemail" %>
+			<p><h3><u>Emails That Were Already Sent</u></h3></p>
+				
+			<%= render "sentemail" %>
+		</div>
+	</div>
+</div>
