@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get '/customer_details' => 'orders#customer_details'
 
   get '/dashboard' => 'dashboard#index'
-  get "/dashboard/invoices" => "dashboard#_invoices"
+  
     
 #  delete 'docs/:id'
   # The priority is based upon order of creation: first created -> highest priority.

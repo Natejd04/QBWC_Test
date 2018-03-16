@@ -40,6 +40,9 @@ gem 'bootstrap-sass', '~> 3.3.7'
 #paperclip gem for uploading files
 gem "paperclip", "~> 5.1"
 
+# Using Autocomplete for a better search tool
+gem 'rails_autocomplete'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

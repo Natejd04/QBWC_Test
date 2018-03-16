@@ -22,6 +22,7 @@ class DashboardController < ApplicationController
   		render "_invoices", 
         # locals: { elephant: some_thing },
         layout: false
+        
 	end
   
   end
