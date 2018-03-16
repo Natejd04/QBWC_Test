@@ -9,7 +9,11 @@ class DashboardController < ApplicationController
 		@prior_m_total = Invoice.where(:c_date => Time.now.beginning_of_month - 1.month..Time.now.beginning_of_month - 1.day).sum(:c_subtotal)
 			@vs = ((@month_total - @prior_m_total) / @month_total) * 100
 		@open_orders_count = Order.where(c_invoiced: nil).count
-			
+
+		respond_to do |format|
+		    format.html
+		    format.json { @search = Customer.search(params[:term]) }
+  		end		
 	end
 
 	def customer_details
@@ -22,7 +26,6 @@ class DashboardController < ApplicationController
   		render "_invoices", 
         # locals: { elephant: some_thing },
         layout: false
-        
 	end
   
   end

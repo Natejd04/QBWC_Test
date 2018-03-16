@@ -1,0 +1,24 @@
+#search-results .ui-widget-content {
+  font-size: .9em;
+  padding: .5em 0;
+  border-color: #ddd;
+  // box-shadow: 0 .1em .2em rgba(187, 187, 187, 0.64);
+  line-height: 1.2;
+  max-height: 45em;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+#search-results .ui-menu-item {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  padding: .2em 0em 0em .2em;
+  position: relative;
+  border: 0;
+  border-left: 0px solid transparent;
+  position: relative;
+  height: 3.0em;
+}
+
+#search-results .city {
+  padding-left: 0.5em;
+}

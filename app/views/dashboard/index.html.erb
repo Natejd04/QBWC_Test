@@ -175,20 +175,21 @@
         <!-- /#page-wrapper -->
 
     <script>
-    $(function() {
-    	$(".order-table").hide();
+    	$(function() {
+      $(".order-table").hide();
+      new app.Search();
     
-    	$('.append-invoices').on('click', function(e) {
-    		e.preventDefault();
-    		$(".order-sales-table").hide();    		
-      		$(".order-table").show();			
-		});
-		$('.append-sales-orders').on('click', function(e) {
-    		e.preventDefault();
-    		$(".order-sales-table").show();    		
-      		$(".order-table").hide();			
-		});
-   	});
+      $('.append-invoices').on('click', function(e) {
+        e.preventDefault();
+        $(".order-sales-table").hide();       
+          $(".order-table").show();     
+    });
+    $('.append-sales-orders').on('click', function(e) {
+        e.preventDefault();
+        $(".order-sales-table").show();       
+          $(".order-table").hide();     
+    });
+});
 	</script>    
     <!-- Bootstrap Core JavaScript -->
     <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/bootstrap/js/bootstrap.min.js"></script>

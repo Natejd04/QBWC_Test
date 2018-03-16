@@ -43,6 +43,12 @@ gem "paperclip", "~> 5.1"
 # Using Autocomplete for a better search tool
 gem 'rails_autocomplete'
 
+# jQuery-ui-rails is needed
+gem 'jquery-ui-rails'
+
+# Apparently typeahead is required for auto_compelte
+gem 'twitter-typeahead-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
