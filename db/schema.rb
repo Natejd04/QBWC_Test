@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303005402) do
+ActiveRecord::Schema.define(version: 20180316232611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 20180303005402) do
     t.integer  "docs_file_size"
     t.datetime "docs_updated_at"
     t.boolean  "remove_docs",       default: false
-    t.string   "customer_id"
     t.string   "c_class"
     t.string   "c_ship1"
     t.string   "c_ship2"
@@ -98,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180303005402) do
     t.decimal  "c_subtotal"
     t.date     "c_qbupdate"
     t.date     "c_qbcreate"
+    t.integer  "customer_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -156,7 +156,6 @@ ActiveRecord::Schema.define(version: 20180303005402) do
     t.integer  "docs_file_size"
     t.datetime "docs_updated_at"
     t.boolean  "remove_docs",       default: false
-    t.string   "customer_id"
     t.integer  "lineitem_id"
     t.string   "c_class"
     t.string   "c_ship1"
@@ -176,6 +175,7 @@ ActiveRecord::Schema.define(version: 20180303005402) do
     t.string   "invoice_number"
     t.date     "qbcreate"
     t.date     "qbupdate"
+    t.integer  "customer_id"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|

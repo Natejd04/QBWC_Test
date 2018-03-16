@@ -123,7 +123,7 @@
                             <div class="pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Type of Orders
+                                        <span id="type-of-orders">Sales Orders</span>
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
@@ -182,12 +182,14 @@
       $('.append-invoices').on('click', function(e) {
         e.preventDefault();
         $(".order-sales-table").hide();       
-          $(".order-table").show();     
+        $(".order-table").show();
+        $("#type-of-orders").text("Invoices");    
     });
     $('.append-sales-orders').on('click', function(e) {
         e.preventDefault();
         $(".order-sales-table").show();       
-          $(".order-table").hide();     
+        $(".order-table").hide();
+        $("#type-of-orders").text("Sales Orders");
     });
 });
 	</script>    
