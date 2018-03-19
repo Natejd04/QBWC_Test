@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   
   resources :sessions
 
-    get 'invoice' => 'orders#invoice'
   delete 'logout' => 'sessions#destroy'
   get 'signin' => 'sessions#new'
     
@@ -25,6 +24,7 @@ Rails.application.routes.draw do
   resources :site_inventories
   resources :bills
   resources :trackings
+  resources :invoices
 
   get '/email_send' => 'trackings#email_send'
     

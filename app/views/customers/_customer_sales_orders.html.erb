@@ -1,0 +1,13 @@
+<% @customer.orders.each do |f| %>
+<tr>
+	<td><%= f.c_name %></td>
+	<td><%= link_to f.invoice_number, order_path(f.id) %></td>
+	<td>Sales Order</td>
+	<td><%= f.c_date.strftime("%m/%d/%Y") %></td>
+	<td><%= f.c_po %></td>
+	<td><%= number_to_currency(f.c_total, :unit=> "$") %></td>
+</tr>
+<% end %>	
+<tr> 
+	<td colspan="6"><b>TOTAL<div class="pull-right"><%= number_to_currency(@order_total, :unit => "$") %></div></b></td>
+</tr>

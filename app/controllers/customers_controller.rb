@@ -6,6 +6,10 @@ class CustomersController < ApplicationController
     
   def show
      @customer = Customer.find(params[:id]) 
+     @order_total = Order.where(:customer_id => @customer.id).sum(:c_total)
+     @order_ytd_total = Order.where(:customer_id => @customer.id, :c_date => Time.now.beginning_of_year..Time.now).sum(:c_total)
+     @invoice_total = Invoice.where(:customer_id => @customer.id).sum(:c_subtotal)
+     @invoice_ytd_total = Invoice.where(:customer_id => @customer.id, :c_date => Time.now.beginning_of_year..Time.now).sum(:c_subtotal)
       
   end
     
