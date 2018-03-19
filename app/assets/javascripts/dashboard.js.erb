@@ -26,14 +26,19 @@ app.Search.prototype = {
 },
 
 _render: function(ul, item) {
-  var markup = [
-    // '<span class="img">',
-    //   '<img src="' + item.image_url + '" />',
-    // '</span>',
-    '<span class="name"><a href="../customers/' + item.id + '">'  + item.name + '</a>:</span>',
-    '<span class="city">' + item.city + ',</span>',
-    '<span class="state">' + item.state + '</span>'
-  ];
+  if (item.orders.length != 0) {
+    var markup = [
+      '<span class="name"><a href="../orders/' + item.orders[0].id + '">'  + item.orders[0].invoice_number + '</a>:</span>',
+      '<span class="city">' + item.name + ',</span>',
+    ];
+  } 
+  else {
+    var markup = [
+      '<span class="name"><a href="../customers/' + item.id + '">'  + item.name + '</a>:</span>',
+      '<span class="city">' + item.city + ',</span>',
+      '<span class="state">' + item.state + '</span>'
+    ];
+  }
   return $('<li>')
     .append(markup.join(''))
     .appendTo(ul);

@@ -3,7 +3,7 @@ class Order < ActiveRecord::Base
     has_many :line_items
     has_many :items
 #    belongs_to :customer, foreign_key: "listid"
-    belongs_to :customers
+    belongs_to :customers, foreign_key: "customer_id"
     accepts_nested_attributes_for :line_items, allow_destroy: true, :reject_if => :reject_blank_items
     validates :customer_id, presence: true
     

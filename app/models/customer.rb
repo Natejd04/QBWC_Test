@@ -8,7 +8,7 @@ class Customer < ActiveRecord::Base
   		else
   			# where('LOWER(name) LIKE :term OR LOWER(city) LIKE :term', term: "%#{term.downcase}%")
 			# Order.where('invoice_number LIKE :term')
-			joins(:orders).where('orders.invoice_number LIKE :term', term: "#{term}")
+			includes(:orders).where('orders.invoice_number LIKE :term', term: "#{term}").references(:orders)
   		end
 	end
 
