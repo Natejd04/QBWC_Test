@@ -92,8 +92,7 @@ class InvoiceNodetailLoader < QBWC::Worker
                     invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
                 end
 
-
-
+                # We need to create the invoice first, so we can get it's ID.
                 if Invoice.exists?(txn_id: invoice_data[:txn_id])
                     invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
@@ -104,7 +103,68 @@ class InvoiceNodetailLoader < QBWC::Worker
                     Invoice.create(invoice_data)
                 end
             end
-       
+
+# ----------------> Start Line Item
+
+                    # Let's try and record line items
+                    if invoice_data['invoice_line_ret']
+                        # binding.pry
+                        
+                        qb_inv['invoice_line_ret'].each do |li|
+                        # We need to match the lineitem with order id
+                        li_data = {}
+
+                        li_data[:order_id] = qb_inv[:id]
+                        
+                    # It's still breaking in here somehwere. Nil Nilclass,                 
+
+                    if li != {"xml_attributes"=>{}}
+                        if li['item_ref']
+                            # binding.pry
+                            list_id = li['item_ref']['list_id']
+                            if Item.find_by(list_id: list_id).present?
+                                li_data[:item_id] = Item.find_by(list_id: list_id).id
+        #                    It doesn't match, or isn't an inventory item, add it to other
+                            else
+            #                   87 represents an other item
+                                li_data[:item_id] = 87
+                            end    
+
+                            li_data[:product_name] = li['item_ref']['full_name']
+                        end
+                    end
+                        
+                        if li['description']
+                            li_data[:description] = li['description']
+                        end
+                            # Does the line item have a quantity
+                        li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
+                            # Does this li have an amount?
+                        li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+                        
+                        if li['inventory_site_ref']
+                            site_id = li['inventory_site_ref']['list_id']
+                            li_data[:site_id] = Site.find_by(list_id: site_id).id
+                            li_data[:site_name] = li['inventory_site_ref']['full_name']
+                        end
+
+                       
+                        # Now we need to record these line items
+                        li_ref = LineItem.find_by txn_id: li['txn_line_id']
+                        if li_ref.blank?
+                            LineItem.create(li_data)
+                        
+                        elsif li_ref.updated_at < qb_inv['time_modified']
+                            li_ref.update(li_data)
+                        else
+                            Rails.logger.info("Invoice hasn't been changed")
+                        end
+                     
+
+                    end
+
+# ---------------> End Line Item     
+  
         # If the obect wasn't an array and only one record was present we will record that
         # No loop or each process
         elsif !r['invoice_ret'].blank? 

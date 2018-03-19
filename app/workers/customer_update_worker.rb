@@ -39,7 +39,7 @@ class CustomerUpdateWorker < QBWC::Worker
             r['customer_ret'].each do |qb_cus|
                 customer_data = {}
                 customer_data[:listid] = qb_cus['list_id']
-                customer_data[:name] = qb_cus['name']
+                customer_data[:name] = qb_cus['full_name']
                 customer_data[:edit_sq] = qb_cus['edit_sequence']
                 customer_data[:email] = qb_cus['email']
                 customer_data[:qbcreate] = qb_cus['time_created']
