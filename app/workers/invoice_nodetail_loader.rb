@@ -102,8 +102,6 @@ class InvoiceNodetailLoader < QBWC::Worker
                 else
                     Invoice.create(invoice_data)
                 end
-            end
-
 # ----------------> Start Line Item
 
                     # Let's try and record line items
@@ -151,7 +149,8 @@ class InvoiceNodetailLoader < QBWC::Worker
                             end
                         end
                     end
-                    
+                end
+
 # ---------------> End Line Item     
   
         # If the obect wasn't an array and only one record was present we will record that

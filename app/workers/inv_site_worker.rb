@@ -4,10 +4,23 @@ require 'qbwc'
 
 class InvSiteWorker < QBWC::Worker
 #    You cannot use iterator above Qbxml7.0, forced QBxml10.0
+    if Log.exists?(worker_name: 'InvSiteWorker')
+
+        LastUpdate = Log.where(worker_name: 'InvSiteWorker').order(created_at: :desc).limit(1)
+        LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+    else
+        # This is preloading data based on no records in the log table
+        LastUpdate = "2018-02-20"
+    
+    end
+
     def requests(job)
         {
             :inventory_site_query_rq => {
-                :xml_attributes => { "requestID" =>"1" }
+                :xml_attributes => { "requestID" =>"1" },
+                :from_modified_date => LastUpdate,
+                :to_modified_date => Date.today + (1.0),
+                :active_status => "ActiveOnly"
             }
         }
     end
@@ -36,9 +49,16 @@ class InvSiteWorker < QBWC::Worker
                 site[:state] = qb_item['site_address']['state']
                 site[:postal] = qb_item['site_address']['postal_code']
             end
-            
-##             <> need to make this so it won't add unless new sites.
+
+            if Site.exists?(list_id: site['list_id'])
+                siteupdate = Site.find_by(list_id: site['list_id'])
+                # before updating, lets find out if it's neccessary by filtering by modified
+                if siteupdate.edit_sq != qb_item['edit_sequence']
+                    siteupdate.update(site)
+                end
+            else
                 Site.create(site)
+            end
         end
     end
 end
