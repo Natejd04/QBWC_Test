@@ -41,7 +41,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
                 item_data[:name] = qb_item['full_name']
-                item_data[:type] = "Inventory Assembly"
+                item_data[:item_type] = "Inventory Assembly"
 
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
@@ -77,7 +77,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
                 item_data[:name] = qb_item['full_name']
-                item_data[:type] = "Service"
+                item_data[:item_type] = "Service"
 
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
@@ -113,7 +113,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
                 item_data[:name] = qb_item['full_name']
-                item_data[:type] = "Non-Inventory Part"
+                item_data[:item_type] = "Non-Inventory Part"
 
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
@@ -149,7 +149,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
                 item_data[:name] = qb_item['full_name']
-                item_data[:type] = "Other Charge"
+                item_data[:item_type] = "Other Charge"
 
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
@@ -185,7 +185,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
                 item_data[:name] = qb_item['full_name']
-                item_data[:type] = "Inventory Part"
+                item_data[:item_type] = "Inventory Part"
 
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
@@ -221,7 +221,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
                 item_data[:name] = qb_item['full_name']
-                item_data[:type] = "Dscount"
+                item_data[:item_type] = "Dscount"
 
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
