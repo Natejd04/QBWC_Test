@@ -140,7 +140,7 @@ class InvoiceNodetailLoader < QBWC::Worker
                             if LineItem.exists?(txn_id: li['txn_line_id'])
                                 lineitemupdate = LineItem.find_by(txn_id: li[:txn_id])
                                 # Has this LineItem actually been modified?
-            binding.pry
+
                                 if invoiceupdate.c_edit != qb_inv['edit_sequence']
                                     lineitemupdate.update(li_data)
                                 end
