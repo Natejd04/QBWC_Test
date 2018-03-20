@@ -26,17 +26,23 @@ app.Search.prototype = {
 },
 
 _render: function(ul, item) {
-  if (item.orders.length != 0) {
-    var markup = [
-      '<span class="name"><a href="../orders/' + item.orders[0].id + '">'  + item.orders[0].invoice_number + '</a>:</span>',
-      '<span class="city">' + item.name + ',</span>',
-    ];
-  } 
-  else {
-    var markup = [
+  if (this._input[0].value.match(/[a-zA-Z]/)) {
+        var markup = [
       '<span class="name"><a href="../customers/' + item.id + '">'  + item.name + '</a>:</span>',
       '<span class="city">' + item.city + ',</span>',
       '<span class="state">' + item.state + '</span>'
+    ];
+  } 
+  else if (this._input[0].value.match(/-{1}\d/)) {
+    var markup = [
+      '<span class="name"><a href="../orders/' + item.invoices[0].id + '">'  + item.invoices[0].c_invoicenumber + '</a>:</span>',
+      '<span class="city">' + item.name + ',</span>',
+    ];
+
+  } else {
+    var markup = [
+      '<span class="name"><a href="../orders/' + item.orders[0].id + '">'  + item.orders[0].invoice_number + '</a>:</span>',
+      '<span class="city">' + item.name + ',</span>',
     ];
   }
   return $('<li>')
