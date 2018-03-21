@@ -132,10 +132,6 @@ class InvoiceDetailLoader < QBWC::Worker
                         if li['inventory_site_ref']
                             if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
                                 li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
-                            else
-                                # insert the site list ID for unspecified.
-                                # I am fairly positive this is required for model associations
-                                li_data[:site_id] = Site.find_by(list_id: "80000005-1399305135")
                             end
                         end
                        
@@ -180,10 +176,6 @@ class InvoiceDetailLoader < QBWC::Worker
                     if li['inventory_site_ref']
                         if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
                             li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
-                        else
-                            # insert the site list ID for unspecified.
-                            # I am fairly positive this is required for model associations
-                            li_data[:site_id] = Site.find_by(list_id: "80000005-1399305135")
                         end
                     end
                    
