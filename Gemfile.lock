@@ -36,7 +36,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    alphabetical_paginate (2.3.3)
     arel (6.0.0)
     autoprefixer-rails (8.1.0.1)
       execjs
@@ -90,7 +89,7 @@ GEM
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
-    loofah (2.2.0)
+    loofah (2.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -220,7 +219,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  alphabetical_paginate
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.3.7)
   byebug
@@ -228,6 +226,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
+  loofah (~> 2.2, >= 2.2.1)
   paperclip (~> 5.1)
   pg
   pry-rails

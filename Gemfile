@@ -53,7 +53,10 @@ gem 'twitter-typeahead-rails'
 gem 'will_paginate-bootstrap'
 
 # Alphabetic Pagination, still supported
-gem 'alphabetical_paginate'
+# gem 'alphabetical_paginate'
+
+# using with rails-html-sanitizer
+gem 'loofah', '~> 2.2', '>= 2.2.1'
 
 
 # Use Unicorn as the app server
