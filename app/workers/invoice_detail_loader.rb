@@ -1,17 +1,17 @@
 require 'qbwc'
 
-class InvoiceNodetailLoader < QBWC::Worker
+class InvoiceDetailLoader < QBWC::Worker
 
     # Pre-load all data from 2017-Present, only if no data exists in the Log table.
     # If data exists in the Log table, we take the last pull date as a sort filter
     # We will limit this to 1, the most recent entry
-    if Log.exists?(worker_name: 'InvoiceNodetailLoader')
+    if Log.exists?(worker_name: 'InvoiceDetailLoader1')
 
-        LastUpdate = Log.where(worker_name: 'InvoiceNodetailLoader').order(created_at: :desc).limit(1)
+        LastUpdate = Log.where(worker_name: 'InvoiceDetailLoader').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
-        LastUpdate = "2018-02-20"
+        LastUpdate = "2018-02-01"
     
     end
 
@@ -22,20 +22,15 @@ class InvoiceNodetailLoader < QBWC::Worker
     def requests(job)
         {
             :invoice_query_rq => {
-                :xml_attributes => { "requestID" =>"1"},
                 :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
     end
-    # old code, that i don't think is supported anymore
-    # :from_modified_date => Customer.order("updated_at").last[:updated_at].strftime("%Y-%m-%d"),
-    # :to_modified_date => DateTime.now.strftime("%Y-%m-%d")
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
-        complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-
+        # complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
         # We will then loop through each invoice and create records.
         if r['invoice_ret'].is_a? Array 
@@ -93,8 +88,8 @@ class InvoiceNodetailLoader < QBWC::Worker
                 end
 
                 # We need to create the invoice first, so we can get it's ID.
-                if Invoice.exists?(txn_id: invoice_data[:txn_id])
-                    invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
+                if Invoice.exists?(txn_id: qb_inv[:txn_id])
+                    invoiceupdate = Invoice.find_by(txn_id: qb_inv[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
                         if invoiceupdate.c_edit != qb_inv['edit_sequence']
                             invoiceupdate.update(invoice_data)
@@ -102,56 +97,104 @@ class InvoiceNodetailLoader < QBWC::Worker
                 else
                     Invoice.create(invoice_data)
                 end
+
 # ----------------> Start Line Item
+                # Line items are recorded if they are an array
+                if qb_inv['invoice_line_ret'].is_a? Array
+                    
+                    
+                    qb_inv['invoice_line_ret'].each do |li|
+                    
+                        li_data = {}
 
-                    # Let's try and record line items
-                    if invoice_data['invoice_line_ret']
-                        # binding.pry
-                        
-                        qb_inv['invoice_line_ret'].each do |li|
-                        
-                            li_data = {}
+                        # We need to match the lineitem with order id
+                        # We just recorded it and could pull it via find.
+                        li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
 
-                            # We need to match the lineitem with order id
-                            # We just recorded it and could pull it via find.
-                            li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
-
-                   #---->     # if li != {"xml_attributes"=>{}}
-                            if li['item_ref']
-                                # This line item has an item, let's find it
-                                li_data[:item_id] = Item.find_by(list_id: list_id).id
-                            end
-                    #---->   end
-                            
-                            if li['description']
-                                li_data[:description] = li['description']
-                            end
-
-                            # Does the line item have a quantity
-                            li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
-                            # Does this li have an amount?
-                            li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
-                            
-                            if li['inventory_site_ref']
-                                li_data[:site_id] = Site.find_by(list_id: site_id).id
-                            end
-                           
-                            # Now we need to record these line items
-                            if LineItem.exists?(txn_id: li['txn_line_id'])
-                                lineitemupdate = LineItem.find_by(txn_id: li[:txn_id])
-                                # Has this LineItem actually been modified?
-
-                                if invoiceupdate.c_edit != qb_inv['edit_sequence']
-                                    lineitemupdate.update(li_data)
-                                end
-                            else
-                                LineItem.create(li_data)
+                    #---->     # if li != {"xml_attributes"=>{}}
+                        if li['item_ref']
+                            # This line item has an item, let's find it
+                            if Item.exists?(list_id: li['item_ref']['list_id'])
+                                li_data[:item_id] = Item.find_by(list_id: li['item_ref']['list_id']).id
                             end
                         end
+                    #---->   end
+                        
+                        if li['desc']
+                            li_data[:description] = li['desc']
+                        end
+
+                        # Does the line item have a quantity
+                        li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
+                        # Does this li have an amount?
+                        li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+                    
+                        if li['inventory_site_ref']
+                            if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
+                                li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
+                            end
+                        end
+                       
+                        # Now we need to record these line items
+                        if LineItem.exists?(txn_id: li['txn_line_id'])
+                            lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
+                            # Has this LineItem actually been modified?
+
+                            if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                                lineitemupdate.update(li_data)
+                            end
+                        else
+                            LineItem.create(li_data)
+                        end
+                    end
+
+                # we need this if the line item only has one entry.   
+                elsif !qb_inv['invoice_line_ret'].blank? 
+                    li_data = {}
+                    li = qb_inv['invoice_line_ret']
+                    # We need to match the lineitem with order id
+                    # We just recorded it and could pull it via find.
+                    li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
+
+                #---->     # if li != {"xml_attributes"=>{}}
+                    if li['item_ref']
+                        if Item.exists?(list_id: li['item_ref']['list_id'])
+                            li_data[:item_id] = Item.find_by(list_id: li['item_ref']['list_id']).id
+                        end
+                    end
+                #---->   end
+                    
+                    if li['desc']
+                        li_data[:description] = li['desc']
+                    end
+
+                    # Does the line item have a quantity
+                    li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
+                    # Does this li have an amount?
+                    li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+                    
+                    if li['inventory_site_ref']
+                        if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
+                            li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
+                        end
+                    end
+                   
+                    # Now we need to record these line items
+                    if LineItem.exists?(txn_id: li['txn_line_id'])
+                        lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
+                        # Has this LineItem actually been modified?
+
+                        if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                            lineitemupdate.update(li_data)
+                        end
+                    else
+                        LineItem.create(li_data)
                     end
                 end
-
-# ---------------> End Line Item     
+    # ---------------> End Line Item     
+            
+            # This is the end of the original invoice each do
+            end
   
         # If the obect wasn't an array and only one record was present we will record that
         # No loop or each process
@@ -226,7 +269,7 @@ class InvoiceNodetailLoader < QBWC::Worker
 
     # let's record that this worker was ran, so that it's timestamped in logs
     # Moved the log creating to be within the handle response incase the response errors, I don't want a log.
-    Log.create(worker_name: "InvoiceNodetailLoader")
+    Log.create(worker_name: "InvoiceDetailLoader")
 
     end
 end
