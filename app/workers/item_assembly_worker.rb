@@ -4,7 +4,7 @@ require 'qbwc'
 class ItemAssemblyWorker < QBWC::Worker
 
 # Same thing, let's fine out the last time this was pulled, and decide if it's worth it
-    if Log.exists?(worker_name: 'ItemAssemblyWorker1')
+    if Log.exists?(worker_name: 'ItemAssemblyWorker')
 
         LastUpdate = Log.where(worker_name: 'ItemAssemblyWorker').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")

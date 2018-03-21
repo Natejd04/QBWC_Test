@@ -4,7 +4,7 @@ require 'qbwc'
 
 class InvSiteWorker < QBWC::Worker
 #    You cannot use iterator above Qbxml7.0, forced QBxml10.0
-    if Log.exists?(worker_name: 'InvSiteWorker1')
+    if Log.exists?(worker_name: 'InvSiteWorker')
 
         LastUpdate = Log.where(worker_name: 'InvSiteWorker').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
