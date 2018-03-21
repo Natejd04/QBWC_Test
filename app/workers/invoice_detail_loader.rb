@@ -42,7 +42,20 @@ class InvoiceDetailLoader < QBWC::Worker
                 invoice_data[:c_edit] = qb_inv['edit_sequence']
                 invoice_data[:c_date] = qb_inv['txn_date']
                 invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
-                invoice_data[:c_subtotal] = qb_inv['subtotal']
+                
+
+                if qb_inv['currency_ref']
+                    currency_ref = qb_inv['currency_ref']['full_name']
+                    invoice_data[:currency_ref] = qb_inv['currency_ref']['full_name']
+                    invoice_data[:exchange_rate] = qb_inv['exchange_rate']
+                    if currency_ref == "Canadian Dollar"
+                        invoice_data[:c_subtotal] = (qb_inv['subtotal'] * invoice_data[:exchange_rate])
+                    else
+                        invoice_data[:c_subtotal] = qb_inv['subtotal']
+                    end
+                end
+
+                invoice_data[:c_template] = qb_inv['template_ref']['full_name']
                 invoice_data[:c_qbcreate] = qb_inv['time_created']
                 invoice_data[:c_qbupdate] = qb_inv['time_modified']
 
@@ -206,9 +219,20 @@ class InvoiceDetailLoader < QBWC::Worker
                 invoice_data[:c_edit] = qb_inv['edit_sequence']
                 invoice_data[:c_date] = qb_inv['txn_date']
                 invoice_data[:c_balance_due] = qb_inv['balance_remaining_in_home_currency']
-                invoice_data[:c_subtotal] = qb_inv['subtotal']
                 invoice_data[:c_qbcreate] = qb_inv['time_created']
                 invoice_data[:c_qbupdate] = qb_inv['time_modified']
+                invoice_data[:c_template] = qb_inv['template_ref']['full_name']
+
+            if qb_inv['currency_ref']
+                currency_ref = qb_inv['currency_ref']['full_name']
+                invoice_data[:currency_ref] = qb_inv['currency_ref']['full_name']
+                invoice_data[:exchange_rate] = qb_inv['exchange_rate']
+                if currency_ref == "Canadian Dollar"
+                    invoice_data[:c_subtotal] = (qb_inv['subtotal'] * invoice_data[:exchange_rate])
+                else
+                    invoice_data[:c_subtotal] = qb_inv['subtotal']
+                end
+            end
 
             if qb_inv['po_number']
                 invoice_data[:c_po] = qb_inv['po_number']

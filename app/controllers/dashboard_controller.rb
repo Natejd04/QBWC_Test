@@ -5,7 +5,11 @@ class DashboardController < ApplicationController
 		@order_total = Order.where(:c_date => 1.month.ago..Time.now).sum(:c_total)
 		@invoices = Invoice.where(:c_date => 1.month.ago..Time.now).where.not(c_subtotal: 0)
 		@invoice_total = Invoice.where(:c_date => 1.month.ago..Time.now).sum(:c_subtotal)
-		@month_total = Invoice.where(:c_date => 1.month.ago..Time.now.end_of_month).sum(:c_subtotal)
+		#@month_total = Invoice.where(:c_date => Time.now.beginning_of_month..Time.now).sum(:c_subtotal)
+		
+		# using these just for development, unhide items above in production
+		@month_total = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where.not("c_name like ?", "* UPP:*%").sum(:c_subtotal)
+		# @month-no-upp = 
 		@prior_m_total = Invoice.where(:c_date => Time.now.beginning_of_month - 1.month..Time.now.beginning_of_month - 1.day).sum(:c_subtotal)
 			@vs = ((@month_total - @prior_m_total) / @month_total) * 100
 		@open_orders_count = Order.where(c_invoiced: nil).count
