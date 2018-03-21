@@ -1,5 +1,6 @@
 class SitesController < ApplicationController
 before_action :authenticate_user, except:[:show]
+
     def index
         @site = Site.all.order('created_at asc') 
     end

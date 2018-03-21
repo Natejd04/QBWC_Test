@@ -5,7 +5,7 @@ class InvoiceDetailLoader < QBWC::Worker
     # Pre-load all data from 2017-Present, only if no data exists in the Log table.
     # If data exists in the Log table, we take the last pull date as a sort filter
     # We will limit this to 1, the most recent entry
-    if Log.exists?(worker_name: 'InvoiceDetailLoader')
+    if Log.exists?(worker_name: 'InvoiceDetailLoader1')
 
         LastUpdate = Log.where(worker_name: 'InvoiceDetailLoader').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
@@ -132,6 +132,10 @@ class InvoiceDetailLoader < QBWC::Worker
                         if li['inventory_site_ref']
                             if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
                                 li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
+                            else
+                                # insert the site list ID for unspecified.
+                                # I am fairly positive this is required for model associations
+                                li_data[:site_id] = Site.find_by(list_id: "80000005-1399305135")
                             end
                         end
                        
@@ -176,6 +180,10 @@ class InvoiceDetailLoader < QBWC::Worker
                     if li['inventory_site_ref']
                         if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
                             li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
+                        else
+                            # insert the site list ID for unspecified.
+                            # I am fairly positive this is required for model associations
+                            li_data[:site_id] = Site.find_by(list_id: "80000005-1399305135")
                         end
                     end
                    
@@ -265,7 +273,114 @@ class InvoiceDetailLoader < QBWC::Worker
             else
                 Invoice.create(invoice_data)
             end
+
+
+# ----------------> Start Line Item
+            # Line items are recorded if they are an array
+            if qb_inv['invoice_line_ret'].is_a? Array
+                
+                
+                qb_inv['invoice_line_ret'].each do |li|
+                
+                    li_data = {}
+
+                    # We need to match the lineitem with order id
+                    # We just recorded it and could pull it via find.
+                    li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
+
+                #---->     # if li != {"xml_attributes"=>{}}
+                    if li['item_ref']
+                        # This line item has an item, let's find it
+                        if Item.exists?(list_id: li['item_ref']['list_id'])
+                            li_data[:item_id] = Item.find_by(list_id: li['item_ref']['list_id']).id
+                        end
+                    end
+                #---->   end
+                    
+                    if li['desc']
+                        li_data[:description] = li['desc']
+                    end
+
+                    # Does the line item have a quantity
+                    li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
+                    # Does this li have an amount?
+                    li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+                
+                    if li['inventory_site_ref']
+                        if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
+                            li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
+                        else
+                            # insert the site list ID for unspecified.
+                            # I am fairly positive this is required for model associations
+                            li_data[:site_id] = Site.find_by(list_id: "80000005-1399305135")
+                        end
+                    end
+                   
+                    # Now we need to record these line items
+                    if LineItem.exists?(txn_id: li['txn_line_id'])
+                        lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
+                        # Has this LineItem actually been modified?
+
+                        if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                            lineitemupdate.update(li_data)
+                        end
+                    else
+                        LineItem.create(li_data)
+                    end
+                end
+
+            # we need this if the line item only has one entry.   
+            elsif !qb_inv['invoice_line_ret'].blank? 
+                li_data = {}
+                li = qb_inv['invoice_line_ret']
+                # We need to match the lineitem with order id
+                # We just recorded it and could pull it via find.
+                li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
+
+            #---->     # if li != {"xml_attributes"=>{}}
+                if li['item_ref']
+                    if Item.exists?(list_id: li['item_ref']['list_id'])
+                        li_data[:item_id] = Item.find_by(list_id: li['item_ref']['list_id']).id
+                    end
+                end
+            #---->   end
+                
+                if li['desc']
+                    li_data[:description] = li['desc']
+                end
+
+                # Does the line item have a quantity
+                li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
+                # Does this li have an amount?
+                li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+                
+                if li['inventory_site_ref']
+                    if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
+                        li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
+                    else
+                        # insert the site list ID for unspecified.
+                        # I am fairly positive this is required for model associations
+                        li_data[:site_id] = Site.find_by(list_id: "80000005-1399305135")
+                    end
+                end
+               
+                # Now we need to record these line items
+                if LineItem.exists?(txn_id: li['txn_line_id'])
+                    lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
+                    # Has this LineItem actually been modified?
+
+                    if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                        lineitemupdate.update(li_data)
+                    end
+                else
+                    LineItem.create(li_data)
+                end
+            end
+    # ---------------> End Line Item    
+
+
         end
+        # this is the end of the non-array original invoice
 
     # let's record that this worker was ran, so that it's timestamped in logs
     # Moved the log creating to be within the handle response incase the response errors, I don't want a log.

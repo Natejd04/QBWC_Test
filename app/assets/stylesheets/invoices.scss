@@ -1,0 +1,22 @@
+// Place all the styles related to the Invoices controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$large: 30px;
+$medium: 20px;
+$small: 15px;
+$grey: #555555;
+
+.invoice-large {
+	font-size: $large;
+}
+.invoice-medium {
+	font-size: $medium;
+}
+.invoice-small {
+	font-size: $small;
+}
+.btn-custom-grey {
+	color: $grey;
+	border-color: #ccc;
+	background-color:#fff;
+}

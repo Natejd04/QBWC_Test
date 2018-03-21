@@ -2,6 +2,7 @@ class LineItem < ActiveRecord::Base
     belongs_to :order
     belongs_to :item
     belongs_to :site
+    belongs_to :invoice, foreign_key: "order_id"
     after_save :delete_orphaned
     
     def self.uninvoiced
