@@ -2,13 +2,69 @@
      <div class="row">
         <div class="col-lg-8">
             <h1><%= link_to @customer.name, edit_customer_path %></h1>
-            <%= @customer.email %> <br />
-            <%= @customer.address %> <br />
-            <%= @customer.address2 %> <br />
-            <% if @customer.city.present? %>
-                <%= @customer.city %>, <%= @customer.state %> <%= @customer.zip %>
-            <%end %>
+            
         </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            <div class="invoice-large">
+                                <%= number_to_currency(@invoice_total, :unit => "$",precision: 2) %>
+                            </div>
+                            <div>Total Sales</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            <div class="invoice-large">
+                           <%=  @customer.invoices.all.count %>
+                            </div>
+                            <div>Total Orders</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    <div class="col-lg-6 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <i class="fa fa-clock-o fa-fw"></i>
+                Shipping Information
+            </div>
+                    <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <span class="text-muted small">
+                            <%= @customer.email %> <br />
+                            <%= @customer.address %> <br />
+                            <%= @customer.address2 %> <br />
+                            <% if @customer.city.present? %>
+                                <%= @customer.city %>, <%= @customer.state %> <%= @customer.zip %>
+                            <%end %>
+                       </span>
+                    </a>
+                </div>
+            </div>
+          <!-- /.panel-body -->
+        </div>
+    </div>
+    </div>
 
                     <!-- /.row -->
         <div class="row">
