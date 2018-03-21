@@ -76,9 +76,10 @@
                                 </div>
                                 <div class="col-xs-10 text-right">
                                     <div class="huge">
-                                    <%= @open_orders_count %>
+                                    $<%= number_to_human(@prior_m_total, :format => '%n%u', :units => { :thousand => 'K' }) %>
+                                    
                                     </div>
-                                    <div>New Orders!</div>
+                                    <div>January Sales</div>
                                 </div>
                             </div>
                         </div>
@@ -99,8 +100,10 @@
                                     <i class="fa fa-support fa-2x"></i>
                                 </div>
                                 <div class="col-xs-10 text-right">
-                                    <div class="huge">NaN</div>
-                                    <div>Items Low on Inv</div>
+                                    <div class="huge">
+                                        <%= @open_orders_count %>
+                                    </div>
+                                    <div>New Orders!</div>
                                 </div>
                             </div>
                         </div>
