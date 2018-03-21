@@ -2,6 +2,9 @@ class CustomersController < ApplicationController
   before_action :authenticate_user, except:[:show]
   def index
       @customers = Customer.all.order "id ASC"
+      @cust1 = Customer.all.paginate(:page => params[:page], :per_page => 100).order('name ASC')
+      # Not using the alphabetical paginate at this time
+      # @cust, @alphaParams = Customer.all.alpha_paginate(params[:letter], {:enumerate => true, :class => "pagination pagination"}){|cust| cust.name}
   end
     
   def show

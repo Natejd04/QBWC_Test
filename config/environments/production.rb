@@ -1,6 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # This is for alphabetical pagination
+  config.assets.precompile += %w( alphabetical_paginate.js )
+  
   # Code is not reloaded between requests.
   config.cache_classes = true
 

@@ -49,6 +49,13 @@ gem 'jquery-ui-rails'
 # Apparently typeahead is required for auto_compelte
 gem 'twitter-typeahead-rails'
 
+# Unsupported but might work for our needs
+gem 'will_paginate-bootstrap'
+
+# Alphabetic Pagination, still supported
+gem 'alphabetical_paginate'
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
