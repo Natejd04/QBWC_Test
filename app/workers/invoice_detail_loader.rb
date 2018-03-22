@@ -7,7 +7,7 @@ class InvoiceDetailLoader < QBWC::Worker
     # We will limit this to 1, the most recent entry
     if Log.exists?(worker_name: 'InvoiceDetailLoader1')
 
-        LastUpdate = Log.where(worker_name: 'InvoiceDetailLoader').order(created_at: :desc).limit(1)
+        LastUpdate = Log.where(worker_name: "InvoiceDetailLoader").order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
@@ -101,8 +101,8 @@ class InvoiceDetailLoader < QBWC::Worker
                 end
 
                 # We need to create the invoice first, so we can get it's ID.
-                if Invoice.exists?(txn_id: qb_inv[:txn_id])
-                    invoiceupdate = Invoice.find_by(txn_id: qb_inv[:txn_id])
+                if Invoice.exists?(txn_id: invoice_data[:txn_id])
+                    invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
                         if invoiceupdate.c_edit != qb_inv['edit_sequence']
                             invoiceupdate.update(invoice_data)
@@ -123,6 +123,8 @@ class InvoiceDetailLoader < QBWC::Worker
                         # We need to match the lineitem with order id
                         # We just recorded it and could pull it via find.
                         li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
+
+                        li_data[:txn_id] = li['txn_line_id']
 
                     #---->     # if li != {"xml_attributes"=>{}}
                         if li['item_ref']
@@ -168,6 +170,8 @@ class InvoiceDetailLoader < QBWC::Worker
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
                     li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
+
+                    li_data[:txn_id] = li['txn_line_id']
 
                 #---->     # if li != {"xml_attributes"=>{}}
                     if li['item_ref']
@@ -278,8 +282,7 @@ class InvoiceDetailLoader < QBWC::Worker
                 invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
             end
 
-
-
+            # We need to create the invoice first, so we can get it's ID.
             if Invoice.exists?(txn_id: invoice_data[:txn_id])
                 invoiceupdate = Invoice.find_by(txn_id: invoice_data[:txn_id])
                     # before updating, lets find out if it's neccessary by filtering by modified
@@ -289,7 +292,6 @@ class InvoiceDetailLoader < QBWC::Worker
             else
                 Invoice.create(invoice_data)
             end
-
 
 # ----------------> Start Line Item
             # Line items are recorded if they are an array
@@ -303,6 +305,8 @@ class InvoiceDetailLoader < QBWC::Worker
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
                     li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
+
+                    li_data[:txn_id] = li['txn_line_id']
 
                 #---->     # if li != {"xml_attributes"=>{}}
                     if li['item_ref']
@@ -353,13 +357,13 @@ class InvoiceDetailLoader < QBWC::Worker
                 # We just recorded it and could pull it via find.
                 li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id']).id
 
-            #---->     # if li != {"xml_attributes"=>{}}
+                li_data[:txn_id] = li['txn_line_id']
+
                 if li['item_ref']
                     if Item.exists?(list_id: li['item_ref']['list_id'])
                         li_data[:item_id] = Item.find_by(list_id: li['item_ref']['list_id']).id
                     end
                 end
-            #---->   end
                 
                 if li['desc']
                     li_data[:description] = li['desc']
