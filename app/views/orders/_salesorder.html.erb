@@ -6,20 +6,26 @@
 <%= f.input :c_ship, as: :date, label: "Ship Date:", order: [:month, :day, :year] %>
 <%= f.input :c_deliver, as: :date, label: "Delivery Date:", order: [:month, :day, :year] %>
 <%= f.input :c_via, collection: ["UPS from Zing", "UPS from ART", "UPS from WDS", "FedEx from Zing", "FedEx from ART", "FedEx from WDS", "LTL from ART", "LTL from WDS", "Pickup at ART", "Pickup at WDS"], label: "Ship Via" %>
+<div class="row">
+    <div class="col-lg-6">
+        <div id="shipping-address"></div>
+        <div id="shipping-address-dynamic"class="order-right" style="display:none;">
+            
+            <div class="form-group">
+                <label>Shipping Address</label>
+                <%= f.input :c_name, label: false, class: "form-control", placeholder: "Name", :maxlength => 41 %>
+                <%= f.input :c_ship1, label: false, class: "form-control", placeholder: "Address", :maxlength => 41 %>
+                <%= f.input :c_ship2, label: false, class: "form-control", placeholder: "Address 2", :maxlength => 41%>
+                <%= f.input :c_ship3, label: false, class: "form-control", placeholder: "Additional Ship Field", :maxlength => 41 %>
+                <%= f.input :c_shipcity, label: false, class: "form-control", placeholder: "City", :maxlength => 31 %>
+                <%= f.input :c_shipstate, label: false, class: "form-control", placeholder: "State", :maxlength => 21%>
+                <%= f.input :c_shippostal, label: false, class: "form-control", placeholder: "Postal", :maxlength => 13%>
+            </div>
 
-<div id="shipping-address"></div>
-<div id="shipping-address-dynamic"class="order-right" style="display:none;">
-    <u>Shipping Address</u><br />
-    <span class="name"><%= f.input :c_ship1, label: false %><br /></span>
-        <%= f.input :c_ship2, label: false%>
-         <%= f.input :c_ship3, label: false %>
-         <%= f.input :c_ship4, label: false %>
-         <%= f.input :c_ship5, label: false %>
-        <%= f.input :c_shipcity, label: false %>
-        <%= f.input :c_shipstate, label: false %> 
-        <%= f.input :c_shippostal, label: false %>
+        </div>
+    <button id="shipping-address-button">Edit Ship</button>
+    </div>
 </div>
-<button id="shipping-address-button">Edit Ship</button>
 
         <table>
         <%= f.simple_fields_for :line_items do |line_item| %>
@@ -32,6 +38,7 @@
             </tr>
                 </table>
 <%= f.input :c_total, id: 'total-amount', label: "Total:" %>
+<%= f.input :qb_process, :type => 'checkbox' %>
 <%= f.button :submit %>
 <% end %>
 

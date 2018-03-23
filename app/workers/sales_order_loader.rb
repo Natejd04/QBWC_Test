@@ -224,7 +224,7 @@ class SalesOrderLoader < QBWC::Worker
             qb_inv = r['sales_order_ret']
             invoice_data = {}
             invoice_data[:txn_id] = qb_inv['txn_id']
-            invoice_data[:c_invoicenumber] = qb_inv['ref_number']
+            invoice_data[:invoice_number] = qb_inv['ref_number']
             invoice_data[:c_edit] = qb_inv['edit_sequence']
             invoice_data[:c_date] = qb_inv['txn_date']
             invoice_data[:c_total] = qb_inv['total_amount']

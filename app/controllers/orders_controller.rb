@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
       
 #      I am meant to be used for single upload, working
       @order = Order.create(order_params)
-      redirect_to :action => :index      
+      redirect_to :action => :new
   end
 
   # def delete_docs
@@ -81,7 +81,7 @@ class OrdersController < ApplicationController
   def new
       @order = Order.new
       10.times {@order.line_items.build}
-      @customers = Customer.all
+      @customers = Customer.where("name LIKE ?", "%* UPP%")
       @items = Item.where(:item_type => ['Inventory Assembly', 'Non-Inventory Part']).all
       @sites = Site.all
   end
@@ -124,7 +124,7 @@ class OrdersController < ApplicationController
   private
     
   def order_params
-      params.require(:order).permit(:docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id ])
+      params.require(:order).permit(:c_name, :docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, :qb_process, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id])
   end
 
 end

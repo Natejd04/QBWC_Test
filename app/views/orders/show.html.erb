@@ -45,6 +45,7 @@
 
 <script>
 $(function() { 
+    new app.Search();
     $('#invoice-button').click(function(event){
         $.ajax({
             url: '../invoice/',
@@ -54,6 +55,5 @@ $(function() {
             data: JSON.stringify({ id: '2782'})
         });
     });
-});
-
+}); 
 </script>
