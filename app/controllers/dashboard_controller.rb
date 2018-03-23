@@ -1,9 +1,19 @@
 class DashboardController < ApplicationController
 
+	def line_items_total
+		invoice_line_items.map(&:amount).sum
+	end
+
 	def index 
+		# Without a way to pull journal entries my monthly totals wont match
+		#@invoices = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where.not("c_name LIKE ?", "%* UPP:%")
+		# @test_total = @invoices.map(&:line_items).flatten.map(&:amount).sum
+		#@test_total = @invoices.map(&:line_items_total).sum
 		@orders = Order.where(:c_date => 1.month.ago..Time.now).where.not(c_total: 0)
-		@order_total = Order.where(:c_date => 1.month.ago..Time.now).sum(:c_total)
-		@invoices = Invoice.where(:c_date => 1.month.ago..Time.now).where.not(c_subtotal: 0)
+		@order_total = @orders.sum(:c_total)
+		@invoices = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month)
+		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
+		# @inv_dist_total = @inv_dist.sum
 		@invoice_total = Invoice.where(:c_date => 1.month.ago..Time.now).sum(:c_subtotal)
 		#@month_total = Invoice.where(:c_date => Time.now.beginning_of_month..Time.now).sum(:c_subtotal)
 		#@prior_m_total = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).sum(:c_subtotal)

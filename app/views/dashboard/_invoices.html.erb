@@ -1,4 +1,4 @@
-<% @invoices.each do |f| %>
+<% @inv_dist.each do |f| %>
 <tr>
 	<td><%= link_to f.c_name, customer_path(f.customer_id) %></td>
 	<td><%= link_to f.c_invoicenumber, invoice_path(f.id) %></td>
@@ -8,5 +8,5 @@
 </tr>
 <% end %>	
 <tr> 
-	<td colspan="5"><b>TOTAL<div class="pull-right"><%= number_to_currency(@invoice_total, :unit => "$") %></div></b></td>
+	<td colspan="5"><b>TOTAL<div class="pull-right"><%= number_to_currency(@inv_dist.sum(:c_subtotal), :unit => "$") %></div></b></td>
 </tr>

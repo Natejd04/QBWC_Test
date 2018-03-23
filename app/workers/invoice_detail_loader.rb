@@ -2,16 +2,20 @@ require 'qbwc'
 
 class InvoiceDetailLoader < QBWC::Worker
 
+    # production purposes only
+    # :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+    # end production
+
     # Pre-load all data from 2017-Present, only if no data exists in the Log table.
     # If data exists in the Log table, we take the last pull date as a sort filter
     # We will limit this to 1, the most recent entry
-    if Log.exists?(worker_name: 'InvoiceDetailLoader1')
+    if Log.exists?(worker_name: 'InvoiceDetailLoader')
 
         LastUpdate = Log.where(worker_name: "InvoiceDetailLoader").order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
-        LastUpdate = "2018-02-01"
+        LastUpdate = "2018-01-01"
     
     end
 
@@ -22,7 +26,7 @@ class InvoiceDetailLoader < QBWC::Worker
     def requests(job)
         {
             :invoice_query_rq => {
-                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+                :txn_date_range_filter => {"from_txn_date" => LastUpdate, "to_txn_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }

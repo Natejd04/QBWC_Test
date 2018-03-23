@@ -26,7 +26,7 @@ QBWC.configure do |c|
    }
 
   # QBXML version to use. Check the "Implementation" column in the QuickBooks Onscreen Reference to see which fields are supported in which versions. Newer versions of QuickBooks are backwards compatible with older QBXML versions.
-  c.min_version = "10.0"
+  c.min_version = "13.0"
   
   # Quickbooks type (either :qb or :qbpos).
   c.api = :qb

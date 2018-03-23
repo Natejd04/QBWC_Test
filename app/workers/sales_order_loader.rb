@@ -2,9 +2,15 @@ require 'qbwc'
 
 class SalesOrderLoader < QBWC::Worker
 
+    # production purposes only
+    # :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+    # end production
+
     # Pre-load all data from 2017-Present, only if no data exists in the Log table.
     # If data exists in the Log table, we take the last pull date as a sort filter
     # We will limit this to 1, the most recent entry
+
+
     if Log.exists?(worker_name: 'SalesOrderLoader')
 
         LastUpdate = Log.where(worker_name: 'SalesOrderLoader').order(created_at: :desc).limit(1)
@@ -23,7 +29,7 @@ class SalesOrderLoader < QBWC::Worker
         {
             :sales_order_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+                :txn_date_range_filter => {"from_txn_date" => LastUpdate, "to_txn_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
