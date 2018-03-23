@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
     # has_many :docs, :dependent => :delete_docs
-    has_many :line_items
+    has_many :line_items, :dependent => :destroy
     has_many :items, through: :line_items
 #    belongs_to :customer, foreign_key: "listid"
     belongs_to :customer

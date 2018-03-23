@@ -82,7 +82,7 @@ class OrdersController < ApplicationController
       @order = Order.new
       10.times {@order.line_items.build}
       @customers = Customer.all
-      @items = Item.where("code IS NOT ?", nil)
+      @items = Item.where(:item_type => ['Inventory Assembly', 'Non-Inventory Part']).all
       @sites = Site.all
   end
       
