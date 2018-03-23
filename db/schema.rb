@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322222705) do
+ActiveRecord::Schema.define(version: 20180323170858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 20180322222705) do
     t.integer  "customer_id"
     t.string   "currency_ref"
     t.integer  "exchange_rate"
+    t.boolean  "qb_process"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|
