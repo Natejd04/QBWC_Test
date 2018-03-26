@@ -5,8 +5,8 @@
 			Current Range = <%= Date.today - 7 %> thru <%= Date.today + 1 %>
 			<p>
 			<%= image_tag("animal.gif", :style => "display:none", :id => "loader") %>
-			</p>
-			<%= link_to "Send Today's Selected Emails", email_send_path, :class => "button-me" %>
+			</p><button>
+			<%= link_to "Send Today's Selected Emails", email_send_path, :class => "button-me" %></button>
 
 			<p><h3><u>Emails That Need To Be Sent</u></h3></p>
 

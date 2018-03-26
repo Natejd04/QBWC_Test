@@ -1,47 +1,156 @@
-<div id="page-wrapper" style="min-height: 629px;">
-     <div class="row">
-        <div class="col-lg-8">
-
-            <div class="order-left">
-                <span class="name"><%= link_to @order.customer.name, customer_path(@order.customer.id) %><br /></span>
-                ID: <%= @order.id %><br />
-                Date: <%= @order.c_date.strftime("%m/%d/%Y") if @order.c_date %><br />
-                Memo Field: <%= @order.c_memo %><br />
-                Ship Date: <%= @order.c_ship.strftime("%m/%d/%Y") if @order.c_ship %><br />
-                Acknowledged: <%= @order.c_ack %><br />
-                <%= link_to "Download Attachment", @order.docs.url(:docs, false) %> |
-                <%= link_to "Edit", edit_order_path %>
+ <div id="page-wrapper" style="min-height: 629px;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><%= link_to @order.customer.name, customer_path(@order.customer.id) %></h1>                  
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
-            <div class="order-right">
-                <u>Shipping Address</u><br />
-                <span class="name"><%= @order.c_ship1 %><br /></span>
-                    <%= @order.c_ship2 %><br />
-                     <%= raw(@order.c_ship3 + '<br />') if !@order.c_ship3.blank? %>
-                    <%= raw(@order.c_ship4 + '<br />') if !@order.c_ship4.blank? %>
-                     <%= raw(@order.c_ship5 + '<br />') if !@order.c_ship5.blank? %>
-                    <%= @order.c_shipcity %>, <%= @order.c_shipstate %> <%= @order.c_shippostal %>
-                <div class="extra-space">
-                    <button id="invoice-button">Invoice</button>
+
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">                            
+                                <div class="col-xs-12 text-right">
+                                    <div class="invoice-large">
+                                        <%= @order.invoice_number %>
+                                    </div>
+                                    <div>Invoice Number</div>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    <div class="invoice-large">
+                                   <%= @order.c_date.strftime("%m/%d/%Y") if @order.c_date %>
+                                    </div>
+                                    <div>Order Date</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    <div class="invoice-large">
+                                        <%= number_to_currency(@order.c_total, :unit => "$",precision: 2) %>
+                                    </div>
+                                    <div>Invoice Total</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+    <div class="row">
+    <div class="col-lg-6 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <i class="fa fa-clock-o fa-fw"></i>
+                Shipping Information
+            </div>
+                    <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <span class="text-muted small">
+                            <%= @order.c_ship1 %><br /></span>
+                            <%= @order.c_ship2 %><br />
+                            <%= raw(@order.c_ship3 + '<br />') if !@order.c_ship3.blank? %>
+                            <%= raw(@order.c_ship4 + '<br />') if !@order.c_ship4.blank? %>
+                            <%= raw(@order.c_ship5 + '<br />') if !@order.c_ship5.blank? %>
+                            <%= @order.c_shipcity %>, <%= @order.c_shipstate %> <%= @order.c_shippostal %>
+                       </span>
+                    </a>
+                    <a href="#" class="btn btn-default btn-block color-grey" >
+                        Ship Date: <%= @order.c_ship.strftime("%m/%d/%Y") if @order.c_ship %>    
+                    </a>
+                    
                 </div>
             </div>
+          <!-- /.panel-body -->
+        </div>
+    </div>
 
-            <div class="order-table">
-                <table style="border:solid 1px black;">
-                    <th>ID</th><th>Product</th><th>QTY</th><th>Site</th><th>Amount</th>
-                    <% @order.line_items.each do |o| %>
-                    <tr><td><%= link_to o.item_id, item_path(o.item_id) %></td>
-                        <td><%= o.item.description %></td>
-                        <td><%= o.qty %></td>
-                        <td><%= o.site_name %></td>
-                        <td><%= number_to_currency(o.amount) %></td>
-                        </tr>
-                    <% end %>
-                    <tr><td style="padding-right:2%;" align="right" colspan="5"><b>Total: <%= number_to_currency(@order.c_total) %></b></td></tr>
-                </table>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Order Table
+                </div>
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Product #</th>
+                                            <th>Description</th>
+                                            <th>Qty</th>
+                                            <th>Site</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="order-sales-table">
+                                            <%= render :partial => 'sales_display' %>
+                                    </tbody>  
+                                </table>
+                            <!-- /.table-responsive -->
+                            </div>                               
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> Confirmation and Notes
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-badge"><i class="fa fa-check"></i>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Order Confirmed</h4>
+                                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Dashboard</small>
+                                    </p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Exceptions: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? 
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 
 <script>
 $(function() { 

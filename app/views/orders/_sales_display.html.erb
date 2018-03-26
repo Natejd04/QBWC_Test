@@ -1,0 +1,16 @@
+<% @order.line_items.each do |o| %>
+    <tr>
+        <td><%= link_to o.item_id, item_path(o.item_id) %></td>
+        <td><%= o.item.name %></td>
+        <td><%= o.description %></td>
+        <td><%= o.qty %></td>
+            <% if( ! o.site.nil? ) %>                   
+                <td><%= o.site.name %></td>
+            <%  else %>
+                <td></td>
+            <% end %>
+                
+        <td><%= number_to_currency(o.amount) %></td>
+    </tr>
+<% end %>
+<tr><td style="padding-right:2%;" align="right" colspan="6"><b>Total: <%= number_to_currency(@order.c_total) %></b></td></tr>
