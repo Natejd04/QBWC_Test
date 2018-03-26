@@ -1,5 +1,11 @@
-<h1>Current Items</h1>
-<% @item.each do |item| %>  
-    <%= item.id %>.
-    <%= link_to item.name, item %> : <%= item.code %><br />
-<% end %>
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+			<h1>Current Items</h1>
+			<% @item.each do |item| %>  
+			    <%= item.id %>.
+			    <%= link_to item.name, item %> : <%= item.code %><br />
+			<% end %>
+		</div>
+	</div>
+</div>

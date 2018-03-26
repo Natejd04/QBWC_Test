@@ -1,0 +1,40 @@
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+			<h1><%= @site.name %><br /></h1>
+			
+			
+		<div class="panel panel-default">
+            <div class="panel-heading">
+            <i class="fa fa-clock-o fa-fw"></i>
+                Site Information
+            </div>
+                    <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="<%= edit_site_path %>" class="list-group-item">
+                        <span class="text-muted small">
+                        	Name: <%= @site.name %><br />
+                        	Contact: <%= @site.contact %><br />
+							Email: <%= @site.email %> <br />
+        				</span>
+                    </a>
+                </div>
+                <div class="list-group">
+                    <a href="<%= edit_site_path %>" class="list-group-item">
+                        <span class="text-muted small">
+                            
+                            <%= @site.description %><br />
+                            <%= @site.address %><br />
+                            <%= raw(@site.address2 + '<br />') if !@site.address2.blank? %>
+                            <%= raw(@site.address3 + '<br />') if !@site.address3.blank? %>
+                            <%= raw(@site.address4 + '<br />') if !@site.address4.blank? %>
+                            <%= raw(@site.address5 + '<br />') if !@site.address5.blank? %>
+                            <%= @site.city %>, <%= @site.state %> <%= @site.postal %>
+                       </span>
+
+                     </a>
+                 </div>
+		</div>
+	</div>
+</div>

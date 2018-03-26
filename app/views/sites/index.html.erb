@@ -1,5 +1,11 @@
-<h1>Current Sites</h1>
-<% @site.each do |site| %>
-    <%= site.id %> .      
-    <%= link_to site.name, site %><br />
-<% end %>
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+			<h1>Current Sites</h1>
+			<% @site.each do |site| %>
+			    <%= site.id %> .      
+			    <%= link_to site.name, site %><br />
+			<% end %>
+		</div>
+	</div>
+</div>

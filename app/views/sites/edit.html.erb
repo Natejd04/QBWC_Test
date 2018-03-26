@@ -1,0 +1,39 @@
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1><%= @site.name %></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="order-left">
+                <div class="form-group">
+                <label>Site Info</label>
+                <%= simple_form_for @site, url: site_path do |f| %>
+                <%= f.input :name, label: "Name", class: "form-control", placeholder: "Name", :maxlength => 41 %>
+                <%= f.input :description, label: "Description", class: "form-control", placeholder: "Description", :maxlength => 96 %>
+                <%= f.input :contact, label: "Contact", class: "form-control", placeholder: "Contact", :maxlength => 96 %>
+                <%= f.input :phone, label: "Phone", class: "form-control", placeholder: "Phone", :maxlength => 96 %>
+                <%= f.input :email, label: "Email", class: "form-control", placeholder: "Email", :maxlength => 96 %>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="order-right">
+                <div class="form-group">
+                    <label>Site Address</label>
+            
+            
+                    <%= f.input :address, label: "Address", class: "form-control", placeholder: "Address", :maxlength => 41 %>
+                    <%= f.input :address2, label: "Address 2", class: "form-control", placeholder: "Address", :maxlength => 41 %>
+                    <%= f.input :city, label: "City", class: "form-control", placeholder: "City", :maxlength => 41 %>
+                    <%= f.input :state, label: "State", class: "form-control", placeholder: "State", :maxlength => 41 %>
+                    <%= f.input :postal, label: "Postal", class: "form-control", placeholder: "Postal", :maxlength => 41 %>
+                </div>
+            </div>
+        </div>
+            <%= f.submit "Save Changes" %>
+        <% end %>
+    </div>
+</div>

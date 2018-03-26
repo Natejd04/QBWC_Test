@@ -1,9 +1,13 @@
-<h2>Item Detail</h2>
-<span class="code">Code: <%= @item.code %><br /></span>
-Name: <%= @item.name %><br />
-Description: <%= @item.description %><br />
-QOH: <%= @item.qty %><br />
-PackSize: <%= @item.packsize %><br />
-Unit: <%= @item.unit %><br />
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+			<h1>Item Detail</h1>
+			<span class="code">Code: <%= @item.code %><br /></span>
+			Name: <%= @item.name %><br />
+			Description: <%= @item.description %><br />
+			Unit: <%= @item.unit %><br />
 
-<p><%= link_to "Edit", edit_item_path %></p>
+			<p><%= link_to "Edit", edit_item_path %></p>
+		</div>
+	</div>
+</div>

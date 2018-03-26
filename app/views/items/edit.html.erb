@@ -1,24 +1,22 @@
-<h1>ID:<%= @item.id %></h1>
-
-<%= simple_form_for @item, url: item_path do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-    <br />
-   
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-    <br />
-    <%= f.label :code %>
-    <%= f.text_field :code %>
-    <br />
-    <%= f.label :unit %>
-    <%= f.text_field :unit %>
-    <br />
-    <%= f.label :packsize %>
-    <%= f.text_field :packsize %>
-    <br />
-    <%= f.input :qty, as: :integer %>
-        
-<%= f.submit "Save Changes" %>
-<% end %>
-
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1><%= @item.name %></h1>
+            <h3>ID:<%= @item.id %></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="order-right">
+                <div class="form-group">
+                    <label>Shipping Address</label>
+            <%= simple_form_for @item, url: item_path do |f| %>
+                <%= f.input :name, label: "Name", class: "form-control", placeholder: "Name", :maxlength => 41 %>
+                <%= f.input :description, label: "Description", class: "form-control", placeholder: "Description", :maxlength => 96 %>
+                <%= f.input :code, label: "Code", class: "form-control", placeholder: "Code", :maxlength => 41 %>
+                <%= f.input :unit, label: "Unit", class: "form-control", placeholder: "Unit", :maxlength => 41 %>
+            <%= f.submit "Save Changes" %>
+            <% end %>
+        </div>
+    </div>
+</div>

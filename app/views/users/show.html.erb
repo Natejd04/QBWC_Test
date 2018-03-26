@@ -1,8 +1,16 @@
-<h1>User <%= @user.id %></h1>
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+			<h1><%= @user.name %></h1>
 <!--
 <%= image_tag @user.avatar.url %>
 <%= image_tag @user.avatar.url(:medium) %>
--->
-    <%= image_tag @user.avatar.url(:thumb) %>
-    <br />
-  <%= link_to "Sign Out", logout_path, method: :delete %>
+-->			
+			ID# <%=@user.id %>
+			<br />
+    		<%= image_tag @user.avatar.url(:thumb) %>
+    		<br />
+  			<%= link_to "Sign Out", logout_path, method: :delete %>
+  		</div>
+  	</div>
+</div>

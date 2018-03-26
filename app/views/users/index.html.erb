@@ -1,7 +1,13 @@
-<h1>Current Users</h1>
-<% i=1 %>
-<% @user.each do |user| %>
-    <%= i %> .  
-    <% i=i+1 %>
-    <%= link_to user.name, user %> - <%= user.role %><br />
-<% end %>
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Current Users</h1>                  
+			<% i=1 %>
+			<% @user.each do |user| %>
+			    <%= i %> .  
+			    <% i=i+1 %>
+			    <%= link_to user.name, user %> - <%= user.role %><br />
+			<% end %>
+		</div>
+	</div>
+</div>
