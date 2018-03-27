@@ -2,69 +2,46 @@ require 'qbwc'
 
 class OrderPushWorker < QBWC::Worker
 
+    multiline_push = {}
+    singleline_push = {}       
+    QBPush = Order.where(qb_process: true)
 
-
-QBPush = Order.where(qb_process: true)
-        QBPush.each do |op|
-            :sales_order_add_rq => {
-                :xml_attributes => { "requestID" =>"1"},
-                :sales_order_add => {
-                    :customer_ref => {"list_id" => op.customer.listid},
-                    :ship_address => {
-                        "addr1" => op.c_ship1,
-                        "addr2" => op.c_ship2,
-                        "addr3" => op.c_ship3,
-                        "city" => op.c_shipcity,
-                        "state" => op.c_shipstate,
-                        "postal_code" => op.c_shippostal,
-                        "country" => op.c_shipcountry 
-                    },
-                     op.line_items.map do |li|
-                        :sales_order_line_add => {
-                            :item_ref => {:list_id => li.item.list_id},
-                            :desc => li.description
-                        },
-                    end
-                    :memo => "memo"
+    def requests(job)    
+    
+        if !QBPush.blank?
+            QBPush.map do |op|
+                    { :sales_order_add_rq => {
+                        :xml_attributes => { "requestID" =>"1"},
+                        :sales_order_add => {
+                            :ref_number => op.invoice_number,
+                            :customer_ref => {"list_id" => op.customer.listid},
+                            :ship_address => {
+                                "addr1" => op.c_ship1,
+                                "addr2" => op.c_ship2,
+                                "addr3" => op.c_ship3,
+                                "city" => op.c_shipcity,
+                                "state" => op.c_shipstate,
+                                "postal_code" => op.c_shippostal,
+                                "country" => op.c_shipcountry 
+                            },
+                             :sales_order_line_add => op.line_items.map do |li|
+                                {
+                                    :item_ref => {:list_id => li.item.list_id},
+                                    :desc => li.description
+                                }
+                            end
+                        }
+                    }
                 }
-            }        
-        end
-    end
- 
- def requests(job)    
-    if !QBPush.blank?
-        QBPush.each do |op|
-            :sales_order_add_rq => {
-                :xml_attributes => { "requestID" =>"1"},
-                :sales_order_add => {
-                    :customer_ref => {"list_id" => op.customer.listid},
-                    :ship_address => {
-                        "addr1" => op.c_ship1,
-                        "addr2" => op.c_ship2,
-                        "addr3" => op.c_ship3,
-                        "city" => op.c_shipcity,
-                        "state" => op.c_shipstate,
-                        "postal_code" => op.c_shippostal,
-                        "country" => op.c_shipcountry 
-                    },
-                     op.line_items.map do |li|
-                        :sales_order_line_add => {
-                            :item_ref => {:list_id => li.item.list_id},
-                            :desc => li.description
-                        },
-                    end
-                    :memo => "memo"
-                }
-            }        
-        end
-    end
+            end      
 
-    if QBPush.is_a? Array
+        elsif QBPush.is_a? Array
             {
                 :sales_order_add_rq => {
-                	:xml_attributes => { "requestID" =>"1"},
-                	:sales_order_add => {
-    	                :customer_ref => {"list_id" => QBPush.customer.listid},
+                    :xml_attributes => { "requestID" =>"1"},
+                    :sales_order_add => {
+                        :ref_number => op.invoice_number,
+                        :customer_ref => {"list_id" => QBPush.customer.listid},
                         :ship_address => {
                             "addr1" => QBPush.c_ship1,
                             "addr2" => QBPush.c_ship2,
@@ -74,15 +51,15 @@ QBPush = Order.where(qb_process: true)
                             "postal_code" => QBPush.c_shippostal,
                             "country" => QBPush.c_shipcountry 
                         },
-        	                :sales_order_line_add => {
-        	                	:item_ref => {"list_id" => QBPush.line_items[0].item.list_id},
-                                "desc" => QBPush.line_items[0].description
-        	                }
-                        
-                	}
-            	}
+                        :sales_order_line_add => {
+                            :item_ref => {"list_id" => QBPush.line_items[0].item.list_id},
+                            "desc" => QBPush.line_items[0].description
+                        } 
+                    }
+                }
             }
         end
+            
     end
 
     def handle_response(r, session, job, request, data)
@@ -93,8 +70,8 @@ QBPush = Order.where(qb_process: true)
                 invoice_data[:qb_process] = false
                 invoice_data[:c_edit] = qb_inv['edit_sequence']
 
-                if Order.exists?(txn_id: invoice_data[:txn_id])
-                    orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
+                if Order.exists?(invoice_number: qb_inv[:ref_number])
+                    orderupdate = Order.find_by(invoice_number: qb[:ref_number])
                     # before updating, lets find out if it's neccessary by filtering by modified
                     if orderupdate.c_edit != qb_inv['edit_sequence']
                         orderupdate.update(invoice_data)
@@ -109,8 +86,8 @@ QBPush = Order.where(qb_process: true)
             invoice_data[:qb_process] = false
             invoice_data[:c_edit] = qb_inv['edit_sequence']
 
-            if Order.exists?(txn_id: invoice_data[:txn_id])
-                orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
+            if Order.exists?(invoice_number: qb_inv[:ref_number])
+                orderupdate = Order.find_by(invoice_number: qb[:ref_number])
                 # before updating, lets find out if it's neccessary by filtering by modified
                 if orderupdate.c_edit != qb_inv['edit_sequence']
                     orderupdate.update(invoice_data)
