@@ -4,7 +4,7 @@ class Order < ActiveRecord::Base
     has_many :items, through: :line_items
 #    belongs_to :customer, foreign_key: "listid"
     belongs_to :customer
-    accepts_nested_attributes_for :line_items, allow_destroy: true, :reject_if => :reject_blank_items
+    accepts_nested_attributes_for :line_items, allow_destroy: true, :reject_if => proc { |a| a[:item_id].blank? }
     validates :customer_id, presence: true
     
     scope :uninvoiced, -> {Order.where(c_invoiced: nil)}

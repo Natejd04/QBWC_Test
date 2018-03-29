@@ -80,11 +80,17 @@ class OrdersController < ApplicationController
 
   def new
       @order = Order.new
-      10.times {@order.line_items.build}
+      3.times {@order.line_items.build}
       @customers = Customer.where("name LIKE ?", "%* UPP%")
       @items = Item.where(:item_type => ['Inventory Assembly', 'Non-Inventory Part']).all
       @sites = Site.all
+        respond_to do |format|
+          format.js
+          format.html
+        end
+
   end
+
       
   # def download
   #     # @docs = Order.find(params[:id])

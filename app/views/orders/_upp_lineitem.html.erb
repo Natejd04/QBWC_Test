@@ -1,0 +1,9 @@
+<tr class="fields">
+	<td>#</td>
+    <td><%= f.input :item_id, label: false, collection: @items, group_method: :code, value_method: :id %></td>
+    <td><%= f.input :qty, label: false, as: :integer %></td>
+    <!--<td><%# f.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td> -->
+    <td><%= f.input :amount, label: false, as: :float, class: "order_line_items_amount" %></td>
+    <td><%= f.hidden_field :_destroy %></td>
+    <td><%= link_to "remove", "#", class: "field_remove" %></td>
+</tr>
