@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
         else
             sign_in user
             role = user.role
-            # render trackings_path(:index)
+            redirect_to trackings_path
         end
     end
     

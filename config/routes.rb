@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   get 'signin' => 'sessions#new'
     
-  resources :orders
+  resources :orders do resources :comments end
   get 'wds' => 'orders#wds'
   get 'art' => 'orders#art'
   get 'admin' => 'orders#admin'
