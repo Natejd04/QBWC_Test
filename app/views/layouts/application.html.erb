@@ -53,6 +53,8 @@
                 <%= link_to "Zing Importly 2.0", dashboard_path, :class => "navbar-brand" %>
             </div>
             <!-- /.navbar-header -->
+        
+        <% if @current_user.present? %>
 
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
@@ -342,9 +344,12 @@
                                 </div> 
                         </li>
                        </ul>
+            
                       </div>
-                                 
+                  
+            <% end %>
             </nav>
+
             <!-- /.navbar-static-side -->
 <!-- End of NAV -->
 

@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     end
     
     def create
-        user = User.authenticate(params[:session][:email], params[:session][:password])
+        user = User.authenticate(params[:email], params[:password])
         
         if user.nil?
             flash.now[:error] = "Invalid email/password combination."
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
         else
             sign_in user
             role = user.role
-            redirect_to trackings_path
+            # render trackings_path(:index)
         end
     end
     
@@ -20,4 +20,5 @@ class SessionsController < ApplicationController
         sign_out
         redirect_to signin_path
     end
+
 end

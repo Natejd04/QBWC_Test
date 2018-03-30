@@ -48,8 +48,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <%= f.fields_for :line_items, remote: true do |l_item| %>
-                            <%= render :partial => "upp_lineitem", locals: {f: l_item}, object: @items %>
+                        <%= f.fields_for :line_items, remote: true do |l_item, index| %>
+                            <%= render :partial => "upp_lineitem", locals: {f: l_item, upp_lineitem_counter: index}, object: @items %>
                         <% end %>
                         <tr><td colspan="6"><%= link_to_add_fields "Add Row", f, :line_items %></td></tr>
                         </tbody>

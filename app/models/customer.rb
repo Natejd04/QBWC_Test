@@ -1,6 +1,7 @@
 class Customer < ActiveRecord::Base
     has_many :orders
     has_many :invoices
+    has_many :comments
 
     def self.search(term)
     	if term.match(/[a-zA-Z]/)

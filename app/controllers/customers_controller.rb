@@ -1,5 +1,6 @@
 class CustomersController < ApplicationController
-  before_action :authenticate_user, except:[:show]
+  before_action :authenticate_user
+  
   def index
       @customers = Customer.all.order "id ASC"
       @cust1 = Customer.all.paginate(:page => params[:page], :per_page => 100).order('name ASC')

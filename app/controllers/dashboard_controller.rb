@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+	before_action :authenticate_user
 
 	def line_items_total
 		invoice_line_items.map(&:amount).sum

@@ -5,5 +5,5 @@
     <!--<td><%# f.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td> -->
     <td><%= f.input :amount, label: false, as: :float, class: "order_line_items_amount" %></td>
     <td><%= f.hidden_field :_destroy %></td>
-    <td><%= link_to "remove", "#", class: "field_remove" %></td>
+    <td><%= button_to "remove", "#", class: "btn btn-danger field_remove" %></td>
 </tr>

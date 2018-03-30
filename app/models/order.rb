@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
     # has_many :docs, :dependent => :delete_docs
     has_many :line_items, :dependent => :destroy
     has_many :items, through: :line_items
+    has_many :comments, :dependent => :destroy
 #    belongs_to :customer, foreign_key: "listid"
     belongs_to :customer
     accepts_nested_attributes_for :line_items, allow_destroy: true, :reject_if => proc { |a| a[:item_id].blank? }
