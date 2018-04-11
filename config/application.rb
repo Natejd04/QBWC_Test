@@ -7,6 +7,9 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 
+
+
+
 module Qbwc3
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -24,6 +27,10 @@ module Qbwc3
     
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    # config.assets.paths << "#{Rails.root}/app/assets/stylesheets/bootstrap/" 
+    # config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
+    
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.time_zone = 'Pacific Time (US & Canada)'
