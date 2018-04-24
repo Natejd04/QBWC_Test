@@ -25,6 +25,12 @@ Rails.application.routes.draw do
   resources :bills
   resources :trackings
   resources :invoices
+  
+  resources :notifications do
+    collection do
+      post :mark_as_read
+    end
+  end
 
   get '/email_send' => 'trackings#email_send'
     

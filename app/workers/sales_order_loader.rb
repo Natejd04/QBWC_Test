@@ -118,6 +118,12 @@ class SalesOrderLoader < QBWC::Worker
                         end
                 else
                     Order.create(invoice_data)
+                        # Creating the notification system
+                    inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
+                    user_role = User.find_by(role: "admin")
+                    user_role.each do |user|
+                        Notification.create(recipient: user, action: "posted", notifiable: inv_created)
+                    end
                 end
             
 # ----------------> Start Line Item
@@ -296,6 +302,11 @@ class SalesOrderLoader < QBWC::Worker
                     end
             else
                 Order.create(invoice_data)
+                inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
+                user_role = User.find_by(role: "admin")
+                user_role.each do |user|
+                    Notification.create(recipient: user, action: "posted", notifiable: inv_created)
+                end
             end
         
         # ----------------> Start Line Item
