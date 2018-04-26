@@ -3,11 +3,11 @@ ruby "2.3.1"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.6'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '>= 3.2'
+gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -57,6 +57,10 @@ gem 'will_paginate-bootstrap'
 
 # using with rails-html-sanitizer
 gem 'loofah', '~> 2.2', '>= 2.2.1'
+# dependency of loofah
+gem 'nokogiri', '~> 1.8.2', '>= 1.8.0'
+gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4'
+# Known security issues with versions below 
 
 
 # Use Unicorn as the app server
