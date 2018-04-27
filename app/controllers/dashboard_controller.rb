@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
 		#@invoices = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where.not("c_name LIKE ?", "%* UPP:%")
 		# @test_total = @invoices.map(&:line_items).flatten.map(&:amount).sum
 		#@test_total = @invoices.map(&:line_items_total).sum
-		@orders = Order.where(:c_date => 2.month.ago..2.month.ago.end_of_month).where.not(c_total: 0)
+		@orders = Order.where(c_invoiced: nil).where.not(c_total: 0)
 		@order_total = @orders.sum(:c_total)
 		@invoices = Invoice.where(:c_date => 2.month.ago.beginning_of_month..2.month.ago.end_of_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
