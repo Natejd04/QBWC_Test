@@ -2,6 +2,7 @@ json.array! @notifications do |notification|
 	# json.recipient_name notification.recipient.name
 	# json.recipient_id notification.recipient.id
 	json.id notification.id
+	json.time notification.created_at
 	if notification.actor.nil?
 		json.actor "Quickbooks"
 	end
