@@ -3,7 +3,7 @@ ruby "2.3.1"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.8'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -38,7 +38,7 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.3.7'
 
 #paperclip gem for uploading files
-gem "paperclip", "~> 5.1"
+gem 'paperclip', '~> 6.0.0'
 
 # Using Autocomplete for a better search tool
 gem 'rails_autocomplete'
