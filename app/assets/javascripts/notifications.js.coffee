@@ -23,7 +23,7 @@ class Notifications
 
 	handleSuccess: (data) =>
 		items = $.map data, (notification) ->
-			"<a href='#{notification.url}'><div><i class='a fa-comment fa-fw'></i>#{notification.notifiable.type}<span class='pull-right text-muted small'>#{notification.time}</span></div></a>"
+			"<a href='#{notification.url}'><div><i class='fa fa-line-chart fa-fw'></i> #{notification.notifiable.type}<span class='pull-right text-muted small'>#{notification.time}</span></div></a>"
 
 		$("[data-behavior='unread-count']").text(items.length)
 		$("[data-behavior='notification-items']").html(items)
