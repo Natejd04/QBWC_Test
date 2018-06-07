@@ -75,6 +75,11 @@ class OrdersController < ApplicationController
 
   def show
       @order = Order.find(params[:id])
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data @order.to_csv }
+      end
 #      send_file @docs.docs.path, :type => @docs.docs_content_type, :disposition => 'inline'
   end
 

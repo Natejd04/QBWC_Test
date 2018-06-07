@@ -34,6 +34,18 @@ class Order < ActiveRecord::Base
         attributes[:customer_id].blank?
     end
     
+    def to_csv
+        # attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship 5 c_shipcity c_shipstate invoice_number customer_id}
+        attributes = %w{id c_name}
+        # li_attributes = %w{id item_id name description qty}
+        CSV.generate(headers: true) do |csv|
+            csv << attributes
+
+            # self.each do |order|
+                csv << self.attributes.values_at(*attributes)
+            # end
+        end
+    end
 #    This was a test from SO, no succes so far
 #    before_save :destroy_doc?
 #    
