@@ -33,13 +33,12 @@ class Order < ActiveRecord::Base
     def reject_no_customer(attributes)
         attributes[:customer_id].blank?
     end
-    
-    def to_csv
+
+    def single_to_csv
         # attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship 5 c_shipcity c_shipstate invoice_number customer_id}
         attributes = %w{id c_name}
         li_attributes = %w{order_id qty description}
         li_header = %w{order_id qty description name}
-        # li_attributes = %w{id item_id name description qty}
         CSV.generate(headers: true) do |csv|
             csv << attributes
             csv << self.attributes.values_at(*attributes)
@@ -49,6 +48,40 @@ class Order < ActiveRecord::Base
                 item_name = [items.item.name].join(", ")
                 row << item_name
                 csv << row
+            end
+        end
+    end
+    
+    def self.to_csv(order)
+        # attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship 5 c_shipcity c_shipstate invoice_number customer_id}
+        attributes = %w{id c_name}
+        li_attributes = %w{order_id qty description}
+        li_header = %w{order_id qty description name}
+        if order.count < 2
+        CSV.generate(headers: true) do |csv|
+            csv << attributes
+            csv << order[0].attributes.values_at(*attributes)
+            csv << li_header
+             order[0].line_items.each do |items|
+                row = items.attributes.values_at(*li_attributes)
+                item_name = [items.item.name].join(", ")
+                row << item_name
+                csv << row
+            end
+        end
+        else
+        CSV.generate(headers: true) do |csv|
+            order.each do |orders|
+            csv << attributes
+            csv << orders.attributes.values_at(*attributes)
+            csv << li_header
+                orders.line_items.each do |items|
+                    row = items.attributes.values_at(*li_attributes)
+                    item_name = [items.item.name].join(", ")
+                    row << item_name
+                    csv << row
+                end
+              end
             end
         end
     end

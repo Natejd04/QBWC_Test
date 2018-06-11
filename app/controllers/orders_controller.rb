@@ -78,7 +78,7 @@ class OrdersController < ApplicationController
 
       respond_to do |format|
         format.html
-        format.csv { send_data @order.to_csv }
+        format.csv { send_data @order.single_to_csv }
       end
 #      send_file @docs.docs.path, :type => @docs.docs_content_type, :disposition => 'inline'
   end

@@ -29,7 +29,7 @@ class DashboardController < ApplicationController
 		respond_to do |format|
 		    format.html
 		    format.json { @search = Customer.search(params[:term]) }
-		    format.csv { send_data @orders.to_csv }
+		    format.csv { send_data Order.to_csv(@orders) }
   		end		
 	end
 
