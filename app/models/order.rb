@@ -53,10 +53,9 @@ class Order < ActiveRecord::Base
     end
     
     def self.to_csv(order)
-        # attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship 5 c_shipcity c_shipstate invoice_number customer_id}
-        attributes = %w{id c_name}
+        attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
         li_attributes = %w{order_id qty description}
-        li_header = %w{order_id qty description name}
+        multi_header = %w{order_id qty description name id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
         if order.count < 2
         CSV.generate(headers: true) do |csv|
             csv << attributes
@@ -71,18 +70,36 @@ class Order < ActiveRecord::Base
         end
         else
         CSV.generate(headers: true) do |csv|
+        csv << multi_header
             order.each do |orders|
-            csv << attributes
-            csv << orders.attributes.values_at(*attributes)
-            csv << li_header
                 orders.line_items.each do |items|
+                    orderinfo = orders.attributes.values_at(*attributes)
+                    # row1 = orderinfo.join(", ")
                     row = items.attributes.values_at(*li_attributes)
                     item_name = [items.item.name].join(", ")
                     row << item_name
+                    row += orderinfo
                     csv << row
                 end
               end
             end
+
+            # V1: Older method, probably not as uesful
+            #     CSV.generate(headers: true) do |csv|
+            # order.each do |orders|
+            # csv << attributes
+            # csv << orders.attributes.values_at(*attributes)
+            # csv << li_header
+            #     orders.line_items.each do |items|
+            #         row = items.attributes.values_at(*li_attributes)
+            #         item_name = [items.item.name].join(", ")
+            #         row << item_name
+            #         csv << row
+            #     end
+            #   end
+            # end
+
+
         end
     end
 #    This was a test from SO, no succes so far
