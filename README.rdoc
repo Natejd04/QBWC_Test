@@ -1,5 +1,5 @@
 == README
-_updated: 06/12/2018_
+<em>updated: 06/12/2018</em>
 
 This application is being created to communicate with any open quickbooks connection. You will need to start by downloading the original QWC file. Then you can use the workers created here, and reference the QBWC gem. This is still in BETA and hasn't been fully completed yet.
 
@@ -15,6 +15,8 @@ You need to list the name, true flag for running job, <tt>''</tt> to enable open
 
 <tt>QBWC.add_job(:list_customers, true, '', CustomerTestWorker)</tt>
 
+For more commands use the Intuit Onscreen Reference guide: https://developer-static.intuit.com/qbSDK-current/Common/newOSR/index.html
+
 == Load List
 The order that all the workers should be loaded:
 
@@ -27,6 +29,7 @@ The order that all the workers should be loaded:
     6) sales_order_loader
     7) journal_worker
     8) order_push_worker
+
 
 == General Requirements
 
