@@ -53,9 +53,8 @@ class JournalWorker < QBWC::Worker
                     journal_data[:exchange_rate] = qb_journal['exchange_rate']
                 end
                 
-                if qb_journal['journal_debit_line']
-                    amount = qb_journal['journal_debit_line']['amount'] 
-                    debit = (amount.to_f * -1)
+                if qb_journal['journal_debit_line']                    
+                    amount = qb_journal['journal_debit_line']['amount']
                     if currency_ref == "Canadian Dollar"
                         debit = (debit * journal_data[:exchange_rate])
                     end
@@ -69,8 +68,7 @@ class JournalWorker < QBWC::Worker
                 end
                 
                 if qb_journal['journal_credit_line']
-                    amount = qb_journal['journal_credit_line']['amount'] 
-                    credit = (amount.to_f * 1)
+                    amount = qb_journal['journal_credit_line']['amount']
                     if currency_ref == "Canadian Dollar"
                         credit = (credit * journal_data[:exchange_rate])
                     end
@@ -122,7 +120,6 @@ class JournalWorker < QBWC::Worker
                 
                 if qb_journal['journal_debit_line']
                     amount = qb_journal['journal_debit_line']['amount'] 
-                    debit = (amount.to_f * -1)
                     if currency_ref == "Canadian Dollar"
                         debit = (debit * journal_data[:exchange_rate])
                     end
@@ -137,7 +134,6 @@ class JournalWorker < QBWC::Worker
                 
                 if qb_journal['journal_credit_line']
                     amount = qb_journal['journal_credit_line']['amount'] 
-                    credit = (amount.to_f * 1)
                     if currency_ref == "Canadian Dollar"
                         credit = (credit * journal_data[:exchange_rate])
                     end
