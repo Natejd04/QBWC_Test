@@ -54,7 +54,8 @@ class JournalWorker < QBWC::Worker
                 end
                 
                 if qb_journal['journal_debit_line']
-                    debit = (qb_journal['journal_debit_line']['amount'] * BigDecimal('-1.00'))
+                    amount = qb_journal['journal_debit_line']['amount'] 
+                    debit = (amount.to_f * -1)
                     if currency_ref == "Canadian Dollar"
                         debit = (debit * journal_data[:exchange_rate])
                     end
@@ -68,7 +69,8 @@ class JournalWorker < QBWC::Worker
                 end
                 
                 if qb_journal['journal_credit_line']
-                    credit = (qb_journal['journal_credit_line']['amount'] * BigDecimal('1.00'))
+                    amount = qb_journal['journal_credit_line']['amount'] 
+                    credit = (amount.to_f * 1)
                     if currency_ref == "Canadian Dollar"
                         credit = (credit * journal_data[:exchange_rate])
                     end
@@ -119,7 +121,8 @@ class JournalWorker < QBWC::Worker
                 end
                 
                 if qb_journal['journal_debit_line']
-                    debit = (qb_journal['journal_debit_line']['amount'] * BigDecimal('-1.00'))
+                    amount = qb_journal['journal_debit_line']['amount'] 
+                    debit = (amount.to_f * -1)
                     if currency_ref == "Canadian Dollar"
                         debit = (debit * journal_data[:exchange_rate])
                     end
@@ -133,7 +136,8 @@ class JournalWorker < QBWC::Worker
                 end
                 
                 if qb_journal['journal_credit_line']
-                    credit = (qb_journal['journal_credit_line']['amount'] * BigDecimal('1.00'))
+                    amount = qb_journal['journal_credit_line']['amount'] 
+                    credit = (amount.to_f * 1)
                     if currency_ref == "Canadian Dollar"
                         credit = (credit * journal_data[:exchange_rate])
                     end
