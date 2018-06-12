@@ -2,6 +2,7 @@ class Customer < ActiveRecord::Base
     has_many :orders
     has_many :invoices
     has_many :comments
+    has_many :journals through: :account_line_items, foreign_key: "customer_id"
 
     def self.search(term)
     	if term.match(/[a-zA-Z]/)

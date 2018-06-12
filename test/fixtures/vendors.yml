@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  company: MyString
+  address1: MyString
+  address2: MyString
+  address3: MyString
+  address4: MyString
+  address5: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  country: MyString
+  contact_name: MyString
+  contact_value: MyString
+  balance: MyString
+  currency_ref: MyString
+  qb_created: 2018-06-12 10:13:43
+  qb_modified: 2018-06-12 10:13:43
+  edit_sq: MyString
+  list_id: MyString
+
+two:
+  name: MyString
+  company: MyString
+  address1: MyString
+  address2: MyString
+  address3: MyString
+  address4: MyString
+  address5: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  country: MyString
+  contact_name: MyString
+  contact_value: MyString
+  balance: MyString
+  currency_ref: MyString
+  qb_created: 2018-06-12 10:13:43
+  qb_modified: 2018-06-12 10:13:43
+  edit_sq: MyString
+  list_id: MyString

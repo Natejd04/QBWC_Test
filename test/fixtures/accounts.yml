@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  number: 1
+  edit_sq: MyString
+  list_id: MyString
+  currency: MyString
+  balance: 9.99
+  type: 
+  active: false
+
+two:
+  name: MyString
+  description: MyString
+  number: 1
+  edit_sq: MyString
+  list_id: MyString
+  currency: MyString
+  balance: 9.99
+  type: 
+  active: false

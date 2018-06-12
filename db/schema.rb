@@ -11,10 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612004312) do
+ActiveRecord::Schema.define(version: 20180612171343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_line_items", force: :cascade do |t|
+    t.string   "description"
+    t.string   "type"
+    t.float    "amount"
+    t.string   "txn_id"
+    t.string   "class"
+    t.integer  "journal_id"
+    t.integer  "account_id"
+    t.integer  "customer_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "number"
+    t.string   "edit_sq"
+    t.string   "list_id"
+    t.string   "currency"
+    t.decimal  "balance"
+    t.string   "type"
+    t.boolean  "active"
+    t.datetime "qb_created"
+    t.datetime "qb_modified"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "bills", force: :cascade do |t|
     t.string   "txn_id"
@@ -311,6 +341,30 @@ ActiveRecord::Schema.define(version: 20180612004312) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+  end
+
+  create_table "vendors", force: :cascade do |t|
+    t.string   "name"
+    t.string   "company"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "address3"
+    t.string   "address4"
+    t.string   "address5"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "contact_name"
+    t.string   "contact_value"
+    t.string   "balance"
+    t.string   "currency_ref"
+    t.datetime "qb_created"
+    t.datetime "qb_modified"
+    t.string   "edit_sq"
+    t.string   "list_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end
