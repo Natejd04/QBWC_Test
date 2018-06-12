@@ -1,16 +1,7 @@
 == README
+_updated: 06/12/2018_
 
 This application is being created to communicate with any open quickbooks connection. You will need to start by downloading the original QWC file. Then you can use the workers created here, and reference the QBWC gem. This is still in BETA and hasn't been fully completed yet.
-
-== Comment Rule
-
-* Issues that need to be resolved are flagged <tt><></tt>:
-
-  <tt># <> Need to correct formula here.</tt>
-
-* Changes that need to be made prior to production are flagged <tt>**</tt>: 
- 
-  <tt># ** Need to make decision before production mode </tt>
 
 == Download QWC file
 
@@ -24,6 +15,19 @@ You need to list the name, true flag for running job, <tt>''</tt> to enable open
 
 <tt>QBWC.add_job(:list_customers, true, '', CustomerTestWorker)</tt>
 
+== Load List
+The order that all the workers should be loaded:
+
+    1) customer_update_worker
+    2) vendor_worker 
+    3) inv_site_worker
+    4) item_assembly_worker
+    5) account_worker
+    6) invoice_detail_loader
+    6) sales_order_loader
+    7) journal_worker
+    8) order_push_worker
+
 == General Requirements
 
 * Ruby version - Currently works on Ruby 2.3.1 and 2.2.2 (gemfile specific)
@@ -34,11 +38,15 @@ You need to list the name, true flag for running job, <tt>''</tt> to enable open
     Requires QBWC gem
     Requires Simple Form
 
-* Workers
-    customer_modify_worker
-    customer_order_worker
-    customer_test_worker
-    item_assembly_worker
 
+== Comment Rule
+
+* Issues that need to be resolved are flagged <tt><></tt>:
+
+  <tt># <> Need to correct formula here.</tt>
+
+* Changes that need to be made prior to production are flagged <tt>**</tt>: 
+ 
+  <tt># ** Need to make decision before production mode </tt>
 
 This will continue to be updated as it continues to push forward.
