@@ -22,8 +22,7 @@ class VendorWorker < QBWC::Worker
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 1000,
                 :from_modified_date => LastUpdate,
-                :to_modified_date => Date.today + (1.0),
-                :is_active => true
+                :to_modified_date => Date.today + (1.0)
             }
         }
     end
@@ -31,6 +30,7 @@ class VendorWorker < QBWC::Worker
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
+        # binding.pry
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
 
         # if no customer updates occured we skip this.
@@ -45,6 +45,9 @@ class VendorWorker < QBWC::Worker
                 vendor_data[:qb_created] = qb_ven['time_created']
                 vendor_data[:qb_modified] = qb_ven['time_modified']
                 vendor_data[:balance] = qb_ven['balance']
+                vendor_data[:email] = qb_ven['email']
+                vendor_data[:f_name] = qb_ven['first_name']
+                vendor_data[:l_name] = qb_ven['last_name']
 
                 if qb_ven['vendor_address']
                     vendor_data[:address1] = qb_ven['vendor_address']['addr1']
@@ -58,10 +61,11 @@ class VendorWorker < QBWC::Worker
                     vendor_data[:country] = qb_ven['vendor_address']['country']
                 end
 
-                if qb_ven['additional_contact_ref']
-                    vendor_data[:contact_name] = qb_ven['additional_contact_ref']['contact_name']
-                    vendor_data[:contact_value] = qb_ven['additional_contact_ref']['contact_value']
-                end
+            # This is an array of objects, address later   
+                # if qb_ven['additional_contact_ref']
+                #     vendor_data[:contact_name] = qb_ven['additional_contact_ref']['contact_name']
+                #     vendor_data[:contact_value] = qb_ven['additional_contact_ref']['contact_value']
+                # end
 
                 if Vendor.exists?(list_id: qb_ven['list_id'])
                 vendorid = Vendor.find_by(list_id: vendor_data[:list_id])
@@ -91,6 +95,10 @@ class VendorWorker < QBWC::Worker
                 vendor_data[:qb_created] = qb_ven['time_created']
                 vendor_data[:qb_modified] = qb_ven['time_modified']
                 vendor_data[:balance] = qb_ven['balance']
+                vendor_data[:email] = qb_ven['email']
+                vendor_data[:f_name] = qb_ven['first_name']
+                vendor_data[:l_name] = qb_ven['last_name']
+
 
                 if qb_ven['vendor_address']
                     vendor_data[:address1] = qb_ven['vendor_address']['addr1']
@@ -104,10 +112,11 @@ class VendorWorker < QBWC::Worker
                     vendor_data[:country] = qb_ven['vendor_address']['country']
                 end
 
-                if qb_ven['additional_contact_ref']
-                    vendor_data[:contact_name] = qb_ven['additional_contact_ref']['contact_name']
-                    vendor_data[:contact_value] = qb_ven['additional_contact_ref']['contact_value']
-                end
+            # This is an array of objects, address later
+                # if qb_ven['additional_contact_ref']
+                #     vendor_data[:contact_name] = qb_ven['additional_contact_ref']['contact_name']
+                #     vendor_data[:contact_value] = qb_ven['additional_contact_ref']['contact_value']
+                # end
 
                 if Vendor.exists?(list_id: qb_ven['list_id'])
                 vendorid = Vendor.find_by(list_id: vendor_data[:list_id])

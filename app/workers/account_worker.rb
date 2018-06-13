@@ -93,8 +93,9 @@ class AccountWorker < QBWC::Worker
                 else
                     Account.create(account_data)
                 end
-        # End of the Assembly items
-      Log.create(worker_name: "AccountWorker")
+        # End of the Accounts
+        end
+        Log.create(worker_name: "AccountWorker")
 
     end
 end
