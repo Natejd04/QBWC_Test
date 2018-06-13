@@ -19,7 +19,7 @@ class JournalWorker < QBWC::Worker
         {
             :journal_entry_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 1000,
+                :max_returned => 500,
                 :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
@@ -107,10 +107,11 @@ class JournalWorker < QBWC::Worker
                         li_data[:account_type] = "debit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
-                                debit = (amount * journal_data[:exchange_rate]).round(2)
+                                li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                            else
+                                li_data[:amount] = amount
                             end
                         
-                        li_data[:amount] = debit
                         li_data[:memo] = li['memo']
 
                             if li['class_ref']
@@ -167,10 +168,11 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            debit = (amount * journal_data[:exchange_rate]).round(2)
+                            li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                        else
+                            li_data[:amount] = amount
                         end
-                    
-                    li_data[:amount] = debit
+
                     li_data[:memo] = li['memo']
 
                         if li['class_ref']
@@ -230,10 +232,11 @@ class JournalWorker < QBWC::Worker
                         li_data[:account_type] = "credit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
-                                credit = (amount * journal_data[:exchange_rate]).round(2)
+                                li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                            else
+                                li_data[:amount] = amount
                             end
-                        
-                        li_data[:amount] = credit
+
                         li_data[:memo] = li['memo']
 
                             if li['class_ref']
@@ -290,10 +293,11 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            credit = (amount * journal_data[:exchange_rate]).round(2)
+                            li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                        else
+                            li_data[:amount] = amount
                         end
                     
-                    li_data[:amount] = credit
                     li_data[:memo] = li['memo']
 
                         if li['class_ref']
@@ -397,10 +401,11 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            debit = (amount * journal_data[:exchange_rate]).round(2)
+                            li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                        else
+                            li_data[:amount] = amount
                         end
-                    
-                    li_data[:amount] = debit
+
                     li_data[:memo] = li['memo']
 
                         if li['class_ref']
@@ -457,10 +462,11 @@ class JournalWorker < QBWC::Worker
                 li_data[:account_type] = "debit"
                 amount = li['amount']
                     if currency_ref == "Canadian Dollar"
-                        debit = (amount * journal_data[:exchange_rate]).round(2)
+                        li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                    else
+                        li_data[:amount] = amount
                     end
-                
-                li_data[:amount] = debit
+
                 li_data[:memo] = li['memo']
 
                     if li['class_ref']
@@ -520,10 +526,11 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            credit = (amount * journal_data[:exchange_rate]).round(2)
+                            li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                        else
+                            li_data[:amount] = amount
                         end
                     
-                    li_data[:amount] = credit
                     li_data[:memo] = li['memo']
 
                         if li['class_ref']
@@ -580,11 +587,12 @@ class JournalWorker < QBWC::Worker
                 li_data[:account_type] = "credit"
                 amount = li['amount']
                     if currency_ref == "Canadian Dollar"
-                        credit = (amount * journal_data[:exchange_rate]).round(2)
+                        li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                    else
+                        li_data[:amount] = amount
                     end
-                
-                li_data[:amount] = credit
-                li_data[:memo] = li['memo']
+               
+               li_data[:memo] = li['memo']
 
                     if li['class_ref']
                         li_data[:class_name] = li['class_ref']['full_name']
