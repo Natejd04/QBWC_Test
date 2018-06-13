@@ -51,6 +51,10 @@ class AccountWorker < QBWC::Worker
                 account_data[:qb_created] = qb_account['time_created']
                 account_data[:qb_modified] = qb_account['time_modified']
 
+                if qb_account['sublevel']
+                    account_data[:sublevel] = qb_account['sublevel']
+                end
+
 
                 if qb_account['currency_ref']                    
                     account_data[:currency] = qb_account['currency_ref']['full_name']
@@ -82,6 +86,9 @@ class AccountWorker < QBWC::Worker
                 account_data[:qb_created] = qb_account['time_created']
                 account_data[:qb_modified] = qb_account['time_modified']
 
+                if qb_account['sublevel']
+                    account_data[:sublevel] = qb_account['sublevel']
+                end
 
                 if qb_account['currency_ref']                    
                     account_data[:currency] = qb_account['currency_ref']['full_name']

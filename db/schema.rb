@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613004752) do
+ActiveRecord::Schema.define(version: 20180613201312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180613004752) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.string   "account_type"
+    t.integer  "sublevel"
   end
 
   create_table "bills", force: :cascade do |t|
@@ -92,11 +93,6 @@ ActiveRecord::Schema.define(version: 20180613004752) do
     t.string   "email"
     t.date     "qbcreate"
     t.date     "qbupdate"
-  end
-
-  create_table "dashboards", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -229,7 +225,6 @@ ActiveRecord::Schema.define(version: 20180613004752) do
     t.integer  "docs_file_size"
     t.datetime "docs_updated_at"
     t.boolean  "remove_docs",       default: false
-    t.integer  "lineitem_id"
     t.string   "c_class"
     t.string   "c_ship1"
     t.string   "c_ship2"
