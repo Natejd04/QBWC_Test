@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613000734) do
+ActiveRecord::Schema.define(version: 20180613004752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(version: 20180613000734) do
     t.string   "list_id"
     t.string   "currency"
     t.decimal  "balance"
-    t.string   "type"
     t.boolean  "active"
     t.datetime "qb_created"
     t.datetime "qb_modified"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "account_type"
   end
 
   create_table "bills", force: :cascade do |t|

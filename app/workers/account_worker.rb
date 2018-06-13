@@ -19,8 +19,7 @@ class AccountWorker < QBWC::Worker
     def requests(job)
         {
             :account_query_rq => {
-                :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 500,
+                :active_status => "ActiveOnly",
                 :from_modified_date => LastUpdate,
                 :to_modified_date => Date.today + (1.0)
             }
@@ -29,8 +28,8 @@ class AccountWorker < QBWC::Worker
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
-        complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-
+        # complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
+        # binding.pry
         # let's grab all inventory assembly items
         if r['account_ret'].is_a? Array
 
@@ -38,7 +37,11 @@ class AccountWorker < QBWC::Worker
             r['account_ret'].each do |qb_account|
                 account_data = {}
                 account_data[:name] = qb_account['full_name']
-                account_data[:description] = qb_account['desc']
+                
+                if account_data[:description] = qb_account['desc']
+                    account_data[:description] = qb_account['desc']
+                end
+
                 account_data[:number] = qb_account['account_number']
                 account_data[:type] = qb_account['account_type']
                 account_data[:balance] = qb_account['balance']
