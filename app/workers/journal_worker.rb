@@ -19,9 +19,8 @@ class JournalWorker < QBWC::Worker
         {
             :journal_entry_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                # :account_filter => {"full_name" => "Gross Sales"},
                 :max_returned => 100,
-                :txn_date_range_filter => {"from_txn_date" => LastUpdate, "to_txn_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
@@ -75,7 +74,7 @@ class JournalWorker < QBWC::Worker
                     
                     qb_journal['journal_debit_line'].each do |li|
                     
-                        li_data = {}
+                    li_data = {}
 
                         # We just recorded it and could pull it via find.
                         li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
@@ -92,8 +91,8 @@ class JournalWorker < QBWC::Worker
                         # Entity Reference - Customer
                         if li['entity_ref']
                             # This line item might have an entity (customer) has an accont, let's find it
-                            if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                                li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                            if Customer.exists?(listid: li['entity_ref']['list_id'])
+                                li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                             end
                         end
 
@@ -105,9 +104,10 @@ class JournalWorker < QBWC::Worker
                             end
                         end
 
-                        li_data[:type] = "debit"
+                        li_data[:account_type] = "debit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
+                                binding.pry
                                 debit = (debit * journal_data[:exchange_rate])
                             end
                         
@@ -134,7 +134,7 @@ class JournalWorker < QBWC::Worker
 
                  # we need this if the line item only has one entry.   
                 elsif !qb_journal['journal_debit_line'].blank? 
-                    li = qb_inv['journal_debit_line']
+                    li = qb_journal['journal_debit_line']
                     li_data = {}
 
                     # We just recorded it and could pull it via find.
@@ -152,8 +152,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                        if Customer.exists?(listid: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -165,7 +165,7 @@ class JournalWorker < QBWC::Worker
                         end
                     end
 
-                    li_data[:type] = "debit"
+                    li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
                             debit = (debit * journal_data[:exchange_rate])
@@ -215,8 +215,8 @@ class JournalWorker < QBWC::Worker
                         # Entity Reference - Customer
                         if li['entity_ref']
                             # This line item might have an entity (customer) has an accont, let's find it
-                            if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                                li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                            if Customer.exists?(listid: li['entity_ref']['list_id'])
+                                li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                             end
                         end
 
@@ -228,7 +228,7 @@ class JournalWorker < QBWC::Worker
                             end
                         end
 
-                        li_data[:type] = "credit"
+                        li_data[:account_type] = "credit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
                                 credit = (credit * journal_data[:exchange_rate])
@@ -257,7 +257,7 @@ class JournalWorker < QBWC::Worker
 
                  # we need this if the line item only has one entry.   
                 elsif !qb_journal['journal_credit_line'].blank? 
-                    li = qb_inv['journal_credit_line']
+                    li = qb_journal['journal_credit_line']
                     li_data = {}
 
                     # We just recorded it and could pull it via find.
@@ -275,8 +275,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                        if Customer.exists?(listid: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -288,7 +288,7 @@ class JournalWorker < QBWC::Worker
                         end
                     end
 
-                    li_data[:type] = "credit"
+                    li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
                             credit = (credit * journal_data[:exchange_rate])
@@ -382,8 +382,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                        if Customer.exists?(listid: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -395,7 +395,7 @@ class JournalWorker < QBWC::Worker
                         end
                     end
 
-                    li_data[:type] = "debit"
+                    li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
                             debit = (debit * journal_data[:exchange_rate])
@@ -424,7 +424,7 @@ class JournalWorker < QBWC::Worker
 
              # we need this if the line item only has one entry.   
             elsif !qb_journal['journal_debit_line'].blank? 
-                li = qb_inv['journal_debit_line']
+                li = qb_journal['journal_debit_line']
                 li_data = {}
 
                 # We just recorded it and could pull it via find.
@@ -442,8 +442,8 @@ class JournalWorker < QBWC::Worker
                 # Entity Reference - Customer
                 if li['entity_ref']
                     # This line item might have an entity (customer) has an accont, let's find it
-                    if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                        li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                    if Customer.exists?(listid: li['entity_ref']['list_id'])
+                        li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                     end
                 end
 
@@ -455,7 +455,7 @@ class JournalWorker < QBWC::Worker
                     end
                 end
 
-                li_data[:type] = "debit"
+                li_data[:account_type] = "debit"
                 amount = li['amount']
                     if currency_ref == "Canadian Dollar"
                         debit = (debit * journal_data[:exchange_rate])
@@ -505,8 +505,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                        if Customer.exists?(listid: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -518,7 +518,7 @@ class JournalWorker < QBWC::Worker
                         end
                     end
 
-                    li_data[:type] = "credit"
+                    li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
                             credit = (credit * journal_data[:exchange_rate])
@@ -547,7 +547,7 @@ class JournalWorker < QBWC::Worker
 
              # we need this if the line item only has one entry.   
             elsif !qb_journal['journal_credit_line'].blank? 
-                li = qb_inv['journal_credit_line']
+                li = qb_journal['journal_credit_line']
                 li_data = {}
 
                 # We just recorded it and could pull it via find.
@@ -565,8 +565,8 @@ class JournalWorker < QBWC::Worker
                 # Entity Reference - Customer
                 if li['entity_ref']
                     # This line item might have an entity (customer) has an accont, let's find it
-                    if Customer.exists?(list_id: li['entity_ref']['list_id'])
-                        li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
+                    if Customer.exists?(listid: li['entity_ref']['list_id'])
+                        li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
                     end
                 end
 
@@ -578,7 +578,7 @@ class JournalWorker < QBWC::Worker
                     end
                 end
 
-                li_data[:type] = "credit"
+                li_data[:account_type] = "credit"
                 amount = li['amount']
                     if currency_ref == "Canadian Dollar"
                         credit = (credit * journal_data[:exchange_rate])

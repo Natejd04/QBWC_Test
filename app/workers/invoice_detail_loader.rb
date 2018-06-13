@@ -26,7 +26,7 @@ class InvoiceDetailLoader < QBWC::Worker
     def requests(job)
         {
             :invoice_query_rq => {
-                :txn_date_range_filter => {"from_txn_date" => LastUpdate, "to_txn_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
