@@ -43,7 +43,7 @@ class AccountWorker < QBWC::Worker
                 end
 
                 account_data[:number] = qb_account['account_number']
-                account_data[:type] = qb_account['account_type']
+                account_data[:account_type] = qb_account['account_type']
                 account_data[:balance] = qb_account['balance']
                 account_data[:list_id] = qb_account['list_id']
                 account_data[:edit_sq] = qb_account['edit_sequence']
@@ -74,7 +74,7 @@ class AccountWorker < QBWC::Worker
                 account_data[:name] = qb_account['full_name']
                 account_data[:description] = qb_account['desc']
                 account_data[:number] = qb_account['account_number']
-                account_data[:type] = qb_account['account_type']
+                account_data[:account_type] = qb_account['account_type']
                 account_data[:balance] = qb_account['balance']
                 account_data[:list_id] = qb_account['list_id']
                 account_data[:edit_sq] = qb_account['edit_sequence']
