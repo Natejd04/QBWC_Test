@@ -19,7 +19,7 @@ class JournalWorker < QBWC::Worker
         {
             :journal_entry_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 100,
+                :max_returned => 1000,
                 :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
@@ -107,8 +107,7 @@ class JournalWorker < QBWC::Worker
                         li_data[:account_type] = "debit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
-                                binding.pry
-                                debit = (debit * journal_data[:exchange_rate])
+                                debit = (amount * journal_data[:exchange_rate]).round(2)
                             end
                         
                         li_data[:amount] = debit
@@ -123,7 +122,7 @@ class JournalWorker < QBWC::Worker
                             lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if journalupdate.qb_edit != qb_journal['edit_sequence']
+                            if journalid.qb_edit != qb_journal['edit_sequence']
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -168,7 +167,7 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            debit = (debit * journal_data[:exchange_rate])
+                            debit = (amount * journal_data[:exchange_rate]).round(2)
                         end
                     
                     li_data[:amount] = debit
@@ -183,7 +182,7 @@ class JournalWorker < QBWC::Worker
                         lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if journalupdate.qb_edit != qb_journal['edit_sequence']
+                        if journalid.qb_edit != qb_journal['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -231,7 +230,7 @@ class JournalWorker < QBWC::Worker
                         li_data[:account_type] = "credit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
-                                credit = (credit * journal_data[:exchange_rate])
+                                credit = (amount * journal_data[:exchange_rate]).round(2)
                             end
                         
                         li_data[:amount] = credit
@@ -246,7 +245,7 @@ class JournalWorker < QBWC::Worker
                             lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if journalupdate.qb_edit != qb_journal['edit_sequence']
+                            if journalid.qb_edit != qb_journal['edit_sequence']
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -291,7 +290,7 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            credit = (credit * journal_data[:exchange_rate])
+                            credit = (amount * journal_data[:exchange_rate]).round(2)
                         end
                     
                     li_data[:amount] = credit
@@ -306,7 +305,7 @@ class JournalWorker < QBWC::Worker
                         lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if journalupdate.qb_edit != qb_journal['edit_sequence']
+                        if journalid.qb_edit != qb_journal['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -398,7 +397,7 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            debit = (debit * journal_data[:exchange_rate])
+                            debit = (amount * journal_data[:exchange_rate]).round(2)
                         end
                     
                     li_data[:amount] = debit
@@ -413,7 +412,7 @@ class JournalWorker < QBWC::Worker
                         lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if journalupdate.qb_edit != qb_journal['edit_sequence']
+                        if journalid.qb_edit != qb_journal['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -458,7 +457,7 @@ class JournalWorker < QBWC::Worker
                 li_data[:account_type] = "debit"
                 amount = li['amount']
                     if currency_ref == "Canadian Dollar"
-                        debit = (debit * journal_data[:exchange_rate])
+                        debit = (amount * journal_data[:exchange_rate]).round(2)
                     end
                 
                 li_data[:amount] = debit
@@ -473,7 +472,7 @@ class JournalWorker < QBWC::Worker
                     lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                     # Has this LineItem actually been modified?
 
-                    if journalupdate.qb_edit != qb_journal['edit_sequence']
+                    if journalid.qb_edit != qb_journal['edit_sequence']
                         lineitemupdate.update(li_data)
                     end
                 else
@@ -521,7 +520,7 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            credit = (credit * journal_data[:exchange_rate])
+                            credit = (amount * journal_data[:exchange_rate]).round(2)
                         end
                     
                     li_data[:amount] = credit
@@ -536,7 +535,7 @@ class JournalWorker < QBWC::Worker
                         lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if journalupdate.qb_edit != qb_journal['edit_sequence']
+                        if journalid.qb_edit != qb_journal['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -581,7 +580,7 @@ class JournalWorker < QBWC::Worker
                 li_data[:account_type] = "credit"
                 amount = li['amount']
                     if currency_ref == "Canadian Dollar"
-                        credit = (credit * journal_data[:exchange_rate])
+                        credit = (amount * journal_data[:exchange_rate]).round(2)
                     end
                 
                 li_data[:amount] = credit
@@ -596,7 +595,7 @@ class JournalWorker < QBWC::Worker
                     lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                     # Has this LineItem actually been modified?
 
-                    if journalupdate.qb_edit != qb_journal['edit_sequence']
+                    if journalid.qb_edit != qb_journal['edit_sequence']
                         lineitemupdate.update(li_data)
                     end
                 else
