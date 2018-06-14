@@ -145,8 +145,8 @@ class SalesReceiptWorker < QBWC::Worker
                         li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                         # Does this li have an amount?
                         li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
-
-                        if qb_receipt['exchange_rate'] != 1.0
+                        
+                        if qb_receipt['exchange_rate'] != 1.0 and !li['amount'].nil?
                             li_data[:homecurrency_amount] = (li_data[:amount] * qb_receipt['exchange_rate'].to_f)
                         else
                             li_data[:homecurrency_amount] = li_data[:amount]
@@ -198,7 +198,7 @@ class SalesReceiptWorker < QBWC::Worker
                     # Does this li have an amount?
                     li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
-                    if qb_receipt['exchange_rate'] != 1.0
+                    if qb_receipt['exchange_rate'] != 1.0 and !li['amount'].nil?
                         li_data[:homecurrency_amount] = (li_data[:amount] * qb_receipt['exchange_rate'].to_f)
                     else
                         li_data[:homecurrency_amount] = li_data[:amount]
@@ -338,7 +338,7 @@ class SalesReceiptWorker < QBWC::Worker
                     # Does this li have an amount?
                     li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
-                    if qb_receipt['exchange_rate'] != 1.0
+                    if qb_receipt['exchange_rate'] != 1.0 and !li['amount'].nil?
                         li_data[:homecurrency_amount] = (li_data[:amount] * qb_receipt['exchange_rate'].to_f)
                     else
                         li_data[:homecurrency_amount] = li_data[:amount]
@@ -393,7 +393,7 @@ class SalesReceiptWorker < QBWC::Worker
                 # Does this li have an amount?
                 li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
-                if qb_receipt['exchange_rate'] != 1.0
+                if qb_receipt['exchange_rate'] != 1.0 and !li['amount'].nil?
                     li_data[:homecurrency_amount] = (li_data[:amount] * qb_receipt['exchange_rate'].to_f)
                 else
                     li_data[:homecurrency_amount] = li_data[:amount]

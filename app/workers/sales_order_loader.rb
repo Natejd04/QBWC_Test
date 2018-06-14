@@ -160,7 +160,7 @@ class SalesOrderLoader < QBWC::Worker
                         # Does this li have an amount?
                         li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
-                        if qb_inv['exchange_rate'] != 1.0
+                        if qb_inv['exchange_rate'] != 1.0 and !li['amount'].nil?
                             li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
                         else
                             li_data[:homecurrency_amount] = li_data[:amount]
@@ -211,7 +211,7 @@ class SalesOrderLoader < QBWC::Worker
                     # Does this li have an amount?
                     li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
-                    if qb_inv['exchange_rate'] != 1.0
+                    if qb_inv['exchange_rate'] != 1.0 and !li['amount'].nil?
                         li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
                     else
                         li_data[:homecurrency_amount] = li_data[:amount]
@@ -357,7 +357,7 @@ class SalesOrderLoader < QBWC::Worker
                     # Does this li have an amount?
                     li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
                 
-                    if qb_inv['exchange_rate'] != 1.0
+                    if qb_inv['exchange_rate'] != 1.0 and !li['amount'].nil?
                         li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
                     else
                         li_data[:homecurrency_amount] = li_data[:amount]
@@ -411,7 +411,7 @@ class SalesOrderLoader < QBWC::Worker
                 # Does this li have an amount?
                 li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
 
-                if qb_inv['exchange_rate'] != 1.0
+                if qb_inv['exchange_rate'] != 1.0 and !li['amount'].nil?
                     li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
                 else
                     li_data[:homecurrency_amount] = li_data[:amount]
