@@ -17,7 +17,7 @@ class SalesOrderLoader < QBWC::Worker
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
-        LastUpdate = "2018-01-01"
+        LastUpdate = "2017-12-01"
     
     end
 
