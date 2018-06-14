@@ -1,0 +1,13 @@
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+			<h1>Item Detail</h1>
+			<span class="code">Code: <%= @account.number %><br /></span>
+			Name: <%= @account.name %><br />
+			Description: <%= @account.description %><br />
+			Unit: <%= @account.balance %><br />
+
+			<p><%= link_to "Edit", edit_account_path %></p>
+		</div>
+	</div>
+</div>

@@ -37,10 +37,20 @@ class ApplicationController < ActionController::Base
     def deny_access
         redirect_to signin_path, :notice => "Please sign in to access this page."
     end
+
+    def no_access_notify
+        redirect_to dashboard_path, :notice => "You do not have appropriate permissions to see this page."
+    end
     
     def authenticate_user
         if !signed_in?
         deny_access
+        end
+    end
+
+     def admin_only
+        if current_user.role != "admin"
+        no_access_notify
         end
     end
     

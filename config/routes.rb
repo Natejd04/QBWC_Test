@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   resources :bills
   resources :trackings
   resources :invoices
+  resources :accounts
+
   
   resources :notifications do
     collection do
