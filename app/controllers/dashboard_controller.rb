@@ -17,17 +17,19 @@ class DashboardController < ApplicationController
 
 		# Let subtract anything that has been deducted from gross sales
 		@journal_debit = Journal.joins(:account_line_items).select('journals.id, journals.txn_date, account_line_items.amount, account_line_items.account_id, account_line_items.account_type').where(:journals => {:txn_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month}).where(:account_line_items => {:account_type => "debit", :account_id => 143}).sum('account_line_items.amount')
-		@journal_debit = Invoice.joins(:line_items, :items).select('journals.id, journals.txn_date, line_items.amount, items.account_id').where(:invoices => {:txn_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month}).where(:items => {:account_id => 143}).sum('line_items.amount')
+		@invoice_total = Invoice.joins(:line_items, :items).select('invoice.id, invoice.c_date, line_items.item_id, line_items.amount, items.account_id').where(:invoices => {:c_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month}).where(:items => {:account_id => 143}).sum('line_items.amount')
+
 		# @inv_dist_total = @inv_dist.sum
-		@invoice_total = Invoice.where(:c_date => 4.month.ago..4.month.ago.end_of_month).sum(:c_subtotal)
+		# @invoice_total = Invoice.where(:c_date => 4.month.ago..4.month.ago.end_of_month).sum(:c_subtotal)
 		#@month_total = Invoice.where(:c_date => Time.now.beginning_of_month..Time.now).sum(:c_subtotal)
 		#@prior_m_total = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).sum(:c_subtotal)
 			#@vs = ((@month_total - @prior_m_total) / @month_total) * 100
 		
 		# using these just for development, unhide items above in production
-		@month_invoice_total = Invoice.where(:c_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month).sum(:c_subtotal)
+		@inv_gross_total = Invoice.joins(:items).where(:c_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month).where("items.account_id = 143").sum("line_items.amount")
+		# @month_invoice_total = Invoice.where(:c_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month).sum(:c_subtotal)
 		@month_sales_receipts = SalesReceipt.where(:txn_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month).sum(:subtotal)
-		@month_total = (@month_invoice_total + @month_sales_receipts) - @journal_debit
+		@month_total = (@inv_gross_total + @month_sales_receipts) - @journal_debit
 		@prior_m_total = Invoice.where(:c_date => 5.month.ago.beginning_of_month..5.month.ago.end_of_month).sum(:c_subtotal)
 			@vs = ((@month_total - @prior_m_total) / @month_total) * 100
 		@open_orders_count = Order.where(c_invoiced: nil).count

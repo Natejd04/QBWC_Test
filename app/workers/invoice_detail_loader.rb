@@ -147,7 +147,13 @@ class InvoiceDetailLoader < QBWC::Worker
                         li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                         # Does this li have an amount?
                         li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
-                    
+
+                        if qb_inv['exchange_rate'] != 1.0
+                            li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
+                        else
+                            li_data[:homecurrency_amount] = li_data[:amount]
+                        end
+
                         if li['inventory_site_ref']
                             if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
                                 li_data[:site_id] = Site.find_by(list_id: li['inventory_site_ref']['list_id']).id
@@ -193,6 +199,12 @@ class InvoiceDetailLoader < QBWC::Worker
                     li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                     # Does this li have an amount?
                     li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+
+                    if qb_inv['exchange_rate'] != 1.0
+                        li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
+                    else
+                        li_data[:homecurrency_amount] = li_data[:amount]
+                    end
                     
                     if li['inventory_site_ref']
                         if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
@@ -329,6 +341,12 @@ class InvoiceDetailLoader < QBWC::Worker
                     li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                     # Does this li have an amount?
                     li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+
+                    if qb_inv['exchange_rate'] != 1.0
+                        li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
+                    else
+                        li_data[:homecurrency_amount] = li_data[:amount]
+                    end
                 
                     if li['inventory_site_ref']
                         if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
@@ -377,6 +395,12 @@ class InvoiceDetailLoader < QBWC::Worker
                 li_data[:qty] = li['quantity'].nil? ? nil : li['quantity'].to_i
                 # Does this li have an amount?
                 li_data[:amount] = li['amount'].nil? ? nil : li['amount'].to_f
+
+                if qb_inv['exchange_rate'] != 1.0
+                    li_data[:homecurrency_amount] = (li_data[:amount] * qb_inv['exchange_rate'].to_f)
+                else
+                    li_data[:homecurrency_amount] = li_data[:amount]
+                end
                 
                 if li['inventory_site_ref']
                     if Site.exists?(list_id: li['inventory_site_ref']['list_id'])
