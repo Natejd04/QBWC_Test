@@ -106,7 +106,7 @@ class SalesReceiptWorker < QBWC::Worker
                 if SalesReceipt.exists?(txn_id: receipt_data[:txn_id])
                     receiptupdate = SalesReceipt.find_by(txn_id: receipt_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
-                        if receiptupdate.c_edit != qb_receipt['edit_sequence']
+                        if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                             receiptupdate.update(receipt_data)
                         end
                 else
@@ -115,16 +115,16 @@ class SalesReceiptWorker < QBWC::Worker
 
 # ----------------> Start Line Item
                 # Line items are recorded if they are an array
-                if qb_receipt['invoice_line_ret'].is_a? Array
+                if qb_receipt['sales_receipt_line_ret'].is_a? Array
                     
                     
-                    qb_receipt['invoice_line_ret'].each do |li|
+                    qb_receipt['sales_receipt_line_ret'].each do |li|
                     
                         li_data = {}
 
                         # We need to match the lineitem with order id
                         # We just recorded it and could pull it via find.
-                        li_data[:order_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
+                        li_data[:sales_receipt_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
 
                         li_data[:txn_id] = li['txn_line_id']
 
@@ -157,7 +157,7 @@ class SalesReceiptWorker < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if receiptupdate.c_edit != qb_receipt['edit_sequence']
+                            if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -166,12 +166,12 @@ class SalesReceiptWorker < QBWC::Worker
                     end
 
                 # we need this if the line item only has one entry.   
-                elsif !qb_receipt['invoice_line_ret'].blank? 
+                elsif !qb_receipt['sales_receipt_line_ret'].blank? 
                     li_data = {}
-                    li = qb_receipt['invoice_line_ret']
+                    li = qb_receipt['sales_receipt_line_ret']
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
-                    li_data[:order_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
+                    li_data[:sales_receipt_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -203,7 +203,7 @@ class SalesReceiptWorker < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if receiptupdate.c_edit != qb_receipt['edit_sequence']
+                        if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -285,7 +285,7 @@ class SalesReceiptWorker < QBWC::Worker
                 if SalesReceipt.exists?(txn_id: receipt_data[:txn_id])
                     receiptupdate = SalesReceipt.find_by(txn_id: receipt_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
-                        if receiptupdate.c_edit != qb_receipt['edit_sequence']
+                        if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                             receiptupdate.update(receipt_data)
                         end
                 else
@@ -294,16 +294,16 @@ class SalesReceiptWorker < QBWC::Worker
 
 # ----------------> Start Line Item
             # Line items are recorded if they are an array
-            if qb_receipt['invoice_line_ret'].is_a? Array
+            if qb_receipt['sales_receipt_line_ret'].is_a? Array
                 
                 
-                qb_receipt['invoice_line_ret'].each do |li|
+                qb_receipt['sales_receipt_line_ret'].each do |li|
                 
                     li_data = {}
 
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
-                    li_data[:order_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
+                    li_data[:sales_receipt_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -340,7 +340,7 @@ class SalesReceiptWorker < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if receiptupdate.c_edit != qb_receipt['edit_sequence']
+                        if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -349,12 +349,12 @@ class SalesReceiptWorker < QBWC::Worker
                 end
 
             # we need this if the line item only has one entry.   
-            elsif !qb_receipt['invoice_line_ret'].blank? 
+            elsif !qb_receipt['sales_receipt_line_ret'].blank? 
                 li_data = {}
-                li = qb_receipt['invoice_line_ret']
+                li = qb_receipt['sales_receipt_line_ret']
                 # We need to match the lineitem with order id
                 # We just recorded it and could pull it via find.
-                li_data[:order_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
+                li_data[:sales_receipt_id] = SalesReceipt.find_by(txn_id: qb_receipt['txn_id']).id
 
                 li_data[:txn_id] = li['txn_line_id']
 
@@ -388,7 +388,7 @@ class SalesReceiptWorker < QBWC::Worker
                     lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                     # Has this LineItem actually been modified?
 
-                    if receiptupdate.c_edit != qb_receipt['edit_sequence']
+                    if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                         lineitemupdate.update(li_data)
                     end
                 else

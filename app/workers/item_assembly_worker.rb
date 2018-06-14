@@ -115,6 +115,8 @@ class ItemAssemblyWorker < QBWC::Worker
                 
                 if qb_item['sales_and_purchase']
                     item_data[:description] = qb_item['sales_and_purchase']['full_name']
+                    
+                    
                 end
 
                 if qb_item['unit_of_measure_set_ref']

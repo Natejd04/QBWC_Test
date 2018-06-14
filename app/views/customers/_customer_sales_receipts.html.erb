@@ -1,0 +1,13 @@
+<% @customer.sales_receipts.each do |f| %>
+<tr>
+	<td><%= f.name %></td>
+	<td><%= link_to f.invoicenumber, order_path(f.id) %></td>
+	<td>Sales Receipt</td>
+	<td><%= f.txn_date.strftime("%m/%d/%Y") %></td>
+	<td><%= f.po_number %></td>
+	<td><%= number_to_currency(f.subtotal, :unit=> "$") %></td>
+</tr>
+<% end %>	
+<tr> 
+	<td colspan="6"><b>TOTAL<div class="pull-right"><%= number_to_currency(@order_total, :unit => "$") %></div></b></td>
+</tr>

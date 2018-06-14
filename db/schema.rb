@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613210216) do
+ActiveRecord::Schema.define(version: 20180614011806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,9 @@ ActiveRecord::Schema.define(version: 20180613210216) do
     t.integer  "user_id"
     t.integer  "customer_id"
     t.boolean  "notified"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "sales_receipt_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -154,6 +155,7 @@ ActiveRecord::Schema.define(version: 20180613210216) do
     t.string   "edit_sq"
     t.string   "list_id"
     t.string   "item_type"
+    t.integer  "account_id"
   end
 
   create_table "journals", force: :cascade do |t|
@@ -175,8 +177,8 @@ ActiveRecord::Schema.define(version: 20180613210216) do
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "qty"
     t.float    "amount"
     t.string   "description"
@@ -184,6 +186,7 @@ ActiveRecord::Schema.define(version: 20180613210216) do
     t.integer  "order_id"
     t.integer  "site_id"
     t.integer  "item_id"
+    t.integer  "sales_receipt_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -274,6 +277,38 @@ ActiveRecord::Schema.define(version: 20180613210216) do
     t.string   "pending_jobs", limit: 1000, default: "", null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+  end
+
+  create_table "sales_receipts", force: :cascade do |t|
+    t.string   "txn_id"
+    t.string   "invoicenumber"
+    t.string   "qb_edit"
+    t.datetime "txn_date"
+    t.string   "currency_ref"
+    t.decimal  "exchange_rate"
+    t.float    "subtotal"
+    t.string   "template"
+    t.datetime "qb_create"
+    t.datetime "qb_update"
+    t.string   "po_number"
+    t.string   "class_name"
+    t.string   "ship_date"
+    t.string   "due_date"
+    t.string   "ship_via"
+    t.integer  "customer_id"
+    t.string   "name"
+    t.string   "ship1"
+    t.string   "ship2"
+    t.string   "ship3"
+    t.string   "ship4"
+    t.string   "ship5"
+    t.string   "shipcity"
+    t.string   "shipstate"
+    t.string   "shippostal"
+    t.string   "shipcountry"
+    t.string   "sales_rep"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "site_inventories", force: :cascade do |t|

@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-xs-12 text-right">
                             <div class="invoice-large">
-                                <%= number_to_currency(@invoice_total, :unit => "$",precision: 2) %>
+                                <%= number_to_currency(@total, :unit => "$",precision: 2) %>
                             </div>
                             <div>Total Sales</div>
                         </div>
@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-xs-12 text-right">
                             <div class="invoice-large">
-                           <%=  @customer.invoices.all.count %>
+                           <%=  @order_count %>
                             </div>
                             <div>Total Orders</div>
                         </div>
@@ -83,6 +83,8 @@
                                     </li>
                                     <li><a class="append-invoices" href="#">Invoices</a>
                                     </li>
+                                    <li><a class="append-sales-receipts" href="#">Sales Receipts</a>
+                                    </li>
                                     <li class="divider"></li>
                                     <li><a href="#">Separated link</a>
                                     </li>
@@ -116,6 +118,10 @@
                                             <%= render :partial => 'customer_invoice_orders' %>
                                         </tbody>                                            
 
+                                        <tbody class="order-sales-receipts">
+                                            <%= render :partial => 'customer_sales_receipts' %>
+                                        </tbody>                                            
+
                                     </table>
                                 </div>
                                 <!-- /.table-responsive -->
@@ -130,10 +136,12 @@
  <script>
         $(function() {
       $(".order-table").hide();
+      $(".order-sales-receipts").hide();
     
       $('.append-invoices').on('click', function(e) {
         e.preventDefault();
-        $(".order-sales-table").hide();       
+        $(".order-sales-table").hide();
+        $(".order-sales-receipts").hide();       
         $(".order-table").show();
         $("#type-of-orders").text("Invoices");    
     });
@@ -141,7 +149,15 @@
         e.preventDefault();
         $(".order-sales-table").show();       
         $(".order-table").hide();
+        $(".order-sales-receipts").hide();
         $("#type-of-orders").text("Sales Orders");
+    });
+    $('.append-sales-receipts').on('click', function(e) {
+        e.preventDefault();
+        $(".order-sales-receipts").show();
+        $(".order-sales-table").hide();              
+        $(".order-table").hide();
+        $("#type-of-orders").text("Sales Receipts");
     });
 });
     </script>    

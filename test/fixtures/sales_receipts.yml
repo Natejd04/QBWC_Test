@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  txn_id: MyString
+  invoicenumber: MyString
+  qb_edit: MyString
+  txn_date: 2018-06-13 16:22:42
+  currency_ref: MyString
+  exchange_rate: 9.99
+  subtotal: 1.5
+  template: MyString
+  qb_create: 2018-06-13 16:22:42
+  qb_update: 2018-06-13 16:22:42
+  po_number: MyString
+  class_name: MyString
+  ship_date: MyString
+  due_date: MyString
+  ship_via: MyString
+  customer_id: 1
+  name: MyString
+  ship1: MyString
+  ship2: MyString
+  ship3: MyString
+  ship4: MyString
+  ship5: MyString
+  shipcity: MyString
+  shipstate: MyString
+  shippostal: MyString
+  shipcountry: MyString
+  sales_rep: MyString
+
+two:
+  txn_id: MyString
+  invoicenumber: MyString
+  qb_edit: MyString
+  txn_date: 2018-06-13 16:22:42
+  currency_ref: MyString
+  exchange_rate: 9.99
+  subtotal: 1.5
+  template: MyString
+  qb_create: 2018-06-13 16:22:42
+  qb_update: 2018-06-13 16:22:42
+  po_number: MyString
+  class_name: MyString
+  ship_date: MyString
+  due_date: MyString
+  ship_via: MyString
+  customer_id: 1
+  name: MyString
+  ship1: MyString
+  ship2: MyString
+  ship3: MyString
+  ship4: MyString
+  ship5: MyString
+  shipcity: MyString
+  shipstate: MyString
+  shippostal: MyString
+  shipcountry: MyString
+  sales_rep: MyString
