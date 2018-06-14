@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614011806) do
+ActiveRecord::Schema.define(version: 20180614191628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,8 +177,8 @@ ActiveRecord::Schema.define(version: 20180614011806) do
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "qty"
     t.float    "amount"
     t.string   "description"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20180614011806) do
     t.integer  "site_id"
     t.integer  "item_id"
     t.integer  "sales_receipt_id"
+    t.float    "homecurrency_amount"
   end
 
   create_table "logs", force: :cascade do |t|
