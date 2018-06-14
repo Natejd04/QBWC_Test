@@ -77,7 +77,8 @@ class JournalWorker < QBWC::Worker
                     li_data = {}
 
                         # We just recorded it and could pull it via find.
-                        li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                        journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                        li_data[:journal_id] = journalid.id
 
                         li_data[:txn_id] = li['txn_line_id']
 
@@ -138,7 +139,8 @@ class JournalWorker < QBWC::Worker
                     li_data = {}
 
                     # We just recorded it and could pull it via find.
-                    li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                    journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                    li_data[:journal_id] = journalid.id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -187,6 +189,8 @@ class JournalWorker < QBWC::Worker
                         if journalid.qb_edit != qb_journal['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
+
+
                     else
                         AccountLineItem.create(li_data)
                     end
@@ -263,7 +267,8 @@ class JournalWorker < QBWC::Worker
                     li_data = {}
 
                     # We just recorded it and could pull it via find.
-                    li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                    journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                    li_data[:journal_id] = journalid.id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -371,7 +376,8 @@ class JournalWorker < QBWC::Worker
                     li_data = {}
 
                     # We just recorded it and could pull it via find.
-                    li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                    journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                    li_data[:journal_id] = journalid.id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -432,7 +438,8 @@ class JournalWorker < QBWC::Worker
                 li_data = {}
 
                 # We just recorded it and could pull it via find.
-                li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                li_data[:journal_id] = journalid.id
 
                 li_data[:txn_id] = li['txn_line_id']
 
@@ -496,7 +503,8 @@ class JournalWorker < QBWC::Worker
                     li_data = {}
 
                     # We just recorded it and could pull it via find.
-                    li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                    journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                    li_data[:journal_id] = journalid.id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -557,7 +565,8 @@ class JournalWorker < QBWC::Worker
                 li_data = {}
 
                 # We just recorded it and could pull it via find.
-                li_data[:journal_id] = Journal.find_by(txn_id: qb_journal['txn_id']).id
+                journalid = Journal.find_by(txn_id: qb_journal['txn_id'])
+                li_data[:journal_id] = journalid.id
 
                 li_data[:txn_id] = li['txn_line_id']
 

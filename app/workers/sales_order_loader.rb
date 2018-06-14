@@ -120,12 +120,12 @@ class SalesOrderLoader < QBWC::Worker
                         # Creating the notification system
                     inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
                     user_role = User.find_by(role: "admin")
-                    if user.role.is_a? Array
+                    if user_role.is_a? Array
                         user_role.each do |user|
                             Notification.create(recipient: user, action: "posted", notifiable: inv_created)
                         end
                     else
-                        Notification.create(recipient: user, action: "posted", notifiable: inv_created)
+                        Notification.create(recipient: user_role, action: "posted", notifiable: inv_created)
                     end
                 end
             

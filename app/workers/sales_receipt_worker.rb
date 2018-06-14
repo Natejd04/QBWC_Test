@@ -9,7 +9,7 @@ class SalesReceiptWorker < QBWC::Worker
     # Pre-load all data from 2017-Present, only if no data exists in the Log table.
     # If data exists in the Log table, we take the last pull date as a sort filter
     # We will limit this to 1, the most recent entry
-    if Log.exists?(worker_name: 'SalesReceiptWorker')
+    if Log.exists?(worker_name: "SalesReceiptWorker")
 
         LastUpdate = Log.where(worker_name: "SalesReceiptWorker").order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")

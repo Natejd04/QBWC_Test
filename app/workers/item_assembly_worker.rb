@@ -199,11 +199,14 @@ class ItemAssemblyWorker < QBWC::Worker
                     item_data[:code] = qb_item['bar_code_value']
                 end
                 
+                if qb_item['sales_or_purchase']
+                    if Account.exists?(list_id: qb_item['sales_or_purchase']['account_ref']['list_id'])
+                        item_data[:account_id] = Account.find_by(list_id: qb_item['sales_or_purchase']['account_ref']['list_id']).id
+                    end
+                end
+
                 if qb_item['sales_and_purchase']
                     item_data[:description] = qb_item['sales_and_purchase']['full_name']
-                    if Account.exists?(list_id: qb_item['sales_and_purchase']['account_ref']['list_id'])
-                        item_data[:account_id] = Account.find_by(list_id: qb_item['sales_and_purchase']['account_ref']['list_id']).id
-                    end
                 end
 
                 if qb_item['unit_of_measure_set_ref']
@@ -233,11 +236,14 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:code] = qb_item['bar_code_value']
             end
             
+            if qb_item['sales_or_purchase']
+                if Account.exists?(list_id: qb_item['sales_or_purchase']['account_ref']['list_id'])
+                    item_data[:account_id] = Account.find_by(list_id: qb_item['sales_or_purchase']['account_ref']['list_id']).id
+                end
+            end
+
             if qb_item['sales_and_purchase']
                 item_data[:description] = qb_item['sales_and_purchase']['full_name']
-                if Account.exists?(list_id: qb_item['sales_and_purchase']['account_ref']['list_id'])
-                    item_data[:account_id] = Account.find_by(list_id: qb_item['sales_and_purchase']['account_ref']['list_id']).id
-                end
             end
 
             if qb_item['unit_of_measure_set_ref']
@@ -270,14 +276,18 @@ class ItemAssemblyWorker < QBWC::Worker
                 if qb_item['bar_code_value']                    
                     item_data[:code] = qb_item['bar_code_value']
                 end
+
+                if qb_item['sales_or_purchase']
+                    if Account.exists?(list_id: qb_item['sales_or_purchase']['account_ref']['list_id'])
+                        item_data[:account_id] = Account.find_by(list_id: qb_item['sales_or_purchase']['account_ref']['list_id']).id
+                    end
+                end
                 
                 if qb_item['sales_and_purchase']
                     item_data[:description] = qb_item['sales_and_purchase']['sales_desc']
-                    if Account.exists?(list_id: qb_item['sales_and_purchase']['account_ref']['list_id'])
-                        item_data[:account_id] = Account.find_by(list_id: qb_item['sales_and_purchase']['account_ref']['list_id']).id
-                    end
                 end
-                    
+
+          
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
                     # before updating, lets find out if it's neccessary by filtering by modified
@@ -301,11 +311,14 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:code] = qb_item['bar_code_value']
             end
             
+            if qb_item['sales_or_purchase']
+                if Account.exists?(list_id: qb_item['sales_or_purchase']['account_ref']['list_id'])
+                    item_data[:account_id] = Account.find_by(list_id: qb_item['sales_or_purchase']['account_ref']['list_id']).id
+                end
+            end
+
             if qb_item['sales_and_purchase']
                 item_data[:description] = qb_item['sales_and_purchase']['sales_desc']
-                if Account.exists?(list_id: qb_item['sales_and_purchase']['account_ref']['list_id'])
-                    item_data[:account_id] = Account.find_by(list_id: qb_item['sales_and_purchase']['account_ref']['list_id']).id
-                end
             end
                 
             if Item.exists?(list_id: qb_item['list_id'])
@@ -452,7 +465,7 @@ class ItemAssemblyWorker < QBWC::Worker
                     item_data[:account_id] = Account.find_by(list_id: qb_item['account_ref']['list_id']).id
                 end
             end
-            
+
             if qb_item['item_desc']
                 item_data[:description] = qb_item['item_desc']
             end
