@@ -43,11 +43,7 @@
       <!-- Custom header -->
       <!-- Navigation -->
         <!-- Flash Message --> 
-        <% flash.each do |key, value| %>
-            <div class="<%= flash_class(key) %>">
-                <%= value %>
-            </div>
-        <% end %>
+        <%= flash_messages %>
 
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
