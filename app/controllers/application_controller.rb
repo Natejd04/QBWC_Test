@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     
     def sign_out
         session[:user_id] = nil
-        self.current_user = nil
+        self.current_user = nil 
     end
     
     def current_user?(user)

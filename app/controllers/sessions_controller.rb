@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
         else
             sign_in user
             role = user.role
-            redirect_to dashboard_path
+            redirect_to dashboard_path, :success => "Welcome back!"
         end
     end
     
