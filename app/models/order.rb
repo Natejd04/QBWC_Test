@@ -51,6 +51,32 @@ class Order < ActiveRecord::Base
             end
         end
     end
+
+    def self.chart_data(start = 5.months.ago)
+        total_prices = prices_by_day(start)
+        (start.to_date..4.months.ago.end_of_month).map do |date|
+        # (5.months.ago.to_date..Date.today).map do |date|
+                if !total_prices[date].nil?
+                    {
+                        c_date: date,
+                        total_price: total_prices[date] || 0
+                    }
+                else
+                    {
+                        c_date: date
+                    }
+                end
+            end
+    end
+
+    def self.prices_by_day(start)
+        orders = where(c_date: start.beginning_of_day..Time.zone.now)
+        orders = orders.group("date_trunc('week', c_date)")
+        orders = orders.select("date_trunc('week', c_date) as c_date, sum(c_total) as c_total").where.not(:customer_id => 1529)
+        orders.each_with_object({}) do |order, prices|
+            prices[order.c_date.to_date] = order.c_total.round(2)
+        end
+    end
     
     def self.to_csv(order)
         attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
@@ -98,8 +124,6 @@ class Order < ActiveRecord::Base
             #     end
             #   end
             # end
-
-
         end
     end
 #    This was a test from SO, no succes so far

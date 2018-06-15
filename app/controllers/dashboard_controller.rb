@@ -15,16 +15,19 @@ class DashboardController < ApplicationController
 		@invoices = Invoice.where(:c_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
 
-		# Let subtract anything that has been deducted from gross sales
+	# Channel calculations
+		#unhide in production 
+		#@orders_cw = Order.where(:c_date => Time.now.at_beginning_of_week..Time.now.at_end_of_week).where.not(customer_id: 1529).sum(:c_total)
+		
+		#hide in production	
+		@orders_cw = Order.where(:c_date => 4.month.ago.beginning_of_week..4.month.ago.end_of_week).where.not(customer_id: 1529).sum(:c_total)
+		
+	# end channel calc		
 		
 
 		# @inv_dist_total = @inv_dist.sum
 		@invoice_total = Invoice.where(:c_date => 4.month.ago..4.month.ago.end_of_month).sum(:c_subtotal)
-		#@month_total = Invoice.where(:c_date => Time.now.beginning_of_month..Time.now).sum(:c_subtotal)
-		#@prior_m_total = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).sum(:c_subtotal)
-			#@vs = ((@month_total - @prior_m_total) / @month_total) * 100
 		
-		# using these just for development, unhide items above in production
 		
 		# Current month top line sales calculations
 		@journal_debit = Journal.joins(:account_line_items).where(:txn_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "143"]).sum('account_line_items.amount')
