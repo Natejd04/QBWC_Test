@@ -1,16 +1,16 @@
-<%= content_tag :div, "", id: "orders_chart", data: {orders: Order.chart_data('week')} %>
+<%= content_tag :div, "", id: "orders_chart-2", data: {orders: Order.donut_chart} %>
 
-<div id="class-sales-chart">
+<div id="month-sales-channel">
 </div>
 
 
 <script>
-new Morris.Line({
+new Morris.Donut({
   // ID of the element in which to draw the chart.
-  element: 'class-sales-chart',
+  element: 'month-sales-channel',
   // Chart data records -- each entry in this array corresponds to a point on
   // the chart.
-  data: $('#orders_chart').data('orders'),
+  data: $('#orders_chart-2').data('orders'),
   // The name of the data record attribute that contains x-values.
   xkey: 'c_date',
   // A list of names of data record attributes that contain y-values.
@@ -20,6 +20,12 @@ new Morris.Line({
   labels: ['Total Sales'],
   continuousLine: false,
   preUnits: '$',
-  xLabels: "week"
+  xLabels: "month",
+  colors: [
+    "#337ab7",
+    "#f0ad4e",
+    "#5cb85c",
+    "#d9534f"
+    ]
 });
 </script>

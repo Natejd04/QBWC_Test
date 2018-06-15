@@ -117,6 +117,44 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        Weekly Sales
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <%= render :partial => 'weekly_sales_chart' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        Monthly Sales by Class
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <%= render :partial => 'month_sales_channel' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+            </div>
+
+            
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
@@ -177,43 +215,7 @@
                 </div>
             </div>
 
-             <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Weekly Sales Data
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                <%= render :partial => 'weekly_sales_chart' %>
-                                </div>
-                            </div>
-                        </div>
-              
-        			</div>
-        		</div>
-        	</div>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Monthly Year Sales Data
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                <%= render :partial => 'monthly_sales_chart' %>
-                                </div>
-                            </div>
-                        </div>
-              
-                    </div>
-                </div>
-            </div>
+             
         <!-- /#page-wrapper -->
 
     <script>

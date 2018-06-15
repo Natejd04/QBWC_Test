@@ -52,29 +52,41 @@ class Order < ActiveRecord::Base
         end
     end
 
-    def self.chart_data(start = 5.months.ago)
-        total_prices = prices_by_day(start)
+    def self.chart_data(start = 5.months.ago, interval)
+        total_prices = prices_by_week(start, interval)
         (start.to_date..4.months.ago.end_of_month).map do |date|
         # (5.months.ago.to_date..Date.today).map do |date|
-                if !total_prices[date].nil?
-                    {
-                        c_date: date,
-                        total_price: total_prices[date] || 0
-                    }
-                else
-                    {
-                        c_date: date
-                    }
-                end
+            if !total_prices[date].nil?
+                {
+                    c_date: date,
+                    total_price: total_prices[date] || 0
+                }
+            else
+                {
+                    c_date: date
+                }
             end
+        end
     end
 
-    def self.prices_by_day(start)
+    def self.prices_by_week(start, interval)
         orders = where(c_date: start.beginning_of_day..Time.zone.now)
-        orders = orders.group("date_trunc('week', c_date)")
-        orders = orders.select("date_trunc('week', c_date) as c_date, sum(c_total) as c_total").where.not(:customer_id => 1529)
+        orders = orders.group("date_trunc('#{interval}', c_date)")
+        orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(c_total) as c_total").where.not(:customer_id => 1529)
         orders.each_with_object({}) do |order, prices|
             prices[order.c_date.to_date] = order.c_total.round(2)
+        end
+    end
+
+    def self.donut_chart(timeish = 4.months.ago)
+        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct")
+        orders = orders.group("c_class")
+        orders = orders.select("c_class, sum(c_total) as c_total")
+        orders.map do |li|
+            {
+                label: li.c_class,
+                value: li.c_total.round(2)
+            }
         end
     end
     
