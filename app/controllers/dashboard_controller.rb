@@ -14,6 +14,7 @@ class DashboardController < ApplicationController
 		@order_total = @orders.sum(:c_total)
 		@invoices = Invoice.where(:c_date => 4.month.ago.beginning_of_month..4.month.ago.end_of_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
+		@log_update = Log.where(worker_name: 'QBWC Updated').last
 
 	# Channel calculations
 		#unhide in production 
@@ -21,7 +22,7 @@ class DashboardController < ApplicationController
 		
 		#hide in production	
 		@orders_cw = Order.where(:c_date => 4.month.ago.beginning_of_week..4.month.ago.end_of_week).where.not(customer_id: 1529).sum(:c_total)
-		
+
 	# end channel calc		
 		
 
