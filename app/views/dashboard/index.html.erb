@@ -3,15 +3,15 @@
 
         <div id="page-wrapper" style="min-height: 629px;">
             <div class="row">
-                <div class="col-lg-10">
+                <div class="col-lg-10 col-md-8">
                     <h1 class="page-header">Dashboard</h1>                  
                 </div>
                 <!-- /.col-lg-12 -->
-                <div class="col-lg-2">
+                <div class="col-lg-2 col-md-4">
                     <span class="page-header" style="border-bottom:unset;line-height:4em;">
-                        <button type="button" class="btn <% if @log_update.updated_at < (Time.now - 1.day) %>btn-danger<% else %>btn-success<% end %> btn-circle"><i class="fa fa-check"></i>
+                        <button type="button" class="btn <% if @log_update.nil? or @log_update.updated_at < (Time.now - 1.day) %>btn-danger<% else %>btn-success<% end %> btn-circle"><i class="fa fa-check"></i>
                         </button>
-                        Last Updated <%= @log_update.updated_at.strftime("%m-%d-%y %l:%M") %>
+                        Last Updated:<%if @log_update.nil? %>n/a<%else%><%=@log_update.updated_at.strftime("%m-%d-%y %l:%M")%> <%end%>
                     </span>
                 </div>
                 
