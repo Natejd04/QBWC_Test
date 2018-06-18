@@ -48,7 +48,7 @@ class DashboardController < ApplicationController
 
 		respond_to do |format|
 		    format.html
-		    format.json  {@search = Customer.search(params[:term]) }
+		    # format.json  {@search = Customer.search(params[:term]) }
 		    format.csv { send_data Order.to_csv(@orders), filename: "orders-#{Time.now.strftime("%d-%m-%Y %k%M")}.csv" }
   		end		
 	end 
