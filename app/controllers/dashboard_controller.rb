@@ -6,6 +6,7 @@ class DashboardController < ApplicationController
 	end
 
 	def index 
+		# @readable_month = Time.now.strftime("%B")
 		# Without a way to pull journal entries my monthly totals wont match
 		#@invoices = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where.not("c_name LIKE ?", "%* UPP:%")
 		# @test_total = @invoices.map(&:line_items).flatten.map(&:amount).sum

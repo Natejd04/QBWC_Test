@@ -3,15 +3,15 @@
 
         <div id="page-wrapper" style="min-height: 629px;">
             <div class="row">
-                <div class="col-lg-10 col-md-8">
+                <div class="col-lg-9 col-md-8">
                     <h1 class="page-header">Dashboard</h1>                  
                 </div>
                 <!-- /.col-lg-12 -->
-                <div class="col-lg-2 col-md-4">
-                    <span class="page-header" style="border-bottom:unset;line-height:4em;">
-                        <button type="button" class="btn <% if @log_update.nil? or @log_update.updated_at < (Time.now - 1.day) %>btn-danger<% else %>btn-success<% end %> btn-circle"><i class="fa fa-check"></i>
-                        </button>
-                        Last Updated:<%if @log_update.nil? %>n/a<%else%><%=@log_update.updated_at.strftime("%m-%d-%y %l:%M")%> <%end%>
+                <div class="col-lg-3 col-md-4" style="text-align:right;"">
+                    <span class="page-header" style="border-bottom:unset;line-height:4em;font-size:12px;">
+                        <i class="btn <% if @log_update.nil? or @log_update.updated_at < (Time.now - 1.day) %>btn-danger<% else %>btn-success<% end %> btn-circle" style="width:20px;height:20px;padding:2px 0;font-size: 10px;"><i class="fa fa-check"></i>
+                        </i>
+                        Last Updated: <%if @log_update.nil? %>n/a<%else%><%=@log_update.updated_at.strftime("%m-%d-%y %l:%M")%> <%end%>
                     </span>
                 </div>
                 
@@ -38,7 +38,7 @@
                                     <div class="huge">
                                     	$<%= number_to_human(@month_total, :format => '%n%u', :units => { :thousand => 'K' }) %>
                                     </div>
-                                    <div>February Sales</div>
+                                    <div><%=Time.now.strftime("%B")%> Sales</div>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                     $<%= number_to_human(@prior_m_total, :format => '%n%u', :units => { :thousand => 'K' }) %>
                                     
                                     </div>
-                                    <div>January Sales</div>
+                                    <div><% month_ago = Time.now - 1.month %><%= month_ago.strftime("%B") %> Sales</div>
                                 </div>
                             </div>
                         </div>
@@ -127,11 +127,11 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Weekly Sales
+                        Weekly Rolling Sales
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -148,7 +148,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Monthly Sales by Class
+                        <%=Time.now.strftime("%B")%> Sales by Class
                         </div>
                         <div class="panel-body">
                             <div class="row">

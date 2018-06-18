@@ -52,7 +52,7 @@ class Order < ActiveRecord::Base
         end
     end
 
-    def self.chart_data(start = 5.months.ago, interval)
+    def self.chart_data(start = 5.months.ago.beginning_of_month, interval)
         total_prices = prices_by_week(start, interval)
         (start.to_date..4.months.ago.end_of_month).map do |date|
         # (5.months.ago.to_date..Date.today).map do |date|
