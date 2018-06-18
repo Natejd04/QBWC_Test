@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   delete 'logout' => 'sessions#destroy'
   get 'signin' => 'sessions#new'
+
+  get :search, controller: :dashboard
     
   resources :orders do resources :comments end
   get 'wds' => 'orders#wds'
