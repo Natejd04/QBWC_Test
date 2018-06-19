@@ -64,7 +64,7 @@ class TrackingEmailWorker < QBWC::Worker
                             end
                         end
                         if item_data[:email].nil?    
-                            customer = Customer.find_by listid: qb_item['customer_ref']['list_id']
+                            customer = Customer.find_by list_id: qb_item['customer_ref']['list_id']
                             item_data[:email] = customer.email
                         end
                     
@@ -127,7 +127,7 @@ class TrackingEmailWorker < QBWC::Worker
                             end
                     end    
                     if item_data[:email].nil?
-                        customer = Customer.find_by listid: r['invoice_ret']['customer_ref']['list_id']
+                        customer = Customer.find_by list_id: r['invoice_ret']['customer_ref']['list_id']
                         item_data[:email] = customer.email
                     end
                 

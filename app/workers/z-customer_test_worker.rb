@@ -20,7 +20,7 @@ class CustomerTestWorker < QBWC::Worker
 #        We will then loop through each customer and create records.
         r['customer_ret'].each do |qb_cus|
             customer_data = {}
-            customer_data[:listid] = qb_cus['list_id']
+            customer_data[:list_id] = qb_cus['list_id']
             customer_data[:name] = qb_cus['name']
             customer_data[:edit_sq] = qb_cus['edit_sequence']
             customer_data[:email] = qb_cus['email']
@@ -45,7 +45,7 @@ class CustomerTestWorker < QBWC::Worker
                 customer_data[:ship_state] = qb_cus['ship_address']['state']
                 customer_data[:ship_zip] = qb_cus['ship_address']['postal_code']
             end
-            customer = Customer.find_by listid: customer_data[:listid]
+            customer = Customer.find_by list_id: customer_data[:list_id]
             
 #            if customer doesn't exist create record.
             if customer.blank?

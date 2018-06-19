@@ -32,7 +32,7 @@ class CustomerOrderWorker < QBWC::Worker
         lineitem_data = {}
             order_data[:c_qbid] = qb_cus['list_id']
             order_data[:c_name] = qb_cus['customer_ref']['full_name']
-            order_data[:customer_id] = Customer.find_by(listid: qb_cus['customer_ref']['list_id']).id
+            order_data[:customer_id] = Customer.find_by(list_id: qb_cus['customer_ref']['list_id']).id
 #            if customer doesn't exsits there will be a shit storm
             order_data[:c_edit] = qb_cus['edit_sequence']
             order_data[:c_po] = qb_cus['po_number']
@@ -75,11 +75,11 @@ class CustomerOrderWorker < QBWC::Worker
                 lineitem_data[:description] = li['item_ref']['full_name'] if li['item_ref']
                 
 #                Figure out if item_ref is empty
-                listid = li['item_ref']['list_id'] if li['item_ref']    
+                list_id = li['item_ref']['list_id'] if li['item_ref']    
                 
 #                does the line_item id match the item field?
-                if Item.find_by(list_id: listid).present?
-                    lineitem_data[:item_id] = Item.find_by(list_id: listid).id
+                if Item.find_by(list_id: list_id).present?
+                    lineitem_data[:item_id] = Item.find_by(list_id: list_id).id
 #                It doesn't match, or isn't an inventory item, add it to other
                 else
 #                   87 represents an other item

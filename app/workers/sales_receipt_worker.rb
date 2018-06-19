@@ -82,7 +82,7 @@ class SalesReceiptWorker < QBWC::Worker
                 end
 
                 if qb_receipt['customer_ref']
-                    receipt_data[:customer_id] = Customer.find_by(listid: qb_receipt['customer_ref']['list_id']).id
+                    receipt_data[:customer_id] = Customer.find_by(list_id: qb_receipt['customer_ref']['list_id']).id
                     receipt_data[:name] = qb_receipt['customer_ref']['full_name']
                 end
               
@@ -274,7 +274,7 @@ class SalesReceiptWorker < QBWC::Worker
                 end
 
                 if qb_receipt['customer_ref']
-                    receipt_data[:customer_id] = Customer.find_by(listid: qb_receipt['customer_ref']['list_id']).id
+                    receipt_data[:customer_id] = Customer.find_by(list_id: qb_receipt['customer_ref']['list_id']).id
                     receipt_data[:name] = qb_receipt['customer_ref']['full_name']
                 end
               

@@ -6,7 +6,7 @@ class Order < ActiveRecord::Base
     has_many :notifications
     
 
-#    belongs_to :customer, foreign_key: "listid"
+#    belongs_to :customer, foreign_key: "list_id"
     belongs_to :customer
     accepts_nested_attributes_for :line_items, allow_destroy: true, :reject_if => proc { |a| a[:item_id].blank? }
     validates :customer_id, presence: true

@@ -38,7 +38,7 @@ class CustomerUpdateWorker < QBWC::Worker
     #        We will then loop through each customer and create records.
             r['customer_ret'].each do |qb_cus|
                 customer_data = {}
-                customer_data[:listid] = qb_cus['list_id']
+                customer_data[:list_id] = qb_cus['list_id']
                 customer_data[:name] = qb_cus['full_name']
                 customer_data[:edit_sq] = qb_cus['edit_sequence']
                 customer_data[:email] = qb_cus['email']
@@ -74,8 +74,8 @@ class CustomerUpdateWorker < QBWC::Worker
                 end
                 
 
-                if Customer.exists?(listid: qb_cus['list_id'])
-                customerid = Customer.find_by(listid: customer_data[:listid])
+                if Customer.exists?(list_id: qb_cus['list_id'])
+                customerid = Customer.find_by(list_id: customer_data[:list_id])
                     
                     # We want to confirm that it's neccessary to update this record first.
                     if customerid.edit_sq != qb_cus['edit_sequence']
@@ -96,7 +96,7 @@ class CustomerUpdateWorker < QBWC::Worker
                 # Now we will check to make sure the object isn't empty.   
         elsif !r['customer_ret'].blank? 
             customer_data = {}
-            customer_data[:listid] = r['customer_ret']['list_id']
+            customer_data[:list_id] = r['customer_ret']['list_id']
             customer_data[:name] = r['customer_ret']['name']
             customer_data[:edit_sq] = r['customer_ret']['edit_sequence']
             customer_data[:email] = r['customer_ret']['email']
@@ -132,8 +132,8 @@ class CustomerUpdateWorker < QBWC::Worker
             end
             
             # We are checking to see if this customer already exists
-            if Customer.exists?(listid: r['customer_ret']['list_id'])
-                customerid = Customer.find_by(listid: customer_data[:listid])
+            if Customer.exists?(list_id: r['customer_ret']['list_id'])
+                customerid = Customer.find_by(list_id: customer_data[:list_id])
                     
                 # we know they exists, but is it neccessary to update this record.
                 if customerid.edit_sq != r['customer_ret']['edit_sequence']

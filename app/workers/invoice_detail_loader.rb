@@ -84,7 +84,7 @@ class InvoiceDetailLoader < QBWC::Worker
                 end
 
                 if qb_inv['customer_ref']
-                    invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
+                    invoice_data[:customer_id] = Customer.find_by(list_id: qb_inv['customer_ref']['list_id']).id
                     invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
                 end
               
@@ -276,7 +276,7 @@ class InvoiceDetailLoader < QBWC::Worker
 
             
             if qb_inv['customer_ref']
-                invoice_data[:customer_id] = Customer.find_by(listid: qb_inv['customer_ref']['list_id']).id
+                invoice_data[:customer_id] = Customer.find_by(list_id: qb_inv['customer_ref']['list_id']).id
                 invoice_data[:c_name] = qb_inv['customer_ref']['full_name']
             end
 

@@ -92,8 +92,8 @@ class JournalWorker < QBWC::Worker
                         # Entity Reference - Customer
                         if li['entity_ref']
                             # This line item might have an entity (customer) has an accont, let's find it
-                            if Customer.exists?(listid: li['entity_ref']['list_id'])
-                                li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                            if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                                li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                             end
                         end
 
@@ -154,8 +154,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(listid: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -220,8 +220,8 @@ class JournalWorker < QBWC::Worker
                         # Entity Reference - Customer
                         if li['entity_ref']
                             # This line item might have an entity (customer) has an accont, let's find it
-                            if Customer.exists?(listid: li['entity_ref']['list_id'])
-                                li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                            if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                                li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                             end
                         end
 
@@ -282,8 +282,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(listid: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -391,8 +391,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(listid: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -453,8 +453,8 @@ class JournalWorker < QBWC::Worker
                 # Entity Reference - Customer
                 if li['entity_ref']
                     # This line item might have an entity (customer) has an accont, let's find it
-                    if Customer.exists?(listid: li['entity_ref']['list_id'])
-                        li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                    if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                        li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                     end
                 end
 
@@ -518,8 +518,8 @@ class JournalWorker < QBWC::Worker
                     # Entity Reference - Customer
                     if li['entity_ref']
                         # This line item might have an entity (customer) has an accont, let's find it
-                        if Customer.exists?(listid: li['entity_ref']['list_id'])
-                            li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                        if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                            li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                         end
                     end
 
@@ -580,8 +580,8 @@ class JournalWorker < QBWC::Worker
                 # Entity Reference - Customer
                 if li['entity_ref']
                     # This line item might have an entity (customer) has an accont, let's find it
-                    if Customer.exists?(listid: li['entity_ref']['list_id'])
-                        li_data[:customer_id] = Customer.find_by(listid: li['entity_ref']['list_id']).id
+                    if Customer.exists?(list_id: li['entity_ref']['list_id'])
+                        li_data[:customer_id] = Customer.find_by(list_id: li['entity_ref']['list_id']).id
                     end
                 end
 

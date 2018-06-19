@@ -14,7 +14,7 @@ class OrderPushWorker < QBWC::Worker
                         :xml_attributes => { "requestID" =>"1"},
                         :sales_order_add => {
                             :ref_number => op.invoice_number,
-                            :customer_ref => {"list_id" => op.customer.listid},
+                            :customer_ref => {"list_id" => op.customer.list_id},
                             :ship_address => {
                                 "addr1" => op.c_ship1,
                                 "addr2" => op.c_ship2,
@@ -41,7 +41,7 @@ class OrderPushWorker < QBWC::Worker
                     :xml_attributes => { "requestID" =>"1"},
                     :sales_order_add => {
                         :ref_number => op.invoice_number,
-                        :customer_ref => {"list_id" => QBPush.customer.listid},
+                        :customer_ref => {"list_id" => QBPush.customer.list_id},
                         :ship_address => {
                             "addr1" => QBPush.c_ship1,
                             "addr2" => QBPush.c_ship2,
