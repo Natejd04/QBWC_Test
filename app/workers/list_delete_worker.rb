@@ -10,7 +10,7 @@ class ListDeleteWorker < QBWC::Worker
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
-        LastUpdate = "2017-12-01"
+        LastUpdate = "2018-06-01"
     
     end
 
@@ -19,19 +19,32 @@ class ListDeleteWorker < QBWC::Worker
     def requests(job)
         {
             :list_deleted_query_rq => {
-                :list_del_type => { "Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", 
-                "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"},
-                :from_deleted_date => LastUpdate,
-                :to_deleted_date => Date.today + (1.0)
+                :xml_attributes => { "requestID" =>"1"},
+                :list_del_type => ["Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"]
+                # :list_del_type => "Customer",
+                # :list_del_type => "InventorySite",
+                # :list_del_type => "ItemDiscount",
+                # :list_del_type => "ItemFixedAsset",
+                # :list_del_type => "ItemGroup",
+                # :list_del_type => "ItemInventory",
+                # :list_del_type => "ItemInventoryAssembly",
+                # :list_del_type => "ItemNonInventory",
+                # :list_del_type => "ItemOtherCharge",
+                # :list_del_type => "ItemPayment",
+                # :list_del_type => "ItemService",
+                # :list_del_type => "ItemSubtotal",
+                # :list_del_type => "Vendor"
+                # :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
             }
         }
     end
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
-        # complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-        # binding.pry
+        complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
+        binding.pry
         # let's grab all inventory assembly items
+
         if r['list_deleted_ret'].is_a? Array
 
             # we will loop through each item and insert it into the Items table.
@@ -49,16 +62,19 @@ class ListDeleteWorker < QBWC::Worker
                             Item
                         when "Vendor"
                             Vendor
+                        else
+                            nil
                     end                
+                    if !table.nil?
+                        delete_data = {}
+                    
+                        delete_data[:list_id] = qb_data['list_id']
+                        delete_data[:deleted] = qb_data['time_deleted']
 
-                    delete_data = {}
-                
-                    delete_data[:list_id] = qb_data['list_id']
-                    delete_data[:deleted] = qb_data['time_deleted']
-
-                    if table.exists?(list_id: qb_data['list_id'])
-                        list_element = table.find_by(list_id: qb_data['list_id'])
-                        list_element.update(delete_data)
+                        if table.exists?(list_id: qb_data['list_id'])
+                            list_element = table.find_by(list_id: qb_data['list_id'])
+                            list_element.update(delete_data)
+                        end
                     end
                 end
             end
@@ -81,21 +97,25 @@ class ListDeleteWorker < QBWC::Worker
                         Item
                     when "Vendor"
                         Vendor
+                else
+                        nil
                 end                
+                
+                if !table.nil?
+                    delete_data = {}
+                
+                    delete_data[:list_id] = qb_data['list_id']
+                    delete_data[:deleted] = qb_data['time_deleted']
 
-                delete_data = {}
-            
-                delete_data[:list_id] = qb_data['list_id']
-                delete_data[:deleted] = qb_data['time_deleted']
-
-                if table.exists?(list_id: qb_data['list_id'])
-                    list_element = table.find_by(list_id: qb_data['list_id'])
-                    list_element.update(delete_data)
+                    if table.exists?(list_id: qb_data['list_id'])
+                        list_element = table.find_by(list_id: qb_data['list_id'])
+                        list_element.update(delete_data)
+                    end
                 end
             end
         # End of the Accounts
         end
-        Log.create(worker_name: "ListDeleteWorker")
+        # Log.create(worker_name: "ListDeleteWorker")
 
     end
 end
