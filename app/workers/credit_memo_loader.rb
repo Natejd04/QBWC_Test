@@ -117,10 +117,10 @@ class CreditMemoLoader < QBWC::Worker
 
 # ----------------> Start Line Item
                 # Line items are recorded if they are an array
-                if qb_inv['invoice_line_ret'].is_a? Array
+                if qb_inv['credit_memo_line_ret'].is_a? Array
                     
                     
-                    qb_inv['invoice_line_ret'].each do |li|
+                    qb_inv['credit_memo_line_ret'].each do |li|
                     
                         li_data = {}
 
@@ -174,9 +174,9 @@ class CreditMemoLoader < QBWC::Worker
                     end
 
                 # we need this if the line item only has one entry.   
-                elsif !qb_inv['invoice_line_ret'].blank? 
+                elsif !qb_inv['credit_memo_line_ret'].blank? 
                     li_data = {}
-                    li = qb_inv['invoice_line_ret']
+                    li = qb_inv['credit_memo_line_ret']
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
                     li_data[:credit_memo_id] = CreditMemo.find_by(txn_id: qb_inv['txn_id']).id
@@ -311,10 +311,10 @@ class CreditMemoLoader < QBWC::Worker
 
 # ----------------> Start Line Item
             # Line items are recorded if they are an array
-            if qb_inv['invoice_line_ret'].is_a? Array
+            if qb_inv['credit_memo_line_ret'].is_a? Array
                 
                 
-                qb_inv['invoice_line_ret'].each do |li|
+                qb_inv['credit_memo_line_ret'].each do |li|
                 
                     li_data = {}
 
@@ -372,9 +372,9 @@ class CreditMemoLoader < QBWC::Worker
                 end
 
             # we need this if the line item only has one entry.   
-            elsif !qb_inv['invoice_line_ret'].blank? 
+            elsif !qb_inv['credit_memo_line_ret'].blank? 
                 li_data = {}
-                li = qb_inv['invoice_line_ret']
+                li = qb_inv['credit_memo_line_ret']
                 # We need to match the lineitem with order id
                 # We just recorded it and could pull it via find.
                 li_data[:credit_memo_id] = CreditMemo.find_by(txn_id: qb_inv['txn_id']).id

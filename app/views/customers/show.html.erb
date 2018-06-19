@@ -83,6 +83,8 @@
                                     </li>
                                     <li><a class="append-invoices" href="#">Invoices</a>
                                     </li>
+                                    <li><a class="append-credit-memos" href="#">Credit Memos</a>
+                                    </li>
                                     <li><a class="append-sales-receipts" href="#">Sales Receipts</a>
                                     </li>
                                     <li class="divider"></li>
@@ -120,7 +122,11 @@
 
                                         <tbody class="order-sales-receipts">
                                             <%= render :partial => 'customer_sales_receipts' %>
-                                        </tbody>                                            
+                                        </tbody>          
+
+                                         <tbody class="order-credit-memos">
+                                            <%= render :partial => 'customer_credit_memos' %>
+                                        </tbody>                                             
 
                                     </table>
                                 </div>
@@ -137,17 +143,20 @@
         $(function() {
       $(".order-table").hide();
       $(".order-sales-receipts").hide();
+      $(".order-credit-memos").hide();
     
       $('.append-invoices').on('click', function(e) {
         e.preventDefault();
         $(".order-sales-table").hide();
-        $(".order-sales-receipts").hide();       
+        $(".order-sales-receipts").hide();
+        $(".order-credit-memos").hide();       
         $(".order-table").show();
         $("#type-of-orders").text("Invoices");    
     });
     $('.append-sales-orders').on('click', function(e) {
         e.preventDefault();
-        $(".order-sales-table").show();       
+        $(".order-sales-table").show();
+        $(".order-credit-memos").hide(); 
         $(".order-table").hide();
         $(".order-sales-receipts").hide();
         $("#type-of-orders").text("Sales Orders");
@@ -155,9 +164,18 @@
     $('.append-sales-receipts').on('click', function(e) {
         e.preventDefault();
         $(".order-sales-receipts").show();
+        $(".order-credit-memos").hide();
         $(".order-sales-table").hide();              
         $(".order-table").hide();
         $("#type-of-orders").text("Sales Receipts");
     });
+    $('.append-credit-memos').on('click', function(e) {
+        e.preventDefault();
+        $(".order-credit-memos").show();
+        $(".order-sales-receipts").hide();
+        $(".order-sales-table").hide();              
+        $(".order-table").hide();
+        $("#type-of-orders").text("Sales Receipts");
+    });    
 });
     </script>    

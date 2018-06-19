@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :trackings
   resources :invoices
   resources :accounts
+  resources :credit_memos
 
   
   resources :notifications do
