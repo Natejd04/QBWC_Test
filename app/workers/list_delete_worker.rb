@@ -21,7 +21,7 @@ class ListDeleteWorker < QBWC::Worker
             :list_deleted_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
                 :list_del_type => ["Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"],
-                :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
+                # :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
             }
         }
     end
