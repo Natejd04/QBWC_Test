@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614191628) do
+ActiveRecord::Schema.define(version: 20180619181929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.datetime "updated_at",   null: false
     t.string   "account_type"
     t.integer  "sublevel"
+    t.datetime "deleted"
   end
 
   create_table "bills", force: :cascade do |t|
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.float    "amount_due"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -68,6 +70,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "sales_receipt_id"
+    t.datetime "deleted"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -95,11 +98,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.string   "email"
     t.date     "qbcreate"
     t.date     "qbupdate"
-  end
-
-  create_table "dashboards", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -148,6 +147,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.integer  "customer_id"
     t.string   "currency_ref"
     t.decimal  "exchange_rate"
+    t.datetime "deleted"
   end
 
   create_table "items", force: :cascade do |t|
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.string   "list_id"
     t.string   "item_type"
     t.integer  "account_id"
+    t.datetime "deleted"
   end
 
   create_table "journals", force: :cascade do |t|
@@ -179,6 +180,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.date     "qbcreate"
     t.date     "qbupdate"
     t.integer  "exchange_rate"
+    t.datetime "deleted"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -235,7 +237,6 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.integer  "docs_file_size"
     t.datetime "docs_updated_at"
     t.boolean  "remove_docs",       default: false
-    t.integer  "lineitem_id"
     t.string   "c_class"
     t.string   "c_ship1"
     t.string   "c_ship2"
@@ -258,6 +259,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.string   "currency_ref"
     t.integer  "exchange_rate"
     t.boolean  "qb_process"
+    t.datetime "deleted"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|
@@ -316,6 +318,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.string   "sales_rep"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.datetime "deleted"
   end
 
   create_table "site_inventories", force: :cascade do |t|
@@ -345,6 +348,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.string   "postal"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "deleted"
   end
 
   create_table "trackings", force: :cascade do |t|
@@ -410,6 +414,7 @@ ActiveRecord::Schema.define(version: 20180614191628) do
     t.string   "f_name"
     t.string   "l_name"
     t.string   "email"
+    t.datetime "deleted"
   end
 
 end
