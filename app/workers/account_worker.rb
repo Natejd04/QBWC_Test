@@ -38,7 +38,7 @@ class AccountWorker < QBWC::Worker
                 account_data = {}
                 account_data[:name] = qb_account['full_name']
                 
-                if account_data[:description] = qb_account['desc']
+                if qb_account['desc']
                     account_data[:description] = qb_account['desc']
                 end
 
