@@ -119,13 +119,17 @@ class SalesOrderLoader < QBWC::Worker
                     Order.create(invoice_data)
                         # Creating the notification system
                     inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
-                    user_role = User.find_by(role: "admin")
-                    if user_role.is_a? Array
-                        user_role.each do |user|
-                            Notification.create(recipient: user, action: "posted", notifiable: inv_created)
+                    admin = User.where(role: "admin").select("name, email, role, id")
+                    combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
+                    if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                        binding.pry
+                        combo.each do |user|
+                            Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
                         end
                     else
-                        Notification.create(recipient: user_role, action: "posted", notifiable: inv_created)
+                        admin.each do |user|
+                            Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                        end
                     end
                 end
             
@@ -316,13 +320,16 @@ class SalesOrderLoader < QBWC::Worker
             else
                 Order.create(invoice_data)
                 inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
-                user_role = User.find_by(role: "admin")
-                if user_role.is_a? Array
-                    user_role.each do |user|
-                        Notification.create(recipient: user, action: "posted", notifiable: inv_created)
+                admin = User.where(role: "admin").select("name, email, role, id")
+                combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
+                if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                    combo.each do |user|
+                        Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
                     end
                 else
-                    Notification.create(recipient: user_role, action: "posted", notifiable: inv_created)
+                    admin.each do |user|
+                        Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                    end
                 end
             end
         
