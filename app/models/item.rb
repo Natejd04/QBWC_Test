@@ -6,4 +6,6 @@ class Item < ActiveRecord::Base
     has_many :sales_receipts
     has_many :line_items
     belongs_to :account, foreign_key: "account_id"
+
+    default_scope {where(:deleted => nil)}
 end

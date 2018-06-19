@@ -20,29 +20,15 @@ class ListDeleteWorker < QBWC::Worker
         {
             :list_deleted_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
-                :list_del_type => ["Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"]
-                # :list_del_type => "Customer",
-                # :list_del_type => "InventorySite",
-                # :list_del_type => "ItemDiscount",
-                # :list_del_type => "ItemFixedAsset",
-                # :list_del_type => "ItemGroup",
-                # :list_del_type => "ItemInventory",
-                # :list_del_type => "ItemInventoryAssembly",
-                # :list_del_type => "ItemNonInventory",
-                # :list_del_type => "ItemOtherCharge",
-                # :list_del_type => "ItemPayment",
-                # :list_del_type => "ItemService",
-                # :list_del_type => "ItemSubtotal",
-                # :list_del_type => "Vendor"
-                # :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
+                :list_del_type => ["Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"],
+                :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
             }
         }
     end
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
-        complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-        binding.pry
+        complete = r['xml_attributes']['iteratorRemainingCount'] == '0'        
         # let's grab all inventory assembly items
 
         if r['list_deleted_ret'].is_a? Array
@@ -115,7 +101,7 @@ class ListDeleteWorker < QBWC::Worker
             end
         # End of the Accounts
         end
-        # Log.create(worker_name: "ListDeleteWorker")
+        Log.create(worker_name: "ListDeleteWorker")
 
     end
 end

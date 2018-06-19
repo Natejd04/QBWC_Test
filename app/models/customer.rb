@@ -5,6 +5,8 @@ class Customer < ActiveRecord::Base
     has_many :comments
     has_many :journals
 
+    default_scope {where(:deleted => nil)}
+
     def self.search(term)
     	if term.match(/[a-zA-Z]/)
   			where('LOWER(name) LIKE :term', term: "%#{term.downcase}%")

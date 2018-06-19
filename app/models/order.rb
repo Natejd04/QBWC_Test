@@ -12,6 +12,8 @@ class Order < ActiveRecord::Base
     validates :customer_id, presence: true
     
     scope :uninvoiced, -> {Order.where(c_invoiced: nil)}
+
+    default_scope {where(:deleted => nil)}
     
     # Let's put this gem on hold
 #    this is used for the paperclip gem, in order to upload pdfs
