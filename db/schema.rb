@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180619222907) do
+ActiveRecord::Schema.define(version: 20180619223943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20180619222907) do
     t.string   "currency_ref"
     t.decimal  "exchange_rate"
     t.datetime "deleted"
+    t.string   "c_class"
   end
 
   create_table "customers", force: :cascade do |t|

@@ -46,6 +46,8 @@ class TxnDeleteWorker < QBWC::Worker
                             Order
                         when "SalesReceipt"
                             SalesReceipt
+                        when "CreditMemo"
+                            CreditMemo
                         else
                             nil
                     end  
@@ -80,6 +82,8 @@ class TxnDeleteWorker < QBWC::Worker
                         Order
                     when "SalesReceipt"
                         SalesReceipt
+                    when "CreditMemo"
+                            CreditMemo
                     else
                         nil
                 end        
