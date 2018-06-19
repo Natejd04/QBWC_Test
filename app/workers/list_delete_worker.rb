@@ -75,7 +75,7 @@ class ListDeleteWorker < QBWC::Worker
                         Account
                     when "Customer"
                         Customer
-                    when "InventorySite"
+                    when "Site"
                         Site
                     when "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal"
                         Item
