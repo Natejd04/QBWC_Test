@@ -27,7 +27,7 @@ class CreditMemo < ActiveRecord::Base
 
     def self.prices_by_week(start, interval)
         attributes = %w{610 611 612 613 614}
-        credit_memos = joins(:line_items, :items).where("items.id in (?)", attributes).where(c_date: start.beginning_of_day..Time.zone.now)
+        credit_memos = joins(:items).where("items.id in (?)", attributes).where(c_date: start.beginning_of_day..Time.zone.now)
         credit_memos = credit_memos.group("date_trunc('#{interval}', credit_memos.c_date)")
         credit_memos = credit_memos.select("date_trunc('#{interval}', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total")
         credit_memos.each_with_object({}) do |order, prices|
