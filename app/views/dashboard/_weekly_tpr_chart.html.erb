@@ -1,0 +1,25 @@
+<%= content_tag :div, "", id: "credit_memos", data: {credit: CreditMemo.chart_data('week')} %>
+
+<div id="credit-tpr-chart">
+</div>
+
+
+<script>
+new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'credit-tpr-chart',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: $('#credit_memos').data('credit'),
+  // The name of the data record attribute that contains x-values.
+  xkey: 'cr_date',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['total_tpr'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Total Sales'],
+  continuousLine: false,
+  preUnits: '$',
+  xLabels: "week"
+});
+</script>

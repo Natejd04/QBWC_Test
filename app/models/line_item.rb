@@ -14,4 +14,7 @@ class LineItem < ActiveRecord::Base
     def delete_orphaned
       delete if persisted? && self.item_id.blank?
     end
+
+   
+
 end
