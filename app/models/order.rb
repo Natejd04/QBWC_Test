@@ -91,6 +91,21 @@ class Order < ActiveRecord::Base
             }
         end
     end
+
+    def self.bar_chart(timeish = 4.months.ago)
+        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct")
+        orders = orders.group("c_name")
+        orders = orders.select("c_name, sum(c_total) as c_total")
+        orders = orders.order("c_total DESC")
+        orders = orders.limit(5)
+        orders.map do |li|
+            {
+                name: li.c_name,
+                value: li.c_total.round(2)
+            }
+        end
+    end
+
     
     def self.to_csv(order)
         attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}

@@ -131,7 +131,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Weekly Rolling Sales
+                        Rolling Sales by Week
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -163,11 +163,11 @@
             </div>
 
              <div class="row">
-                <div class="col-lg-8 col-md-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Rolling Deductions
+                        Rolling Deductions by Week
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -179,6 +179,23 @@
               
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        Top Customers for <%=Time.now.strftime("%B")%>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <%= render :partial => 'monthly_top_customers' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+
             </div>
 
             

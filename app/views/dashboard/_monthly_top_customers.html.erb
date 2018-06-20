@@ -1,0 +1,30 @@
+<%= content_tag :div, "", id: "bar-chart-1", data: {orders: Order.bar_chart} %>
+
+<div id="top-customer-sales">
+</div>
+
+
+<script>
+new Morris.Bar({
+  // ID of the element in which to draw the chart.
+  element: 'top-customer-sales',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: $('#bar-chart-1').data('orders'),
+  // The name of the data record attribute that contains x-values.
+  xkey: 'name',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Total Sales'],
+  barColors: function (row, series, type) {
+    if (type === 'bar') {
+      return '#5cb85c';
+    }
+    else {
+      return '#5cb85c';
+    }
+  }
+});
+</script>
