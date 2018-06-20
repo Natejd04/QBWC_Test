@@ -5,6 +5,7 @@ class Customer < ActiveRecord::Base
     has_many :comments
     has_many :journals
     has_many :credit_memos
+    has_many :notifications
 
     default_scope {where(:deleted => nil)}
 

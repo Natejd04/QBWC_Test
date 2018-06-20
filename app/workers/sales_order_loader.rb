@@ -15,10 +15,11 @@ class SalesOrderLoader < QBWC::Worker
 
         LastUpdate = Log.where(worker_name: 'SalesOrderLoader').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+        InitialLoad = false
     else
         # This is preloading data based on no records in the log table
         LastUpdate = "2017-12-01"
-    
+        InitialLoad = true
     end
 
     # This worker is going to be used to test. It will pre-load, with 2017 sales orders.
@@ -118,16 +119,18 @@ class SalesOrderLoader < QBWC::Worker
                 else
                     Order.create(invoice_data)
                         # Creating the notification system
-                    inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
-                    admin = User.where(role: "admin").select("name, email, role, id")
-                    combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                    if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
-                        combo.each do |user|
-                            Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
-                        end
-                    else
-                        admin.each do |user|
-                            Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                    if InitialLoad == false
+                        inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
+                        admin = User.where(role: "admin").select("name, email, role, id")
+                        combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
+                        if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                            combo.each do |user|
+                                Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                            end
+                        else
+                            admin.each do |user|
+                                Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                            end
                         end
                     end
                 end
@@ -181,7 +184,11 @@ class SalesOrderLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if orderupdate.c_edit != qb_inv['edit_sequence']
+                             if defined?(orderupdate)
+                                if orderupdate.c_edit != qb_inv['edit_sequence']
+                                    lineitemupdate.update(li_data)
+                                end
+                            else 
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -231,7 +238,11 @@ class SalesOrderLoader < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if orderupdate.c_edit != qb_inv['edit_sequence']
+                        if defined?(orderupdate)
+                            if orderupdate.c_edit != qb_inv['edit_sequence']
+                                lineitemupdate.update(li_data)
+                            end
+                        else 
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -318,16 +329,18 @@ class SalesOrderLoader < QBWC::Worker
                     end
             else
                 Order.create(invoice_data)
-                inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
-                admin = User.where(role: "admin").select("name, email, role, id")
-                combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
-                    combo.each do |user|
-                        Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
-                    end
-                else
-                    admin.each do |user|
-                        Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                if InitialLoad == false
+                    inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
+                    admin = User.where(role: "admin").select("name, email, role, id")
+                    combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
+                    if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                        combo.each do |user|
+                            Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                        end
+                    else
+                        admin.each do |user|
+                            Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                        end
                     end
                 end
             end
@@ -384,9 +397,14 @@ class SalesOrderLoader < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if orderupdate.c_edit != qb_inv['edit_sequence']
+                        if defined?(orderupdate)
+                            if orderupdate.c_edit != qb_inv['edit_sequence']
+                                lineitemupdate.update(li_data)
+                            end
+                        else 
                             lineitemupdate.update(li_data)
                         end
+
                     else
                         LineItem.create(li_data)
                     end
@@ -438,7 +456,11 @@ class SalesOrderLoader < QBWC::Worker
                     lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                     # Has this LineItem actually been modified?
 
-                    if orderupdate.c_edit != qb_inv['edit_sequence']
+                    if defined?(orderupdate)
+                        if orderupdate.c_edit != qb_inv['edit_sequence']
+                            lineitemupdate.update(li_data)
+                        end
+                    else 
                         lineitemupdate.update(li_data)
                     end
                 else

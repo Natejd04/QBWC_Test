@@ -3,6 +3,7 @@ class CreditMemo < ActiveRecord::Base
     has_many :items, through: :line_items
     has_many :sites, through: :line_items, foreign_key: "site_id"
     belongs_to :customer
+    has_many :notifications
 
     default_scope {where(:deleted => nil)}
 

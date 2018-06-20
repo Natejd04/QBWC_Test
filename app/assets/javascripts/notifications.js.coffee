@@ -23,7 +23,13 @@ class Notifications
 
 	handleSuccess: (data) =>
 		items = $.map data, (notification) ->
-			"<a href='#{notification.url}'><div><i class='fa fa-dollar fa-fw'></i> #{notification.notifiable.type}<span class='pull-right text-muted small'>#{notification.time}</span></div></a>"
+			if notification.type is "CreditMemo"
+				"<a href='#{notification.url}'><div><i class='fa fa-exclamation fa-fw'></i> #{notification.notifiable.type}<span class='pull-right text-muted small'>#{notification.time}</span></div></a><li class='divider'></li>"
+			else if notification.type is "Order"
+				"<a href='#{notification.url}'><div><i class='fa fa-dollar fa-fw'></i> #{notification.notifiable.type}<span class='pull-right text-muted small'>#{notification.time}</span></div></a><li class='divider'></li>"
+			else if notification.type is "Customer"
+				"<a href='#{notification.url}'><div><i class='fa fa-users fa-fw'></i> #{notification.notifiable.type}<span class='pull-right text-muted small'>#{notification.time}</span></div></a><li class='divider'></li>"
+
 
 		$("[data-behavior='unread-count']").text(items.length)
 		$("[data-behavior='notification-items']").html(items)
