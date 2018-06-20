@@ -7,8 +7,8 @@
 <%= image_tag @user.avatar.url(:medium) %>
 -->			
 			ID# <%=@user.id %>
+      Email:<%= @user.email %>
 			<br />
-    		<%= image_tag @user.avatar.url(:thumb) %>
     		<br />
   			<%= link_to "Sign Out", logout_path, method: :delete %>
   		</div>
