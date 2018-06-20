@@ -122,7 +122,6 @@ class SalesOrderLoader < QBWC::Worker
                     admin = User.where(role: "admin").select("name, email, role, id")
                     combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
                     if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
-                        binding.pry
                         combo.each do |user|
                             Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
                         end
