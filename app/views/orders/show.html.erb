@@ -124,27 +124,11 @@
     
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-clock-o fa-fw"></i> Confirmation and Notes
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    
+                             
                     <!-- Rendering the comments -->
                     <%= render :partial => 'order_comments' %>
 
-                </div>
-                <div>
-                    <h2>Add a comment:</h2>
-                    <%= form_for([@order, @order.comments.build]) do |f| %>
-                        <p><%= f.label @current_user.name %></p>
-                        <p><%= f.label :body %><br /><%= f.text_field :body %></p>
-                        <p><%= f.submit %></p>
-                    <% end %>
-                </div>
-                <!-- /.panel-body -->
-            </div>
+
         </div>
     </div>
 </div>
