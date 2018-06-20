@@ -1,0 +1,9 @@
+<% @notify_o.each do |f| %>
+<tr>
+		<td><%= f.notifiable.id %></td>
+		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+		<td><%= f.created_at.strftime("%m/%d/%Y") %></td>
+</tr>
+<% end %>	

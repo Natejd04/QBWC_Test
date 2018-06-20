@@ -27,13 +27,13 @@ class UsersController < ApplicationController
 
   def show
       @user = User.find(params[:id])
-      if current_user.role = "admin"
-        else
-      redirect_to user_path(current_user)
-      end
+      @notify_o = @current_user.recipients.where(:notifiable_type => "Order").limit(10)
+      @notify_cm = @current_user.recipients.where(:notifiable_type => "CreditMemo").limit(10)
+      @notify_c = @current_user.recipients.where(:notifiable_type => "Customer").limit(10)
   end
       
   def edit
+      admin_only
       @user = User.find(params[:id]) 
       end
       

@@ -1,0 +1,9 @@
+<% @notify_c.each do |f| %>
+<tr>
+		<td><%= f.notifiable.id %></td>
+		<td><%= link_to f.notifiable.name, customer_path(f.notifiable.id) %></td>
+		<td><%= f.notifiable.customer_type %></td>
+		<td><%= f.notifiable.email %></td>
+		<td><%= f.created_at.strftime("%m/%d/%Y") %></td>
+</tr>
+<% end %>	

@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-    has_many :comments
+    has_many :recipients, class_name: "Notification", foreign_key: "recipient_id"
+    has_many :actors, class_name: "Notification", foreign_key: "actor_id"
     has_many :notifications 
     attr_accessor :password
 #    attr_accessible :name, :email, :password, :password_confirmation

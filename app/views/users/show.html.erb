@@ -1,16 +1,105 @@
- <div id="page-wrapper" style="min-height: 629px;">
-    <div class="row">
-        <div class="col-lg-12">
-			<h1><%= @user.name %></h1>
-<!--
-<%= image_tag @user.avatar.url %>
-<%= image_tag @user.avatar.url(:medium) %>
--->			
-			ID# <%=@user.id %>
-      Email:<%= @user.email %>
-			<br />
-    		<br />
-  			<%= link_to "Sign Out", logout_path, method: :delete %>
-  		</div>
-  	</div>
+<div id="page-wrapper" style="min-height: 629px;">
+  <div class="row">
+    <div class="col-lg-12">
+ 			<h1><%= @user.name %></h1>
+  <!--
+  <%= image_tag @user.avatar.url %>
+  <%= image_tag @user.avatar.url(:medium) %>
+  -->			
+  			 ID# <%=@user.id %>
+        Email:<%= @user.email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+          <div class="panel-heading" style="font-size:2em;">
+            <i class="fa fa-bell fa-fw" style="color:#337ab7;"></i> Recent Notifications
+            <div class="pull-right">
+            </div>
+          </div>
+            
+            <div class="panel-body">
+
+          
+              <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-dollar fa-fw"></i> Recent Order Notifications
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>PO#</th>
+                    <th>Amount</th>
+                    <th>Date Created</th>
+                  </tr>
+                </thead>
+                <tbody class="order-sales-table">
+                 <%= render :partial => 'notification_order_view' %>
+                </tbody>  
+              </table>
+            </div>
+          </div>
+       
+       <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-dollar fa-fw" style="color:#F00;"></i> Recent Credit Memo Notifications
+              <div class="pull-right">
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Invoice #</th>
+                    <th>Amount</th>
+                    <th>Date Created</th>
+                  </tr>
+                </thead>
+                <tbody class="order-sales-table">
+                 <%= render :partial => 'notification_creditmemo_view' %>
+                </tbody>  
+              </table>
+            </div>
+          </div>
+
+           <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-users fa-fw"></i> Recent New Customer Notifications
+              <div class="pull-right">
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Email</th>
+                    <th>Date Created</th>
+                  </tr>
+                </thead>
+                <tbody class="order-sales-table">
+                 <%= render :partial => 'notification_creditmemo_view' %>
+                </tbody>  
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to "Sign Out", logout_path, method: :delete %>
 </div>
+
+			<br />
+    	<br />
+
