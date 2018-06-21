@@ -1,14 +1,36 @@
 <div id="page-wrapper" style="min-height: 629px;">
-  <div class="row">
-    <div class="col-lg-12">
- 			<h1><%= @user.name %></h1>
-      <%= link_to raw('<i class="fa fa-user fa-fw"></i>Edit Info'), edit_user_registration_path %>
-    </div>
-  </div>
-  <div class="round-image-100"><%= image_tag(current_user.avatar.url(:thumb)) %></div>
+        <div class="row">
+        <div class="col-lg-12">
+        <h1 class="page-header">User Profile</h1>
+        </div>
+        </div>
 
-  ID# <%=@user.id %>
-        Email:<%= @user.email %>
+        <div class="row">
+        <div class="col-lg-6">
+                      <div class="panel panel-default">
+                      
+                       <div class="panel-body">
+                      <div class="col-lg-3">
+                        <div class="round-image-150"><%= image_tag(current_user.avatar.url(:medium)) %></div>
+                     <p style="text-align:center;padding-top: 5%;"><%= link_to raw('<i class="fa fa-user fa-fw"></i>Edit Info'), edit_user_registration_path %></p>
+                 
+                      </div>
+                      <div class="col-lg-9" >
+                          <div class="container" >
+                            <h2><%= @user.name %></h2>
+                            <p><b><%= @user.role %></b></p>
+                          <div>
+                            <p><span class="fa fa-phone fa-fw" style="width:50px;"></span><%= @user.phone %></p>
+                            <p><span class="fa fa-envelope fa-fw" style="width:50px;"></span><%= @user.email %></p>
+                          <div class="col-sm-5 col-xs-6 tital " >Join Date: <%= @user.created_at.strftime("%m-%d-%Y") %>
+                          </div>
+                      </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <div class="row">
     <div class="col-lg-12">
