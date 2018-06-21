@@ -53,6 +53,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            <div class="invoice-large">
+                                <%= @order.c_ship.strftime("%m/%d/%Y") if @order.c_ship %>
+                            </div>
+                            <div>Ship Date</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <div class="row">
@@ -82,6 +98,38 @@
                     </div>
                 </div>
               <!-- /.panel-body -->
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <i class="fa fa-clock-o fa-fw"></i>
+                    Order Status
+                </div>
+                <div class="panel-body">
+
+                    <% if @order.c_ack.nil? %>
+                        <% if @order.c_class == "Distributor Channel" || @order.class == "Amazon VC" %>
+                            <button type="button" class="btn btn-default btn-circle-2" 
+                                <i class="fa fa-question"></i> Pending Confirmation
+                            </button>
+                        <% else %>
+                            <button type="button" class="btn btn-disabled btn-circle-2">
+                                <i class="fa fa-minus"></i> N/A
+                            </button>
+                        <% end %>
+                    <% elsif @order.c_ack == "OK" %>
+                        <button type="button" class="btn btn-success btn-circle-2" data-container="body">
+                        <i class="fa fa-check"></i>Confirmed
+                        </button>
+                    <% else %>
+                        <button type="button" class="btn btn-warning btn-circle-2">
+                        <i class="fa fa-exclamation"></i> 
+                        </button>
+                        <h3><%= @order.c_ack %></h3>
+                        <p><%= @order.c_memo %></p>
+                    <% end %>
+                </div>
             </div>
         </div>
     </div>

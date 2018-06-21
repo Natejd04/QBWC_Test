@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180621001138) do
+ActiveRecord::Schema.define(version: 20180621214605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -305,6 +305,10 @@ ActiveRecord::Schema.define(version: 20180621001138) do
     t.integer  "exchange_rate"
     t.boolean  "qb_process"
     t.datetime "deleted"
+    t.boolean  "send_to_qb"
+    t.datetime "qb_sent_time"
+    t.datetime "confirmed_time"
+    t.integer  "user_confirmed"
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|

@@ -1,3 +1,13 @@
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Order #</th>
+        <th>Date</th>
+        <th>PO#</th>
+        <th>Amount</th>
+    </tr>
+</thead>
+<tbody>
 <% @inv_dist.each do |f| %>
 <tr>
 	<td><%= link_to f.c_name, customer_path(f.customer_id) %></td>
@@ -10,3 +20,4 @@
 <tr> 
 	<td colspan="5"><b>TOTAL<div class="pull-right"><%= number_to_currency(@inv_dist.sum(:c_subtotal), :unit => "$") %></div></b></td>
 </tr>
+</tbody>
