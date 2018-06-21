@@ -38,10 +38,14 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+# This is for devise
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
 # This is for gmail, SMTP Settings
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 # SMTP settings for gmail
 config.action_mailer.smtp_settings = {
  :address              => 'smtp.office365.com',

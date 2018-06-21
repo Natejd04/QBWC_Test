@@ -60,7 +60,10 @@ gem 'loofah', '~> 2.2', '>= 2.2.1'
 # dependency of loofah
 gem 'nokogiri', '~> 1.8.2', '>= 1.8.0'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4'
-# Known security issues with versions below 
+
+# Making the switch to devise for public use
+gem 'devise'
+
 
 
 # Use Unicorn as the app server

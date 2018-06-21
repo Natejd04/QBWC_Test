@@ -62,7 +62,7 @@
             </div>
             <!-- /.navbar-header -->
         
-        <% if @current_user.present? %>
+        <% if current_user.present? %>
 
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
@@ -270,7 +270,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="<%= user_path(@current_user) %>"><i class="fa fa-user fa-fw"></i> <%= @current_user.name %></a>
+                        <li><a href="<%= user_path(current_user) %>"><i class="fa fa-user fa-fw"></i> <%= current_user.name %></a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
@@ -278,7 +278,7 @@
 
                     <!-- Statement for logged in vs logged out -->
                         <li>
-                        <% if @current_user.nil? %>
+                        <% if current_user.nil? %>
                           <%= link_to raw('<i class="fa fa-sign-out fa-fw"></i>Login'), signin_path %>
                         <% else %>
                           <%= link_to raw('<i class="fa fa-sign-out fa-fw"></i>Logout'), logout_path, method: :delete %>

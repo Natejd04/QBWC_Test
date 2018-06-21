@@ -4,35 +4,35 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 #  include SessionsHelper
  
-    #establish the sign in constants
-    def sign_in(user)
-        session[:user_id] = user.id
-        self.current_user = user
-    end
+    # #establish the sign in constants
+    # def sign_in(user)
+    #     session[:user_id] = user.id
+    #     self.current_user = user
+    # end
     
-    #set the current user
-    def current_user=(user)
-        @current_user = user
-    end
+    # #set the current user
+    # def current_user=(user)
+    #     @current_user = user
+    # end
     
-    #the get method for the user
-    def current_user
-        @current_user ||= User.find(session[:user_id]) if session[:user_id]
-    end
-    helper_method :current_user
+    # #the get method for the user
+    # def current_user
+    #     @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    # end
+    # helper_method :current_user
     
-    def signed_in?
-        !current_user.nil?
-    end
+    # def signed_in?
+    #     !current_user.nil?
+    # end
     
-    def sign_out
-        session[:user_id] = nil
-        self.current_user = nil 
-    end
+    # def sign_out
+    #     session[:user_id] = nil
+    #     self.current_user = nil 
+    # end
     
-    def current_user?(user)
-        user == current_user
-    end
+    # def current_user?(user)
+    #     user == current_user
+    # end
     
     def deny_access
         redirect_to signin_path, :notice => "Please sign in to access this page."
@@ -42,11 +42,11 @@ class ApplicationController < ActionController::Base
         redirect_to dashboard_path, :notice => "You do not have appropriate permissions to see this page."
     end
     
-    def authenticate_user
-        if !signed_in?
-        deny_access
-        end
-    end
+    # def authenticate_user
+    #     if !signed_in?
+    #     deny_access
+    #     end
+    # end
 
      def admin_only
         if current_user.role != "admin"

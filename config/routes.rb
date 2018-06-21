@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'order/index'
 
 #  get 'users/new'
   resources :users
+
   resources :customers
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc
-  root 'welcome#index'
+  root 'dashboard#index'
   
-  resources :sessions
+  # resources :sessions
 
   delete 'logout' => 'sessions#destroy'
   get 'signin' => 'sessions#new'

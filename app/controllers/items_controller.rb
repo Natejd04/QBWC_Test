@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-    before_action :authenticate_user
+    before_action :authenticate_user!
     
     def create
         @item = Item.new(items_params)
