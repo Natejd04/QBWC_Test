@@ -53,6 +53,8 @@ class ApplicationController < ActionController::Base
         no_access_notify
         end
     end
+
+    
     
 #  Authenticate the wds users definition(model)
     def authenticate_wds

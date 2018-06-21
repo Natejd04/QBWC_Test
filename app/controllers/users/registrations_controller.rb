@@ -38,16 +38,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super
   end
 
+
   protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:phone, :avatar])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:phone, :avatar, :role])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:phone, :avatar])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:phone, :avatar, :role])
+  end
+
+  def active_for_authentication?
+    #remember to call the super
+    #then put our own check to determine "active" state using 
+    #our own "is_active" column
+    super and self.role == 'admin'
   end
 
   # The path used after sign up.

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     before_action :authenticate_user!
+    before_action :admin_only, except:[:edit, :update, :show]
     # you can use this to make exceptions ", except:[:new, :create, :edit, :update]"
   
   def index
