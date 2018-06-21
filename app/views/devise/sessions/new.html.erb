@@ -1,3 +1,4 @@
+<div id="page-wrapper" style="min-height: 629px;">  
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <div class="login-panel panel panel-default">
@@ -30,12 +31,15 @@
 				<% if flash[:notice] %>
 				    <p><%= flash[:notice] %></p>
 				<% end %>
+                </div>
             </div>
+
+            <%= render "devise/shared/links" %>
         </div>
 	</div>
 </div>
 
-<%= render "devise/shared/links" %>
 
+</div>
 
 

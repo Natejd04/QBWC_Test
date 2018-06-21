@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
     # end
 
      def admin_only
-        if current_user.role != "admin"
+        if current_user.nil? || current.user.role != "admin"
         no_access_notify
         end
     end

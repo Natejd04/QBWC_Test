@@ -24,4 +24,8 @@ module ApplicationHelper
     nil
   end
 
+  def comment
+    # nothing between this chunk will render
+  end
+
 end

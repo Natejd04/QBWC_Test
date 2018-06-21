@@ -8,25 +8,27 @@
 
 
 				<div class="panel-body">
-	                <%= simple_form_for(@user, url: registration_path(@user)) do |f| %>
+	                <%= simple_form_for(@user, url: users_path(@user)) do |f| %>
 	                    <form role="form" _lpchecked="1" lpformnum="1">
 	                        <fieldset>
+
+	                        	<%= f.input :name, required: true %>
 	                            <div class="form-group">
 	                                <%= f.label :avatar %>
 	                                <%= f.file_field :avatar %>
 	                            </div>
 	                            <div class="form-group">
 	                                <%= f.input :role, as: :string %>
+
+
 	                            </div>
 	                            <div class="form-group">
 	                                 <%= f.input :email, required: true, autofocus: true %>
 	                                <%= f.input :phone, as: :tel %>
 	                            </div>
 	                            <div class="form-group">
-	                            	<%= f.input :email, required: false, autofocus: true,  name: "email", class: "form-control", placeholder: "E-mail" %>
-	                            </div>
-	                            <div class="form-group">
-	                            	<%= f.input :password, required: false, name: "password", class: "form-control", placeholder: "Password" %>
+    <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password_confirmation, required: true %>
 	                            </div>
 	                            <%= f.button :submit, class: "btn btn-lg btn-success btn-block"%>
 	                        </fieldset>
