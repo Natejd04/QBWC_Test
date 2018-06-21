@@ -2,14 +2,11 @@
   <div class="row">
     <div class="col-lg-12">
  			<h1><%= @user.name %></h1>
-  <!--
-  <%= image_tag @user.avatar.url %>
-  <%= image_tag @user.avatar.url(:medium) %>
-  -->			
-  			 ID# <%=@user.id %>
-        Email:<%= @user.email %>
+      <%= link_to raw('<i class="fa fa-user fa-fw"></i>Edit Info'), edit_user_registration_path %>
     </div>
   </div>
+  ID# <%=@user.id %>
+        Email:<%= @user.email %>
 
   <div class="row">
     <div class="col-lg-12">
@@ -97,7 +94,7 @@
     </div>
   </div>
 
-  <%= link_to "Sign Out", logout_path, method: :delete %>
+  <%= link_to raw('<i class="fa fa-sign-out fa-fw"></i>Logout'), destroy_user_session_path, :method => :delete %>
 </div>
 
 			<br />

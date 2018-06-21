@@ -27,9 +27,9 @@ class UsersController < ApplicationController
 
   def show
       @user = User.find(params[:id])
-      @notify_o = @current_user.recipients.where(:notifiable_type => "Order").limit(10)
-      @notify_cm = @current_user.recipients.where(:notifiable_type => "CreditMemo").limit(10)
-      @notify_c = @current_user.recipients.where(:notifiable_type => "Customer").limit(10)
+      @notify_o = current_user.recipients.where(:notifiable_type => "Order").limit(10)
+      @notify_cm = current_user.recipients.where(:notifiable_type => "CreditMemo").limit(10)
+      @notify_c = current_user.recipients.where(:notifiable_type => "Customer").limit(10)
   end
       
   def edit
@@ -42,7 +42,14 @@ class UsersController < ApplicationController
       @user.update(user_params)
       p @user
   end
+
+  # def destroy
+  #       # sign_out
+  #       # redirect_to signin_path
+  #   end
+
     
+  def 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :avatar)
   end

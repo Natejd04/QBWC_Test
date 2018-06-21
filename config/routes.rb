@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
   get 'order/index'
 
 #  get 'users/new'
   resources :users
+  # patch '/users/:id/' => 'users#show'
+  # get 'users' => 'users#index'
 
   resources :customers
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
@@ -13,8 +15,8 @@ Rails.application.routes.draw do
   
   # resources :sessions
 
-  delete 'logout' => 'sessions#destroy'
-  get 'signin' => 'sessions#new'
+  # delete 'logout' => 'sessions#destroy'
+  # get 'signin' => 'sessions#new'
 
   get :search, controller: :dashboard
     

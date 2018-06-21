@@ -281,7 +281,7 @@
                         <% if current_user.nil? %>
                           <%= link_to raw('<i class="fa fa-sign-out fa-fw"></i>Login'), signin_path %>
                         <% else %>
-                          <%= link_to raw('<i class="fa fa-sign-out fa-fw"></i>Logout'), logout_path, method: :delete %>
+                            <%= link_to raw('<i class="fa fa-sign-out fa-fw"></i>Logout'), destroy_user_session_path, :method => :delete %>
                         <% end %>
 
                       </li>
