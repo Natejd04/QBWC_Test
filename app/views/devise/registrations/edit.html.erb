@@ -12,7 +12,10 @@
                 <form role="form" _lpchecked="1" lpformnum="1">
                   <fieldset>
                     <div class="form-group">
-                
+                    
+                      <%= f.label :avatar %>
+                       <%= f.file_field :avatar %>
+                    
                   <%= f.input :email, required: true, autofocus: true %>
                   <%= f.input :phone, as: :tel %>
 

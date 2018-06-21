@@ -5,6 +5,8 @@
       <%= link_to raw('<i class="fa fa-user fa-fw"></i>Edit Info'), edit_user_registration_path %>
     </div>
   </div>
+  <div class="round-image-100"><%= image_tag(current_user.avatar.url(:thumb)) %></div>
+
   ID# <%=@user.id %>
         Email:<%= @user.email %>
 
