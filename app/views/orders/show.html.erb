@@ -129,6 +129,9 @@
                         <h3><%= @order.c_ack %></h3>
                         <p><%= @order.c_memo %></p>
                     <% end %>
+                    <a href="<%= edit_order_path(@order.id) %>">
+                        <button type="button" class="btn btn-outline btn-primary btn-lg btn-block">Confirm Order</button>
+                    </a>
                 </div>
             </div>
         </div>
