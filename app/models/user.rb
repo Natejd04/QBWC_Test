@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :lockable, :timeoutable
          
     has_many :recipients, class_name: "Notification", foreign_key: "recipient_id"
     has_many :actors, class_name: "Notification", foreign_key: "actor_id"
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 #             Digest::SHA2.hexdigest("#{self.salt}--#{pass}")
 #         end
     
-#     has_attached_file :avatar, :styles => { :medium=> "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-#     validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+    has_attached_file :avatar, :styles => { :medium=> "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+    validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
     
 end

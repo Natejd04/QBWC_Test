@@ -29,7 +29,7 @@
     <div class="panel-footer">
         <%= form_for([@order, @order.comments.build]) do |f| %>
         <div class="input-group">
-        <input type="hidden" name="comment[user_id]" value="<%= @current_user.id %>"> 
+        <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>"> 
         <input id="btn-input" type="text" name="comment[body]" class="form-control input-sm" placeholder="Type your message here...">
             <span class="input-group-btn">
             <button class="btn btn-warning btn-sm" type="submit" name="commit" id="btn-chat">
