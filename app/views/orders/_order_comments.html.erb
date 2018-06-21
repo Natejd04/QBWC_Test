@@ -7,8 +7,9 @@
         <ul class="chat">
             <% @order.comments.each do |f| %>
                 <li class="<%= cycle('left', 'right', name: "li-ish") -%> clearfix">
-                    <span class="chat-img pull-<%= cycle('left', 'right', name: "span-ish") -%>">
-                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle">
+                    <span class="round-image-50 chat-img pull-<%= cycle('left', 'right', name: "span-ish") -%>">
+                        <%= image_tag(f.user.avatar.url(:thumb)) %>
+                        
                     </span>
                     <div class="chat-body clearfix">
                         <div class="header">
