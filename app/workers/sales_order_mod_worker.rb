@@ -15,6 +15,7 @@ class SalesOrderModWorker < QBWC::Worker
                         :xml_attributes => { "requestID" =>"1"},
                         :sales_order_mod => {
                             :txn_id => op.txn_id,
+                            :edit_sequence => op.c_edit,
                             :customer_ref => {"list_id" => op.customer.list_id},
                             :f_o_b => op.c_ack,
                             :memo => op.c_memo
@@ -29,6 +30,7 @@ class SalesOrderModWorker < QBWC::Worker
                     :xml_attributes => { "requestID" =>"1"},
                     :sales_order_mod => {
                         :txn_id => op.txn_id,
+                        :edit_sequence => op.c_edit,
                         :customer_ref => {"list_id" => op.customer.list_id},
                         :f_o_b => op.c_ack,
                         :memo => op.c_memo
@@ -40,7 +42,8 @@ class SalesOrderModWorker < QBWC::Worker
     end
 
     def handle_response(r, session, job, request, data)
-        if r['sales_order_mod_rs']['sales_order_ret'].is_a? Array
+        # binding.pry
+        if r['sales_order_ret'].is_a? Array
             r['sales_order_ret'].each do |qb_inv|
                 invoice_data = {}
                 invoice_data[:c_edit] = qb_inv['edit_sequence']          

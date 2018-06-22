@@ -10,7 +10,7 @@ QBWC.configure do |c|
   # Instead of using hard coded username, password, and path, use a proc
   # to determine who has access to what. Useful for multiple users or
   # multiple company files.
-   #c.authenticator = Proc.new{|username, password|
+   # c.authenticator = Proc.new{|username, password|
   #   # qubert can access Oceanic
     # next "D:\\SharedQB\\ZingBars2013.QBW" if username == "nate" && password == "******"
      # quimby can access Veridian   
