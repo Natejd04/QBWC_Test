@@ -54,9 +54,9 @@ class Order < ActiveRecord::Base
         end
     end
 
-    def self.chart_data(start = 5.months.ago.beginning_of_month, interval)
+    def self.chart_data(start = 1.month.ago.beginning_of_month, interval)
         total_prices = prices_by_week(start, interval)
-        (start.to_date..4.months.ago.end_of_month).map do |date|
+        (start.to_date..Time.now.end_of_month).map do |date|
         # (5.months.ago.to_date..Date.today).map do |date|
             if !total_prices[date].nil?
                 {
@@ -80,7 +80,7 @@ class Order < ActiveRecord::Base
         end
     end
 
-    def self.donut_chart(timeish = 4.months.ago)
+    def self.donut_chart(timeish = Time.now)
         orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct")
         orders = orders.group("c_class")
         orders = orders.select("c_class, sum(c_total) as c_total")
@@ -92,7 +92,7 @@ class Order < ActiveRecord::Base
         end
     end
 
-    def self.bar_chart(timeish = 4.months.ago)
+    def self.bar_chart(timeish = Time.now)
         orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct")
         orders = orders.group("c_name")
         orders = orders.select("c_name, sum(c_total) as c_total")
