@@ -134,7 +134,7 @@ class OrdersController < ApplicationController
   private
     
   def order_params
-      params.require(:order).permit(:c_name, :docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, :qb_process, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id])
+      params.require(:order).permit(:c_name, :c_memo, :c_ack, :docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, :qb_process, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id])
   end
 
 end

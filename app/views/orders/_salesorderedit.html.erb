@@ -1,4 +1,6 @@
  <div id="page-wrapper" style="min-height: 629px;">
+<div id="forming">
+<%= simple_form_for @order do |f| %>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header"><%= link_to @order.customer.name, customer_path(@order.customer.id) %></h1>                  
@@ -17,7 +19,6 @@
                 <div class="panel-body">
 
 <!-- I work as a single upload -->
-<%= simple_form_for @order, :html => {multipart: true} do |f| %>
     <% comment do %>
         <% if @order.docs_file_name.nil?  %>
             No Files, Please Add One Below
@@ -26,9 +27,14 @@
             <%= @order.docs_file_name %>
             <%= f.check_box :remove_docs, :checked => false %> Remove 
         <% end %>    
-        <% comment end %>
-    <%= f.input :c_date, label: "Order Date:", as: :string, input_html: { class: "datepicker", value: @order.c_date.strftime('%m-%d-%Y')} %>
-    <%= f.input :c_ship, label: "Ship Date:", as: :string, input_html: { class: "datepicker", value: @order.c_ship.strftime('%m-%d-%Y')} %>
+    <% comment end %>
+    <% comment do %>
+        This is the old path for date pickers that doesn't work yet.
+        <%= f.input :c_date, label: "Order Date:", required: true, as: :date_time_picker, input_html: { class: "datepickers-all", value: @order.c_date}, data: { provide: 'datepicker'} %>
+        <%= f.input :c_ship, label: "Ship Date:", required: true, as: :text, input_html: { class: "datepicker", value: @order.c_ship} %>
+    <% commend end %>
+    <%= f.input :c_date, label: "Order Date:", required: true, as: :date, value: @order.c_date %>
+    <%= f.input :c_ship, label: "Ship Date:", required: true, as: :date,  value: @order.c_ship %>
     <%= f.input :c_via, collection: ["UPS from FMG", "UPS from WTB", "LTL from FMG", "LTL from WTB", "Pickup at FMG", "Pickup at WTB"], label: "Ship Via", :selected => @order.c_via %>
 
             </div>
@@ -79,69 +85,85 @@
         </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Order Details
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Amount</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Order Details
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                        <th>Amount</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-        <%= f.simple_fields_for :line_items do |line_item| %>
-            <tr>
-                <td><%= line_item.input :item_id, collection: @items, group_method: :name, value_method: :id %></td>
-                <td><%= line_item.input :qty, as: :integer %></td>
-                <td><%= line_item.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td>
-                <td><%= line_item.input :amount, as: :float %></td>
-                <td><%= f.hidden_field :_destroy %></td>
-                <td><%= button_to "remove", "#", class: "btn btn-danger field_remove" %></td>
-        <% end %>
-            </tr>
-            <tr><td colspan="6"><%= link_to_add_fields "Add Row", f, :line_items %></td></tr>
-                </table>
-            </tbody>
-<%= f.input :c_total, id: 'total-amount', label: "Total:" %>
-<%= f.input :c_memo, as: :text, label: "Order Exceptions", id: 'exception-memo' %>
-<%= f.input :c_ack, as: :hidden, id: "exception-ack" %>
-<%= f.button :submit, style: 'display:none;', id: 'submit-form-button' %>
-<% end %>
-<button class="btn btn-danger exceptions">Exceptions</button></td>
-<button class="btn btn-success">Confirmed</button></td>
-
-
+                            <%= f.simple_fields_for :line_items do |line_item| %>
+                                <tr class="fields">
+                                    <td><%= line_item.input :item_id, collection: @items, group_method: :name, value_method: :id %></td>
+                                    <td><%= line_item.input :qty, as: :integer %></td>
+                                    <td><%= line_item.input :site_id, collection: @sites, group_method: :name, value_method: :id %></td>
+                                    <td><%= line_item.input :amount, as: :float %></td>
+                                    <td><%= line_item.hidden_field :_destroy %></td>
+                                    <td>
+                                        <div class="form-group float">
+                                            <label class="float control-label">&nbsp;</label>
+                                            <%= button_to "remove", "#", class: "btn btn-danger field_remove form-control" %>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% end %>
+                                </tbody>
+                        </table>
+                            <%= f.input :c_total, id: 'total-amount', label: "Total:" %>
+                            <div class="form-group text optional order_c_memo" id="exception-text"><label class="text optional control-label" for="order_c_memo">Order Exceptions</label><textarea class="text optional form-control" name="order[c_memo]" id="order_c_memo"><%= @order.c_memo %></textarea></div>
+                            <%= f.input :c_ack, as: :hidden, id: "exception-ack" %>
+                            <div class="form-group float optional">
+                                <button class="btn btn-danger" id="exceptions">Exceptions</button>
+                                <button class="btn btn-success" id="confirmed">Confirmed</button>
+                            </div>
+                            <%= f.button :button, type: :submit, style: 'display:none;margin:1% 0 1% 0', id: 'submit-form-button' %>
+                        </div>
+                    </div>
+                </div>
+                    <!-- /.panel-body -->
             </div>
-                <!-- /.table-responsive -->
-            </div>
-            <!-- /.panel-body -->
         </div>
+        <% end %>
     </div>
-</div>
+</div> 
+
 
 <div id="jquery_enter"></div>
 <script>
     $(function() { 
-        $('.datepicker').datepicker();  
-        $('.exceptions').on('click', function () {
-            $('#order_c_ack').val("EXC");
-            $('#submit-form-button').css("display", "block");
+        $('#exception-text').css("display", "none");
+        $('.datepicker').datepicker({
+          formatDate: 'yyyy-mm-dd'
         });
-        $('.confirmed').on('click', function () {
+        $('#exceptions').on('click', function (e) {
+            (e).preventDefault();
+            $( '#confirmed' ).toggle();
+            $('#order_c_ack').val("EXC");
+            $('#submit-form-button').toggle();
+            $('#exception-text').toggle();
+        });
+        $('#confirmed').click(function (e) {
+            (e).preventDefault();
+            $('#exceptions').toggle();
             $('#order_c_ack').val("OK");
-            $('#submit-form-button').css("display", "block");
+            $('#submit-form-button').toggle();
+            // $('.btn-danger').addClass("disabled");
+            // $('.btn-success').removeClass("disabled");
         });
          
         // $('.link_to_add_fields').on('click', '.field-remove', function(e) {
@@ -167,6 +189,9 @@
         $('.order_line_items_amount').change(function() {
                 SumAmount();
             });
+        // $('#submit-form-button').on('click', function(e) {
+        //     $(this).submit();
+        // });
     });
                                         
     //$('#order_customer_id').change(function(event){
