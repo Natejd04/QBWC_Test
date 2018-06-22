@@ -1,4 +1,3 @@
-class QbwcController < ApplicationController
-  # before_action :authenticate_user!
+class QbwcController < ApplicationController  
   include QBWC::Controller
 end
