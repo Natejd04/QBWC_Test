@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
 	before_action :authenticate_user!
+	before_action :admin_only, except:[:show, :index]
 
 	def index
 		@invoices = Invoice.all.order "id ASC"

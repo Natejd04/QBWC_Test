@@ -1,5 +1,5 @@
 class TrackingsController < ApplicationController
- before_action :authenticate_user!, except:[:show]
+ before_action :authenticate_user!
 
  def index
         @track = Tracking.all.order "id ASC"
