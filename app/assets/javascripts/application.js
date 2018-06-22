@@ -18,4 +18,3 @@
 //= require rails_autocomplete
 //= require twitter/typeahead
 //= require_tree .
-
