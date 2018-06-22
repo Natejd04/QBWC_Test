@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require bootstrap
 //= require turbolinks
-//= require_tree .
 //= require rails_autocomplete
 //= require twitter/typeahead
+//= require_tree .
+
