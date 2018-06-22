@@ -11,7 +11,7 @@ class TrackingEmailWorker < QBWC::Worker
         {
             :invoice_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 20,
+                :max_returned => 50,
                 :txn_date_range_filter => {"from_txn_date" => Date.today - 7, "to_txn_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
