@@ -67,8 +67,11 @@ class OrdersController < ApplicationController
       # if order_params[:remove_docs] == "1"
           # @order.docs = nil
       # end
+      @order.send_to_qb = true
+      @order.confirmed_time = Time.now
+      @order.user_confirmed = current_user.id
       @order.update(order_params)
-      redirect_to :action => :index
+      redirect_to order_path(@order)
       
   end
 

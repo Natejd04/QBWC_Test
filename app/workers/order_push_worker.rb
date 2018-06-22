@@ -4,7 +4,7 @@ class OrderPushWorker < QBWC::Worker
 
     multiline_push = {}
     singleline_push = {}       
-    QBPush = Order.where(qb_process: true)
+    QBPush = Order.where(qb_process: true, qb_sent_time: nil)
 
     def requests(job)    
     
@@ -68,12 +68,13 @@ class OrderPushWorker < QBWC::Worker
                 invoice_data = {}
                 invoice_data[:txn_id] = qb_inv['txn_id']
                 invoice_data[:qb_process] = false
-                invoice_data[:c_edit] = qb_inv['edit_sequence']
+                invoice_data[:c_edit] = qb_inv['edit_sequence']                
 
                 if Order.exists?(invoice_number: qb_inv[:ref_number])
                     orderupdate = Order.find_by(invoice_number: qb[:ref_number])
                     # before updating, lets find out if it's neccessary by filtering by modified
                     if orderupdate.c_edit != qb_inv['edit_sequence']
+                        invoice_data[:qb_sent_time] = Time.now
                         orderupdate.update(invoice_data)
                     end
                 end
@@ -90,6 +91,7 @@ class OrderPushWorker < QBWC::Worker
                 orderupdate = Order.find_by(invoice_number: qb[:ref_number])
                 # before updating, lets find out if it's neccessary by filtering by modified
                 if orderupdate.c_edit != qb_inv['edit_sequence']
+                    invoice_data[:qb_sent_time] = Time.now
                     orderupdate.update(invoice_data)
                 end
             end

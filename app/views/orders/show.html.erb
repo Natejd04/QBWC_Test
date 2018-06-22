@@ -107,34 +107,41 @@
                     Order Status
                 </div>
                 <div class="panel-body">
-
+                        <% status = "default" %>
+                        <% button_text = "Edit Order" %>
                     <% if @order.c_ack.nil? %>
                         <% if @order.c_class == "Distributor Channel" || @order.class == "Amazon VC" %>
                             <button type="button" class="btn btn-default btn-circle-2"> 
                                 <i class="fa fa-question"></i>
                             </button>
-                            <span>Pending Confirmation</span>
+                            <span class="mt-1">Pending Confirmation</span>
+                            <% status = "info" %>
+                            <% button_text = "Confirm Order" %>
                         <% else %>
                             <button type="button" class="btn btn-disabled btn-circle-2">
                                 <i class="fa fa-minus"></i>
                             </button>
-                            <p>N/A<p>
+                            <span class="mt-1">N/A</span>
+                            <% status = "default" %>
+                            <% button_text = "Edit Order" %>
                         <% end %>
                     <% elsif @order.c_ack == "OK" %>
                         <button type="button" class="btn btn-success btn-circle-2" data-container="body">
                         <i class="fa fa-check"></i>
-                        </button>
-                        <p>Confirmed</p>
+                        </button><span class="mt-1">Confirmed</span>
+                        <% status = "success" %>
+                        <% button_text = "Adjust Order Confirmation" %>
                     <% else %>
                         <button type="button" class="btn btn-warning btn-circle-2">
                         <i class="fa fa-exclamation"></i> 
-                        </button>
-                        <h3><%= @order.c_ack %></h3>
-                        <p><%= @order.c_memo %></p>
+                        </button><span class="mt-1"><%= @order.c_ack %></span>
+                        <p class="up-1"><%= @order.c_memo %></p>
+                        <% status = "warning" %>
+                        <% button_text = "Adjust Order Confirmation" %>
                     <% end %>
+                    <p>&nbsp;</p>
                     <a href="<%= edit_order_path(@order.id) %>">
-                        <p>&nbsp;</p>
-                        <button type="button" class="btn btn-outline btn-primary btn-lg btn-block">Confirm Order</button>
+                        <button type="button" class="btn btn-outline btn-<%=status %> btn-lg btn-block"><%= button_text %></button>
                     </a>
                 </div>
             </div>

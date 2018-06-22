@@ -126,12 +126,12 @@
                         </table>
                             <%= f.input :c_total, id: 'total-amount', label: "Total:" %>
                             <div class="form-group text optional order_c_memo" id="exception-text"><label class="text optional control-label" for="order_c_memo">Order Exceptions</label><textarea class="text optional form-control" name="order[c_memo]" id="order_c_memo"><%= @order.c_memo %></textarea></div>
-                            <%= f.input :c_ack, as: :hidden, id: "exception-ack" %>
+                            <div class="form-group" id="exception-ack"><input class="form-control" value="<%= @order.c_ack %>" name="order[c_ack]" id="order_c_ack"></div>
                             <div class="form-group float optional">
                                 <button class="btn btn-danger" id="exceptions">Exceptions</button>
                                 <button class="btn btn-success" id="confirmed">Confirmed</button>
                             </div>
-                            <%= f.button :button, type: :submit, style: 'display:none;margin:1% 0 1% 0', id: 'submit-form-button' %>
+                        <%= f.button :button, type: :submit, style: 'display:none;margin:1% 0 1% 0', id: 'submit-form-button' %>
                         </div>
                     </div>
                 </div>
@@ -147,15 +147,16 @@
 <script>
     $(function() { 
         $('#exception-text').css("display", "none");
+        $('#exception-ack').css("display", "none");
         $('.datepicker').datepicker({
           formatDate: 'yyyy-mm-dd'
         });
         $('#exceptions').on('click', function (e) {
             (e).preventDefault();
             $( '#confirmed' ).toggle();
-            $('#order_c_ack').val("EXC");
             $('#submit-form-button').toggle();
             $('#exception-text').toggle();
+            $('#exception-ack').toggle();
         });
         $('#confirmed').click(function (e) {
             (e).preventDefault();
