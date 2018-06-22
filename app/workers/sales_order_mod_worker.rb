@@ -17,7 +17,7 @@ class SalesOrderModWorker < QBWC::Worker
                             :txn_id => op.txn_id,
                             :customer_ref => {"list_id" => op.customer.list_id},
                             :f_o_b => op.c_ack,
-                            :memo => op.memo
+                            :memo => op.c_memo
                         }
                     }
                 }
@@ -31,7 +31,7 @@ class SalesOrderModWorker < QBWC::Worker
                         :txn_id => op.txn_id,
                         :customer_ref => {"list_id" => op.customer.list_id},
                         :f_o_b => op.c_ack,
-                        :memo => op.memo
+                        :memo => op.c_memo
                     }
                 }
             }
@@ -40,16 +40,17 @@ class SalesOrderModWorker < QBWC::Worker
     end
 
     def handle_response(r, session, job, request, data)
-        if r['sales_order_ret'].is_a? Array
+        if r['sales_order_mod_rs']['sales_order_ret'].is_a? Array
             r['sales_order_ret'].each do |qb_inv|
                 invoice_data = {}
                 invoice_data[:c_edit] = qb_inv['edit_sequence']          
 
                 if Order.exists?(txn_id: qb_inv['txn_id'])
-                    orderupdate = Order.find_by(txn_ic: qb_inv['txn_id'])
+                    orderupdate = Order.find_by(txn_id: qb_inv['txn_id'])
                     # before updating, lets find out if it's neccessary by filtering by modified
                     if orderupdate.c_edit != qb_inv['edit_sequence']
                         invoice_data[:qb_sent_time] = Time.now
+                        invoice_data[:send_to_qb] = nil
                         orderupdate.update(invoice_data)
                     end
                 end
@@ -61,10 +62,11 @@ class SalesOrderModWorker < QBWC::Worker
             invoice_data[:c_edit] = qb_inv['edit_sequence'] 
 
             if Order.exists?(txn_id: qb_inv['txn_id'])
-                orderupdate = Order.find_by(txn_ic: qb_inv['txn_id'])
+                orderupdate = Order.find_by(txn_id: qb_inv['txn_id'])
                 # before updating, lets find out if it's neccessary by filtering by modified
                 if orderupdate.c_edit != qb_inv['edit_sequence']
                     invoice_data[:qb_sent_time] = Time.now
+                    invoice_data[:send_to_qb] = nil
                     orderupdate.update(invoice_data)
                 end
             end
