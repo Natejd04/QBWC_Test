@@ -41,6 +41,13 @@ class InvSiteWorker < QBWC::Worker
                 site[:contact] = qb_item['contact']
                 site[:phone] = qb_item['phone']
                 site[:email] = qb_item['email']
+
+                if qb_item['is_active'] == true
+                    site[:active] = true
+                else
+                    site[:active] = false
+                end
+
                 if qb_item['site_address']
                     site[:address] = qb_item['site_address']['addr1']
                     site[:address2] = qb_item['site_address']['addr2']
@@ -75,6 +82,13 @@ class InvSiteWorker < QBWC::Worker
             site[:contact] = qb_item['contact']
             site[:phone] = qb_item['phone']
             site[:email] = qb_item['email']
+
+            if qb_item['is_active'] == true
+                site[:active] = true
+            else
+                site[:active] = false
+            end
+
             if qb_item['site_address']
                 site[:address] = qb_item['site_address']['addr1']
                 site[:address2] = qb_item['site_address']['addr2']

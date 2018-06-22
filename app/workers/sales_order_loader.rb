@@ -65,6 +65,14 @@ class SalesOrderLoader < QBWC::Worker
                     end
                 end
 
+                if qb_inv['f_o_b']
+                    invoice_data[:c_ack]
+                end
+
+                if qb_inv['memo']
+                    invoice_data[:c_memo]
+                end
+
                 if qb_inv['po_number']
                     invoice_data[:c_po] = qb_inv['po_number']
                 end
@@ -276,6 +284,14 @@ class SalesOrderLoader < QBWC::Worker
                 else
                     invoice_data[:c_total] = qb_inv['total_amount']
                 end
+            end
+
+            if qb_inv['f_o_b']
+                invoice_data[:c_ack]
+            end
+
+            if qb_inv['memo']
+                invoice_data[:c_memo]
             end
 
             if qb_inv['po_number']
