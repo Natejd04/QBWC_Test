@@ -110,18 +110,21 @@
 
                     <% if @order.c_ack.nil? %>
                         <% if @order.c_class == "Distributor Channel" || @order.class == "Amazon VC" %>
-                            <button type="button" class="btn btn-default btn-circle-2" 
-                                <i class="fa fa-question"></i> Pending Confirmation
+                            <button type="button" class="btn btn-default btn-circle-2"> 
+                                <i class="fa fa-question"></i>
                             </button>
+                            <span>Pending Confirmation</span>
                         <% else %>
                             <button type="button" class="btn btn-disabled btn-circle-2">
-                                <i class="fa fa-minus"></i> N/A
+                                <i class="fa fa-minus"></i>
                             </button>
+                            <p>N/A<p>
                         <% end %>
                     <% elsif @order.c_ack == "OK" %>
                         <button type="button" class="btn btn-success btn-circle-2" data-container="body">
-                        <i class="fa fa-check"></i>Confirmed
+                        <i class="fa fa-check"></i>
                         </button>
+                        <p>Confirmed</p>
                     <% else %>
                         <button type="button" class="btn btn-warning btn-circle-2">
                         <i class="fa fa-exclamation"></i> 
@@ -130,6 +133,7 @@
                         <p><%= @order.c_memo %></p>
                     <% end %>
                     <a href="<%= edit_order_path(@order.id) %>">
+                        <p>&nbsp;</p>
                         <button type="button" class="btn btn-outline btn-primary btn-lg btn-block">Confirm Order</button>
                     </a>
                 </div>

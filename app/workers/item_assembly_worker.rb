@@ -490,7 +490,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data = {}
                 item_data[:list_id] = qb_item['list_id']
                 item_data[:edit_sq] = qb_item['edit_sequence']
-                item_data[:name] = qb_item['full_name']
+                item_data[:name] = qb_item['name']
                 item_data[:item_type] = "Subtotal"
 
                 if qb_item['bar_code_value']                    
@@ -517,7 +517,7 @@ class ItemAssemblyWorker < QBWC::Worker
             item_data = {}
             item_data[:list_id] = qb_item['list_id']
             item_data[:edit_sq] = qb_item['edit_sequence']
-            item_data[:name] = qb_item['full_name']
+            item_data[:name] = qb_item['name']
             item_data[:item_type] = "Subtotal"
 
             if qb_item['bar_code_value']                    
