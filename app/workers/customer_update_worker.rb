@@ -22,7 +22,7 @@ class CustomerUpdateWorker < QBWC::Worker
         {
             :customer_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 250,
+                :max_returned => 100,
                 :from_modified_date => LastUpdate,
                 :to_modified_date => Date.today + (1.0)          
             }
