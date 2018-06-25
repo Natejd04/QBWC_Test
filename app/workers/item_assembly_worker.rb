@@ -20,7 +20,7 @@ class ItemAssemblyWorker < QBWC::Worker
         {
             :item_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :max_returned => 1000,
+                :max_returned => 1000, #required
                 :from_modified_date => LastUpdate,
                 :to_modified_date => Date.today + (1.0)
             }
