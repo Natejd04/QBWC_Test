@@ -158,17 +158,13 @@
                                 </div>
                             </a>
                         </li> 
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Unknown</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
                 <!-- /.dropdown -->
+               <% comment do %>
+               We will hide the dropdown for tasks
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -246,8 +242,11 @@
                         </li>
                     </ul>
                     <!-- /.dropdown-tasks -->
+
                 </li>
                 <!-- /.dropdown -->
+                <% comment end %>
+
                 <li class="dropdown" data-behavior="notifications">
                     <a class="dropdown-toggle" data-behavior="notifications-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"><span data-behavior="unread-count" style="padding-left:2px;font-weight:600;font-size:16px;color:#d9534f"></span></i> <i class="fa fa-caret-down"></i>
@@ -272,7 +271,7 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="<%= user_path(current_user) %>"><i class="fa fa-user fa-fw"></i> <%= current_user.name %></a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="<%= edit_user_registration_path %>"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
 

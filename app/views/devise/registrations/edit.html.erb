@@ -13,14 +13,14 @@
                   <fieldset>
                     <div class="form-group">
                       
-
+                      <div class="form-group">
                       <%= f.label :avatar %>
                        <%= f.file_field :avatar %>
-
+                      </div>
                   <% if current_user.role == "admin" %>
                     <%= f.input :role, as: :string %>
                   <% end %>
-                  
+
                   <%= f.input :email, required: true, autofocus: true %>
                   <%= f.input :phone, as: :tel %>
 

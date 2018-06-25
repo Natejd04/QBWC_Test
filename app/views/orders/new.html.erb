@@ -3,7 +3,15 @@
         <div class="col-lg-12">
 			<h1 class="page-header">New Order Request</h1>
 		    <div>
+		    <% if current_user.role == "admin" %>
 		        <%= render :partial => 'salesorder' %>
+		       <% else %>
+		       <div class="row">
+    				<div class="col-lg-6">
+    				The kinks are still being worked out on this page
+    				</div>
+    			</div>
+    			<% end %>
 		    </div>
 
 			<div class="panel-body" style="display:none;">
