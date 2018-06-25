@@ -89,7 +89,8 @@ class VendorWorker < QBWC::Worker
 
                 # Now we will check to make sure the object isn't empty.   
         elsif !r['vendor_ret'].blank? 
-                 vendor_data = {}
+                vendor_data = {}
+                qb_ven = r['vendor_ret']
                 vendor_data[:list_id] = qb_ven['list_id']
                 vendor_data[:name] = qb_ven['name']
                 vendor_data[:edit_sq] = qb_ven['edit_sequence']
