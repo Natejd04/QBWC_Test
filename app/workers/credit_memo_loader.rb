@@ -28,7 +28,7 @@ class CreditMemoLoader < QBWC::Worker
     def requests(job)
         {
             :credit_memo_query_rq => {
-                :max_returned => 100,
+                # :max_returned => 100,
                 :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }

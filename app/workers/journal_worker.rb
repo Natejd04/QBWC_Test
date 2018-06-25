@@ -18,7 +18,7 @@ class JournalWorker < QBWC::Worker
     def requests(job)
         {
             :journal_entry_query_rq => {
-                :max_returned => 100,
+                # :max_returned => 100,
                 # :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
