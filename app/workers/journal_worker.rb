@@ -108,7 +108,11 @@ class JournalWorker < QBWC::Worker
                         li_data[:account_type] = "debit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
-                                li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                                if !li_data[:amount].nil?
+                                    li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                                else
+                                    li_data[:amount] = amount
+                                end
                             else
                                 li_data[:amount] = amount
                             end
@@ -170,7 +174,11 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "debit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                            if !li_data[:amount].nil?
+                                    li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                                else
+                                    li_data[:amount] = amount
+                                end
                         else
                             li_data[:amount] = amount
                         end
@@ -236,7 +244,11 @@ class JournalWorker < QBWC::Worker
                         li_data[:account_type] = "credit"
                         amount = li['amount']
                             if currency_ref == "Canadian Dollar"
-                                li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                                if !li_data[:amount].nil?
+                                    li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                                else
+                                    li_data[:amount] = amount
+                                end
                             else
                                 li_data[:amount] = amount
                             end
@@ -298,7 +310,11 @@ class JournalWorker < QBWC::Worker
                     li_data[:account_type] = "credit"
                     amount = li['amount']
                         if currency_ref == "Canadian Dollar"
-                            li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                             if !li_data[:amount].nil?
+                                    li_data[:amount] = (amount * journal_data[:exchange_rate]).round(2)
+                                else
+                                    li_data[:amount] = amount
+                                end
                         else
                             li_data[:amount] = amount
                         end
