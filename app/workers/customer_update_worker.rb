@@ -92,13 +92,15 @@ class CustomerUpdateWorker < QBWC::Worker
                         customer_created = Customer.find_by(list_id: customer_data[:list_id])
                         admin = User.where(role: "admin").select("name, email, role, id")
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                        if qb_cus['customer_type_ref']['full_name'] == "Distributor"
-                            combo.each do |user|
-                                Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
-                            end
-                        else
-                            admin.each do |user|
-                                Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
+                        if qb_cus['customer_type_ref']
+                            if qb_cus['customer_type_ref']['full_name'] == "Distributor"
+                                combo.each do |user|
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
+                                end
+                            else
+                                admin.each do |user|
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
+                                end
                             end
                         end
                     end
@@ -163,13 +165,15 @@ class CustomerUpdateWorker < QBWC::Worker
                     customer_created = Customer.find_by(txn_id: customer_data[:txn_id])
                     admin = User.where(role: "admin").select("name, email, role, id")
                     combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                    if c['customer_type_ref']['full_name'] == "Distributor"
-                        combo.each do |user|
-                            Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
-                        end
-                    else
-                        admin.each do |user|
-                            Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
+                    if qb_cus['customer_type_ref']
+                        if qb_cus['customer_type_ref']['full_name'] == "Distributor"
+                            combo.each do |user|
+                                Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
+                            end
+                        else
+                            admin.each do |user|
+                                Notification.create(recipient_id: user.id, action: "posted", notifiable: customer_created)
+                            end
                         end
                     end
                 end 
