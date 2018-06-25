@@ -19,7 +19,7 @@ class VendorWorker < QBWC::Worker
     def requests(job)
         {
             :vendor_query_rq => {
-                :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
+                # :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 100,
                 :active_status => "ActiveOnly",
                 :from_modified_date => LastUpdate,
