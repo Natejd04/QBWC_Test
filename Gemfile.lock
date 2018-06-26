@@ -124,6 +124,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (3.11.4)
     qbwc (0.1.0)
       qbxml (>= 0.3.0)
       wash_out (>= 0.7.1)
@@ -255,6 +256,7 @@ DEPENDENCIES
   paperclip (~> 6.0.0)
   pg
   pry-rails
+  puma
   qbwc
   rails (= 4.2.8)
   rails-footnotes (~> 4.0)

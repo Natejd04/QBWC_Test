@@ -64,6 +64,9 @@ gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4'
 # Making the switch to devise for public use
 gem 'devise'
 
+# We are going to test out the use of Puma
+gem 'puma'
+
 
 
 # Use Unicorn as the app server
