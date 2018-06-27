@@ -31,7 +31,7 @@ class SalesOrderLoader < QBWC::Worker
             :sales_order_query_rq => {
                 # :max_returned => 100,
                 # :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => "2018-02-28", "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => "2018-05-01", "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
