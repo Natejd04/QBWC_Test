@@ -3,7 +3,7 @@ threads_count = Integer(ENV['RAILS_MAX_THREADS'] || 5)
 threads threads_count, threads_count
 
 # Let's run this covertly
-daemonize false
+daemonize
 
 # We need to bind our certs, and the operation has to happen before preload
 bind 'ssl://0.0.0.0:3000?key=.ssl/importly.key&cert=.ssl/importly_app.crt&verify_mode=none&ca=.ssl/importly_app.ca-bundle'
