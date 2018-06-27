@@ -122,9 +122,9 @@ class SalesOrderLoader < QBWC::Worker
                 if Order.exists?(txn_id: invoice_data[:txn_id])
                     orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
-                        # if orderupdate.c_edit != qb_inv['edit_sequence']
+                        if orderupdate.c_edit != qb_inv['edit_sequence']
                             orderupdate.update(invoice_data)
-                        # end
+                        end
                 else
                     Order.create(invoice_data)
                         # Creating the notification system

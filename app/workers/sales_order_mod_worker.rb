@@ -17,7 +17,7 @@ class SalesOrderModWorker < QBWC::Worker
                             :txn_id => op.txn_id,
                             :edit_sequence => op.c_edit,
                             :customer_ref => {"list_id" => op.customer.list_id},
-                            :f_o_b => op.c_ack,
+                            :fob => op.c_ack,
                             :memo => op.c_memo
                         }
                     }
@@ -32,7 +32,7 @@ class SalesOrderModWorker < QBWC::Worker
                         :txn_id => op.txn_id,
                         :edit_sequence => op.c_edit,
                         :customer_ref => {"list_id" => op.customer.list_id},
-                        :f_o_b => op.c_ack,
+                        :fob => op.c_ack,
                         :memo => op.c_memo
                     }
                 }
