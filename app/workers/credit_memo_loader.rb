@@ -120,9 +120,11 @@ class CreditMemoLoader < QBWC::Worker
                         cm_created = CreditMemo.find_by(txn_id: invoice_data[:txn_id])
                         admin = User.where(role: "admin").select("name, email, role, id")
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                        if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
-                            combo.each do |user|
-                                Notification.create(recipient_id: user.id, action: "posted", notifiable: cm_created)
+                        if qb_inv['class_ref']
+                            if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                                combo.each do |user|
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: cm_created)
+                                end
                             end
                         else
                             admin.each do |user|
@@ -328,9 +330,11 @@ class CreditMemoLoader < QBWC::Worker
                     cm_created = CreditMemo.find_by(txn_id: invoice_data[:txn_id])
                     admin = User.where(role: "admin").select("name, email, role, id")
                     combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                    if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
-                        combo.each do |user|
-                            Notification.create(recipient_id: user.id, action: "posted", notifiable: cm_created)
+                    if qb_inv['class_ref']
+                        if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                            combo.each do |user|
+                                Notification.create(recipient_id: user.id, action: "posted", notifiable: cm_created)
+                            end
                         end
                     else
                         admin.each do |user|
