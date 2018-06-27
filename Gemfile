@@ -68,7 +68,7 @@ gem 'devise'
 gem 'puma'
 
 #Attempting SSL
-gem 'thin'
+#gem 'thin'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
