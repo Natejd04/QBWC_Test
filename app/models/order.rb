@@ -82,8 +82,7 @@ class Order < ActiveRecord::Base
     end
 
     def self.donut_chart(timeish = Time.now)
-        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct")
-        orders = where.not("c_name = ?", "Nate2 Davis")
+        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ? and c_name = ?", nil, "Consumer Direct", "Nate2 Davis")
         orders = orders.group("c_class")
         orders = orders.select("c_class, sum(c_total) as c_total")
         orders.map do |li|
