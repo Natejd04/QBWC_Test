@@ -27,7 +27,7 @@ class CreditMemo < ActiveRecord::Base
     end
 
     def self.prices_by_week(start, interval)
-        attributes = %w{197 198 199 201 202 203 204 205}
+        attributes = %w{181 182 188 189 191 192 195 198 204 206}
         credit_memos = joins(:items).where("items.id in (?)", attributes).where(c_date: start.beginning_of_day..Time.zone.now)
         credit_memos = credit_memos.group("date_trunc('#{interval}', credit_memos.c_date)")
         credit_memos = credit_memos.select("date_trunc('#{interval}', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total")
