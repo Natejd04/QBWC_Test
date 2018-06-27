@@ -31,7 +31,7 @@ class SalesOrderLoader < QBWC::Worker
             :sales_order_query_rq => {
                 # :max_returned => 100,
                 # :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => "06-01-2018", "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
@@ -67,11 +67,11 @@ class SalesOrderLoader < QBWC::Worker
                 end
 
                 if qb_inv['f_o_b']
-                    invoice_data[:c_ack]
+                    invoice_data[:c_ack] = qb_inv['f_o_b']
                 end
 
                 if qb_inv['memo']
-                    invoice_data[:c_memo]
+                    invoice_data[:c_memo] = qb_inv['memo']
                 end
 
                 if qb_inv['po_number']
@@ -122,9 +122,9 @@ class SalesOrderLoader < QBWC::Worker
                 if Order.exists?(txn_id: invoice_data[:txn_id])
                     orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
-                        if orderupdate.c_edit != qb_inv['edit_sequence']
+                        # if orderupdate.c_edit != qb_inv['edit_sequence']
                             orderupdate.update(invoice_data)
-                        end
+                        # end
                 else
                     Order.create(invoice_data)
                         # Creating the notification system
@@ -290,12 +290,13 @@ class SalesOrderLoader < QBWC::Worker
             end
 
             if qb_inv['f_o_b']
-                invoice_data[:c_ack]
+                invoice_data[:c_ack] = qb_inv['f_o_b']
             end
 
             if qb_inv['memo']
-                invoice_data[:c_memo]
+                invoice_data[:c_memo] = qb_inv['memo']
             end
+
 
             if qb_inv['po_number']
                 invoice_data[:c_po] = qb_inv['po_number']
