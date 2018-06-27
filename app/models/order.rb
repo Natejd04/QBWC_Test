@@ -95,7 +95,7 @@ class Order < ActiveRecord::Base
     end
 
     def self.bar_chart(timeish = Time.now)
-        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?, c_name = ?", nil, "Consumer Direct", "Nate2 Davis")
+        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ? and c_name = ?", nil, "Consumer Direct", "Nate2 Davis")
         orders = orders.group("c_name")
         orders = orders.select("c_name, sum(c_total) as c_total")
         orders = orders.order("c_total DESC")
