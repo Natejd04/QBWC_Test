@@ -117,7 +117,6 @@ class CreditMemoLoader < QBWC::Worker
                 else
                     CreditMemo.create(invoice_data)
                     if InitialLoad == false
-                        binding.pry
                         cm_created = CreditMemo.find_by(txn_id: invoice_data[:txn_id])
                         admin = User.where(role: "admin").select("name, email, role, id")
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
@@ -326,7 +325,6 @@ class CreditMemoLoader < QBWC::Worker
             else
                 CreditMemo.create(invoice_data)
                 if InitialLoad == false
-                    binding.pry
                     cm_created = CreditMemo.find_by(txn_id: invoice_data[:txn_id])
                     admin = User.where(role: "admin").select("name, email, role, id")
                     combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
