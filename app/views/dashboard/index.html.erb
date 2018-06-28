@@ -135,7 +135,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div>
                                 <%= render :partial => 'weekly_sales_chart' %>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        <%=Time.now.strftime("%B")%> Sales by Class
+                        <%=Time.now.strftime("%B")%> Sales by Class <sub>*if filled in full</sub>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -171,7 +171,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div>
                                 <%= render :partial => 'weekly_tpr_chart' %>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div>
                                 <%= render :partial => 'monthly_top_customers' %>
                                 </div>
                             </div>
