@@ -31,7 +31,7 @@ class SalesOrderLoader < QBWC::Worker
             :sales_order_query_rq => {
                 # :max_returned => 100,
                 # :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => "2018-06-25", "to_modified_date" => Date.today + (1.0)},
                 :include_line_items => true
             }
         }
@@ -122,6 +122,11 @@ class SalesOrderLoader < QBWC::Worker
                 if Order.exists?(txn_id: invoice_data[:txn_id])
                     orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
+                        if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                                combo.each do |user|
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                                end
+                            end
                         if orderupdate.c_edit != qb_inv['edit_sequence']
                             orderupdate.update(invoice_data)
                         end
