@@ -123,11 +123,13 @@ class SalesOrderLoader < QBWC::Worker
                     orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                        if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
+                        if qb_inv['class_ref']
+                            if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
                                 combo.each do |user|
                                     Notification.create(recipient_id: user.id, action: "posted", notifiable: orderupdate)
                                 end
                             end
+                        end
                         if orderupdate.c_edit != qb_inv['edit_sequence']
                             orderupdate.update(invoice_data)
                         end
