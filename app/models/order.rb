@@ -75,14 +75,14 @@ class Order < ActiveRecord::Base
         orders = where(c_date: start.beginning_of_day..Time.zone.now)
         orders = where.not("c_name = ?", "Nate2 Davis")
         orders = orders.group("date_trunc('#{interval}', c_date)")
-        orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(c_total) as c_total").where.not(:customer_id => 1529)
+        orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(c_total) as c_total").where.not("c_name = ?", "Nate2 Davis")
         orders.each_with_object({}) do |order, prices|
             prices[order.c_date.to_date] = order.c_total.round(2)
         end
     end
 
     def self.donut_chart(timeish = Time.now)
-        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ? and c_name = ?", nil, "Consumer Direct", "Nate2 Davis")
+        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct").where.not("c_name = ?", "Nate2 Davis")
         orders = orders.group("c_class")
         orders = orders.select("c_class, sum(c_total) as c_total")
         orders.map do |li|
@@ -94,7 +94,7 @@ class Order < ActiveRecord::Base
     end
 
     def self.bar_chart(timeish = Time.now)
-        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ? and c_name = ?", nil, "Consumer Direct", "Nate2 Davis")
+        orders = where(c_date: timeish.beginning_of_month..timeish.end_of_month).where.not("c_class = ? and c_class = ?", nil, "Consumer Direct").where.not("c_name = ?", "Nate2 Davis")
         orders = orders.group("c_name")
         orders = orders.select("c_name, sum(c_total) as c_total")
         orders = orders.order("c_total DESC")
