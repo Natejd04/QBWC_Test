@@ -125,7 +125,7 @@ class SalesOrderLoader < QBWC::Worker
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
                         if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
                                 combo.each do |user|
-                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: orderupdate)
                                 end
                             end
                         if orderupdate.c_edit != qb_inv['edit_sequence']
