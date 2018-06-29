@@ -122,14 +122,6 @@ class SalesOrderLoader < QBWC::Worker
                 if Order.exists?(txn_id: invoice_data[:txn_id])
                     orderupdate = Order.find_by(txn_id: invoice_data[:txn_id])
                         # before updating, lets find out if it's neccessary by filtering by modified
-                        combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                        if qb_inv['class_ref']
-                            if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
-                                combo.each do |user|
-                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: orderupdate)
-                                end
-                            end
-                        end
                         if orderupdate.c_edit != qb_inv['edit_sequence']
                             orderupdate.update(invoice_data)
                         end
@@ -165,7 +157,8 @@ class SalesOrderLoader < QBWC::Worker
 
                         # We need to match the lineitem with order id
                         # We just recorded it and could pull it via find.
-                        li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id']).id
+                        order_id = li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id'])
+                        li_data[:order_id] = order_id.id
 
                         li_data[:txn_id] = li['txn_line_id']
 
@@ -203,11 +196,7 @@ class SalesOrderLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                             if defined?(orderupdate)
-                                if orderupdate.c_edit != qb_inv['edit_sequence']
-                                    lineitemupdate.update(li_data)
-                                end
-                            else 
+                            if order_id.c_edit != qb_inv['edit_sequence']
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -221,7 +210,9 @@ class SalesOrderLoader < QBWC::Worker
                     li = qb_inv['sales_order_line_ret']
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
-                    li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id']).id
+                    order_id = li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id'])
+                    li_data[:order_id] = order_id.id
+
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -256,12 +247,8 @@ class SalesOrderLoader < QBWC::Worker
                     if LineItem.exists?(txn_id: li['txn_line_id'])
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
-
-                        if defined?(orderupdate)
-                            if orderupdate.c_edit != qb_inv['edit_sequence']
-                                lineitemupdate.update(li_data)
-                            end
-                        else 
+                        
+                        if order_id.c_edit != qb_inv['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -386,7 +373,9 @@ class SalesOrderLoader < QBWC::Worker
 
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
-                    li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id']).id
+                    order_id = li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id'])
+                    li_data[:order_id] = order_id.id
+
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -426,15 +415,9 @@ class SalesOrderLoader < QBWC::Worker
                     if LineItem.exists?(txn_id: li['txn_line_id'])
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
-
-                        if defined?(orderupdate)
-                            if orderupdate.c_edit != qb_inv['edit_sequence']
-                                lineitemupdate.update(li_data)
-                            end
-                        else 
+                        if order_id.c_edit != qb_inv['edit_sequence']
                             lineitemupdate.update(li_data)
                         end
-
                     else
                         LineItem.create(li_data)
                     end
@@ -446,7 +429,9 @@ class SalesOrderLoader < QBWC::Worker
                 li = qb_inv['sales_order_line_ret']
                 # We need to match the lineitem with order id
                 # We just recorded it and could pull it via find.
-                li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id']).id
+                order_id = li_data[:order_id] = Order.find_by(txn_id: qb_inv['txn_id'])
+                li_data[:order_id] = order_id.id
+
 
                 li_data[:txn_id] = li['txn_line_id']
 
@@ -486,12 +471,8 @@ class SalesOrderLoader < QBWC::Worker
                     lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                     # Has this LineItem actually been modified?
 
-                    if defined?(orderupdate)
-                        if orderupdate.c_edit != qb_inv['edit_sequence']
+                    if order_id.c_edit != qb_inv['edit_sequence']
                             lineitemupdate.update(li_data)
-                        end
-                    else 
-                        lineitemupdate.update(li_data)
                     end
                 else
                     LineItem.create(li_data)
