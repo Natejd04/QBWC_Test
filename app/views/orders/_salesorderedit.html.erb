@@ -125,8 +125,8 @@
                                 </tbody>
                         </table>
                             <%= f.input :c_total, id: 'total-amount', label: "Total:" %>
-                            <div class="form-group text optional order_c_memo" id="exception-text"><label class="text optional control-label" for="order_c_memo">Order Exceptions</label><textarea class="text optional form-control" name="order[c_memo]" id="order_c_memo"><%= @order.c_memo %></textarea></div>
-                            <div class="form-group" id="exception-ack"><input class="form-control" value="<%= @order.c_ack %>" name="order[c_ack]" id="order_c_ack"></div>
+                            <div class="form-group text optional order_c_memo" id="exception-text"><label class="text optional control-label" for="order_c_memo">Order Exceptions</label><textarea class="text optional form-control" name="order[c_memo]" id="order_c_memo" maxlength="4000"><%= @order.c_memo %></textarea></div>
+                            <div class="form-group" id="exception-ack"><label class="text optional control-label" for="order_c_ack">Exception Title</label><input class="form-control" value="<%= @order.c_ack %>" name="order[c_ack]" id="order_c_ack" maxlength="13"></div>
                             <div class="form-group float optional">
                                 <button class="btn btn-danger" id="exceptions">Exceptions</button>
                                 <button class="btn btn-success" id="confirmed">Confirmed</button>
