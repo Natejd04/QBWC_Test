@@ -54,9 +54,9 @@ class Order < ActiveRecord::Base
         end
     end
 
-    def self.chart_data(start = 1.month.ago.beginning_of_month, interval)
+    def self.chart_data(start = 8.week.ago, interval)
         total_prices = prices_by_week(start, interval)
-        (start.to_date..Time.now.end_of_month).map do |date|
+        (start.to_date..Time.now).map do |date|
         # (5.months.ago.to_date..Date.today).map do |date|
             if !total_prices[date].nil?
                 {
