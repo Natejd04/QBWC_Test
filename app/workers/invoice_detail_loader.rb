@@ -128,7 +128,7 @@ class InvoiceDetailLoader < QBWC::Worker
                         # We need to match the lineitem with order id
                         # We just recorded it and could pull it via find                        
                         invoice_id = li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id'])
-                        li_data[:order_id] = invoice_id.id
+                        li_data[:invoice_id] = invoice_id.id
 
                         li_data[:txn_id] = li['txn_line_id']
 
@@ -182,7 +182,7 @@ class InvoiceDetailLoader < QBWC::Worker
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
                     invoice_id = li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id'])
-                    li_data[:order_id] = invoice_id.id
+                    li_data[:invoice_id] = invoice_id.id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -324,7 +324,7 @@ class InvoiceDetailLoader < QBWC::Worker
                     # We need to match the lineitem with order id
                     # We just recorded it and could pull it via find.
                     invoice_id = li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id'])
-                    li_data[:order_id] = invoice_id.id
+                    li_data[:invoice_id] = invoice_id.id
 
                     li_data[:txn_id] = li['txn_line_id']
 
@@ -382,7 +382,7 @@ class InvoiceDetailLoader < QBWC::Worker
                 # We need to match the lineitem with order id
                 # We just recorded it and could pull it via find.
                 invoice_id = li_data[:order_id] = Invoice.find_by(txn_id: qb_inv['txn_id'])
-                li_data[:order_id] = invoice_id.id
+                li_data[:invoice_id] = invoice_id.id
 
                 li_data[:txn_id] = li['txn_line_id']
 
