@@ -19,7 +19,7 @@ class SalesOrderLoader < QBWC::Worker
     else
         # This is preloading data based on no records in the log table
         LastUpdate = "2017-12-01"
-        InitialLoad = true
+        InitialLoad = false
     end
 
     # This worker is going to be used to test. It will pre-load, with 2017 sales orders.
