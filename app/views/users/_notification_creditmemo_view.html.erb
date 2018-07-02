@@ -1,3 +1,4 @@
+<% !@notify_cm.nil? %>
 <% @notify_cm.each do |f| %>
 <tr>
 		<td><%= f.notifiable.id %></td>
@@ -7,3 +8,4 @@
 		<td><%= f.created_at.strftime("%m/%d/%Y") %></td>
 </tr>
 <% end %>	
+<% end %>
