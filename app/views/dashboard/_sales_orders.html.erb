@@ -1,11 +1,11 @@
 <thead>
     <tr>
-        <th>Name</th>
+        <th><%= sortable "c_name", "Name" %></th>
         <th>Order #</th>
-        <th><%= link_to "Order Date", :sort => "ordered_date" %></th>
-        <th><%= link_to "Ship Date", :sort => "ship_date" %></th>
+        <th><%= sortable "c_date", "Order Date" %></th>
+        <th><%= sortable "c_ship", "Ship Date" %></th>
         <th>PO#</th>
-        <th>Amount</th>
+        <th><%= sortable "c_total", "Amount" %></th>
         <th>Status</th>
     </tr>
 </thead>                                           

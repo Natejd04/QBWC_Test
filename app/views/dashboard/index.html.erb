@@ -217,7 +217,8 @@
                                         <li><a class="append-invoices" href="#">Invoices</a>
                                         </li>
                                         <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
+                                        <li><%= link_to "Remove [Wholesale]", request.query_parameters.merge({:remove => "Wholesale Direct"}) %></li> 
+                                        <li>
                                         </li>
                                     </ul>
                                 </div>
