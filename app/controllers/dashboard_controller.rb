@@ -36,8 +36,23 @@ class DashboardController < ApplicationController
 		@pm_journal_debit = Journal.joins(:account_line_items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]).sum('account_line_items.amount')
 		@pm_inv_gross_total = Invoice.joins(:items).where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where("items.account_id = 152").sum("line_items.homecurrency_amount")
 		@pm_sr_gross_total = SalesReceipt.joins(:items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+
+		# Prior Month To DATE
+		@journal_td_debit = Journal.joins(:account_line_items).where(:txn_date => Time.now.beginning_of_month..Time.now).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]).sum('account_line_items.amount')
+		@inv_gross_td_total = Invoice.joins(:items).where(:c_date => Time.now.beginning_of_month..Time.now).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		@sr_gross_td_total = SalesReceipt.joins(:items).where(:txn_date => Time.now.beginning_of_month..Time.now).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		@month_sales_td_receipts = SalesReceipt.where(:txn_date => Time.now.beginning_of_month..Time.now).sum(:subtotal)
+		@month_td_total = ((@inv_gross_td_total + @sr_gross_td_total) - @journal_td_debit)
+
+		@pmtd_journal_debit = Journal.joins(:account_line_items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.to_date).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]).sum('account_line_items.amount')
+		@pmtd_inv_gross_total = Invoice.joins(:items).where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.to_date).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		@pmtd_sr_gross_total = SalesReceipt.joins(:items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.to_date).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		
+
+
+		@prior_mtd_total = ((@pmtd_inv_gross_total + @pmtd_sr_gross_total) - @pmtd_journal_debit)
 		@prior_m_total = ((@pm_inv_gross_total + @pm_sr_gross_total) - @pm_journal_debit)
-			@vs = ((@month_total - @prior_m_total) / @month_total) * 100
+			@vs = ((@month_td_total - @prior_mtd_total) / @month_td_total) * 100
 		@open_orders_count = Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis").count
 
 		respond_to do |format|
