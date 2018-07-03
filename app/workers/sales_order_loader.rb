@@ -128,7 +128,7 @@ class SalesOrderLoader < QBWC::Worker
                 else
                     Order.create(invoice_data)
                         # Creating the notification system
-                    if InitialLoad == false
+                    # if InitialLoad == false
                         inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
                         admin = User.where(role: "admin").select("name, email, role, id")
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
@@ -143,7 +143,7 @@ class SalesOrderLoader < QBWC::Worker
                                 Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
                             end
                         end
-                    end
+                    # end
                 end
             
 # ----------------> Start Line Item
@@ -344,7 +344,7 @@ class SalesOrderLoader < QBWC::Worker
                     end
             else
                 Order.create(invoice_data)
-                if InitialLoad == false
+                # if InitialLoad == false
                     inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
                     admin = User.where(role: "admin").select("name, email, role, id")
                     combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
@@ -359,7 +359,7 @@ class SalesOrderLoader < QBWC::Worker
                             Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
                         end
                     end
-                end
+                # end
             end
         
         # ----------------> Start Line Item
