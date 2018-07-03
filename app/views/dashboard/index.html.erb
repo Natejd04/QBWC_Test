@@ -38,7 +38,7 @@
                                     <div class="huge">
                                     	$<%= number_to_human(@month_total, :format => '%n%u', :units => { :thousand => 'K' }) %>
                                     </div>
-                                    <div><%=Time.now.strftime("%B")%> Sales</div>
+                                    <div><%=Time.now.strftime("%B")%> Sales to Date</div>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                     <div class="huge">
                                     <%= number_to_percentage(@vs, precision: 2) %>
                                     </div>
-                                    <div>vs Prior Month</div>
+                                    <div>vs Prior Month to Date</div>
                                 </div>
                             </div>
                         </div>
