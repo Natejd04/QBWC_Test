@@ -15,11 +15,11 @@ class SalesOrderLoader < QBWC::Worker
 
         LastUpdate = Log.where(worker_name: 'SalesOrderLoader').order(created_at: :desc).limit(1)
         LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
-        InitialLoad = true
+        InitialLoad = false
     else
         # This is preloading data based on no records in the log table
         LastUpdate = "2017-12-01"
-        InitialLoad = false
+        InitialLoad = true
     end
 
     # This worker is going to be used to test. It will pre-load, with 2017 sales orders.
