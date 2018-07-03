@@ -139,10 +139,10 @@ class SalesOrderLoader < QBWC::Worker
                         else
                             admin.each do |user|
                                 Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                            end
                         end
-                    # end
-                # end
-            end
+                end
+            
             
 # ----------------> Start Line Item
                 # Line items are recorded if they are an array
@@ -354,8 +354,8 @@ class SalesOrderLoader < QBWC::Worker
                         else
                             admin.each do |user|
                                 Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                            end
                         end
-                    # end
                 # end
             end
         
