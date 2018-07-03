@@ -1,4 +1,10 @@
 ---
+<<<<<<< HEAD
 pid: 4174
 control_url: unix:///tmp/puma-status-1530556726520-4174
 control_auth_token: 65403a8d56e3292166dc9178baed79
+=======
+pid: 1090
+control_url: unix:///tmp/puma-status-1530649146543-1090
+control_auth_token: 14522decc8ee106016a66f23ff1b42cc
+>>>>>>> 3ff977114e31ea9f770129cadd7e84862803e484

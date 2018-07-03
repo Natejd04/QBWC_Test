@@ -28,4 +28,16 @@ module ApplicationHelper
     # nothing between this chunk will render
   end
 
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    css_class = column == sort_column ? "current #{sort_direction}" : nil
+    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    link_to title, request.query_parameters.merge({:sort => column, :direction => direction}), {:class => css_class}
+  end
+
+  def remove_class(c_class, title)
+    removed = classed_remove == "Wholesale Direct" ? nil : nil
+    link_to c_class, request.query_parameters.merge({:remove => removed})
+  end
+
 end

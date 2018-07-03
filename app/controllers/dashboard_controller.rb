@@ -1,6 +1,8 @@
 class DashboardController < ApplicationController
 	before_action :authenticate_user!
 
+	helper_method :sort_column, :sort_direction, :classed_remove
+
 	def line_items_total
 		invoice_line_items.map(&:amount).sum
 	end
@@ -11,7 +13,9 @@ class DashboardController < ApplicationController
 		#@invoices = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where.not("c_name LIKE ?", "%* UPP:%")
 		# @test_total = @invoices.map(&:line_items).flatten.map(&:amount).sum
 		#@test_total = @invoices.map(&:line_items_total).sum
-		@orders = Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis").order(c_class: :asc, c_name: :asc)
+
+
+		@orders = Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis").where.not(:c_class => classed_remove).order(sort_column + " " + sort_direction)
 		@order_total = @orders.sum(:c_total)
 		@invoices = Invoice.where(:c_date => Time.now.beginning_of_month..Time.now.end_of_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
@@ -72,11 +76,25 @@ class DashboardController < ApplicationController
           format.js
       end
 
-    def _invoices
-  		render "_invoices", 
-        # locals: { elephant: some_thing },
-        layout: false
-	end
-  
-  end
+	    def _invoices
+	  		render "_invoices", 
+	        # locals: { elephant: some_thing },
+	        layout: false
+		end
+    end
+
+    private
+
+    def sort_column
+    	%w[c_ship c_date c_total c_name].include?(params[:sort]) ? params[:sort] : "c_ship"
+    end
+
+    def sort_direction
+    	%w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def classed_remove
+    	%w[Wholesale\ Direct nil].include?(params[:remove]) ? params[:remove] : nil
+    end
+
 end
