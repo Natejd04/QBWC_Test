@@ -131,7 +131,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Rolling Sales by Week
+                        Sales by Week
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -167,7 +167,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        Rolling Deductions by Week
+                        Deductions by Week
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -218,7 +218,7 @@
                                         </li>
                                         <li class="divider"></li>
                                         <li><%= link_to "Remove [Wholesale]", request.query_parameters.merge({:remove => "Wholesale Direct"}) %></li> 
-                                        <li>
+                                        <li><%= remove_class "Wholesale Direct" %>
                                         </li>
                                     </ul>
                                 </div>
