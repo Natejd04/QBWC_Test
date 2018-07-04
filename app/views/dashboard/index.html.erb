@@ -211,14 +211,13 @@
                                         <span id="type-of-orders">Sales Orders</span>
                                         <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
+                                    <ul class="dropdown-menu pull-right" id="sorting" role="menu">
                                         <li><a class="append-sales-orders" href="#">Sales Orders</a>
                                         </li>
                                         <li><a class="append-invoices" href="#">Invoices</a>
                                         </li>
                                         <li class="divider"></li>
-                                        <li><%= link_to "Remove [Wholesale]", request.query_parameters.merge({:remove => "Wholesale Direct"}) %></li> 
-                                        <li><%= remove_class "Wholesale Direct" %>
+                                        <li><%= remove_class "Remove Wholesale" %></span>
                                         </li>
                                     </ul>
                                 </div>

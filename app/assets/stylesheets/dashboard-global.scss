@@ -4,8 +4,27 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-#order-sales-table {
+#sorting {
+  
+      
+
+  a:before {
+      content: "\f0c8";
+      font-family: FontAwesome;
+      left: 5px;
+      position:absolute;
+  }
     
+    .current:before {
+      content: "\f14a";
+      font-family: FontAwesome;
+      left: 5px;
+      position:absolute;
+  }
+}
+
+#order-sales-table {
+
   th .current {
     padding-right: 12px;
     background-repeat: no-repeat;
