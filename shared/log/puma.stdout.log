@@ -1,0 +1,668 @@
+=== puma startup: 2018-07-02 17:37:37 +0000 ===
+[3214] * Starting control server on unix:///tmp/puma-status-1530553057004-3209
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "AccountWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "AccountWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CreditMemoLoader"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CreditMemoLoader"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[36mLog Exists (1.5ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvSiteWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvSiteWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "AccountWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "AccountWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[35mLog Load (1.5ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "JournalWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CreditMemoLoader"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "JournalWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CreditMemoLoader"]]
+  [1m[36mLog Exists (1.2ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ListDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ListDeleteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvSiteWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvSiteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesOrderLoader"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesOrderLoader"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesReceiptWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesReceiptWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[35mLog Load (1.7ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "TxnDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "TxnDeleteWorker"]]
+  [1m[36mLog Exists (1.6ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "JournalWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "VendorWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "JournalWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "VendorWorker"]]
+  [1m[36mLog Exists (1.2ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ListDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ListDeleteWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesOrderLoader"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesOrderLoader"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesReceiptWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesReceiptWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "TxnDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "TxnDeleteWorker"]]
+  [1m[36mLog Exists (1.2ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "VendorWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "VendorWorker"]]
+[3214] - Worker 0 (pid: 3221) booted, phase: 0
+[3214] - Worker 1 (pid: 3225) booted, phase: 0
+Started GET "/orders/new" for 50.200.105.2 at 2018-07-02 17:38:47 +0000
+Processing by OrdersController#new as HTML
+  [1m[36mUser Load (1.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (1.4ms)[0m  BEGIN
+  [1m[36m (1.3ms)[0m  [1mCOMMIT[0m
+Completed 401 Unauthorized in 43ms (ActiveRecord: 12.2ms)
+Started GET "/orders/new" for 50.200.105.2 at 2018-07-02 17:38:47 +0000
+Processing by OrdersController#new as HTML
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms)
+Started GET "/auth/login" for 50.200.105.2 at 2018-07-02 17:38:47 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (1.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (11.0ms)
+Completed 200 OK in 20ms (Views: 17.7ms | ActiveRecord: 0.0ms)
+Started POST "/auth/login" for 50.200.105.2 at 2018-07-02 17:38:48 +0000
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"YQs8L6Nq9xEquPk9mShXEeJ5U4dNvjciNrVmP4A/UE8OdUaHcQdKACUO5DAuUwINHhU97UcBGFWfuM7pDOym0A==", "user"=>{"email"=>"nate@zingbars.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Login"}
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["email", "nate@zingbars.com"]]
+  [1m[36m (1.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  UPDATE "users" SET "last_sign_in_at" = $1, "current_sign_in_at" = $2, "sign_in_count" = $3, "updated_at" = $4 WHERE "users"."id" = $5  [["last_sign_in_at", "2018-07-02 16:55:33.158515"], ["current_sign_in_at", "2018-07-02 17:38:48.963756"], ["sign_in_count", 20], ["updated_at", "2018-07-02 17:38:48.966407"], ["id", 1]]
+  [1m[36m (2.0ms)[0m  [1mCOMMIT[0m
+Redirected to https://importly.app/orders/new
+Completed 302 Found in 160ms (ActiveRecord: 6.4ms)
+Started GET "/orders/new" for 50.200.105.2 at 2018-07-02 17:38:48 +0000
+Processing by OrdersController#new as HTML
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mCustomer Load (2.8ms)[0m  [1mSELECT "customers".* FROM "customers" WHERE "customers"."deleted" IS NULL AND (name LIKE '%* UPP%')[0m
+  [1m[35mItem Load (3.2ms)[0m  SELECT "items".* FROM "items" WHERE "items"."deleted" IS NULL AND "items"."item_type" IN ('Inventory Assembly', 'Non-Inventory Part')
+  Rendered orders/_upp_lineitem.html.erb (27.8ms)
+  Rendered orders/_upp_lineitem.html.erb (9.0ms)
+  Rendered orders/_upp_lineitem.html.erb (8.9ms)
+  Rendered orders/_upp_lineitem.html.erb (9.5ms)
+  Rendered orders/_salesorder.html.erb (110.8ms)
+  Rendered orders/new.html.erb within layouts/application (112.5ms)
+Completed 200 OK in 173ms (Views: 105.5ms | ActiveRecord: 20.3ms)
+Started GET "/notifications.json" for 50.200.105.2 at 2018-07-02 17:38:49 +0000
+Processing by NotificationsController#index as JSON
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (4.4ms)[0m  SELECT "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = 1 AND "notifications"."read_at" IS NULL
+  [1m[36mOrder Load (1.8ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered notifications/index.json.jbuilder (33.5ms)
+Completed 500 Internal Server Error in 44ms (ActiveRecord: 14.4ms)
+
+ActionView::Template::Error (undefined method `c_name' for nil:NilClass):
+    20: 	
+    21: 	elsif notification.notifiable_type == "Order"
+    22: 		json.notifiable do
+    23: 			json.type "#{notification.notifiable.class.to_s.underscore.humanize} from #{notification.notifiable.c_name}"
+    24: 		end	
+    25: 		json.url order_path(notification.notifiable)
+    26: 		json.type notification.notifiable_type	
+  app/views/notifications/index.json.jbuilder:23:in `block (2 levels) in _app_views_notifications_index_json_jbuilder___2867183645169612305_40231440'
+  app/views/notifications/index.json.jbuilder:22:in `block in _app_views_notifications_index_json_jbuilder___2867183645169612305_40231440'
+  app/views/notifications/index.json.jbuilder:1:in `_app_views_notifications_index_json_jbuilder___2867183645169612305_40231440'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:38:51 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.6ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.5ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.6ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (8.9ms)
+  Rendered users/show.html.erb within layouts/application (11.6ms)
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 6.1ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_37060300'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_37060300'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_37833960'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:38:51 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.5ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.4ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.4ms)
+  Rendered users/show.html.erb within layouts/application (8.3ms)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 5.9ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_36278480'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:38:54 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.4ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.5ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (5.9ms)
+  Rendered users/show.html.erb within layouts/application (6.7ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 5.8ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_36278480'
+
+
+Started GET "/dashboard" for 50.200.105.2 at 2018-07-02 17:38:57 +0000
+Processing by DashboardController#index as HTML
+  [1m[35mUser Load (3.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36m (4.7ms)[0m  [1mSELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."id" DESC LIMIT 1  [["worker_name", "QBWC Updated"]]
+  [1m[36m (1.8ms)[0m  [1mSELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-02' AND '2018-07-08') AND ("orders"."c_name" != $1)[0m  [["c_name", "Nate2 Davis"]]
+  [1m[35m (2.1ms)[0m  SELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31')
+  [1m[36m (1.9ms)[0m  [1mSELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')[0m
+  [1m[35m (9.0ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (items.account_id = 152)
+  [1m[36m (7.5ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999') AND (items.account_id = 152)[0m
+  [1m[35m (1.6ms)[0m  SELECT SUM("sales_receipts"."subtotal") FROM "sales_receipts" WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999')
+  [1m[36m (2.0ms)[0m  [1mSELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')[0m
+  [1m[35m (10.0ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (items.account_id = 152)
+  [1m[36m (8.2ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-06-01 07:00:00.000000' AND '2018-07-01 06:59:59.999999') AND (items.account_id = 152)[0m
+  [1m[35m (2.1ms)[0m  SELECT COUNT(*) FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[36mOrder Load (4.3ms)[0m  [1mSELECT date_trunc('week', c_date) as c_date, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND (NOT (c_name = 'Nate2 Davis')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY date_trunc('week', c_date)[0m
+  Rendered dashboard/_weekly_sales_chart.html.erb (17.9ms)
+  [1m[35mOrder Load (2.5ms)[0m  SELECT c_class, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_class"
+  Rendered dashboard/_month_sales_channel.html.erb (4.6ms)
+  [1m[36mCreditMemo Load (8.7ms)[0m  [1mSELECT date_trunc('week', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total FROM "credit_memos" INNER JOIN "line_items" ON "line_items"."credit_memo_id" = "credit_memos"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "credit_memos"."deleted" IS NULL AND (items.id in ('181','182','188','189','191','192','195','198','204','206')) AND ("credit_memos"."c_date" BETWEEN '2018-05-01' AND '2018-07-02') GROUP BY date_trunc('week', credit_memos.c_date)[0m
+  Rendered dashboard/_weekly_tpr_chart.html.erb (47.2ms)
+  [1m[35mOrder Load (2.5ms)[0m  SELECT  c_name, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_name"  ORDER BY c_total DESC LIMIT 5
+  Rendered dashboard/_monthly_top_customers.html.erb (4.7ms)
+  [1m[36mInvoice Load (2.2ms)[0m  [1mSELECT "invoices".* FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)[0m  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  [1m[35m (1.8ms)[0m  SELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  Rendered dashboard/_invoices.html.erb (26.9ms)
+  [1m[36mOrder Load (2.5ms)[0m  [1mSELECT "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  ORDER BY "orders"."c_class" ASC[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  Rendered dashboard/_sales_orders.html.erb (18.1ms)
+  Rendered dashboard/index.html.erb within layouts/application (128.8ms)
+Completed 200 OK in 241ms (Views: 107.9ms | ActiveRecord: 94.2ms)
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:39:00 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.5ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.5ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.5ms)
+  Rendered users/show.html.erb within layouts/application (7.5ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 5.9ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_37060300'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_37060300'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_37833960'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:39:00 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.5ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.5ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.2ms)
+  Rendered users/show.html.erb within layouts/application (7.0ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 6.0ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_36278480'
+
+
+Started GET "/users/" for 50.200.105.2 at 2018-07-02 17:39:05 +0000
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.7ms)[0m  [1mSELECT "users".* FROM "users"  ORDER BY created_at asc[0m
+  Rendered users/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 9ms (Views: 3.7ms | ActiveRecord: 3.1ms)
+Started GET "/notifications.json" for 50.200.105.2 at 2018-07-02 17:39:05 +0000
+Processing by NotificationsController#index as JSON
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mNotification Load (4.0ms)[0m  [1mSELECT "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = 1 AND "notifications"."read_at" IS NULL[0m
+  [1m[35mOrder Load (2.1ms)[0m  SELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1  [["id", 1931]]
+  Rendered notifications/index.json.jbuilder (13.7ms)
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 7.5ms)
+
+ActionView::Template::Error (undefined method `c_name' for nil:NilClass):
+    20: 	
+    21: 	elsif notification.notifiable_type == "Order"
+    22: 		json.notifiable do
+    23: 			json.type "#{notification.notifiable.class.to_s.underscore.humanize} from #{notification.notifiable.c_name}"
+    24: 		end	
+    25: 		json.url order_path(notification.notifiable)
+    26: 		json.type notification.notifiable_type	
+  app/views/notifications/index.json.jbuilder:23:in `block (2 levels) in _app_views_notifications_index_json_jbuilder___2867183645169612305_40231440'
+  app/views/notifications/index.json.jbuilder:22:in `block in _app_views_notifications_index_json_jbuilder___2867183645169612305_40231440'
+  app/views/notifications/index.json.jbuilder:1:in `_app_views_notifications_index_json_jbuilder___2867183645169612305_40231440'
+
+
+Started GET "/dashboard" for 50.200.105.2 at 2018-07-02 17:39:08 +0000
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (2.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (2.2ms)[0m  SELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[36mLog Load (1.4ms)[0m  [1mSELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."id" DESC LIMIT 1[0m  [["worker_name", "QBWC Updated"]]
+  [1m[35m (1.9ms)[0m  SELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-02' AND '2018-07-08') AND ("orders"."c_name" != $1)  [["c_name", "Nate2 Davis"]]
+  [1m[36m (1.9ms)[0m  [1mSELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31')[0m
+  [1m[35m (1.7ms)[0m  SELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')
+  [1m[36m (8.8ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (items.account_id = 152)[0m
+  [1m[35m (8.1ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999') AND (items.account_id = 152)
+  [1m[36m (1.7ms)[0m  [1mSELECT SUM("sales_receipts"."subtotal") FROM "sales_receipts" WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999')[0m
+  [1m[35m (1.9ms)[0m  SELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')
+  [1m[36m (10.2ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (items.account_id = 152)[0m
+  [1m[35m (8.0ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-06-01 07:00:00.000000' AND '2018-07-01 06:59:59.999999') AND (items.account_id = 152)
+  [1m[36m (2.1ms)[0m  [1mSELECT COUNT(*) FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[35mOrder Load (3.8ms)[0m  SELECT date_trunc('week', c_date) as c_date, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND (NOT (c_name = 'Nate2 Davis')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY date_trunc('week', c_date)
+  Rendered dashboard/_weekly_sales_chart.html.erb (16.0ms)
+  [1m[36mOrder Load (2.2ms)[0m  [1mSELECT c_class, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_class"[0m
+  Rendered dashboard/_month_sales_channel.html.erb (3.4ms)
+  [1m[35mCreditMemo Load (8.2ms)[0m  SELECT date_trunc('week', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total FROM "credit_memos" INNER JOIN "line_items" ON "line_items"."credit_memo_id" = "credit_memos"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "credit_memos"."deleted" IS NULL AND (items.id in ('181','182','188','189','191','192','195','198','204','206')) AND ("credit_memos"."c_date" BETWEEN '2018-05-01' AND '2018-07-02') GROUP BY date_trunc('week', credit_memos.c_date)
+  Rendered dashboard/_weekly_tpr_chart.html.erb (11.9ms)
+  [1m[36mOrder Load (2.3ms)[0m  [1mSELECT  c_name, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_name"  ORDER BY c_total DESC LIMIT 5[0m
+  Rendered dashboard/_monthly_top_customers.html.erb (3.5ms)
+  [1m[35mInvoice Load (2.0ms)[0m  SELECT "invoices".* FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  [1m[36m (1.6ms)[0m  [1mSELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)[0m  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  Rendered dashboard/_invoices.html.erb (6.8ms)
+  [1m[35mOrder Load (2.5ms)[0m  SELECT "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  ORDER BY "orders"."c_class" ASC  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  Rendered dashboard/_sales_orders.html.erb (15.3ms)
+  Rendered dashboard/index.html.erb within layouts/application (59.3ms)
+Completed 200 OK in 135ms (Views: 38.2ms | ActiveRecord: 74.9ms)
+Started GET "/auth/login" for 172.31.1.102 at 2018-07-02 17:39:24 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.3ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (7.2ms)
+Completed 200 OK in 9ms (Views: 8.3ms | ActiveRecord: 0.0ms)
+Started GET "/auth/login" for 172.31.40.69 at 2018-07-02 17:39:26 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (1.1ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (16.8ms)
+Completed 200 OK in 53ms (Views: 23.4ms | ActiveRecord: 6.5ms)
+Started GET "/auth/login" for 172.31.34.252 at 2018-07-02 17:39:37 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.4ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.9ms)
+Completed 200 OK in 9ms (Views: 7.9ms | ActiveRecord: 0.0ms)
+Started GET "/auth/login" for 172.31.1.102 at 2018-07-02 17:44:24 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.3ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (7.0ms)
+Completed 200 OK in 9ms (Views: 8.0ms | ActiveRecord: 0.0ms)
+Started GET "/auth/login" for 172.31.40.69 at 2018-07-02 17:44:26 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.3ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (7.0ms)
+Completed 200 OK in 9ms (Views: 8.0ms | ActiveRecord: 0.0ms)
+Started GET "/auth/login" for 172.31.34.252 at 2018-07-02 17:44:37 +0000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.3ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 9ms (Views: 8.3ms | ActiveRecord: 0.0ms)
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:44:56 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mNotification Load (1.4ms)[0m  [1mSELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10[0m  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[35mOrder Load (1.4ms)[0m  SELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.2ms)
+  Rendered users/show.html.erb within layouts/application (7.2ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 5.8ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_37060300'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_37060300'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_37833960'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:44:56 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (1.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mNotification Load (1.3ms)[0m  [1mSELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10[0m  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[35mOrder Load (1.5ms)[0m  SELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (5.7ms)
+  Rendered users/show.html.erb within layouts/application (6.5ms)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 5.4ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb__3988561635021860643_36210460'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___4385692382055817319_36278480'
+
+
+[3214] Early termination of worker
+[3225] ! Detected parent died, dying
+[3221] ! Detected parent died, dying
+=== puma startup: 2018-07-02 17:45:49 +0000 ===
+[3300] * Starting control server on unix:///tmp/puma-status-1530553549090-3300
+  [1m[36mLog Exists (1.5ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "AccountWorker"]]
+  [1m[36mLog Exists (1.5ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "AccountWorker"]]
+  [1m[35mLog Load (1.5ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "AccountWorker"]]
+  [1m[35mLog Load (1.5ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "AccountWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CreditMemoLoader"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CreditMemoLoader"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CreditMemoLoader"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CreditMemoLoader"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "CustomerUpdateWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvSiteWorker"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvSiteWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvSiteWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvSiteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[36mLog Exists (1.4ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[35mLog Load (2.8ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[35mLog Load (2.8ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "InvoiceDetailLoader"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ItemAssemblyWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "JournalWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "JournalWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "JournalWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "JournalWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ListDeleteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "ListDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ListDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "ListDeleteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesOrderLoader"]]
+  [1m[36mLog Exists (1.2ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesOrderLoader"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesOrderLoader"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesOrderLoader"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesReceiptWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "SalesReceiptWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesReceiptWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "SalesReceiptWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "TxnDeleteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "TxnDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "TxnDeleteWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "TxnDeleteWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "VendorWorker"]]
+  [1m[36mLog Exists (1.3ms)[0m  [1mSELECT  1 AS one FROM "logs" WHERE "logs"."worker_name" = $1 LIMIT 1[0m  [["worker_name", "VendorWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "VendorWorker"]]
+  [1m[35mLog Load (1.3ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."created_at" DESC LIMIT 1  [["worker_name", "VendorWorker"]]
+[3300] - Worker 1 (pid: 3311) booted, phase: 0
+[3300] - Worker 0 (pid: 3307) booted, phase: 0
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:46:01 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.7ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mNotification Load (1.7ms)[0m  [1mSELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10[0m  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[35mOrder Load (2.0ms)[0m  SELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (37.6ms)
+  Rendered users/show.html.erb within layouts/application (39.8ms)
+Completed 500 Internal Server Error in 95ms (ActiveRecord: 35.3ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb___1532450808087606477_70260063191880'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb___1532450808087606477_70260063191880'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___2174074693418491184_70260063113800'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:46:03 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (11.8ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mNotification Load (1.4ms)[0m  [1mSELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10[0m  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[35mOrder Load (2.1ms)[0m  SELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.4ms)
+  Rendered users/show.html.erb within layouts/application (7.3ms)
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 16.7ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb___1532450808087606477_70260063191880'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb___1532450808087606477_70260063191880'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___2174074693418491184_70260063113800'
+
+
+Started GET "/" for 50.200.105.2 at 2018-07-02 17:46:07 +0000
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (2.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (2.3ms)[0m  SELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[36mLog Load (1.5ms)[0m  [1mSELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."id" DESC LIMIT 1[0m  [["worker_name", "QBWC Updated"]]
+  [1m[35m (2.0ms)[0m  SELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-02' AND '2018-07-08') AND ("orders"."c_name" != $1)  [["c_name", "Nate2 Davis"]]
+  [1m[36m (2.3ms)[0m  [1mSELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31')[0m
+  [1m[35m (1.9ms)[0m  SELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')
+  [1m[36m (9.3ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (items.account_id = 152)[0m
+  [1m[35m (8.2ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999') AND (items.account_id = 152)
+  [1m[36m (2.4ms)[0m  [1mSELECT SUM("sales_receipts"."subtotal") FROM "sales_receipts" WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999')[0m
+  [1m[35m (2.0ms)[0m  SELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')
+  [1m[36m (10.4ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (items.account_id = 152)[0m
+  [1m[35m (8.6ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-06-01 07:00:00.000000' AND '2018-07-01 06:59:59.999999') AND (items.account_id = 152)
+  [1m[36m (2.1ms)[0m  [1mSELECT COUNT(*) FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[35mOrder Load (4.4ms)[0m  SELECT date_trunc('week', c_date) as c_date, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND (NOT (c_name = 'Nate2 Davis')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY date_trunc('week', c_date)
+  Rendered dashboard/_weekly_sales_chart.html.erb (43.4ms)
+  [1m[36mOrder Load (2.4ms)[0m  [1mSELECT c_class, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_class"[0m
+  Rendered dashboard/_month_sales_channel.html.erb (4.5ms)
+  [1m[35mCreditMemo Load (8.4ms)[0m  SELECT date_trunc('week', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total FROM "credit_memos" INNER JOIN "line_items" ON "line_items"."credit_memo_id" = "credit_memos"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "credit_memos"."deleted" IS NULL AND (items.id in ('181','182','188','189','191','192','195','198','204','206')) AND ("credit_memos"."c_date" BETWEEN '2018-05-01' AND '2018-07-02') GROUP BY date_trunc('week', credit_memos.c_date)
+  Rendered dashboard/_weekly_tpr_chart.html.erb (35.2ms)
+  [1m[36mOrder Load (2.6ms)[0m  [1mSELECT  c_name, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_name"  ORDER BY c_total DESC LIMIT 5[0m
+  Rendered dashboard/_monthly_top_customers.html.erb (4.6ms)
+  [1m[35mInvoice Load (2.3ms)[0m  SELECT "invoices".* FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  [1m[36m (1.9ms)[0m  [1mSELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)[0m  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  Rendered dashboard/_invoices.html.erb (28.3ms)
+  [1m[35mOrder Load (2.8ms)[0m  SELECT "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  ORDER BY "orders"."c_class" ASC  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  Rendered dashboard/_sales_orders.html.erb (22.1ms)
+  Rendered dashboard/index.html.erb within layouts/application (149.8ms)
+Completed 200 OK in 260ms (Views: 128.4ms | ActiveRecord: 95.8ms)
+Started GET "/notifications.json" for 50.200.105.2 at 2018-07-02 17:46:07 +0000
+Processing by NotificationsController#index as JSON
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (4.7ms)[0m  SELECT "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = 1 AND "notifications"."read_at" IS NULL
+  [1m[36mOrder Load (1.7ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered notifications/index.json.jbuilder (14.9ms)
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 7.9ms)
+
+ActionView::Template::Error (undefined method `c_name' for nil:NilClass):
+    20: 	
+    21: 	elsif notification.notifiable_type == "Order"
+    22: 		json.notifiable do
+    23: 			json.type "#{notification.notifiable.class.to_s.underscore.humanize} from #{notification.notifiable.c_name}"
+    24: 		end	
+    25: 		json.url order_path(notification.notifiable)
+    26: 		json.type notification.notifiable_type	
+  app/views/notifications/index.json.jbuilder:23:in `block (2 levels) in _app_views_notifications_index_json_jbuilder__158237689166804722_45272540'
+  app/views/notifications/index.json.jbuilder:22:in `block in _app_views_notifications_index_json_jbuilder__158237689166804722_45272540'
+  app/views/notifications/index.json.jbuilder:1:in `_app_views_notifications_index_json_jbuilder__158237689166804722_45272540'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:46:09 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.5ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.5ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.5ms)
+  Rendered users/show.html.erb within layouts/application (8.5ms)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 6.0ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb___1532450808087606477_43475140'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb___1532450808087606477_43475140'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___2174074693418491184_43569260'
+
+
+Started GET "/users/1" for 50.200.105.2 at 2018-07-02 17:46:09 +0000
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (1.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mNotification Load (1.4ms)[0m  SELECT  "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = $1 AND "notifications"."notifiable_type" = $2 LIMIT 10  [["recipient_id", 1], ["notifiable_type", "Order"]]
+  [1m[36mOrder Load (1.5ms)[0m  [1mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1[0m  [["id", 1931]]
+  Rendered users/_notification_order_view.html.erb (6.0ms)
+  Rendered users/show.html.erb within layouts/application (6.8ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 5.9ms)
+
+ActionView::Template::Error (undefined method `id' for nil:NilClass):
+    1: <% @notify_o.each do |f| %>
+    2: <tr>
+    3: 		<td><%= f.notifiable.id %></td>
+    4: 		<td><%= link_to f.notifiable.c_name, customer_path(f.notifiable.customer_id) %></td>
+    5: 		<td><%= link_to f.notifiable.c_po, order_path(f.notifiable.id) %></td>
+    6: 		<td><%= number_to_currency(f.notifiable.c_total, :unit=> "$") %></td>
+  app/views/users/_notification_order_view.html.erb:3:in `block in _app_views_users__notification_order_view_html_erb___1532450808087606477_70260063191880'
+  app/views/users/_notification_order_view.html.erb:1:in `_app_views_users__notification_order_view_html_erb___1532450808087606477_70260063191880'
+  app/views/users/show.html.erb:63:in `_app_views_users_show_html_erb___2174074693418491184_70260063113800'
+
+
+Started GET "/" for 50.200.105.2 at 2018-07-02 17:46:14 +0000
+Processing by DashboardController#index as HTML
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36m (2.2ms)[0m  [1mSELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[35mLog Load (1.4ms)[0m  SELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."id" DESC LIMIT 1  [["worker_name", "QBWC Updated"]]
+  [1m[36m (1.7ms)[0m  [1mSELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-02' AND '2018-07-08') AND ("orders"."c_name" != $1)[0m  [["c_name", "Nate2 Davis"]]
+  [1m[35m (1.9ms)[0m  SELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31')
+  [1m[36m (1.7ms)[0m  [1mSELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')[0m
+  [1m[35m (8.7ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (items.account_id = 152)
+  [1m[36m (8.1ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999') AND (items.account_id = 152)[0m
+  [1m[35m (1.7ms)[0m  SELECT SUM("sales_receipts"."subtotal") FROM "sales_receipts" WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999')
+  [1m[36m (1.9ms)[0m  [1mSELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')[0m
+  [1m[35m (10.0ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (items.account_id = 152)
+  [1m[36m (8.0ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-06-01 07:00:00.000000' AND '2018-07-01 06:59:59.999999') AND (items.account_id = 152)[0m
+  [1m[35m (2.1ms)[0m  SELECT COUNT(*) FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[36mOrder Load (3.7ms)[0m  [1mSELECT date_trunc('week', c_date) as c_date, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND (NOT (c_name = 'Nate2 Davis')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY date_trunc('week', c_date)[0m
+  Rendered dashboard/_weekly_sales_chart.html.erb (17.3ms)
+  [1m[35mOrder Load (2.1ms)[0m  SELECT c_class, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_class"
+  Rendered dashboard/_month_sales_channel.html.erb (3.4ms)
+  [1m[36mCreditMemo Load (8.5ms)[0m  [1mSELECT date_trunc('week', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total FROM "credit_memos" INNER JOIN "line_items" ON "line_items"."credit_memo_id" = "credit_memos"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "credit_memos"."deleted" IS NULL AND (items.id in ('181','182','188','189','191','192','195','198','204','206')) AND ("credit_memos"."c_date" BETWEEN '2018-05-01' AND '2018-07-02') GROUP BY date_trunc('week', credit_memos.c_date)[0m
+  Rendered dashboard/_weekly_tpr_chart.html.erb (12.5ms)
+  [1m[35mOrder Load (2.1ms)[0m  SELECT  c_name, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_name"  ORDER BY c_total DESC LIMIT 5
+  Rendered dashboard/_monthly_top_customers.html.erb (3.5ms)
+  [1m[36mInvoice Load (2.0ms)[0m  [1mSELECT "invoices".* FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)[0m  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  [1m[35m (1.8ms)[0m  SELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  Rendered dashboard/_invoices.html.erb (7.1ms)
+  [1m[36mOrder Load (2.5ms)[0m  [1mSELECT "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  ORDER BY "orders"."c_class" ASC[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  Rendered dashboard/_sales_orders.html.erb (16.6ms)
+  Rendered dashboard/index.html.erb within layouts/application (63.0ms)
+Completed 200 OK in 132ms (Views: 41.9ms | ActiveRecord: 73.4ms)
+Started GET "/notifications.json" for 50.200.105.2 at 2018-07-02 17:46:15 +0000
+Processing by NotificationsController#index as JSON
+  [1m[35mUser Load (1.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mNotification Load (4.5ms)[0m  [1mSELECT "notifications".* FROM "notifications" WHERE "notifications"."recipient_id" = 1 AND "notifications"."read_at" IS NULL[0m
+  [1m[35mOrder Load (1.5ms)[0m  SELECT  "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."id" = $1 LIMIT 1  [["id", 1931]]
+  Rendered notifications/index.json.jbuilder (13.0ms)
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 7.4ms)
+
+ActionView::Template::Error (undefined method `c_name' for nil:NilClass):
+    20: 	
+    21: 	elsif notification.notifiable_type == "Order"
+    22: 		json.notifiable do
+    23: 			json.type "#{notification.notifiable.class.to_s.underscore.humanize} from #{notification.notifiable.c_name}"
+    24: 		end	
+    25: 		json.url order_path(notification.notifiable)
+    26: 		json.type notification.notifiable_type	
+  app/views/notifications/index.json.jbuilder:23:in `block (2 levels) in _app_views_notifications_index_json_jbuilder__158237689166804722_45272540'
+  app/views/notifications/index.json.jbuilder:22:in `block in _app_views_notifications_index_json_jbuilder__158237689166804722_45272540'
+  app/views/notifications/index.json.jbuilder:1:in `_app_views_notifications_index_json_jbuilder__158237689166804722_45272540'
+
+
+Started GET "/dashboard" for 50.200.105.2 at 2018-07-02 17:46:20 +0000
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (1.6ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (2.1ms)[0m  SELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[36mLog Load (1.4ms)[0m  [1mSELECT  "logs".* FROM "logs" WHERE "logs"."worker_name" = $1  ORDER BY "logs"."id" DESC LIMIT 1[0m  [["worker_name", "QBWC Updated"]]
+  [1m[35m (1.9ms)[0m  SELECT SUM("orders"."c_total") FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-02' AND '2018-07-08') AND ("orders"."c_name" != $1)  [["c_name", "Nate2 Davis"]]
+  [1m[36m (1.9ms)[0m  [1mSELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31')[0m
+  [1m[35m (1.7ms)[0m  SELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')
+  [1m[36m (8.9ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (items.account_id = 152)[0m
+  [1m[35m (8.2ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999') AND (items.account_id = 152)
+  [1m[36m (2.0ms)[0m  [1mSELECT SUM("sales_receipts"."subtotal") FROM "sales_receipts" WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-07-01 00:00:00.000000' AND '2018-07-31 23:59:59.999999')[0m
+  [1m[35m (2.0ms)[0m  SELECT SUM(account_line_items.amount) FROM "journals" INNER JOIN "account_line_items" ON "account_line_items"."journal_id" = "journals"."id" WHERE "journals"."deleted" IS NULL AND ("journals"."txn_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (account_line_items.account_type = 'debit' and account_line_items.account_id = '152')
+  [1m[36m (10.3ms)[0m  [1mSELECT SUM(line_items.homecurrency_amount) FROM "invoices" INNER JOIN "line_items" ON "line_items"."invoice_id" = "invoices"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-06-01' AND '2018-06-30') AND (items.account_id = 152)[0m
+  [1m[35m (8.7ms)[0m  SELECT SUM(line_items.homecurrency_amount) FROM "sales_receipts" INNER JOIN "line_items" ON "line_items"."sales_receipt_id" = "sales_receipts"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "sales_receipts"."deleted" IS NULL AND ("sales_receipts"."txn_date" BETWEEN '2018-06-01 07:00:00.000000' AND '2018-07-01 06:59:59.999999') AND (items.account_id = 152)
+  [1m[36m (2.2ms)[0m  [1mSELECT COUNT(*) FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)[0m  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  [1m[35mOrder Load (3.9ms)[0m  SELECT date_trunc('week', c_date) as c_date, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND (NOT (c_name = 'Nate2 Davis')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY date_trunc('week', c_date)
+  Rendered dashboard/_weekly_sales_chart.html.erb (16.3ms)
+  [1m[36mOrder Load (2.3ms)[0m  [1mSELECT c_class, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_class"[0m
+  Rendered dashboard/_month_sales_channel.html.erb (3.5ms)
+  [1m[35mCreditMemo Load (8.7ms)[0m  SELECT date_trunc('week', credit_memos.c_date) as c_date, sum(line_items.amount) as c_total FROM "credit_memos" INNER JOIN "line_items" ON "line_items"."credit_memo_id" = "credit_memos"."id" INNER JOIN "items" ON "items"."id" = "line_items"."item_id" AND "items"."deleted" IS NULL WHERE "credit_memos"."deleted" IS NULL AND (items.id in ('181','182','188','189','191','192','195','198','204','206')) AND ("credit_memos"."c_date" BETWEEN '2018-05-01' AND '2018-07-02') GROUP BY date_trunc('week', credit_memos.c_date)
+  Rendered dashboard/_weekly_tpr_chart.html.erb (12.3ms)
+  [1m[36mOrder Load (2.2ms)[0m  [1mSELECT  c_name, sum(c_total) as c_total FROM "orders" WHERE "orders"."deleted" IS NULL AND ("orders"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND (NOT (c_class = NULL and c_class = 'Consumer Direct')) AND (NOT (c_name = 'Nate2 Davis')) GROUP BY "orders"."c_name"  ORDER BY c_total DESC LIMIT 5[0m
+  Rendered dashboard/_monthly_top_customers.html.erb (3.6ms)
+  [1m[35mInvoice Load (2.0ms)[0m  SELECT "invoices".* FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  [1m[36m (1.7ms)[0m  [1mSELECT SUM("invoices"."c_subtotal") FROM "invoices" WHERE "invoices"."deleted" IS NULL AND ("invoices"."c_date" BETWEEN '2018-07-01' AND '2018-07-31') AND "invoices"."c_class" = $1 AND ("invoices"."c_subtotal" != $2)[0m  [["c_class", "Distributor Channel"], ["c_subtotal", 0]]
+  Rendered dashboard/_invoices.html.erb (6.8ms)
+  [1m[35mOrder Load (2.6ms)[0m  SELECT "orders".* FROM "orders" WHERE "orders"."deleted" IS NULL AND "orders"."c_invoiced" IS NULL AND ("orders"."c_total" != $1) AND ("orders"."c_class" IS NOT NULL) AND ("orders"."c_class" != $2) AND ("orders"."c_name" != $3)  ORDER BY "orders"."c_class" ASC  [["c_total", 0], ["c_class", "Consumer Direct"], ["c_name", "Nate2 Davis"]]
+  Rendered dashboard/_sales_orders.html.erb (19.8ms)
+  Rendered dashboard/index.html.erb within layouts/application (65.0ms)
+Completed 200 OK in 147ms (Views: 43.0ms | ActiveRecord: 76.4ms)
+[3300] - Gracefully shutting down workers...
+[3300] === puma shutdown: 2018-07-02 17:46:27 +0000 ===
+[3300] - Goodbye!

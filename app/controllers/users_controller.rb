@@ -32,9 +32,9 @@ class UsersController < ApplicationController
 
   def show
       @user = User.find(params[:id])
-      @notify_o = current_user.recipients.where(:notifiable_type => "Order").limit(10)
-      @notify_cm = current_user.recipients.where(:notifiable_type => "CreditMemo").limit(10)
-      @notify_c = current_user.recipients.where(:notifiable_type => "Customer").limit(10)
+      @notify_o = current_user.recipients.where(:notifiable_type => "Order").order(:created_at => "DESC").limit(10)
+      @notify_cm = current_user.recipients.where(:notifiable_type => "CreditMemo").order(:created_at => "DESC").limit(10)
+      @notify_c = current_user.recipients.where(:notifiable_type => "Customer").order(:created_at => "DESC").limit(10)
   end
       
   def edit

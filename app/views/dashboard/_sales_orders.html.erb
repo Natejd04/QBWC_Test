@@ -1,10 +1,11 @@
 <thead>
     <tr>
-        <th>Name</th>
+        <th><%= sortable "c_name", "Name" %></th>
         <th>Order #</th>
-        <th>Date</th>
+        <th><%= sortable "c_date", "Order Date" %></th>
+        <th><%= sortable "c_ship", "Ship Date" %></th>
         <th>PO#</th>
-        <th>Amount</th>
+        <th><%= sortable "c_total", "Amount" %></th>
         <th>Status</th>
     </tr>
 </thead>                                           
@@ -14,6 +15,7 @@
 	<td><%= link_to f.c_name, customer_path(f.customer_id) %></td>
 	<td><%= link_to f.invoice_number, order_path(f.id) %></td>
 	<td><%= f.c_date.strftime("%m/%d/%Y") %></td>
+	<td><%= f.c_ship.strftime("%m/%d/%Y") %></td>
 	<td><%= f.c_po %></td>
 	<td><%= number_to_currency(f.c_total, :unit=> "$") %></td>
 	<td style="text-align:center;">
@@ -41,6 +43,6 @@
 </tr>
 <% end %>	
 <tr> 
-	<td colspan="5"><b>TOTAL<div class="pull-right"><%= number_to_currency(@order_total, :unit => "$") %></div></b></td>
+	<td colspan="6"><b>TOTAL<div class="pull-right"><%= number_to_currency(@order_total, :unit => "$") %></div></b></td>
 </tr>
 </tbody>

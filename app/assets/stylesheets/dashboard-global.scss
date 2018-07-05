@@ -3,6 +3,58 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+
+#sorting {
+  
+      
+
+  a:before {
+      content: "\f0c8";
+      font-family: FontAwesome;
+      left: 5px;
+      position:absolute;
+  }
+    
+    .current:before {
+      content: "\f14a";
+      font-family: FontAwesome;
+      left: 5px;
+      position:absolute;
+  }
+}
+
+#order-sales-table {
+
+  th .current {
+    padding-right: 12px;
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+
+  th .asc {
+    position:relative;    
+  }
+  th .asc:after {
+    content: "\f107";
+    font-family: FontAwesome;
+    right: -5px;
+    position:absolute;
+    top:0;
+  }
+
+  th .desc {
+    position:relative;    
+  }
+
+  th .desc:after {
+    content: "\f106";
+    font-family: FontAwesome;
+    right:-5px;
+    position:absolute;
+    top:0;
+  }
+} 
+
 body {
   background-color: #f8f8f8;
 }

@@ -1,6 +1,8 @@
 class DashboardController < ApplicationController
 	before_action :authenticate_user!
 
+	helper_method :sort_column, :sort_direction, :classed_remove
+
 	def line_items_total
 		invoice_line_items.map(&:amount).sum
 	end
@@ -11,7 +13,9 @@ class DashboardController < ApplicationController
 		#@invoices = Invoice.where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where.not("c_name LIKE ?", "%* UPP:%")
 		# @test_total = @invoices.map(&:line_items).flatten.map(&:amount).sum
 		#@test_total = @invoices.map(&:line_items_total).sum
-		@orders = Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis").order(:c_class => "ASC")
+
+
+		@orders = Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis").where.not(:c_class => classed_remove).order(sort_column + " " + sort_direction)
 		@order_total = @orders.sum(:c_total)
 		@invoices = Invoice.where(:c_date => Time.now.beginning_of_month..Time.now.end_of_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
@@ -36,8 +40,23 @@ class DashboardController < ApplicationController
 		@pm_journal_debit = Journal.joins(:account_line_items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]).sum('account_line_items.amount')
 		@pm_inv_gross_total = Invoice.joins(:items).where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where("items.account_id = 152").sum("line_items.homecurrency_amount")
 		@pm_sr_gross_total = SalesReceipt.joins(:items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.end_of_month).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+
+		# Prior Month To DATE
+		@journal_td_debit = Journal.joins(:account_line_items).where(:txn_date => Time.now.beginning_of_month..Time.now).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]).sum('account_line_items.amount')
+		@inv_gross_td_total = Invoice.joins(:items).where(:c_date => Time.now.beginning_of_month..Time.now).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		@sr_gross_td_total = SalesReceipt.joins(:items).where(:txn_date => Time.now.beginning_of_month..Time.now).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		@month_sales_td_receipts = SalesReceipt.where(:txn_date => Time.now.beginning_of_month..Time.now).sum(:subtotal)
+		@month_td_total = ((@inv_gross_td_total + @sr_gross_td_total) - @journal_td_debit)
+
+		@pmtd_journal_debit = Journal.joins(:account_line_items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.to_date).where(["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]).sum('account_line_items.amount')
+		@pmtd_inv_gross_total = Invoice.joins(:items).where(:c_date => 1.month.ago.beginning_of_month..1.month.ago.to_date).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		@pmtd_sr_gross_total = SalesReceipt.joins(:items).where(:txn_date => 1.month.ago.beginning_of_month..1.month.ago.to_date).where("items.account_id = 152").sum("line_items.homecurrency_amount")
+		
+
+
+		@prior_mtd_total = ((@pmtd_inv_gross_total + @pmtd_sr_gross_total) - @pmtd_journal_debit)
 		@prior_m_total = ((@pm_inv_gross_total + @pm_sr_gross_total) - @pm_journal_debit)
-			@vs = ((@month_total - @prior_m_total) / @month_total) * 100
+			@vs = ((@month_td_total - @prior_mtd_total) / @month_td_total) * 100
 		@open_orders_count = Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis").count
 
 		respond_to do |format|
@@ -57,11 +76,25 @@ class DashboardController < ApplicationController
           format.js
       end
 
-    def _invoices
-  		render "_invoices", 
-        # locals: { elephant: some_thing },
-        layout: false
-	end
-  
-  end
+	    def _invoices
+	  		render "_invoices", 
+	        # locals: { elephant: some_thing },
+	        layout: false
+		end
+    end
+
+    private
+
+    def sort_column
+    	%w[c_ship c_date c_total c_name].include?(params[:sort]) ? params[:sort] : "c_ship"
+    end
+
+    def sort_direction
+    	%w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def classed_remove
+    	%w[Wholesale\ Direct nil wholesale].include?(params[:remove]) ? params[:remove] : "nil"
+    end
+
 end
