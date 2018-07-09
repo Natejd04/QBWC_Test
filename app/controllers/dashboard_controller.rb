@@ -94,7 +94,7 @@ class DashboardController < ApplicationController
     end
 
     def classed_remove
-    	%w[Wholesale\ Direct nil wholesale].include?(params[:remove]) ? params[:remove] : "nil"
+    	%w[Wholesale\ Direct nil wholesale].include?(params[:remove]) ? params[:remove] : nil
     end
 
 end
