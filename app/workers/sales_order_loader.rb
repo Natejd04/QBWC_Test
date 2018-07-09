@@ -131,7 +131,8 @@ class SalesOrderLoader < QBWC::Worker
                     inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
                     admin = User.where(role: "admin").select("name, email, role, id")
                     combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                    # if qb_inv['class_ref']
+                    if qb_inv['class_ref'].nil?
+                    binding.pry 
                         if qb_inv['class_ref']['full_name'] == "Distributor Class"  || qb_inv['class_ref']['full_name'] == "Amazon VC"
                             combo.each do |user|
                                 Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
@@ -141,6 +142,7 @@ class SalesOrderLoader < QBWC::Worker
                                 Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
                             end
                         end
+                    end
                 end
             
             
