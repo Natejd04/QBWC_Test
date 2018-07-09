@@ -20,7 +20,7 @@
 	<td><%= number_to_currency(f.c_total, :unit=> "$") %></td>
 	<td style="text-align:center;">
 		<% if f.c_ack.nil? %>
-			<% if f.c_class == "Distributor Channel" || f.class == "Amazon VC" %>
+			<% if f.c_class == "Distributor Channel" || f.c_class == "Amazon VC" %>
 				<button type="button" class="btn btn-default btn-circle-2" data-container="body" data-toggle="popover" data-placement="left" data-content="" title="Pending Confirmation">
 					<i class="fa fa-question"></i>
 	            </button>
