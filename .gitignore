@@ -13,7 +13,7 @@ uploads/*
 /config/database.yml
 /config/puma.rb
 /.ssl/*
-
+/config/puma.rb
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
