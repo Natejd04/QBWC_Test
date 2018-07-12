@@ -35,10 +35,10 @@ module ApplicationHelper
     link_to title, request.query_parameters.merge({:sort => column, :direction => direction}), {:class => css_class}
   end
 
-  def remove_class(title)
+  def remove_class(a, title)
     css_class = title == classed_remove ?  nil : "current"
-    removed = title == classed_remove ? "Wholesale" : "Wholesale Direct"
-    link_to title, request.query_parameters.merge({:remove => removed}), {:class => css_class}
+    removed = a == nil ? "nil" : nil
+    link_to title, request.query_parameters.merge({:remove => a}), {:class => css_class}
   end
 
 end
