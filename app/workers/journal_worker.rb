@@ -356,6 +356,7 @@ class JournalWorker < QBWC::Worker
                 # Now we will check to make sure the object isn't empty.   
         elsif !r['journal_entry_ret'].blank? 
             journal_data = {}
+            qb_journal = r['journal_entry_ret']
             journal_data[:qb_edit] = qb_journal['edit_sequence']
             journal_data[:txn_id] = qb_journal['txn_id']
             journal_data[:qbcreate] = qb_journal['time_created']

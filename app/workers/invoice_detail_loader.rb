@@ -12,7 +12,8 @@ class InvoiceDetailLoader < QBWC::Worker
     if Log.exists?(worker_name: 'InvoiceDetailLoader')
 
         LastUpdate = Log.where(worker_name: "InvoiceDetailLoader").order(created_at: :desc).limit(1)
-        LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+        # LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+        LastUpdate = "2018-06-15"
     else
         # This is preloading data based on no records in the log table
         LastUpdate = "2017-12-01"
@@ -28,7 +29,8 @@ class InvoiceDetailLoader < QBWC::Worker
             :invoice_query_rq => {
                 # :max_returned => 100,
                 :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
-                :include_line_items => true
+                :include_line_items => true,
+                :include_linked_txns => true
             }
         }
     end
@@ -103,6 +105,34 @@ class InvoiceDetailLoader < QBWC::Worker
                 
                 if qb_inv['sales_rep_ref']
                     invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
+                end
+
+                # Apparently QB SDK has no way to pull sales order link, without this line
+               if qb_inv['linked_txn'].is_a? Array
+                    qb_inv['linked_txn'].each do |link|
+                        if link['txn_type'] == "SalesOrder"
+                            invoice_data[:sales_order_txn] = link['txn_id']
+                            invoice_data[:sales_order_ref] = link['ref_number']
+                            orderupdate = Order.find_by(txn_id: invoice_data[:sales_order_txn])
+                            if orderupdate.nil?
+                            else
+                               orderupdate.update(c_invoiced: "qbwc_closed")
+                            end
+                        end
+                    end
+                elsif !qb_inv['linked_txn'].blank?
+                    if qb_inv['linked_txn'].nil?
+                    else
+                        if qb_inv['linked_txn']['txn_type'] == "SalesOrder"
+                            invoice_data[:sales_order_txn] = qb_inv['linked_txn']['txn_id']
+                            invoice_data[:sales_order_ref] = qb_inv['linked_txn']['ref_number']
+                            orderupdate = Order.find_by(txn_id: invoice_data[:sales_order_txn])
+                            if orderupdate.nil?
+                            else
+                                orderupdate.update(c_invoiced: "qbwc_closed")
+                            end
+                        end
+                    end
                 end
 
                 # We need to create the invoice first, so we can get it's ID.
@@ -300,6 +330,35 @@ class InvoiceDetailLoader < QBWC::Worker
             if qb_inv['sales_rep_ref']
                 invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
             end
+
+                # Apparently QB SDK has no way to pull sales order link, without this line
+            if qb_inv['linked_txn'].is_a? Array
+                qb_inv['linked_txn'].each do |link|
+                    if link['txn_type'] == "SalesOrder"
+                        invoice_data[:sales_order_txn] = link['txn_id']
+                        invoice_data[:sales_order_ref] = link['ref_number']
+                        orderupdate = Order.find_by(txn_id: invoice_data[:sales_order_txn])
+                        if orderupdate.nil?
+                        else
+                           orderupdate.update(c_invoiced: "qbwc_closed")
+                        end
+                    end
+                end
+            elsif !qb_inv['linked_txn'].blank?
+                if qb_inv['linked_txn'].nil?
+                else
+                    if qb_inv['linked_txn']['txn_type'] == "SalesOrder"
+                        invoice_data[:sales_order_txn] = qb_inv['linked_txn']['txn_id']
+                        invoice_data[:sales_order_ref] = qb_inv['linked_txn']['ref_number']
+                        orderupdate = Order.find_by(txn_id: invoice_data[:sales_order_txn])
+                        if orderupdate.nil?
+                        else
+                            orderupdate.update(c_invoiced: "qbwc_closed")
+                        end
+                    end
+                end
+            end
+
 
             # We need to create the invoice first, so we can get it's ID.
             if Invoice.exists?(txn_id: invoice_data[:txn_id])
