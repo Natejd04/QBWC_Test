@@ -12,8 +12,7 @@ class InvoiceDetailLoader < QBWC::Worker
     if Log.exists?(worker_name: 'InvoiceDetailLoader')
 
         LastUpdate = Log.where(worker_name: "InvoiceDetailLoader").order(created_at: :desc).limit(1)
-        # LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
-        LastUpdate = "2018-06-15"
+        LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
     else
         # This is preloading data based on no records in the log table
         LastUpdate = "2017-12-01"
