@@ -1,0 +1,18 @@
+measure: 
+  key: invoice
+  name: Invoices
+  aggregation: sum_of_invoices
+filters:
+- customer
+- c_date
+dimensions:
+- c_date
+- customer
+chart:
+  options:
+    scales:
+      xAxes:
+        - stacked: true
+      yAxes:
+        - stacked: true
+

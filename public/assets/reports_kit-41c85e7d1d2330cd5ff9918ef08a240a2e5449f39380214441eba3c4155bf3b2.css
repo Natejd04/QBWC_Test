@@ -1,0 +1,2133 @@
+@charset "UTF-8";
+/* line 1, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 4, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report {
+  width: 100%;
+  padding: 1px;
+}
+
+/* line 4, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 9, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report canvas {
+  width: 100%;
+}
+
+/* line 6, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 13, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report .date_range_picker {
+  width: 180px;
+}
+
+/* line 8, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 17, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report .loading_indicator {
+  position: absolute;
+  margin: 5px auto;
+  left: 0;
+  right: 0;
+  padding: 22px;
+  background: url(data:image/gif;base64,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) no-repeat center;
+}
+
+/* line 19, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 27, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_visualization table thead .header {
+  color: #337ab7;
+  cursor: pointer;
+}
+
+/* line 23, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 32, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_visualization table thead .headerSortUp::after, .reports_kit_visualization table thead .headerSortDown::after {
+  margin-left: 6px;
+  font-size: 0.8em;
+  font-family: "Arial";
+}
+
+/* line 27, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 38, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_visualization table thead .headerSortUp::after {
+  content: "▼";
+}
+
+/* line 29, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 42, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_visualization table thead .headerSortDown::after {
+  content: "▲";
+}
+
+/* line 31, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/reports.css.sass */
+/* line 47, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_actions {
+  margin-top: 12px;
+  text-align: right;
+}
+
+/* line 2, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/select2_overrides.css.sass */
+/* line 52, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report .select2 {
+  width: 200px;
+}
+
+/* line 4, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/select2_overrides.css.sass */
+/* line 56, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report .select2-container .select2-selection--multiple .select2-selection__rendered {
+  padding-left: 0;
+}
+
+/* line 6, /home/nate/.rvm/gems/ruby-2.3.1/gems/reports_kit-0.7.1/app/assets/stylesheets/reports_kit/select2_overrides.css.sass */
+/* line 60, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.reports_kit_report .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+  height: 25px;
+}
+
+/* line 63, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker {
+  position: absolute;
+  color: inherit;
+  background-color: #fff;
+  border-radius: 4px;
+  width: 278px;
+  padding: 4px;
+  margin-top: 1px;
+  top: 100px;
+  left: 20px;
+  /* Calendars */
+}
+
+/* line 74, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker:before, .daterangepicker:after {
+  position: absolute;
+  display: inline-block;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+/* line 79, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker:before {
+  top: -7px;
+  border-right: 7px solid transparent;
+  border-left: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+}
+
+/* line 84, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker:after {
+  top: -6px;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #fff;
+  border-left: 6px solid transparent;
+}
+
+/* line 89, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.opensleft:before {
+  right: 9px;
+}
+
+/* line 91, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.opensleft:after {
+  right: 10px;
+}
+
+/* line 93, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.openscenter:before {
+  left: 0;
+  right: 0;
+  width: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 99, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.openscenter:after {
+  left: 0;
+  right: 0;
+  width: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 105, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.opensright:before {
+  left: 9px;
+}
+
+/* line 107, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.opensright:after {
+  left: 10px;
+}
+
+/* line 109, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.dropup {
+  margin-top: -5px;
+}
+
+/* line 111, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.dropup:before {
+  top: initial;
+  bottom: -7px;
+  border-bottom: initial;
+  border-top: 7px solid #ccc;
+}
+
+/* line 116, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.dropup:after {
+  top: initial;
+  bottom: -6px;
+  border-bottom: initial;
+  border-top: 6px solid #fff;
+}
+
+/* line 121, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.dropdown-menu {
+  max-width: none;
+  z-index: 3001;
+}
+
+/* line 124, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.single .ranges, .daterangepicker.single .calendar {
+  float: none;
+}
+
+/* line 126, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.show-calendar .calendar {
+  display: block;
+}
+
+/* line 128, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .calendar {
+  display: none;
+  max-width: 270px;
+  margin: 4px;
+}
+
+/* line 132, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .calendar.single .calendar-table {
+  border: none;
+}
+
+/* line 134, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .calendar th, .daterangepicker .calendar td {
+  white-space: nowrap;
+  text-align: center;
+  min-width: 32px;
+}
+
+/* line 138, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .calendar-table {
+  border: 1px solid #fff;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* line 143, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker table {
+  width: 100%;
+  margin: 0;
+}
+
+/* line 146, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td, .daterangepicker th {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* line 154, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.available:hover, .daterangepicker th.available:hover {
+  background-color: #eee;
+  border-color: transparent;
+  color: inherit;
+}
+
+/* line 158, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.week, .daterangepicker th.week {
+  font-size: 80%;
+  color: #ccc;
+}
+
+/* line 161, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+  background-color: #fff;
+  border-color: transparent;
+  color: #999;
+}
+
+/* line 165, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.in-range {
+  background-color: #ebf4f8;
+  border-color: transparent;
+  color: #000;
+  border-radius: 0;
+}
+
+/* line 170, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.start-date {
+  border-radius: 4px 0 0 4px;
+}
+
+/* line 172, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.end-date {
+  border-radius: 0 4px 4px 0;
+}
+
+/* line 174, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.start-date.end-date {
+  border-radius: 4px;
+}
+
+/* line 176, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color: #357ebd;
+  border-color: transparent;
+  color: #fff;
+}
+
+/* line 180, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker th.month {
+  width: auto;
+}
+
+/* line 182, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker td.disabled, .daterangepicker option.disabled {
+  color: #999;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* line 186, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker select.monthselect, .daterangepicker select.yearselect {
+  font-size: 12px;
+  padding: 1px;
+  height: auto;
+  margin: 0;
+  cursor: default;
+}
+
+/* line 192, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker select.monthselect {
+  margin-right: 2%;
+  width: 56%;
+}
+
+/* line 195, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker select.yearselect {
+  width: 40%;
+}
+
+/* line 197, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
+  width: 50px;
+  margin-bottom: 0;
+}
+
+/* line 200, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .input-mini {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #555;
+  height: 30px;
+  line-height: 30px;
+  display: block;
+  vertical-align: middle;
+  margin: 0 0 5px 0;
+  padding: 0 6px 0 28px;
+  width: 100%;
+}
+
+/* line 211, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .input-mini.active {
+  border: 1px solid #08c;
+  border-radius: 4px;
+}
+
+/* line 214, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .daterangepicker_input {
+  position: relative;
+}
+
+/* line 216, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .daterangepicker_input i {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+}
+
+/* line 220, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.rtl .input-mini {
+  padding-right: 28px;
+  padding-left: 6px;
+}
+
+/* line 223, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker.rtl .daterangepicker_input i {
+  left: auto;
+  right: 8px;
+}
+
+/* line 226, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .calendar-time {
+  text-align: center;
+  margin: 5px auto;
+  line-height: 30px;
+  position: relative;
+  padding-left: 28px;
+}
+
+/* line 232, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.daterangepicker .calendar-time select.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* line 236, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.ranges {
+  font-size: 11px;
+  float: none;
+  margin: 4px;
+  text-align: left;
+}
+
+/* line 241, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.ranges ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+/* line 246, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.ranges li {
+  font-size: 13px;
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
+  border-radius: 4px;
+  color: #08c;
+  padding: 3px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* line 255, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.ranges li:hover {
+  background-color: #08c;
+  border: 1px solid #08c;
+  color: #fff;
+}
+
+/* line 259, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.ranges li.active {
+  background-color: #08c;
+  border: 1px solid #08c;
+  color: #fff;
+}
+
+/*  Larger Screen Styling */
+@media (min-width: 564px) {
+  /* line 266, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker {
+    width: auto;
+  }
+
+  /* line 268, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker .ranges ul {
+    width: 160px;
+  }
+
+  /* line 270, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.single .ranges ul {
+    width: 100%;
+  }
+
+  /* line 272, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.single .calendar.left {
+    clear: none;
+  }
+
+  /* line 274, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.single.ltr .ranges, .daterangepicker.single.ltr .calendar {
+    float: left;
+  }
+
+  /* line 276, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.single.rtl .ranges, .daterangepicker.single.rtl .calendar {
+    float: right;
+  }
+
+  /* line 278, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr {
+    direction: ltr;
+    text-align: left;
+  }
+
+  /* line 281, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .calendar.left {
+    clear: left;
+    margin-right: 0;
+  }
+
+  /* line 284, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .calendar.left .calendar-table {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* line 288, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .calendar.right {
+    margin-left: 0;
+  }
+
+  /* line 290, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .calendar.right .calendar-table {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* line 294, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .left .daterangepicker_input {
+    padding-right: 12px;
+  }
+
+  /* line 296, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .calendar.left .calendar-table {
+    padding-right: 12px;
+  }
+
+  /* line 298, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .ranges, .daterangepicker.ltr .calendar {
+    float: left;
+  }
+
+  /* line 300, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl {
+    direction: rtl;
+    text-align: right;
+  }
+
+  /* line 303, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .calendar.left {
+    clear: right;
+    margin-left: 0;
+  }
+
+  /* line 306, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .calendar.left .calendar-table {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* line 310, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .calendar.right {
+    margin-right: 0;
+  }
+
+  /* line 312, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .calendar.right .calendar-table {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* line 316, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .left .daterangepicker_input {
+    padding-left: 12px;
+  }
+
+  /* line 318, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .calendar.left .calendar-table {
+    padding-left: 12px;
+  }
+
+  /* line 320, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .ranges, .daterangepicker.rtl .calendar {
+    text-align: right;
+    float: right;
+  }
+}
+@media (min-width: 730px) {
+  /* line 324, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker .ranges {
+    width: auto;
+  }
+
+  /* line 326, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.ltr .ranges {
+    float: left;
+  }
+
+  /* line 328, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker.rtl .ranges {
+    float: right;
+  }
+
+  /* line 330, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .daterangepicker .calendar.left {
+    clear: none !important;
+  }
+}
+/*!
+ * Select2 Bootstrap Theme v0.1.0-beta.10 (https://select2.github.io/select2-bootstrap-theme)
+ * Copyright 2015-2017 Florian Kissling and contributors (https://github.com/select2/select2-bootstrap-theme/graphs/contributors)
+ * Licensed under MIT (https://github.com/select2/select2-bootstrap-theme/blob/master/LICENSE)
+ */
+/* line 339, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap {
+  display: block;
+  /*------------------------------------*      #COMMON STYLES
+  \*------------------------------------*/
+  /**
+   * Search field in the Select2 dropdown.
+   */
+  /**
+   * No outline for all search fields - in the dropdown
+   * and inline in multi Select2s.
+   */
+  /**
+   * Adjust Select2's choices hover and selected styles to match
+   * Bootstrap 3's default dropdown styles.
+   *
+   * @see http://getbootstrap.com/components/#dropdowns
+   */
+  /**
+   * Clear the selection.
+   */
+  /**
+   * Address disabled Select2 styles.
+   *
+   * @see https://select2.github.io/examples.html#disabled
+   * @see http://getbootstrap.com/css/#forms-control-disabled
+   */
+  /*------------------------------------*      #DROPDOWN
+  \*------------------------------------*/
+  /**
+   * Dropdown border color and box-shadow.
+   */
+  /**
+   * Limit the dropdown height.
+   */
+  /*------------------------------------*      #SINGLE SELECT2
+  \*------------------------------------*/
+  /*------------------------------------*    #MULTIPLE SELECT2
+  \*------------------------------------*/
+  /**
+   * Address Bootstrap control sizing classes
+   *
+   * 1. Reset Bootstrap defaults.
+   * 2. Adjust the dropdown arrow button icon position.
+   *
+   * @see http://getbootstrap.com/css/#forms-control-sizes
+   */
+  /* 1 */
+  /*------------------------------------*    #RTL SUPPORT
+  \*------------------------------------*/
+}
+
+/* line 390, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #555555;
+  font-size: 14px;
+  outline: 0;
+}
+
+/* line 401, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection.form-control {
+  border-radius: 4px;
+}
+
+/* line 405, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-search--dropdown .select2-search__field {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #555555;
+  font-size: 14px;
+}
+
+/* line 415, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-search__field {
+  outline: 0;
+  /* Firefox 18- */
+  /**
+     * Firefox 19+
+     *
+     * @see http://stackoverflow.com/questions/24236240/color-for-styled-placeholder-text-is-muted-in-firefox
+     */
+}
+
+/* line 425, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-search__field::-webkit-input-placeholder {
+  color: #999;
+}
+
+/* line 429, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-search__field:-moz-placeholder {
+  color: #999;
+}
+
+/* line 433, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-search__field::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+/* line 438, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-search__field:-ms-input-placeholder {
+  color: #999;
+}
+
+/* line 442, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option {
+  padding: 6px 12px;
+  /**
+     * Disabled results.
+     *
+     * @see https://select2.github.io/examples.html#disabled-results
+     */
+  /**
+     * Hover state.
+     */
+  /**
+     * Selected state.
+     */
+}
+
+/* line 457, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option[role=group] {
+  padding: 0;
+}
+
+/* line 461, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option[aria-disabled=true] {
+  color: #777777;
+  cursor: not-allowed;
+}
+
+/* line 466, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option[aria-selected=true] {
+  background-color: #f5f5f5;
+  color: #262626;
+}
+
+/* line 471, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
+  background-color: #337ab7;
+  color: #fff;
+}
+
+/* line 476, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option {
+  padding: 6px 12px;
+}
+
+/* line 480, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option .select2-results__group {
+  padding-left: 0;
+}
+
+/* line 484, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -12px;
+  padding-left: 24px;
+}
+
+/* line 489, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -24px;
+  padding-left: 36px;
+}
+
+/* line 494, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -36px;
+  padding-left: 48px;
+}
+
+/* line 499, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -48px;
+  padding-left: 60px;
+}
+
+/* line 504, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -60px;
+  padding-left: 72px;
+}
+
+/* line 509, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results__group {
+  color: #777777;
+  display: block;
+  padding: 6px 12px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  white-space: nowrap;
+}
+
+/* line 518, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--focus .select2-selection, .select2-container--bootstrap.select2-container--open .select2-selection {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  border-color: #66afe9;
+}
+
+/* line 530, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--open {
+  /**
+     * Make the dropdown arrow point up while the dropdown is visible.
+     */
+  /**
+     * Handle border radii of the container when the dropdown is showing.
+     */
+}
+
+/* line 539, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--open .select2-selection .select2-selection__arrow b {
+  border-color: transparent transparent #999 transparent;
+  border-width: 0 4px 4px 4px;
+}
+
+/* line 544, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--open.select2-container--below .select2-selection {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-color: transparent;
+}
+
+/* line 550, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--open.select2-container--above .select2-selection {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-color: transparent;
+}
+
+/* line 556, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection__clear {
+  color: #999;
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* line 564, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection__clear:hover {
+  color: #333;
+}
+
+/* line 568, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--disabled .select2-selection {
+  border-color: #ccc;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* line 574, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--disabled .select2-selection,
+.select2-container--bootstrap.select2-container--disabled .select2-search__field {
+  cursor: not-allowed;
+}
+
+/* line 579, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--disabled .select2-selection,
+.select2-container--bootstrap.select2-container--disabled .select2-selection--multiple .select2-selection__choice {
+  background-color: #eeeeee;
+}
+
+/* line 584, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap.select2-container--disabled .select2-selection__clear,
+.select2-container--bootstrap.select2-container--disabled .select2-selection--multiple .select2-selection__choice__remove {
+  display: none;
+}
+
+/* line 589, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-dropdown {
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border-color: #66afe9;
+  overflow-x: hidden;
+  margin-top: -1px;
+}
+
+/* line 597, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-dropdown--above {
+  -webkit-box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.175);
+  margin-top: 1px;
+}
+
+/* line 603, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-results > .select2-results__options {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* line 608, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single {
+  height: 34px;
+  line-height: 1.42857143;
+  padding: 6px 24px 6px 12px;
+  /**
+     * Adjust the single Select2's dropdown arrow button appearance.
+     */
+}
+
+/* line 617, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
+  position: absolute;
+  bottom: 0;
+  right: 12px;
+  top: 0;
+  width: 4px;
+}
+
+/* line 625, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single .select2-selection__arrow b {
+  border-color: #999 transparent transparent transparent;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  height: 0;
+  left: 0;
+  margin-left: -4px;
+  margin-top: -2px;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+
+/* line 638, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
+  color: #555555;
+  padding: 0;
+}
+
+/* line 643, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single .select2-selection__placeholder {
+  color: #999;
+}
+
+/* line 647, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple {
+  min-height: 34px;
+  padding: 0;
+  height: auto;
+  /**
+     * Make Multi Select2's choices match Bootstrap 3's default button styles.
+     */
+  /**
+     * Minus 2px borders.
+     */
+  /**
+     * Clear the selection.
+     */
+}
+
+/* line 662, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__rendered {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  line-height: 1.42857143;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* line 677, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__placeholder {
+  color: #999;
+  float: left;
+  margin-top: 5px;
+}
+
+/* line 683, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+  color: #555555;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: default;
+  float: left;
+  margin: 5px 0 0 6px;
+  padding: 0 6px;
+}
+
+/* line 694, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+  background: transparent;
+  padding: 0 12px;
+  height: 32px;
+  line-height: 1.42857143;
+  margin-top: 0;
+  min-width: 5em;
+}
+
+/* line 703, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove {
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 3px;
+}
+
+/* line 711, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove:hover {
+  color: #333;
+}
+
+/* line 715, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__clear {
+  margin-top: 6px;
+}
+
+/* line 719, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single.input-sm,
+.input-group-sm .select2-container--bootstrap .select2-selection--single,
+.form-group-sm .select2-container--bootstrap .select2-selection--single {
+  border-radius: 3px;
+  font-size: 12px;
+  height: 30px;
+  line-height: 1.5;
+  padding: 5px 22px 5px 10px;
+  /* 2 */
+}
+
+/* line 730, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single.input-sm .select2-selection__arrow b,
+.input-group-sm .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b,
+.form-group-sm .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b {
+  margin-left: -5px;
+}
+
+/* line 736, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-sm,
+.input-group-sm .select2-container--bootstrap .select2-selection--multiple,
+.form-group-sm .select2-container--bootstrap .select2-selection--multiple {
+  min-height: 30px;
+  border-radius: 3px;
+}
+
+/* line 743, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-sm .select2-selection__choice,
+.input-group-sm .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice,
+.form-group-sm .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 4px 0 0 5px;
+  padding: 0 5px;
+}
+
+/* line 752, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-sm .select2-search--inline .select2-search__field,
+.input-group-sm .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field,
+.form-group-sm .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+  padding: 0 10px;
+  font-size: 12px;
+  height: 28px;
+  line-height: 1.5;
+}
+
+/* line 761, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-sm .select2-selection__clear,
+.input-group-sm .select2-container--bootstrap .select2-selection--multiple .select2-selection__clear,
+.form-group-sm .select2-container--bootstrap .select2-selection--multiple .select2-selection__clear {
+  margin-top: 5px;
+}
+
+/* line 767, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single.input-lg,
+.input-group-lg .select2-container--bootstrap .select2-selection--single,
+.form-group-lg .select2-container--bootstrap .select2-selection--single {
+  border-radius: 6px;
+  font-size: 18px;
+  height: 46px;
+  line-height: 1.3333333;
+  padding: 10px 31px 10px 16px;
+  /* 1 */
+}
+
+/* line 778, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single.input-lg .select2-selection__arrow,
+.input-group-lg .select2-container--bootstrap .select2-selection--single .select2-selection__arrow,
+.form-group-lg .select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
+  width: 5px;
+}
+
+/* line 784, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--single.input-lg .select2-selection__arrow b,
+.input-group-lg .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b,
+.form-group-lg .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b {
+  border-width: 5px 5px 0 5px;
+  margin-left: -5px;
+  margin-left: -10px;
+  margin-top: -2.5px;
+}
+
+/* line 793, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-lg,
+.input-group-lg .select2-container--bootstrap .select2-selection--multiple,
+.form-group-lg .select2-container--bootstrap .select2-selection--multiple {
+  min-height: 46px;
+  border-radius: 6px;
+}
+
+/* line 800, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-lg .select2-selection__choice,
+.input-group-lg .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice,
+.form-group-lg .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 4px;
+  margin: 9px 0 0 8px;
+  padding: 0 10px;
+}
+
+/* line 810, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-lg .select2-search--inline .select2-search__field,
+.input-group-lg .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field,
+.form-group-lg .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+  padding: 0 16px;
+  font-size: 18px;
+  height: 44px;
+  line-height: 1.3333333;
+}
+
+/* line 819, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection--multiple.input-lg .select2-selection__clear,
+.input-group-lg .select2-container--bootstrap .select2-selection--multiple .select2-selection__clear,
+.form-group-lg .select2-container--bootstrap .select2-selection--multiple .select2-selection__clear {
+  margin-top: 10px;
+}
+
+/* line 825, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection.input-lg.select2-container--open .select2-selection--single {
+  /**
+     * Make the dropdown arrow point up while the dropdown is visible.
+     */
+}
+
+/* line 831, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap .select2-selection.input-lg.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  border-color: transparent transparent #999 transparent;
+  border-width: 0 5px 5px 5px;
+}
+
+/* line 836, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group-lg .select2-container--bootstrap .select2-selection.select2-container--open .select2-selection--single {
+  /**
+     * Make the dropdown arrow point up while the dropdown is visible.
+     */
+}
+
+/* line 842, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group-lg .select2-container--bootstrap .select2-selection.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  border-color: transparent transparent #999 transparent;
+  border-width: 0 5px 5px 5px;
+}
+
+/* line 847, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] {
+  /**
+     * Single Select2
+     *
+     * 1. Makes sure that .select2-selection__placeholder is positioned
+     *    correctly.
+     */
+  /**
+     * Multiple Select2
+     */
+}
+
+/* line 859, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--single {
+  padding-left: 24px;
+  padding-right: 12px;
+}
+
+/* line 864, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--single .select2-selection__rendered {
+  padding-right: 0;
+  padding-left: 0;
+  text-align: right;
+  /* 1 */
+}
+
+/* line 871, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--single .select2-selection__clear {
+  float: left;
+}
+
+/* line 875, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--single .select2-selection__arrow {
+  left: 12px;
+  right: auto;
+}
+
+/* line 880, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--single .select2-selection__arrow b {
+  margin-left: 0;
+}
+
+/* line 884, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--multiple .select2-selection__choice,
+.select2-container--bootstrap[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder,
+.select2-container--bootstrap[dir="rtl"] .select2-selection--multiple .select2-search--inline {
+  float: right;
+}
+
+/* line 890, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+/* line 895, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--bootstrap[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
+  margin-left: 2px;
+  margin-right: auto;
+}
+
+/*------------------------------------*  #ADDITIONAL GOODIES
+\*------------------------------------*/
+/**
+ * Address Bootstrap's validation states
+ *
+ * If a Select2 widget parent has one of Bootstrap's validation state modifier
+ * classes, adjust Select2's border colors and focus states accordingly.
+ * You may apply said classes to the Select2 dropdown (body > .select2-container)
+ * via JavaScript match Bootstraps' to make its styles match.
+ *
+ * @see http://getbootstrap.com/css/#forms-control-validation
+ */
+/* line 912, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-warning .select2-dropdown,
+.has-warning .select2-selection {
+  border-color: #8a6d3b;
+}
+
+/* line 917, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-warning .select2-container--focus .select2-selection,
+.has-warning .select2-container--open .select2-selection {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+  border-color: #66512c;
+}
+
+/* line 924, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-warning.select2-drop-active {
+  border-color: #66512c;
+}
+
+/* line 928, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-warning.select2-drop-active.select2-drop.select2-drop-above {
+  border-top-color: #66512c;
+}
+
+/* line 932, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-error .select2-dropdown,
+.has-error .select2-selection {
+  border-color: #a94442;
+}
+
+/* line 937, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-error .select2-container--focus .select2-selection,
+.has-error .select2-container--open .select2-selection {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  border-color: #843534;
+}
+
+/* line 944, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-error.select2-drop-active {
+  border-color: #843534;
+}
+
+/* line 948, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-error.select2-drop-active.select2-drop.select2-drop-above {
+  border-top-color: #843534;
+}
+
+/* line 952, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-success .select2-dropdown,
+.has-success .select2-selection {
+  border-color: #3c763d;
+}
+
+/* line 957, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-success .select2-container--focus .select2-selection,
+.has-success .select2-container--open .select2-selection {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+  border-color: #2b542c;
+}
+
+/* line 964, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-success.select2-drop-active {
+  border-color: #2b542c;
+}
+
+/* line 968, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.has-success.select2-drop-active.select2-drop.select2-drop-above {
+  border-top-color: #2b542c;
+}
+
+/**
+ * Select2 widgets in Bootstrap Input Groups
+ *
+ * @see http://getbootstrap.com/components/#input-groups
+ * @see https://github.com/twbs/bootstrap/blob/master/less/input-groups.less
+ */
+/**
+ * Reset rounded corners
+ */
+/* line 981, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-hidden-accessible:first-child + .select2-container--bootstrap > .selection > .select2-selection,
+.input-group > .select2-hidden-accessible:first-child + .select2-container--bootstrap > .selection > .select2-selection.form-control {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* line 987, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-hidden-accessible:not(:first-child) + .select2-container--bootstrap:not(:last-child) > .selection > .select2-selection,
+.input-group > .select2-hidden-accessible:not(:first-child) + .select2-container--bootstrap:not(:last-child) > .selection > .select2-selection.form-control {
+  border-radius: 0;
+}
+
+/* line 992, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-hidden-accessible:not(:first-child):not(:last-child) + .select2-container--bootstrap:last-child > .selection > .select2-selection,
+.input-group > .select2-hidden-accessible:not(:first-child):not(:last-child) + .select2-container--bootstrap:last-child > .selection > .select2-selection.form-control {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+/* line 998, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-container--bootstrap {
+  display: table;
+  table-layout: fixed;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-bottom: 0;
+  /**
+   * Adjust z-index like Bootstrap does to show the focus-box-shadow
+   * above appended buttons in .input-group and .form-group.
+   */
+  /**
+   * Adjust alignment of Bootstrap buttons in Bootstrap Input Groups to address
+   * Multi Select2's height which - depending on how many elements have been selected -
+   * may grow taller than its initial size.
+   *
+   * @see http://getbootstrap.com/components/#input-groups
+   */
+}
+
+/* line 1018, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-container--bootstrap > .selection > .select2-selection.form-control {
+  float: none;
+}
+
+/* line 1022, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-container--bootstrap.select2-container--open, .input-group > .select2-container--bootstrap.select2-container--focus {
+  z-index: 3;
+}
+
+/* line 1026, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.input-group > .select2-container--bootstrap,
+.input-group > .select2-container--bootstrap .input-group-btn,
+.input-group > .select2-container--bootstrap .input-group-btn .btn {
+  vertical-align: top;
+}
+
+/**
+ * Temporary fix for https://github.com/select2/select2-bootstrap-theme/issues/9
+ *
+ * Provides `!important` for certain properties of the class applied to the
+ * original `<select>` element to hide it.
+ *
+ * @see https://github.com/select2/select2/pull/3301
+ * @see https://github.com/fk/select2/commit/31830c7b32cb3d8e1b12d5b434dee40a6e753ada
+ */
+/* line 1041, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.form-control.select2-hidden-accessible {
+  position: absolute !important;
+  width: 1px !important;
+}
+
+/**
+ * Display override for inline forms
+ */
+@media (min-width: 768px) {
+  /* line 1050, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+  .form-inline .select2-container--bootstrap {
+    display: inline-block;
+  }
+}
+/* line 1054, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+}
+
+/* line 1060, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-selection--single {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 28px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* line 1067, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-selection--single .select2-selection__rendered {
+  display: block;
+  padding-left: 8px;
+  padding-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* line 1074, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-selection--single .select2-selection__clear {
+  position: relative;
+}
+
+/* line 1076, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
+  padding-right: 8px;
+  padding-left: 20px;
+}
+
+/* line 1079, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-selection--multiple {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  min-height: 32px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* line 1086, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  display: inline-block;
+  overflow: hidden;
+  padding-left: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* line 1092, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-search--inline {
+  float: left;
+}
+
+/* line 1094, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-search--inline .select2-search__field {
+  box-sizing: border-box;
+  border: none;
+  font-size: 100%;
+  margin-top: 5px;
+  padding: 0;
+}
+
+/* line 1100, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* line 1103, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-dropdown {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  left: -100000px;
+  width: 100%;
+  z-index: 1051;
+}
+
+/* line 1114, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-results {
+  display: block;
+}
+
+/* line 1117, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-results__options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 1122, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-results__option {
+  padding: 6px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* line 1126, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-results__option[aria-selected] {
+  cursor: pointer;
+}
+
+/* line 1129, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--open .select2-dropdown {
+  left: 0;
+}
+
+/* line 1132, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--open .select2-dropdown--above {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* line 1137, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--open .select2-dropdown--below {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* line 1142, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-search--dropdown {
+  display: block;
+  padding: 4px;
+}
+
+/* line 1145, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-search--dropdown .select2-search__field {
+  padding: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* line 1149, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-search--dropdown .select2-search__field::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* line 1151, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-search--dropdown.select2-search--hide {
+  display: none;
+}
+
+/* line 1154, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-close-mask {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  min-height: 100%;
+  min-width: 100%;
+  height: auto;
+  width: auto;
+  opacity: 0;
+  z-index: 99;
+  background-color: #fff;
+  filter: alpha(opacity=0);
+}
+
+/* line 1171, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-hidden-accessible {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+}
+
+/* line 1181, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--single {
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+/* line 1185, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #444;
+  line-height: 28px;
+}
+
+/* line 1188, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--single .select2-selection__clear {
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+}
+
+/* line 1192, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #999;
+}
+
+/* line 1194, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 26px;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 20px;
+}
+
+/* line 1200, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: #888 transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px 4px 0 4px;
+  height: 0;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -2px;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+
+/* line 1212, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__clear {
+  float: left;
+}
+
+/* line 1215, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__arrow {
+  left: 1px;
+  right: auto;
+}
+
+/* line 1219, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--disabled .select2-selection--single {
+  background-color: #eee;
+  cursor: default;
+}
+
+/* line 1222, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--disabled .select2-selection--single .select2-selection__clear {
+  display: none;
+}
+
+/* line 1225, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  border-color: transparent transparent #888 transparent;
+  border-width: 0 4px 5px 4px;
+}
+
+/* line 1229, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: text;
+}
+
+/* line 1234, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+  width: 100%;
+}
+
+/* line 1240, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+  list-style: none;
+}
+
+/* line 1242, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+  color: #999;
+  margin-top: 5px;
+  float: left;
+}
+
+/* line 1246, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+/* line 1252, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #e4e4e4;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: default;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 0 5px;
+}
+
+/* line 1261, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 2px;
+}
+
+/* line 1267, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+  color: #333;
+}
+
+/* line 1270, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice, .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder, .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-search--inline {
+  float: right;
+}
+
+/* line 1273, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
+  margin-left: 5px;
+  margin-right: auto;
+}
+
+/* line 1277, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
+  margin-left: 2px;
+  margin-right: auto;
+}
+
+/* line 1281, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: solid black 1px;
+  outline: 0;
+}
+
+/* line 1285, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+  background-color: #eee;
+  cursor: default;
+}
+
+/* line 1289, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--disabled .select2-selection__choice__remove {
+  display: none;
+}
+
+/* line 1292, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--open.select2-container--above .select2-selection--single, .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* line 1296, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* line 1300, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border: 1px solid #aaa;
+}
+
+/* line 1303, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-search--inline .select2-search__field {
+  background: transparent;
+  border: none;
+  outline: 0;
+  box-shadow: none;
+  -webkit-appearance: textfield;
+}
+
+/* line 1310, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results > .select2-results__options {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* line 1314, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option[role=group] {
+  padding: 0;
+}
+
+/* line 1317, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option[aria-disabled=true] {
+  color: #999;
+}
+
+/* line 1320, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #ddd;
+}
+
+/* line 1323, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option {
+  padding-left: 1em;
+}
+
+/* line 1325, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option .select2-results__group {
+  padding-left: 0;
+}
+
+/* line 1327, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -1em;
+  padding-left: 2em;
+}
+
+/* line 1330, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -2em;
+  padding-left: 3em;
+}
+
+/* line 1333, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -3em;
+  padding-left: 4em;
+}
+
+/* line 1336, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -4em;
+  padding-left: 5em;
+}
+
+/* line 1339, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option .select2-results__option {
+  margin-left: -5em;
+  padding-left: 6em;
+}
+
+/* line 1343, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #5897fb;
+  color: white;
+}
+
+/* line 1347, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--default .select2-results__group {
+  cursor: default;
+  display: block;
+  padding: 6px;
+}
+
+/* line 1352, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single {
+  background-color: #f7f7f7;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  outline: 0;
+  background-image: -webkit-linear-gradient(top, white 50%, #eeeeee 100%);
+  background-image: -o-linear-gradient(top, white 50%, #eeeeee 100%);
+  background-image: linear-gradient(to bottom, white 50%, #eeeeee 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0);
+}
+
+/* line 1362, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single:focus {
+  border: 1px solid #5897fb;
+}
+
+/* line 1364, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single .select2-selection__rendered {
+  color: #444;
+  line-height: 28px;
+}
+
+/* line 1367, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single .select2-selection__clear {
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* line 1372, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single .select2-selection__placeholder {
+  color: #999;
+}
+
+/* line 1374, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single .select2-selection__arrow {
+  background-color: #ddd;
+  border: none;
+  border-left: 1px solid #aaa;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  height: 26px;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 20px;
+  background-image: -webkit-linear-gradient(top, #eeeeee 50%, #cccccc 100%);
+  background-image: -o-linear-gradient(top, #eeeeee 50%, #cccccc 100%);
+  background-image: linear-gradient(to bottom, #eeeeee 50%, #cccccc 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFEEEEEE', endColorstr='#FFCCCCCC', GradientType=0);
+}
+
+/* line 1390, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--single .select2-selection__arrow b {
+  border-color: #888 transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px 4px 0 4px;
+  height: 0;
+  left: 50%;
+  margin-left: -4px;
+  margin-top: -2px;
+  position: absolute;
+  top: 50%;
+  width: 0;
+}
+
+/* line 1402, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic[dir="rtl"] .select2-selection--single .select2-selection__clear {
+  float: left;
+}
+
+/* line 1405, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic[dir="rtl"] .select2-selection--single .select2-selection__arrow {
+  border: none;
+  border-right: 1px solid #aaa;
+  border-radius: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  left: 1px;
+  right: auto;
+}
+
+/* line 1414, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open .select2-selection--single {
+  border: 1px solid #5897fb;
+}
+
+/* line 1416, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open .select2-selection--single .select2-selection__arrow {
+  background: transparent;
+  border: none;
+}
+
+/* line 1419, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open .select2-selection--single .select2-selection__arrow b {
+  border-color: transparent transparent #888 transparent;
+  border-width: 0 4px 5px 4px;
+}
+
+/* line 1423, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open.select2-container--above .select2-selection--single {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-image: -webkit-linear-gradient(top, white 0%, #eeeeee 50%);
+  background-image: -o-linear-gradient(top, white 0%, #eeeeee 50%);
+  background-image: linear-gradient(to bottom, white 0%, #eeeeee 50%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0);
+}
+
+/* line 1433, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open.select2-container--below .select2-selection--single {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-image: -webkit-linear-gradient(top, #eeeeee 50%, white 100%);
+  background-image: -o-linear-gradient(top, #eeeeee 50%, white 100%);
+  background-image: linear-gradient(to bottom, #eeeeee 50%, white 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFEEEEEE', endColorstr='#FFFFFFFF', GradientType=0);
+}
+
+/* line 1443, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: text;
+  outline: 0;
+}
+
+/* line 1449, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple:focus {
+  border: 1px solid #5897fb;
+}
+
+/* line 1451, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple .select2-selection__rendered {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+}
+
+/* line 1455, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple .select2-selection__clear {
+  display: none;
+}
+
+/* line 1457, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple .select2-selection__choice {
+  background-color: #e4e4e4;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: default;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 0 5px;
+}
+
+/* line 1466, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple .select2-selection__choice__remove {
+  color: #888;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 2px;
+}
+
+/* line 1472, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-selection--multiple .select2-selection__choice__remove:hover {
+  color: #555;
+}
+
+/* line 1475, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
+  float: right;
+}
+
+/* line 1478, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic[dir="rtl"] .select2-selection--multiple .select2-selection__choice {
+  margin-left: 5px;
+  margin-right: auto;
+}
+
+/* line 1482, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
+  margin-left: 2px;
+  margin-right: auto;
+}
+
+/* line 1486, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open .select2-selection--multiple {
+  border: 1px solid #5897fb;
+}
+
+/* line 1489, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open.select2-container--above .select2-selection--multiple {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* line 1494, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open.select2-container--below .select2-selection--multiple {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* line 1499, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-search--dropdown .select2-search__field {
+  border: 1px solid #aaa;
+  outline: 0;
+}
+
+/* line 1503, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-search--inline .select2-search__field {
+  outline: 0;
+  box-shadow: none;
+}
+
+/* line 1507, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-dropdown {
+  background-color: white;
+  border: 1px solid transparent;
+}
+
+/* line 1511, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-dropdown--above {
+  border-bottom: none;
+}
+
+/* line 1514, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-dropdown--below {
+  border-top: none;
+}
+
+/* line 1517, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-results > .select2-results__options {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* line 1521, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-results__option[role=group] {
+  padding: 0;
+}
+
+/* line 1524, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-results__option[aria-disabled=true] {
+  color: grey;
+}
+
+/* line 1527, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-results__option--highlighted[aria-selected] {
+  background-color: #3875d7;
+  color: white;
+}
+
+/* line 1531, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic .select2-results__group {
+  cursor: default;
+  display: block;
+  padding: 6px;
+}
+
+/* line 1536, /mnt/c/qbwc/app/assets/stylesheets/reports_kit.scss */
+.select2-container--classic.select2-container--open .select2-dropdown {
+  border-color: #5897fb;
+}
+
+/*
+
+*/

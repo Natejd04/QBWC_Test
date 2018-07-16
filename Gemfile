@@ -67,6 +67,9 @@ gem 'devise'
 # We are going to test out the use of Puma
 gem 'puma'
 
+# Adding reports Kit, which will hopefully allow easy reporting
+gem 'reports_kit'
+
 #Attempting SSL
 #gem 'thin'
 

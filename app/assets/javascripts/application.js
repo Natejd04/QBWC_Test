@@ -17,4 +17,5 @@
 //= require turbolinks
 //= require rails_autocomplete
 //= require twitter/typeahead
+//= require reports_kit/application
 //= require_tree .

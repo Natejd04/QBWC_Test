@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180712180348) do
+ActiveRecord::Schema.define(version: 20180713194344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 20180712180348) do
     t.string   "c_po"
     t.string   "c_edit"
     t.string   "c_qbid"
-    t.date     "c_date"
+    t.datetime "c_date"
     t.string   "c_ack"
     t.string   "c_conf"
     t.string   "c_pro"

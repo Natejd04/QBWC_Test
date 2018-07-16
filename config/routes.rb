@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   # patch '/users/:id/' => 'users#show'
   # get 'users' => 'users#index'
 
+  mount ReportsKit::Engine, at: '/'
+
   resources :customers
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
@@ -34,7 +36,7 @@ Rails.application.routes.draw do
   resources :invoices
   resources :accounts
   resources :credit_memos
-
+  resources :reports
   
   resources :notifications do
     collection do
