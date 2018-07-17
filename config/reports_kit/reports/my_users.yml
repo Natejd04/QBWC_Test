@@ -3,11 +3,14 @@ measure:
   name: Invoices
   aggregation: sum_of_invoices
 filters:
-- customer
 - c_date
+- key: customer
+  contextual_filters:
+    - for_customer
 dimensions:
+- key: customer
+  limit: 5
 - c_date
-- customer
 chart:
   options:
     scales:
@@ -15,4 +18,5 @@ chart:
         - stacked: true
       yAxes:
         - stacked: true
+
 

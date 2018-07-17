@@ -41,4 +41,12 @@ module ApplicationHelper
     link_to title, request.query_parameters.merge({:remove => a}), {:class => css_class}
   end
 
+  def beg_month
+    Time.now.beginning_of_month
+  end
+  
+  def end_month
+    Time.now.end_of_month
+  end
+
 end

@@ -12,6 +12,7 @@ class Order < ActiveRecord::Base
     validates :customer_id, presence: true
     
     scope :uninvoiced, -> {Order.where(c_invoiced: nil)}
+    scope :dash_orders, -> {Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis")}
 
     default_scope {where(:deleted => nil)}
     
@@ -156,6 +157,8 @@ class Order < ActiveRecord::Base
             # end
         end
     end
+
+
 #    This was a test from SO, no succes so far
 #    before_save :destroy_doc?
 #    
