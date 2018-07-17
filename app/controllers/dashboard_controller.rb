@@ -14,8 +14,7 @@ class DashboardController < ApplicationController
 		prev_td_month = 1.month.ago.to_date
 		homecurrency = "line_items.homecurrency_amount"
 		account_amount = "account_line_items.amount"
-		account_array = ["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]
-		#account_array = "account_line_items.account_id = 152"
+		account_array = ["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]		
 
 		@orders = Order.dash_orders.where.not(:c_class => classed_remove).order(sort_column + " " + sort_direction)
 		@order_total = @orders.sum(:c_total)
