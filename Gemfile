@@ -68,7 +68,7 @@ gem 'devise'
 gem 'puma'
 
 # Adding reports Kit, which will hopefully allow easy reporting
-gem 'reports_kit'
+gem 'reports_kit', :path => "git@github.com:Natejd04/reports_kit.git"
 
 #Attempting SSL
 #gem 'thin'
