@@ -11,6 +11,7 @@ dimensions:
 - monthly_group
 - key: customer
   limit: 5
+order: dimension1.label asc
 chart:
   options:
     scales:

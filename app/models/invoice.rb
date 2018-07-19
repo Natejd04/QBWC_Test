@@ -14,7 +14,7 @@ include ReportsKit::Model
   reports_kit do
     aggregation :sum_of_invoices, [:sum, 'invoices.c_subtotal'] 
     contextual_filter :for_customer, ->(relation, context_params) { relation.where(customer_id: context_params[:customer_id]) }
-    dimension :monthly_group, group: 'EXTRACT(MONTH from invoices.c_date)'
+    dimension :monthly_group, group: "to_char(date_trunc('month', invoices.c_date), 'MM-YY Mon')", order_by: "to_char_date_trunc_month_invoices_c_date_yy_mon DESC"
     # dimension :customer_group, group: '(customers.name)'
     # filter :is_published, :boolean, conditions: ->(relation) { relation.where(status: 'published') }
     # dimension :date_month, where: "date_trunc(month, invoices.c_date)"
