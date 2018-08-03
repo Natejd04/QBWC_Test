@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:Natejd04/reports_kit.git
-  revision: dc75c1a79bca69c0269fe5379dc78e8690fe65cc
+  revision: 8dd939bdc293dfaa31d7bb3c925a43ab0f6c5750
   specs:
     reports_kit (0.7.1)
       rails (>= 3)

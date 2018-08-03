@@ -13,10 +13,10 @@ $(function(){
 
     $.ajax({
       method: "put",
-      url: "/trackings/" + id,
-      data: {emailed: checked},
+      url: "/invoices/" + id,
+      data: {to_email: checked},
       success: function(data){
-      	if (data.emailed == true) {
+      	if (data.to_email == true) {
       		console.log("Checkbox is marked as true");
       		$('#' + data.id).prop('checked', true); }
       	else {

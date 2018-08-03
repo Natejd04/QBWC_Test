@@ -106,6 +106,44 @@ class InvoiceDetailLoader < QBWC::Worker
                     invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
                 end
 
+                if qb_inv['memo']
+                    invoice_data[:memo] = qb_inv['memo']
+                end
+                
+                if qb_inv['fob']
+                    invoice_data[:fob] = qb_inv['fob']
+                end
+
+                if qb_inv['po_number']                    
+                    email = qb_inv['po_number']
+                    if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                        invoice_data[:email] = email     
+                    end
+                end
+                
+                invoice_data[:to_email] = false
+
+                if invoice_data[:email].nil?
+                    invoice_data[:email] = Customer.find(invoice_data[:customer_id]).email
+                end
+
+                if qb_inv['other']
+                    invoice_data[:tracking] = qb_inv['other']
+                        if invoice_data[:tracking] =~ /^1Z/
+                            invoice_data[:ship_method] = "UPS"
+                        elsif tracking =~ /\d{20,22}/
+                                invoice_data[:ship_method] = "USPS"
+                        elsif tracking =~ /(\b96\d{20}\b)|(\b\d{15}\b)|(\b\d{12}\b)/
+                            invoice_data[:ship_method] = "FedEx"
+                        else
+                            invoice_data[:ship_method] = "LTL or Pickup"
+                        end
+                end
+                
+                if qb_inv['template_ref']['full_name'] == "* Zing Whls/Consumer Invoice V2"
+                    invoice_data[:emailable] = true
+                end
+
                 # Apparently QB SDK has no way to pull sales order link, without this line
                if qb_inv['linked_txn'].is_a? Array
                     qb_inv['linked_txn'].each do |link|
@@ -328,6 +366,44 @@ class InvoiceDetailLoader < QBWC::Worker
             
             if qb_inv['sales_rep_ref']
                 invoice_data[:c_rep] = qb_inv['sales_rep_ref']['full_name']
+            end
+
+            if qb_inv['memo']
+                invoice_data[:memo] = qb_inv['memo']
+            end
+            
+            if qb_inv['fob']
+                invoice_data[:fob] = qb_inv['fob']
+            end
+
+            if qb_inv['po_number']                    
+                email = qb_inv['po_number']
+                if email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                    invoice_data[:email] = email     
+                end
+            end
+
+            invoice_data[:to_email] = false
+
+            if invoice_data[:email].nil?
+                invoice_data[:email] = Customer.find(invoice_data[:customer_id]).email
+            end
+
+            if qb_inv['other']
+                invoice_data[:tracking] = qb_inv['other']
+                    if invoice_data[:tracking] =~ /^1Z/
+                        invoice_data[:ship_method] = "UPS"
+                    elsif tracking =~ /\d{20,22}/
+                            invoice_data[:ship_method] = "USPS"
+                    elsif tracking =~ /(\b96\d{20}\b)|(\b\d{15}\b)|(\b\d{12}\b)/
+                        invoice_data[:ship_method] = "FedEx"
+                    else
+                        invoice_data[:ship_method] = "LTL or Pickup"
+                    end
+            end
+            
+            if qb_inv['template_ref']['full_name'] == "* Zing Whls/Consumer Invoice V2"
+                invoice_data[:emailable] = true
             end
 
                 # Apparently QB SDK has no way to pull sales order link, without this line

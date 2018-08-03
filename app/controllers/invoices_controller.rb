@@ -10,5 +10,25 @@ class InvoicesController < ApplicationController
 	def show
       @order = Invoice.find(params[:id])
   	end
+  	def update
+	  	respond_to do |format|
+        format.html {
+          @track = Invoice.find(params[:id])
+          @track.update(track_params)
+          redirect_to trackings_path}
+        format.js
+        format.json {
+          @track = Invoice.find(params[:id])
+          @track.update(email_params)
+          render json: @track}
+      end
+    end
+
+  	def email_params
+      params.permit(:to_email, :emailed)
+ 	end
+ 	 def track_params
+      params.require(:tracking).permit(:memo, :tracking, :ship_method, :email, :emailed, :packages, :ship1, :ship2, :ship3, :shipcity, :shipstate, :shippostal, :shipcountry, :name, :to_email)
+  end
 
 end

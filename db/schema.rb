@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180713194344) do
+ActiveRecord::Schema.define(version: 20180802230538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,14 @@ ActiveRecord::Schema.define(version: 20180713194344) do
     t.datetime "deleted"
     t.string   "sales_order_txn"
     t.string   "sales_order_ref"
+    t.string   "memo"
+    t.string   "fob"
+    t.string   "email"
+    t.string   "tracking"
+    t.string   "ship_method"
+    t.boolean  "emailable"
+    t.boolean  "to_email"
+    t.datetime "emailed"
   end
 
   create_table "items", force: :cascade do |t|

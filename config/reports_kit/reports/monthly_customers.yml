@@ -19,3 +19,5 @@ chart:
         - stacked: true
       yAxes:
         - stacked: true
+    custom:
+      tooltips: "BLAH BLAH BLAH"

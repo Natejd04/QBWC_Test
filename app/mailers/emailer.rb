@@ -3,11 +3,11 @@ class Emailer < ActionMailer::Base
 
 
 	def prep_email()
-		@recipients = Tracking.where(:txn_date => 1.week.ago..Date.today).where(:emailed => true, :emailsent => nil)
+		@recipients = Invoice.where(:c_date => 1.week.ago..Date.today+1).where(:emailable => true, :to_email => true)
      	@recipients.each do |recipient|
-       		@name = recipient.name
+       		@name = recipient.c_name
        		Emailer.sample_email(recipient).deliver
-          recipient.update_attribute(:emailsent, Time.now)
+          recipient.update_attributes(:emailed => Time.now, :to_email => false)
     	end
  	end
    	
