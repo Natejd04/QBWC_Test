@@ -19,7 +19,7 @@
 			      <tr>
 			       <td><%= link_to bi.c_name, customer_path(bi.customer_id) %></td>
 			       <td><%= bi.email %></td>
-					<td><%= link_to bi.c_invoicenumber, invoices_path(bi.id) %></td>
+					<td><%= link_to bi.c_invoicenumber, invoice_path(bi.id) %></td>
 			       <td><%= bi.c_date.strftime("%m/%d/%y") %></td>
 			       <td><%= bi.tracking %></td>
 			       <td><%= bi.fob %></td>
