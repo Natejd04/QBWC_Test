@@ -12,7 +12,7 @@
 		</thead>
 		<% @emailed.each do |bi| %>
 		    <tr>
-		       <td><%= link_to bi.c_name, invoices_path(bi.id) %></td>
+		       <td><%= link_to bi.c_name, customer_path(bi.customer_id) %></td>
 		       <td><%= bi.email %></td><td><%= bi.c_date.strftime("%m/%d/%y") %></td>
 		       <td><%= bi.tracking %></td><td><%= bi.fob %></td>
 		       <td><%= bi.ship_method %></td>
