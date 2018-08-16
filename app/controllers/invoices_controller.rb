@@ -5,6 +5,12 @@ class InvoicesController < ApplicationController
 	def index
 		@invoices = Invoice.all.order "id ASC"
     	@inv1 = Invoice.where("c_date >= ?", 2.months.ago).paginate(:page => params[:page], :per_page => 50).order('c_date ASC')
+      @invoice_limit = Invoice.where("c_date >= ?", 3.months.ago)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Invoice.inv_csv(@invoice_limit), filename: "invoices-#{Time.now.strftime("%d-%m-%Y %k%M")}.csv" }
+    end    
 	end
 
 	def show

@@ -38,7 +38,7 @@ class Order < ActiveRecord::Base
     end
 
     def single_to_csv
-        # attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship 5 c_shipcity c_shipstate invoice_number customer_id}
+        #attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship 5 c_shipcity c_shipstate invoice_number customer_id tracking fob}
         attributes = %w{id c_name}
         li_attributes = %w{order_id qty description}
         li_header = %w{order_id qty description name}
@@ -110,7 +110,7 @@ class Order < ActiveRecord::Base
 
     
     def self.to_csv(order)
-        attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
+        attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id tracking fob}
         li_attributes = %w{order_id qty description}
         multi_header = %w{order_id qty description name id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
         if order.count < 2
