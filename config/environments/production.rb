@@ -93,7 +93,7 @@ if ENV["RAILS_LOG_TO_STDOUT"].present?
   config.active_record.dump_schema_after_migration = false
 
   # This is for devise
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'importly.app', port: 443 }
 
   # This is for gmail, SMTP Settings
   config.action_mailer.perform_deliveries = true
