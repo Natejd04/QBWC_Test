@@ -1,0 +1,274 @@
+
+
+
+        <div id="page-wrapper" style="min-height: 629px;">
+            <div class="row">
+                <div class="col-lg-9 col-md-8">
+                    <h1 class="page-header">Dashboard</h1>                  
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-3 col-md-4" style="text-align:right;"">
+                    <span class="page-header" style="border-bottom:unset;line-height:4em;font-size:12px;">
+                        <i class="btn <% if @log_update.nil? or @log_update.updated_at < (Time.now - 1.day) %>btn-danger<% else %>btn-success<% end %> btn-circle" style="width:20px;height:20px;padding:2px 0;font-size: 10px;"><i class="fa fa-check"></i>
+                        </i>
+                        Last Updated: <%if @log_update.nil? %>n/a<%else%><%=@log_update.updated_at.strftime("%m-%d-%y %l:%M")%> <%end%>
+                    </span>
+                </div>
+                
+            </div>
+
+            <!-- Nate's Row -->
+               <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-dollar"></i> Sales Figures
+                    </div>
+                </div>
+
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-tasks fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                    	$<%= number_to_human(@month_total, :format => '%n%u', :units => { :thousand => 'K' }) %>
+                                    </div>
+                                    <div><%=Time.now.strftime("%B")%> Sales to Date</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-tasks fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                    <%= number_to_percentage(@vs, precision: 2) %>
+                                    </div>
+                                    <div>vs Prior Month to Date</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-shopping-cart fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                    $<%= number_to_human(@prior_m_total, :format => '%n%u', :units => { :thousand => 'K' }) %>
+                                    
+                                    </div>
+                                    <div><% month_ago = Time.now - 1.month %><%= month_ago.strftime("%B") %> Sales</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-support fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                        <%= @open_orders_count %>
+                                    </div>
+                                    <div>Open Orders!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        Sales by Week
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div>
+                                <%= render :partial => 'weekly_sales_chart' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <%=Time.now.strftime("%B")%> Sales by Class <sub>*if filled in full</sub>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div>
+                                <%= render :partial => 'month_sales_channel' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        Deductions by Week
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div>
+                                <%= render :partial => 'weekly_tpr_chart' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        Top Customers for <%=Time.now.strftime("%B")%>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div>
+                                <%= render :partial => 'monthly_top_customers' %>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Order Table
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        <span id="type-of-orders">Sales Orders</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" id="sorting" role="menu">
+                                        <li><a class="append-sales-orders" href="#">Sales Orders</a>
+                                        </li>
+                                        <li><a class="append-invoices" href="#">Invoices</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><%= remove_class "nil", "Add Wholesale" %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                       
+                                  
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped" id="order-table">
+                                                <%= render :partial => 'invoices' %>
+                                        </table>
+                                        <table class="table table-bordered table-hover table-striped" id="order-sales-table">
+                                            <%= render :partial => 'sales_orders' %>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>                               
+                    		</div>
+                	    </div>
+                    </div>
+                </div>
+            </div>
+
+             
+        <!-- /#page-wrapper -->
+
+    <script>
+    	$(function() {
+        
+      $('[data-toggle="popover"]').popover({
+        trigger: 'focus'
+    })
+      
+      $("#order-table").hide();
+      
+    
+      $('.append-invoices').on('click', function(e) {
+        e.preventDefault();
+        $("#order-sales-table").hide();       
+        $("#order-table").show();
+        $("#type-of-orders").text("Invoices");    
+    });
+    $('.append-sales-orders').on('click', function(e) {
+        e.preventDefault();
+        $("#order-sales-table").show();       
+        $("#order-table").hide();
+        $("#type-of-orders").text("Sales Orders");
+    });
+});
+	</script>    

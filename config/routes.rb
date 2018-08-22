@@ -14,8 +14,9 @@ Rails.application.routes.draw do
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc
-  root 'dashboard#index'
-  
+    
+  root :to => 'users#homepages'
+
   # resources :sessions
 
   # delete 'logout' => 'sessions#destroy'
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
   get 'wds' => 'orders#wds'
   get 'art' => 'orders#art'
   get 'admin' => 'orders#admin'
+
   
   resources :items
   resources :sites
@@ -49,6 +51,7 @@ Rails.application.routes.draw do
   get '/customer_details' => 'orders#customer_details'
 
   get '/dashboard' => 'dashboard#index'
+  get '/dashboard/consumer' => 'dashboard#consumer'
   
     
 #  delete 'docs/:id'
