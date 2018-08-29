@@ -54,6 +54,26 @@ class UsersController < ApplicationController
       redirect_to dashboard_consumer_path
      end
   end
+
+  def qbwc_settings
+    if current_user.role = "admin" && current_user.email = "nate@zingbars.com"
+      @qbwc = QBWC.jobs
+    else
+      redirect_to users_path, notice: "You do not have access to this page."
+    end
+  end
+
+  def qbwc_enabled
+    worker_name = params[:id]
+    enabling = params[:qbwc_enabled]
+    QBWC.get_job(worker_name).enabled = enabling
+    a = QBWC.get_job(worker_name).enabled?
+    respond_to do |format|
+      format.js
+      format.json {        
+        render json: {qbwc_enabled: a, id: worker_name} }
+    end
+  end
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:phone, :avatar, :role])
   # end
@@ -70,6 +90,11 @@ class UsersController < ApplicationController
   #   end
         
   private
+  
+  def qbwc_params
+      params.permit(:qbwc_enabled, :id)
+  end
+
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :avatar)
   end

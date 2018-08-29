@@ -3,4 +3,6 @@ class QbwcController < ApplicationController
   # before_action :admin_only, except:[:_generate_wsdl]
   include QBWC::Controller
 
+
+
 end

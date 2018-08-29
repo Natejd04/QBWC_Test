@@ -1,0 +1,42 @@
+ <div id="page-wrapper" style="min-height: 629px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">QBWC - List Of Queries</h1>                  
+			<% i=1 %>
+			<% b = @qbwc.to_a %>
+			<div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                    	<th>#</th>
+                                        <th>Worker Name</th>
+                                        <th>Worker Class</th>
+                                        <th>Enabled?</th>
+                                    </tr>
+                                </thead>
+								<tbody class="order-table">
+                               	<% b.each_with_index do |qbwc, index| %>
+                                	<tr>
+                                    	<td><%= index + 1 %>.</td>
+										<td><%= qbwc.name %></td>
+										<td><%= qbwc.worker_class %></td>
+										<td>
+											<%= form_tag '/users/qbwc_enabled', remote: true do %> 
+								       			<%= check_box_tag qbwc.name, 'yes', qbwc.enabled?, class: 'checkbox-qbwc' %>
+			       							<% end %>
+			       						</td>
+									</tr>
+								<% end %>
+                               	</tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>                               
+        		</div>
+    	    </div>
+		</div>
+	</div>
+</div>

@@ -14,8 +14,13 @@ Rails.application.routes.draw do
   get 'qbwc/action' => 'qbwc#_generate_wsdl'
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc
-    
+
+
+
   root :to => 'users#homepages'
+
+  get 'qbwc_settings' => 'users#qbwc_settings'
+  put 'qbwc_enabled' => 'users#qbwc_enabled'
 
   # resources :sessions
 
@@ -45,6 +50,8 @@ Rails.application.routes.draw do
       post :mark_as_read
     end
   end
+
+
 
   get '/email_send' => 'trackings#email_send'
     
