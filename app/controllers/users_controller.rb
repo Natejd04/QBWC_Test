@@ -47,6 +47,13 @@ class UsersController < ApplicationController
       p @user
   end
 
+  def homepages
+     if current_user.homepage == nil
+      redirect_to dashboard_path
+     else
+      redirect_to dashboard_consumer_path
+     end
+  end
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:phone, :avatar, :role])
   # end
