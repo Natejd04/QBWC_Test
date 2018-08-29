@@ -112,7 +112,7 @@ class Order < ActiveRecord::Base
     def self.to_csv(order)
         attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id tracking fob}
         li_attributes = %w{order_id qty description}
-        multi_header = %w{order_id qty description name id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
+        multi_header = %w{order_id qty description name code upc id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
         if order.count < 2
         CSV.generate(headers: true) do |csv|
             csv << attributes
@@ -120,8 +120,8 @@ class Order < ActiveRecord::Base
             csv << li_header
              order[0].line_items.each do |items|
                 row = items.attributes.values_at(*li_attributes)
-                item_name = [items.item.name].join(", ")
-                row << item_name
+                row += [items.item.name, items.item.code, items.item.upc]
+                row << item_name << item_code << item_upc 
                 csv << row
             end
         end
@@ -133,8 +133,7 @@ class Order < ActiveRecord::Base
                     orderinfo = orders.attributes.values_at(*attributes)
                     # row1 = orderinfo.join(", ")
                     row = items.attributes.values_at(*li_attributes)
-                    item_name = [items.item.name].join(", ")
-                    row << item_name
+                    row += [items.item.name, items.item.code, items.item.upc]
                     row += orderinfo
                     csv << row
                 end
