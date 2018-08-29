@@ -21,8 +21,9 @@ class ItemAssemblyWorker < QBWC::Worker
             :item_query_rq => {
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 1000, #required
-                :from_modified_date => LastUpdate,
-                :to_modified_date => Date.today + (1.0)
+                :from_modified_date => "2017-01-01",
+                :to_modified_date => Date.today + (1.0),
+                :owner_id => 0
             }
         }
     end
@@ -42,9 +43,35 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:name] = qb_item['full_name']
                 item_data[:item_type] = "Inventory Assembly"
 
-                if qb_item['bar_code_value']                    
-                    item_data[:code] = qb_item['bar_code_value']
+                # Start Loop for Owner ID 0
+                if qb_item['data_ext_ret'].is_a? Array
+                    qb_item['data_ext_ret'].each do |li|
+                        if li['data_ext_name'] == "UPC"
+                            if li['data_ext_value'] 
+                                item_data[:upc] = li['data_ext_value']
+                            end
+                        end
+                        if li['data_ext_name'] == "Code"
+                            if li['data_ext_value'] 
+                                item_data[:code] = li['data_ext_value']
+                            end
+                        end
+                    end
+                elsif !qb_item['data_ext_ret'].blank? 
+                    li = qb_item['data_ext_ret']
+                    if li['data_ext_name'] == "UPC"
+                        if li['data_ext_value'] 
+                            item_data[:upc] = li['data_ext_value']
+                        end
+                    end
+                    if li['data_ext_name'] == "Code"
+                        if li['data_ext_value'] 
+                            item_data[:code] = li['data_ext_value']
+                        end
+                    end
                 end
+
+
 
                 if qb_item['income_account_ref']
                     if Account.exists?(list_id: qb_item['income_account_ref']['list_id'])
@@ -62,10 +89,10 @@ class ItemAssemblyWorker < QBWC::Worker
                     
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
-                    # before updating, lets find out if it's neccessary by filtering by modified
-                    if itemupdate.edit_sq != qb_item['edit_sequence']
+                    # # before updating, lets find out if it's neccessary by filtering by modified
+                    # if itemupdate.edit_sq != qb_item['edit_sequence']
                         itemupdate.update(item_data)
-                   end
+                   # end
                 else
                     Item.create(item_data)
                 end
@@ -80,8 +107,32 @@ class ItemAssemblyWorker < QBWC::Worker
             item_data[:name] = qb_item['full_name']
             item_data[:item_type] = "Inventory Assembly"
 
-            if qb_item['bar_code_value']                    
-                item_data[:code] = qb_item['bar_code_value']
+            # Start Loop for Owner ID 0
+            if qb_item['data_ext_ret'].is_a? Array
+                qb_item['data_ext_ret'].each do |li|
+                    if li['data_ext_name'] == "UPC"
+                        if li['data_ext_value'] 
+                            item_data[:upc] = li['data_ext_value']
+                        end
+                    end
+                    if li['data_ext_name'] == "Code"
+                        if li['data_ext_value'] 
+                            item_data[:code] = li['data_ext_value']
+                        end
+                    end
+                end
+            elsif !qb_item['data_ext_ret'].blank? 
+                li = qb_item['data_ext_ret']
+                if li['data_ext_name'] == "UPC"
+                    if li['data_ext_value'] 
+                        item_data[:upc] = li['data_ext_value']
+                    end
+                end
+                if li['data_ext_name'] == "Code"
+                    if li['data_ext_value'] 
+                        item_data[:code] = li['data_ext_value']
+                    end
+                end
             end
             
             if qb_item['sales_and_purchase']
@@ -100,10 +151,10 @@ class ItemAssemblyWorker < QBWC::Worker
                 
             if Item.exists?(list_id: qb_item['list_id'])
                 itemupdate = Item.find_by(list_id: qb_item['list_id'])
-                # before updating, lets find out if it's neccessary by filtering by modified
-                if itemupdate.edit_sq != qb_item['edit_sequence']
+                # # before updating, lets find out if it's neccessary by filtering by modified
+                # if itemupdate.edit_sq != qb_item['edit_sequence']
                     itemupdate.update(item_data)
-              end
+              # end
             else
                 Item.create(item_data)
             end
@@ -195,8 +246,32 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:name] = qb_item['full_name']
                 item_data[:item_type] = "Non-Inventory Part"
 
-                if qb_item['bar_code_value']                    
-                    item_data[:code] = qb_item['bar_code_value']
+                # Start Loop for Owner ID 0
+                if qb_item['data_ext_ret'].is_a? Array
+                    qb_item['data_ext_ret'].each do |li|
+                        if li['data_ext_name'] == "UPC"
+                            if li['data_ext_value'] 
+                                item_data[:upc] = li['data_ext_value']
+                            end
+                        end
+                        if li['data_ext_name'] == "Code"
+                            if li['data_ext_value'] 
+                                item_data[:code] = li['data_ext_value']
+                            end
+                        end
+                    end
+                elsif !qb_item['data_ext_ret'].blank? 
+                    li = qb_item['data_ext_ret']
+                    if li['data_ext_name'] == "UPC"
+                        if li['data_ext_value'] 
+                            item_data[:upc] = li['data_ext_value']
+                        end
+                    end
+                    if li['data_ext_name'] == "Code"
+                        if li['data_ext_value'] 
+                            item_data[:code] = li['data_ext_value']
+                        end
+                    end
                 end
                 
                 if qb_item['sales_or_purchase']
@@ -215,10 +290,10 @@ class ItemAssemblyWorker < QBWC::Worker
                     
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
-                    # before updating, lets find out if it's neccessary by filtering by modified
-                    if itemupdate.edit_sq != qb_item['edit_sequence']
+                    # # before updating, lets find out if it's neccessary by filtering by modified
+                    # if itemupdate.edit_sq != qb_item['edit_sequence']
                         itemupdate.update(item_data)
-                    end
+                    # end
                 else
                     Item.create(item_data)
                 end
@@ -231,9 +306,33 @@ class ItemAssemblyWorker < QBWC::Worker
             item_data[:edit_sq] = qb_item['edit_sequence']
             item_data[:name] = qb_item['full_name']
             item_data[:item_type] = "Non-Inventory Part"
-
-            if qb_item['bar_code_value']                    
-                item_data[:code] = qb_item['bar_code_value']
+            
+            # Start Loop for Owner ID 0
+            if qb_item['data_ext_ret'].is_a? Array
+                qb_item['data_ext_ret'].each do |li|
+                    if li['data_ext_name'] == "UPC"
+                        if li['data_ext_value'] 
+                            item_data[:upc] = li['data_ext_value']
+                        end
+                    end
+                    if li['data_ext_name'] == "Code"
+                        if li['data_ext_value'] 
+                            item_data[:code] = li['data_ext_value']
+                        end
+                    end
+                end
+            elsif !qb_item['data_ext_ret'].blank? 
+                li = qb_item['data_ext_ret']
+                if li['data_ext_name'] == "UPC"
+                    if li['data_ext_value'] 
+                        item_data[:upc] = li['data_ext_value']
+                    end
+                end
+                if li['data_ext_name'] == "Code"
+                    if li['data_ext_value'] 
+                        item_data[:code] = li['data_ext_value']
+                    end
+                end
             end
             
             if qb_item['sales_or_purchase']
@@ -252,10 +351,10 @@ class ItemAssemblyWorker < QBWC::Worker
                 
             if Item.exists?(list_id: qb_item['list_id'])
                 itemupdate = Item.find_by(list_id: qb_item['list_id'])
-                # before updating, lets find out if it's neccessary by filtering by modified
-                if itemupdate.edit_sq != qb_item['edit_sequence']
+                # # before updating, lets find out if it's neccessary by filtering by modified
+                # if itemupdate.edit_sq != qb_item['edit_sequence']
                     itemupdate.update(item_data)
-                end
+                # end
             else
                 Item.create(item_data)
             end
@@ -273,8 +372,32 @@ class ItemAssemblyWorker < QBWC::Worker
                 item_data[:name] = qb_item['full_name']
                 item_data[:item_type] = "Other Charge"
 
-                if qb_item['bar_code_value']                    
-                    item_data[:code] = qb_item['bar_code_value']
+                # Start Loop for Owner ID 0
+                if qb_item['data_ext_ret'].is_a? Array
+                    qb_item['data_ext_ret'].each do |li|
+                        if li['data_ext_name'] == "UPC"
+                            if li['data_ext_value'] 
+                                item_data[:upc] = li['data_ext_value']
+                            end
+                        end
+                        if li['data_ext_name'] == "Code"
+                            if li['data_ext_value'] 
+                                item_data[:code] = li['data_ext_value']
+                            end
+                        end
+                    end
+                elsif !qb_item['data_ext_ret'].blank? 
+                    li = qb_item['data_ext_ret']
+                    if li['data_ext_name'] == "UPC"
+                        if li['data_ext_value'] 
+                            item_data[:upc] = li['data_ext_value']
+                        end
+                    end
+                    if li['data_ext_name'] == "Code"
+                        if li['data_ext_value'] 
+                            item_data[:code] = li['data_ext_value']
+                        end
+                    end
                 end
 
                 if qb_item['sales_or_purchase']
@@ -290,10 +413,10 @@ class ItemAssemblyWorker < QBWC::Worker
           
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
-                    # before updating, lets find out if it's neccessary by filtering by modified
-                    if itemupdate.edit_sq != qb_item['edit_sequence']
+                    # # before updating, lets find out if it's neccessary by filtering by modified
+                    # if itemupdate.edit_sq != qb_item['edit_sequence']
                         itemupdate.update(item_data)
-                    end
+                    # end
                 else
                     Item.create(item_data)
                 end
@@ -307,8 +430,32 @@ class ItemAssemblyWorker < QBWC::Worker
             item_data[:name] = qb_item['full_name']
             item_data[:item_type] = "Other Charge"
 
-            if qb_item['bar_code_value']                    
-                item_data[:code] = qb_item['bar_code_value']
+            # Start Loop for Owner ID 0
+            if qb_item['data_ext_ret'].is_a? Array
+                qb_item['data_ext_ret'].each do |li|
+                    if li['data_ext_name'] == "UPC"
+                        if li['data_ext_value'] 
+                            item_data[:upc] = li['data_ext_value']
+                        end
+                    end
+                    if li['data_ext_name'] == "Code"
+                        if li['data_ext_value'] 
+                            item_data[:code] = li['data_ext_value']
+                        end
+                    end
+                end
+            elsif !qb_item['data_ext_ret'].blank? 
+                li = qb_item['data_ext_ret']
+                if li['data_ext_name'] == "UPC"
+                    if li['data_ext_value'] 
+                        item_data[:upc] = li['data_ext_value']
+                    end
+                end
+                if li['data_ext_name'] == "Code"
+                    if li['data_ext_value'] 
+                        item_data[:code] = li['data_ext_value']
+                    end
+                end
             end
             
             if qb_item['sales_or_purchase']
@@ -323,10 +470,10 @@ class ItemAssemblyWorker < QBWC::Worker
                 
             if Item.exists?(list_id: qb_item['list_id'])
                 itemupdate = Item.find_by(list_id: qb_item['list_id'])
-                # before updating, lets find out if it's neccessary by filtering by modified
-                if itemupdate.edit_sq != qb_item['edit_sequence']
+                # # before updating, lets find out if it's neccessary by filtering by modified
+                # if itemupdate.edit_sq != qb_item['edit_sequence']
                     itemupdate.update(item_data)
-                end
+                # end
             else
                 Item.create(item_data)
             end

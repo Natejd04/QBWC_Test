@@ -67,14 +67,14 @@ class ApplicationController < ActionController::Base
 #    Authenticate the art users, direct them accordingly
     def authenticate_art
         if current_user.role != "art" && current_user.role != "admin"
-            redirect_to signin_path, :notice => "You do not have permissions for   this page."
+            redirect_to signin_path, :notice => "You do not have permissions for this page."
         end
     end
     
 #    authenticate the admin users, direct them accordingly
     def authenticate_admin
         if current_user.role != "admin"
-            redirect_to signin_path, :notice => "You do not have permissions for   this page."
+            redirect_to signin_path, :notice => "You do not have permissions for this page."
         end
     end
     
