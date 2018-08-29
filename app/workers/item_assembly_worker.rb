@@ -90,9 +90,9 @@ class ItemAssemblyWorker < QBWC::Worker
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
                     # # before updating, lets find out if it's neccessary by filtering by modified
-                    # if itemupdate.edit_sq != qb_item['edit_sequence']
+                    if itemupdate.edit_sq != qb_item['edit_sequence']
                         itemupdate.update(item_data)
-                   # end
+                   end
                 else
                     Item.create(item_data)
                 end
@@ -152,9 +152,9 @@ class ItemAssemblyWorker < QBWC::Worker
             if Item.exists?(list_id: qb_item['list_id'])
                 itemupdate = Item.find_by(list_id: qb_item['list_id'])
                 # # before updating, lets find out if it's neccessary by filtering by modified
-                # if itemupdate.edit_sq != qb_item['edit_sequence']
+                if itemupdate.edit_sq != qb_item['edit_sequence']
                     itemupdate.update(item_data)
-              # end
+              end
             else
                 Item.create(item_data)
             end
@@ -291,9 +291,9 @@ class ItemAssemblyWorker < QBWC::Worker
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
                     # # before updating, lets find out if it's neccessary by filtering by modified
-                    # if itemupdate.edit_sq != qb_item['edit_sequence']
+                    if itemupdate.edit_sq != qb_item['edit_sequence']
                         itemupdate.update(item_data)
-                    # end
+                    end
                 else
                     Item.create(item_data)
                 end
@@ -352,9 +352,9 @@ class ItemAssemblyWorker < QBWC::Worker
             if Item.exists?(list_id: qb_item['list_id'])
                 itemupdate = Item.find_by(list_id: qb_item['list_id'])
                 # # before updating, lets find out if it's neccessary by filtering by modified
-                # if itemupdate.edit_sq != qb_item['edit_sequence']
+                if itemupdate.edit_sq != qb_item['edit_sequence']
                     itemupdate.update(item_data)
-                # end
+                end
             else
                 Item.create(item_data)
             end
@@ -414,9 +414,9 @@ class ItemAssemblyWorker < QBWC::Worker
                 if Item.exists?(list_id: qb_item['list_id'])
                     itemupdate = Item.find_by(list_id: qb_item['list_id'])
                     # # before updating, lets find out if it's neccessary by filtering by modified
-                    # if itemupdate.edit_sq != qb_item['edit_sequence']
+                    if itemupdate.edit_sq != qb_item['edit_sequence']
                         itemupdate.update(item_data)
-                    # end
+                    end
                 else
                     Item.create(item_data)
                 end
@@ -471,9 +471,9 @@ class ItemAssemblyWorker < QBWC::Worker
             if Item.exists?(list_id: qb_item['list_id'])
                 itemupdate = Item.find_by(list_id: qb_item['list_id'])
                 # # before updating, lets find out if it's neccessary by filtering by modified
-                # if itemupdate.edit_sq != qb_item['edit_sequence']
+                if itemupdate.edit_sq != qb_item['edit_sequence']
                     itemupdate.update(item_data)
-                # end
+                end
             else
                 Item.create(item_data)
             end
