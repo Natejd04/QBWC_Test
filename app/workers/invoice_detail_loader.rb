@@ -131,9 +131,9 @@ class InvoiceDetailLoader < QBWC::Worker
                     invoice_data[:tracking] = qb_inv['other']
                         if invoice_data[:tracking] =~ /^1Z/
                             invoice_data[:ship_method] = "UPS"
-                        elsif tracking =~ /\d{20,22}/
+                        elsif invoice_data[:tracking] =~ /\d{20,22}/
                                 invoice_data[:ship_method] = "USPS"
-                        elsif tracking =~ /(\b96\d{20}\b)|(\b\d{15}\b)|(\b\d{12}\b)/
+                        elsif invoice_data[:tracking] =~ /(\b96\d{20}\b)|(\b\d{15}\b)|(\b\d{12}\b)/
                             invoice_data[:ship_method] = "FedEx"
                         else
                             invoice_data[:ship_method] = "LTL or Pickup"
@@ -393,9 +393,9 @@ class InvoiceDetailLoader < QBWC::Worker
                 invoice_data[:tracking] = qb_inv['other']
                     if invoice_data[:tracking] =~ /^1Z/
                         invoice_data[:ship_method] = "UPS"
-                    elsif tracking =~ /\d{20,22}/
+                    elsif invoice_data[:tracking] =~ /\d{20,22}/
                             invoice_data[:ship_method] = "USPS"
-                    elsif tracking =~ /(\b96\d{20}\b)|(\b\d{15}\b)|(\b\d{12}\b)/
+                    elsif invoice_data[:tracking] =~ /(\b96\d{20}\b)|(\b\d{15}\b)|(\b\d{12}\b)/
                         invoice_data[:ship_method] = "FedEx"
                     else
                         invoice_data[:ship_method] = "LTL or Pickup"
