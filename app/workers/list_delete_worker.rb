@@ -30,11 +30,53 @@ class ListDeleteWorker < QBWC::Worker
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'        
         # let's grab all inventory assembly items
+        if r['list_deleted_ret'].nil? 
+            # if it's true then we lay down a log update, saying not updated"
+            # Need to add a column to log in order to state when the last one was run
+            # UNLESS there is no trues, it goes with the last empty valued column
+            Log.create(worker_name: "ListDeleteWorker")
+        else
+            # Data was fetched, and will execute
+            # We need a way to say that there wasn't an error, and if so...mark complete.
+            if r['list_deleted_ret'].is_a? Array
 
-        if r['list_deleted_ret'].is_a? Array
+                # we will loop through each item and insert it into the Items table.
+                r['list_deleted_ret'].each do |qb_data|
+                    if qb_data['list_del_type']
+                        table = 
+                        case qb_data['list_del_type']
+                            when "Account"
+                                Account
+                            when "Customer"
+                                Customer
+                            when "InventorySite"
+                                Site
+                            when "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal"
+                                Item
+                            when "Vendor"
+                                Vendor
+                            else
+                                nil
+                        end                
+                        if !table.nil?
+                            delete_data = {}
+                        
+                            delete_data[:list_id] = qb_data['list_id']
+                            delete_data[:deleted] = qb_data['time_deleted']
 
-            # we will loop through each item and insert it into the Items table.
-            r['list_deleted_ret'].each do |qb_data|
+                            if table.exists?(list_id: qb_data['list_id'])
+                                list_element = table.find_by(list_id: qb_data['list_id'])
+                                list_element.update(delete_data)
+                            end
+                        end
+                    end
+                end
+                #this is the end for the array of deleted list
+
+
+            # This is the start of just a single deleted list
+            elsif !r['list_deleted_ret'].blank? 
+                qb_data = r['list_deleted_ret']
                 if qb_data['list_del_type']
                     table = 
                     case qb_data['list_del_type']
@@ -42,15 +84,16 @@ class ListDeleteWorker < QBWC::Worker
                             Account
                         when "Customer"
                             Customer
-                        when "InventorySite"
+                        when "Site"
                             Site
                         when "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal"
                             Item
                         when "Vendor"
                             Vendor
-                        else
+                    else
                             nil
                     end                
+                    
                     if !table.nil?
                         delete_data = {}
                     
@@ -63,45 +106,13 @@ class ListDeleteWorker < QBWC::Worker
                         end
                     end
                 end
+            # End of the Accounts
             end
-            #this is the end for the array of deleted list
-
-
-        # This is the start of just a single deleted list
-        elsif !r['list_deleted_ret'].blank? 
-            qb_data = r['list_deleted_ret']
-            if qb_data['list_del_type']
-                table = 
-                case qb_data['list_del_type']
-                    when "Account"
-                        Account
-                    when "Customer"
-                        Customer
-                    when "Site"
-                        Site
-                    when "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal"
-                        Item
-                    when "Vendor"
-                        Vendor
-                else
-                        nil
-                end                
-                
-                if !table.nil?
-                    delete_data = {}
-                
-                    delete_data[:list_id] = qb_data['list_id']
-                    delete_data[:deleted] = qb_data['time_deleted']
-
-                    if table.exists?(list_id: qb_data['list_id'])
-                        list_element = table.find_by(list_id: qb_data['list_id'])
-                        list_element.update(delete_data)
-                    end
-                end
-            end
-        # End of the Accounts
-        end
+        # Only if complete, put the complete one.
         Log.create(worker_name: "ListDeleteWorker")
+        end #closing of the if log statement
+
+        
 
     end
 end
