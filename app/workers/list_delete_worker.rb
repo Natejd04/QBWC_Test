@@ -1,18 +1,23 @@
 require 'qbwc'
-
+require 'qbwc_helpers/qbwc_helper'
 
 class ListDeleteWorker < QBWC::Worker
 
 # Same thing, let's fine out the last time this was pulled, and decide if it's worth it
-    if Log.exists?(worker_name: 'ListDeleteWorker')
+    qbwc_log_init("ListDeleteWorker")
 
-        LastUpdate = Log.where(worker_name: 'ListDeleteWorker').order(created_at: :desc).limit(1)
-        LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
-    else
-        # This is preloading data based on no records in the log table
-        LastUpdate = "2018-06-01"
+    # if Log.exists?(worker_name: 'ListDeleteWorker')
+
+    #     LastUpdate = Log.where(worker_name: 'ListDeleteWorker').where(status: 'Completed').order(created_at: :desc).limit(1)
+    #         if LastUpdate.nil? || LastUpdate.empty? 
+    #             LastUpdate = Log.where(worker_name: 'ListDeleteWorker').order(created_at: :desc).limit(1)           
+    #         end
+    #     LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
+    # else
+    #     # This is preloading data based on no records in the log table
+    #     LastUpdate = "2018-06-01"
     
-    end
+    # end
 
 #    This worker will grab only active items, in the assembly section of QB.
 #    We will use this to populate our item table, so that we can refernce orders and track inventory
@@ -21,7 +26,7 @@ class ListDeleteWorker < QBWC::Worker
             :list_deleted_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
                 :list_del_type => ["Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"],
-                # :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
+                :deleted_date_range_filter => {"from_deleted_date" => LastUpdate, "to_deleted_date" => Date.today + (1.0)}
             }
         }
     end
@@ -34,14 +39,14 @@ class ListDeleteWorker < QBWC::Worker
             # if it's true then we lay down a log update, saying not updated"
             # Need to add a column to log in order to state when the last one was run
             # UNLESS there is no trues, it goes with the last empty valued column
-            Log.create(worker_name: "ListDeleteWorker")
+            Log.create(worker_name: "ListDeleteWorker", status: "No Changes")
         else
             # Data was fetched, and will execute
             # We need a way to say that there wasn't an error, and if so...mark complete.
             if r['list_deleted_ret'].is_a? Array
-
+                i = 0
                 # we will loop through each item and insert it into the Items table.
-                r['list_deleted_ret'].each do |qb_data|
+                r['list_deleted_ret'].each_with_index do |qb_data, index|
                     if qb_data['list_del_type']
                         table = 
                         case qb_data['list_del_type']
@@ -67,6 +72,7 @@ class ListDeleteWorker < QBWC::Worker
                             if table.exists?(list_id: qb_data['list_id'])
                                 list_element = table.find_by(list_id: qb_data['list_id'])
                                 list_element.update(delete_data)
+                                Log.create(worker_name: "ListDeleteWorker", status: "Updates", log_msg: "#{index} records were updated.")
                             end
                         end
                     end
@@ -103,13 +109,14 @@ class ListDeleteWorker < QBWC::Worker
                         if table.exists?(list_id: qb_data['list_id'])
                             list_element = table.find_by(list_id: qb_data['list_id'])
                             list_element.update(delete_data)
+                            Log.create(worker_name: "ListDeleteWorker", status: "Updates", log_msg: "One record was updated.")
                         end
                     end
                 end
             # End of the Accounts
             end
         # Only if complete, put the complete one.
-        Log.create(worker_name: "ListDeleteWorker")
+        Log.create(worker_name: "ListDeleteWorker", status: "Complete")
         end #closing of the if log statement
 
         
