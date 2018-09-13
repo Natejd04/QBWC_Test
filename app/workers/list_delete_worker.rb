@@ -1,23 +1,10 @@
 require 'qbwc'
-require 'qbwc_helpers/qbwc_helper'
-
+require 'concerns/qbwc_helper'
 class ListDeleteWorker < QBWC::Worker
+    extend QbwcHelper
 
 # Same thing, let's fine out the last time this was pulled, and decide if it's worth it
-    qbwc_log_init("ListDeleteWorker")
-
-    # if Log.exists?(worker_name: 'ListDeleteWorker')
-
-    #     LastUpdate = Log.where(worker_name: 'ListDeleteWorker').where(status: 'Completed').order(created_at: :desc).limit(1)
-    #         if LastUpdate.nil? || LastUpdate.empty? 
-    #             LastUpdate = Log.where(worker_name: 'ListDeleteWorker').order(created_at: :desc).limit(1)           
-    #         end
-    #     LastUpdate = LastUpdate[0][:created_at].strftime("%Y-%m-%d")
-    # else
-    #     # This is preloading data based on no records in the log table
-    #     LastUpdate = "2018-06-01"
-    
-    # end
+    LastUpdate = qbwc_log_init("ListDeleteWorker")
 
 #    This worker will grab only active items, in the assembly section of QB.
 #    We will use this to populate our item table, so that we can refernce orders and track inventory
