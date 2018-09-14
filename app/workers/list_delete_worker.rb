@@ -2,10 +2,10 @@ require 'qbwc'
 require 'concerns/qbwc_helper'
 class ListDeleteWorker < QBWC::Worker
     extend QbwcHelper
+    extend QbwcLogCreate
 
-# Same thing, let's fine out the last time this was pulled, and decide if it's worth it
+    #We will establish which worker this is. This will be used through-out.
     WorkerName = "ListDeleteWorker"
-    # LastUpdate = qbwc_log_init(WorkerName)
 
 #    This worker will grab only active items, in the assembly section of QB.
 #    We will use this to populate our item table, so that we can refernce orders and track inventory
@@ -22,13 +22,15 @@ class ListDeleteWorker < QBWC::Worker
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'        
-        # let's grab all inventory assembly items
+        
         if r['list_deleted_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
             qbwc_log_create(WorkerName, "none", nil)            
         else
             # Data was fetched, and will execute
             # We need a way to say that there wasn't an error, and if so...mark complete.
+            
+            # let's grab all inventory assembly items
             if r['list_deleted_ret'].is_a? Array                
                 # we will loop through each item and insert it into the Items table.
                 r['list_deleted_ret'].each_with_index do |qb_data, index|

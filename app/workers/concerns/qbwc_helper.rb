@@ -13,11 +13,15 @@ module QbwcHelper
 	    end
 	end
 
-	def qbwc_log_create(worker, stat, msg)
-		if stat == "none"
+	def qbwc_log_create(worker, code, stat, msg)
+		if stat == "none" && code == 0 
 			Log.create(worker_name: WorkerName, status: "No Changes")
-		elsif stat == "updates"
-			Log.create(worker_name: WorkerName, status: stat, log_msg: msg + "record(s) were updated")
+		elsif stat == "none" && code == 1
+			Log.create(worker_name: WorkerName, status: "No Changes", log_msg: msg)
+		elsif stat == "updates" && code == 0
+			Log.create(worker_name: WorkerName, status: "Updates", log_msg: msg + "record(s) were updated or created")
+		elsif stat == "updates" && code == 1
+			Log.create(worker_name: WorkerName, status: "Updates", log_msg: msg)
 		elsif stat == "completed"
 			Log.create(worker_name: WorkerName, status: "Completed")
 		end
