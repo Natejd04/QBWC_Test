@@ -339,7 +339,7 @@ class JournalWorker < QBWC::Worker
     # ----------------> End of Journal Entry each loop
                     i += 1
                     end
-                    qbwc_log_create(WorkerName, 0, "updates", i)
+                    qbwc_log_create(WorkerName, 0, "updates", i.to_s)
                     # Now we will check to make sure the object isn't empty.   
             elsif !r['journal_entry_ret'].blank? 
                 journal_data = {}

@@ -69,7 +69,7 @@ class AccountWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
 
             # This is if there is only 1 item update
             elsif !r['account_ret'].blank? 

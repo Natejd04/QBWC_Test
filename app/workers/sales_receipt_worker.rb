@@ -216,7 +216,7 @@ class SalesReceiptWorker < QBWC::Worker
                 i += 1
                 # This is the end of the original invoice each do
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
 
             # If the obect wasn't an array and only one record was present we will record that
             # No loop or each process

@@ -103,7 +103,7 @@ class CustomerUpdateWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates",i)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
             # Now we will check to make sure the object isn't empty.   
             elsif !r['customer_ret'].blank? 
                 c = r['customer_ret']

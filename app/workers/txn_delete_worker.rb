@@ -64,7 +64,7 @@ class TxnDeleteWorker < QBWC::Worker
                 end
                 #this is the end for the array of deleted list
 
-                qbwc_log_create(WorkerName, 0, "updates", i)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
 
             # This is the start of just a single deleted list
             elsif !r['txn_deleted_ret'].blank? 

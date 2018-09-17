@@ -23,7 +23,7 @@ QBWC.configure do |c|
   # Can be re-assigned by calling QBWC.set_session_initializer
    c.session_initializer = Proc.new{|session|
      puts "New QuickBooks Web Connector session has been established"
-     Log.create(:worker_name => "QBWC Updated")
+     Log.create(:worker_name => "QBWC Initialized")
    }
 
   # QBXML version to use. Check the "Implementation" column in the QuickBooks Onscreen Reference to see which fields are supported in which versions. Newer versions of QuickBooks are backwards compatible with older QBXML versions.

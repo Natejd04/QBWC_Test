@@ -69,7 +69,7 @@ class InvSiteWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
 
             # We need this if there is not an array of sites
             elsif !r['inventory_site_ret'].blank? 
