@@ -3,7 +3,7 @@ require 'concerns/qbwc_helper'
 
 class CreditMemoLoader < QBWC::Worker
     extend QbwcHelper
-    extend QbwcLogCreate
+    
 
     #We will establish which worker this is. This will be used through-out.
     WorkerName = "CreditMemoLoader"
