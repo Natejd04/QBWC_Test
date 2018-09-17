@@ -1,7 +1,7 @@
 require 'qbwc'
 require 'concerns/qbwc_helper'
 class ListDeleteWorker < QBWC::Worker
-    extend QbwcHelper
+    include QbwcHelper
     
 
     #We will establish which worker this is. This will be used through-out.
@@ -21,6 +21,7 @@ class ListDeleteWorker < QBWC::Worker
 
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
+        
         complete = r['xml_attributes']['iteratorRemainingCount'] == '0'        
         
         if r['list_deleted_ret'].nil? 

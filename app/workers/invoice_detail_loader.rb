@@ -2,7 +2,7 @@ require 'qbwc'
 require 'concerns/qbwc_helper'
 
 class InvoiceDetailLoader < QBWC::Worker
-    extend QbwcHelper
+    include QbwcHelper
     
     #We will establish which worker this is. This will be used through-out.
     WorkerName = "InvoiceDetailLoader"

@@ -3,7 +3,7 @@ require 'concerns/qbwc_helper'
 #   We will use this to pull site location data.
 
 class InvSiteWorker < QBWC::Worker
-    extend QbwcHelper
+    include QbwcHelper
     
     #We will establish which worker this is. This will be used through-out.
     WorkerName = "InvSiteWorker"
