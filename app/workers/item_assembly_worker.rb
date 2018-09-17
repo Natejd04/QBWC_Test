@@ -26,7 +26,7 @@ class ItemAssemblyWorker < QBWC::Worker
 
         if r['item_inventory_assembly_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, "none", "No assembly items were updated")            
+            qbwc_log_create(WorkerName, 1, "none", "No assembly items were updated")            
         else
 
             # let's grab all inventory assembly items

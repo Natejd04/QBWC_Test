@@ -25,7 +25,7 @@ class ListDeleteWorker < QBWC::Worker
         
         if r['list_deleted_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil)            
         else
             # Data was fetched, and will execute
             # We need a way to say that there wasn't an error, and if so...mark complete.
@@ -60,7 +60,7 @@ class ListDeleteWorker < QBWC::Worker
                                 list_element = table.find_by(list_id: qb_data['list_id'])
                                 list_element.update(delete_data)
                                 # This will record how many updates were made.
-                                qbwc_log_create(WorkerName, "updates", index)
+                                qbwc_log_create(WorkerName, 0, "updates", index)
                             end
                         end
                     end
@@ -97,14 +97,14 @@ class ListDeleteWorker < QBWC::Worker
                         if table.exists?(list_id: qb_data['list_id'])
                             list_element = table.find_by(list_id: qb_data['list_id'])
                             list_element.update(delete_data)
-                            qbwc_log_create(WorkerName, "updates", "1")                            
+                            qbwc_log_create(WorkerName, 0, "updates", "1")                            
                         end
                     end
                 end
             # End of the Accounts
             end
         # Only if complete, put the complete one.
-        qbwc_log_create(WorkerName, "complete", nil)
+        qbwc_log_create(WorkerName, 0, "complete", nil)
         end #closing of the if log statement
 
         
