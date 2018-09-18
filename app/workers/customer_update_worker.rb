@@ -155,7 +155,7 @@ class CustomerUpdateWorker < QBWC::Worker
                 else
                     # the customer didn't exists so we will create
                     Customer.create(customer_data)
-                    if InitialLoad == false
+                    if initial_load == false
                         customer_created = Customer.find_by(txn_id: customer_data[:txn_id])
                         admin = User.where(role: "admin").select("name, email, role, id")
                         combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")

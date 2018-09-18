@@ -75,41 +75,39 @@ class AccountWorker < QBWC::Worker
             elsif !r['account_ret'].blank? 
                 qb_account = r['account_ret']
                 account_data = {}
-                    account_data[:name] = qb_account['full_name']
-                    account_data[:description] = qb_account['desc']
-                    account_data[:number] = qb_account['account_number']
-                    account_data[:account_type] = qb_account['account_type']
-                    account_data[:balance] = qb_account['balance']
-                    account_data[:list_id] = qb_account['list_id']
-                    account_data[:edit_sq] = qb_account['edit_sequence']
-                    account_data[:active] = qb_account['is_active']
-                    account_data[:qb_created] = qb_account['time_created']
-                    account_data[:qb_modified] = qb_account['time_modified']
+                account_data[:name] = qb_account['full_name']
+                account_data[:description] = qb_account['desc']
+                account_data[:number] = qb_account['account_number']
+                account_data[:account_type] = qb_account['account_type']
+                account_data[:balance] = qb_account['balance']
+                account_data[:list_id] = qb_account['list_id']
+                account_data[:edit_sq] = qb_account['edit_sequence']
+                account_data[:active] = qb_account['is_active']
+                account_data[:qb_created] = qb_account['time_created']
+                account_data[:qb_modified] = qb_account['time_modified']
 
-                    if qb_account['sublevel']
-                        account_data[:sublevel] = qb_account['sublevel']
-                    end
+                if qb_account['sublevel']
+                    account_data[:sublevel] = qb_account['sublevel']
+                end
 
-                    if qb_account['currency_ref']                    
-                        account_data[:currency] = qb_account['currency_ref']['full_name']
+                if qb_account['currency_ref']                    
+                    account_data[:currency] = qb_account['currency_ref']['full_name']
+                end
+               
+                if Account.exists?(list_id: qb_account['list_id'])
+                    accountupdate = Account.find_by(list_id: qb_account['list_id'])
+                    # before updating, lets find out if it's neccessary by filtering by modified
+                    if accountupdate.edit_sq != qb_account['edit_sequence']
+                        accountupdate.update(account_data)
                     end
-                   
-                    if Account.exists?(list_id: qb_account['list_id'])
-                        accountupdate = Account.find_by(list_id: qb_account['list_id'])
-                        # before updating, lets find out if it's neccessary by filtering by modified
-                        if accountupdate.edit_sq != qb_account['edit_sequence']
-                            accountupdate.update(account_data)
-                        end
-                    else
-                        Account.create(account_data)
-                    end
-                    qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
+                else
+                    Account.create(account_data)
+                end
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             # End of the Accounts
             end
-        qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
-        # This is the end of the empty statement
-        
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
+            # This is the end of the empty statement
         end
-
     end
 end

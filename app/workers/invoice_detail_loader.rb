@@ -21,7 +21,7 @@ class InvoiceDetailLoader < QBWC::Worker
     def handle_response(r, session, job, request, data)
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         # complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
-        if r['account_ret'].nil? 
+        if r['invoice_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
             qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
