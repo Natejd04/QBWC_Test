@@ -14,7 +14,7 @@ class AccountWorker < QBWC::Worker
             :account_query_rq => {
                 :active_status => "ActiveOnly",
                 :from_modified_date => qbwc_log_init(WorkerName),
-                :to_modified_date => Date.today + (1.0)
+                :to_modified_date => qbwc_log_end()
             }
         }
     end
@@ -23,7 +23,7 @@ class AccountWorker < QBWC::Worker
         # handle_response will get customers in groups of 100. When this is 0, we're done.
         if r['account_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
 
             # let's grab all inventory assembly items
@@ -69,7 +69,7 @@ class AccountWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
 
             # This is if there is only 1 item update
             elsif !r['account_ret'].blank? 
@@ -103,10 +103,10 @@ class AccountWorker < QBWC::Worker
                     else
                         Account.create(account_data)
                     end
-                    qbwc_log_create(WorkerName, 0, "updates", "1")
+                    qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             # End of the Accounts
             end
-        qbwc_log_create(WorkerName, 0, "complete", nil)
+        qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         # This is the end of the empty statement
         
         end

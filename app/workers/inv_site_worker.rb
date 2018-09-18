@@ -13,7 +13,7 @@ class InvSiteWorker < QBWC::Worker
             :inventory_site_query_rq => {
                 :active_status => "All",
                 :from_modified_date => qbwc_log_init(WorkerName),
-                :to_modified_date => Date.today + (1.0)
+                :to_modified_date => qbwc_log_end()
                 
             }
         }
@@ -24,7 +24,7 @@ class InvSiteWorker < QBWC::Worker
 #        <> ideally fix this so that it only updates, when a new item is added
         if r['account_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
 
             if r['inventory_site_ret'].is_a? Array
@@ -69,7 +69,7 @@ class InvSiteWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
 
             # We need this if there is not an array of sites
             elsif !r['inventory_site_ret'].blank? 
@@ -109,9 +109,9 @@ class InvSiteWorker < QBWC::Worker
                 else
                     Site.create(site)
                 end
-                qbwc_log_create(WorkerName, 0, "updates", "1")
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             end
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         # This is the end of the empty statement
         end
     end

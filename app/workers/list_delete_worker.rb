@@ -14,7 +14,7 @@ class ListDeleteWorker < QBWC::Worker
             :list_deleted_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
                 :list_del_type => ["Account", "Customer", "InventorySite", "ItemDiscount", "ItemFixedAsset", "ItemGroup", "ItemInventory", "ItemInventoryAssembly", "ItemNonInventory", "ItemOtherCharge", "ItemPayment", "ItemService", "ItemSubtotal", "Vendor"],
-                :deleted_date_range_filter => {"from_deleted_date" => qbwc_log_init(WorkerName), "to_deleted_date" => Date.today + (1.0)}
+                :deleted_date_range_filter => {"from_deleted_date" => qbwc_log_init(WorkerName), "to_deleted_date" => qbwc_log_end()}
             }
         }
     end
@@ -26,7 +26,7 @@ class ListDeleteWorker < QBWC::Worker
         
         if r['list_deleted_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
             # Data was fetched, and will execute
             # We need a way to say that there wasn't an error, and if so...mark complete.
@@ -34,6 +34,7 @@ class ListDeleteWorker < QBWC::Worker
             # let's grab all inventory assembly items
             if r['list_deleted_ret'].is_a? Array                
                 # we will loop through each item and insert it into the Items table.
+                i = 0
                 r['list_deleted_ret'].each_with_index do |qb_data, index|
                     if qb_data['list_del_type']
                         table = 
@@ -60,14 +61,14 @@ class ListDeleteWorker < QBWC::Worker
                             if table.exists?(list_id: qb_data['list_id'])
                                 list_element = table.find_by(list_id: qb_data['list_id'])
                                 list_element.update(delete_data)
-                                # This will record how many updates were made.
-                                qbwc_log_create(WorkerName, 0, "updates", index)
                             end
                         end
                     end
+                    i += 1
                 end
                 #this is the end for the array of deleted list
-
+                # This will record how many updates were made.
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
 
             # This is the start of just a single deleted list
             elsif !r['list_deleted_ret'].blank? 
@@ -105,10 +106,7 @@ class ListDeleteWorker < QBWC::Worker
             # End of the Accounts
             end
         # Only if complete, put the complete one.
-        qbwc_log_create(WorkerName, 0, "complete", nil)
+        qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         end #closing of the if log statement
-
-        
-
     end
 end

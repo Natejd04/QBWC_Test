@@ -14,7 +14,7 @@ class VendorWorker < QBWC::Worker
                 :max_returned => 100, #required
                 :active_status => "ActiveOnly",
                 :from_modified_date => qbwc_log_init(WorkerName),
-                :to_modified_date => Date.today + (1.0)
+                :to_modified_date => qbwc_log_end()
             }
         }
     end
@@ -27,7 +27,7 @@ class VendorWorker < QBWC::Worker
 
         if r['vendor_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
             # if no customer updates occured we skip this.
             # if r['vendor_ret']
@@ -80,7 +80,7 @@ class VendorWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
 
                     # Now we will check to make sure the object isn't empty.   
             elsif !r['vendor_ret'].blank? 
@@ -131,9 +131,9 @@ class VendorWorker < QBWC::Worker
                     end
                 # let's record that this worker was ran, so that it's timestamped in logs
                 # Moved the log create to be within the handle response incase the response has errors and I don't want it to log.
-                qbwc_log_create(WorkerName, 0, "updates", "1")
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             end
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         end
     end
 end

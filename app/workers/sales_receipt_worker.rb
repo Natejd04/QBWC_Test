@@ -11,7 +11,7 @@ class SalesReceiptWorker < QBWC::Worker
         {
             :sales_receipt_query_rq => {
                 # :max_returned => 100,
-                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => LastUpdate, "to_modified_date" => qbwc_log_end()},
                 :include_line_items => true
             }
         }
@@ -22,7 +22,7 @@ class SalesReceiptWorker < QBWC::Worker
         # complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
         if r['sales_receipt_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end()) 
         else
 
             # We will then loop through each invoice and create records.
@@ -216,7 +216,7 @@ class SalesReceiptWorker < QBWC::Worker
                 i += 1
                 # This is the end of the original invoice each do
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
 
             # If the obect wasn't an array and only one record was present we will record that
             # No loop or each process
@@ -413,11 +413,11 @@ class SalesReceiptWorker < QBWC::Worker
                     end
                 end
         # ---------------> End Line Item    
-                qbwc_log_create(WorkerName, 0, "updates", "1")                            
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())                            
             end
             # this is the end of the non-array original invoice
 
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         end
     end
 end

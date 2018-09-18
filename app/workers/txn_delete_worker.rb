@@ -13,7 +13,7 @@ class TxnDeleteWorker < QBWC::Worker
             :txn_deleted_query_rq => {
                 :xml_attributes => { "requestID" =>"1"},
                 :txn_del_type => ["Bill", "CreditMemo", "Invoice", "JournalEntry", "PurchaseOrder", "SalesOrder", "SalesReceipt"],
-                :deleted_date_range_filter => {"from_deleted_date" => qbwc_log_init(WorkerName), "to_deleted_date" => Date.today + (1.0)}
+                :deleted_date_range_filter => {"from_deleted_date" => qbwc_log_init(WorkerName), "to_deleted_date" => qbwc_log_end()}
             }
         }
     end
@@ -24,7 +24,7 @@ class TxnDeleteWorker < QBWC::Worker
         # let's grab all inventory assembly items
         if r['txn_deleted_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
 
             if r['txn_deleted_ret'].is_a? Array
@@ -64,7 +64,7 @@ class TxnDeleteWorker < QBWC::Worker
                 end
                 #this is the end for the array of deleted list
 
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
 
             # This is the start of just a single deleted list
             elsif !r['txn_deleted_ret'].blank? 
@@ -99,10 +99,10 @@ class TxnDeleteWorker < QBWC::Worker
                     end
                 end
             # End of the Accounts
-                qbwc_log_create(WorkerName, 0, "updates", "1")
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             end
             # this is the end of the non-array original sales order
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         end
     end
 end

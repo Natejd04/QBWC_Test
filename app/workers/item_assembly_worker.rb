@@ -14,7 +14,7 @@ class ItemAssemblyWorker < QBWC::Worker
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 1000, #required
                 :from_modified_date => qbwc_log_init(WorkerName),
-                :to_modified_date => Date.today + (1.0),
+                :to_modified_date => qbwc_log_end(),
                 :owner_id => 0
             }
         }
@@ -26,7 +26,7 @@ class ItemAssemblyWorker < QBWC::Worker
 
         if r['item_inventory_assembly_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 1, "none", "No assembly items were updated")            
+            qbwc_log_create(WorkerName, 1, "none", "No assembly items were updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else
 
             # let's grab all inventory assembly items
@@ -158,13 +158,13 @@ class ItemAssemblyWorker < QBWC::Worker
             
             end
             # End of the Assembly items
-            qbwc_log_create(WorkerName, 1, "updates", "Assembly items were created/updated")
+            qbwc_log_create(WorkerName, 1, "updates", "Assembly items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())
         # This is the end of the empty statement
         end
 
         if r['item_service_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", "No service items were updated")            
+            qbwc_log_create(WorkerName, 1, "none", "No service items were updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else
             # Now lets grab service items
             if r['item_service_ret'].is_a? Array
@@ -239,12 +239,12 @@ class ItemAssemblyWorker < QBWC::Worker
 
             end
             # end of the service items
-            qbwc_log_create(WorkerName, 1, "updates", "Service items were created/updated")
+            qbwc_log_create(WorkerName, 1, "updates", "Service items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())
         end
 
         if r['item_non_inventory_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", "no non inventory items were changed/updated")            
+            qbwc_log_create(WorkerName, 1, "none", "no non inventory items were changed/updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else    
             # Now lets grab non-inventory part items
             if r['item_non_inventory_ret'].is_a? Array
@@ -372,12 +372,12 @@ class ItemAssemblyWorker < QBWC::Worker
             end
             # end of the non-inventory part items
                     
-        qbwc_log_create(WorkerName, 1, "updates", "Non-Inventory items were created/updated")
+        qbwc_log_create(WorkerName, 1, "updates", "Non-Inventory items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())
         end
 
         if r['item_other_charge_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", "No other charge group items were updated")            
+            qbwc_log_create(WorkerName, 1, "none", "No other charge group items were updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else 
             # Now lets grab the item other charge group
             if r['item_other_charge_ret'].is_a? Array
@@ -497,12 +497,12 @@ class ItemAssemblyWorker < QBWC::Worker
                 end
             end
             # end of the other charge group items
-        qbwc_log_create(WorkerName, 1, "updates", "Other Charge group items were created/updated")
+        qbwc_log_create(WorkerName, 1, "updates", "Other Charge group items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())
         end
 
         if r['item_inventory_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 1, "none", "no inventory part items updated")            
+            qbwc_log_create(WorkerName, 1, "none", "no inventory part items updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else 
             # Now lets grab the inventory part group
             if r['item_inventory_ret'].is_a? Array
@@ -582,12 +582,12 @@ class ItemAssemblyWorker < QBWC::Worker
 
             end
             # end of the inventory part group
-        qbwc_log_create(WorkerName, 1, "updates", "Inventory Part Group items were created/updated")
+        qbwc_log_create(WorkerName, 1, "updates", "Inventory Part Group items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())
         end        
 
         if r['item_discount_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 1, "none", "no discount items updated")            
+            qbwc_log_create(WorkerName, 1, "none", "no discount items updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else 
             # Now lets grab the item discount group
             if r['item_discount_ret'].is_a? Array
@@ -658,12 +658,12 @@ class ItemAssemblyWorker < QBWC::Worker
                 end
             end
             # end of the discount group 
-            qbwc_log_create(WorkerName, 1, "updates", "Discount group items were created/updated")        
+            qbwc_log_create(WorkerName, 1, "updates", "Discount group items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())        
         end
 
         if r['item_subtotal_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 1, "none", "no subtotal items updated")            
+            qbwc_log_create(WorkerName, 1, "none", "no subtotal items updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else 
             # Now lets grab the subtotal group
             if r['item_subtotal_ret'].is_a? Array
@@ -722,12 +722,12 @@ class ItemAssemblyWorker < QBWC::Worker
                 end
             end
             # end of the subtotal group 
-            qbwc_log_create(WorkerName, 1, "updates", "Subtotal items were created/updated")
+            qbwc_log_create(WorkerName, 1, "updates", "Subtotal items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())
         end
 
         if r['item_sales_tax_ret'].nil?
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 1, "none", "no sales tax items updated")            
+            qbwc_log_create(WorkerName, 1, "none", "no sales tax items updated", qbwc_log_init(WorkerName), qbwc_log_end())            
         else 
              # Now lets grab the sales tax group
             if r['item_sales_tax_ret'].is_a? Array
@@ -784,11 +784,11 @@ class ItemAssemblyWorker < QBWC::Worker
                 else
                     Item.create(item_data)
                 end
+                # end of the discount group 
+                qbwc_log_create(WorkerName, 1, "updates", "Sales tax items were created/updated", qbwc_log_init(WorkerName), qbwc_log_end())         
             end
-            # end of the discount group 
-        qbwc_log_create(WorkerName, 1, "updates", "Sales tax items were created/updated")         
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
+            # This is the end of the empty statement
         end
-        qbwc_log_create(WorkerName, 0, "complete", nil)
-        # This is the end of the empty statement
     end
 end

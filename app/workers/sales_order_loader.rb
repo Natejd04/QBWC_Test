@@ -12,7 +12,7 @@ class SalesOrderLoader < QBWC::Worker
             :sales_order_query_rq => {
                 # :max_returned => 100,
                 # :xml_attributes => { "requestID" =>"1"},
-                :modified_date_range_filter => {"from_modified_date" => qbwc_log_init(WorkerName), "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => qbwc_log_init(WorkerName), "to_modified_date" => qbwc_log_end()},
                 :include_line_items => true
             }
         }
@@ -24,7 +24,7 @@ class SalesOrderLoader < QBWC::Worker
 
         if r['sales_order_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
 
             # We will then loop through each invoice and create records.
@@ -112,20 +112,21 @@ class SalesOrderLoader < QBWC::Worker
                             end
                     else
                         Order.create(invoice_data)
-                    # if InitialLoad == false
-                        inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
-                        admin = User.where(role: "admin").select("name, email, role, id")
-                        combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
-                        if qb_inv['class_ref'].nil?
-                            invoice_data[:c_class] = nil
-                        end
-                        if invoice_data[:c_class] == "Distributor Class"  || invoice_data[:c_class] == "Amazon VC"
-                            combo.each do |user|
-                                Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                        if initial_load == false
+                            inv_created = Order.find_by(txn_id: invoice_data[:txn_id])
+                            admin = User.where(role: "admin").select("name, email, role, id")
+                            combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
+                            if qb_inv['class_ref'].nil?
+                                invoice_data[:c_class] = nil
                             end
-                        else
-                            admin.each do |user|
-                                Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                            if invoice_data[:c_class] == "Distributor Class"  || invoice_data[:c_class] == "Amazon VC"
+                                combo.each do |user|
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                                end
+                            else
+                                admin.each do |user|
+                                    Notification.create(recipient_id: user.id, action: "posted", notifiable: inv_created)
+                                end
                             end
                         end
                     end
@@ -245,7 +246,7 @@ class SalesOrderLoader < QBWC::Worker
                 
                 # This is the end of the original sales order each do
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
            
             # If the obect wasn't an array and only one record was present we will record that
             # No loop or each process
@@ -467,10 +468,10 @@ class SalesOrderLoader < QBWC::Worker
                 end
         # ---------------> End Line Item    
 
-                qbwc_log_create(WorkerName, 0, "updates", "1")                            
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())                            
             end
             # this is the end of the non-array original sales order
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         end
     end
 end

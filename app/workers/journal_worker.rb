@@ -12,7 +12,7 @@ class JournalWorker < QBWC::Worker
             :journal_entry_query_rq => {
                 # :max_returned => 100,
                 # :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
-                :modified_date_range_filter => {"from_modified_date" => qbwc_log_init(WorkerName), "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => qbwc_log_init(WorkerName), "to_modified_date" => qbwc_log_end()},
                 :include_line_items => true
             }
         }
@@ -25,7 +25,7 @@ class JournalWorker < QBWC::Worker
 
         if r['journal_entry_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
         # if no journal updates occured we skip this.
             if r['journal_entry_ret'].is_a? Array
@@ -339,7 +339,7 @@ class JournalWorker < QBWC::Worker
     # ----------------> End of Journal Entry each loop
                     i += 1
                     end
-                    qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                    qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
                     # Now we will check to make sure the object isn't empty.   
             elsif !r['journal_entry_ret'].blank? 
                 journal_data = {}
@@ -624,10 +624,10 @@ class JournalWorker < QBWC::Worker
                     end
     # ----------------> End of credit account line item entry 
                 end
-                qbwc_log_create(WorkerName, 0, "updates", "1")
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
     #----------------> End of non-array journal update
             end
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         end
     end
 end

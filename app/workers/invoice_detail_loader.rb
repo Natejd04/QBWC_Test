@@ -11,7 +11,7 @@ class InvoiceDetailLoader < QBWC::Worker
         {
             :invoice_query_rq => {
                 # :max_returned => 100,
-                :modified_date_range_filter => {"from_modified_date" => qbwc_log_init(WorkerName), "to_modified_date" => Date.today + (1.0)},
+                :modified_date_range_filter => {"from_modified_date" => qbwc_log_init(WorkerName), "to_modified_date" => qbwc_log_end()},
                 :include_line_items => true,
                 :include_linked_txns => true
             }
@@ -23,7 +23,7 @@ class InvoiceDetailLoader < QBWC::Worker
         # complete = r['xml_attributes']['iteratorRemainingCount'] == '0'
         if r['account_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())            
         else
 
             # We will then loop through each invoice and create records.
@@ -287,7 +287,7 @@ class InvoiceDetailLoader < QBWC::Worker
                 
                 # This is the end of the original invoice each do
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
       
             # If the obect wasn't an array and only one record was present we will record that
             # No loop or each process
@@ -554,9 +554,9 @@ class InvoiceDetailLoader < QBWC::Worker
                     end
                 end
         # ---------------> End Line Item    
-                qbwc_log_create(WorkerName, 0, "updates", "1")
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             end
-        qbwc_log_create(WorkerName, 0, "complete", nil)
+        qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         # This is the end of the empty statement
         end
     end

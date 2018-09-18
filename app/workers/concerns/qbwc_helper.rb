@@ -1,4 +1,8 @@
 module QbwcHelper
+  	def initial_load()
+  		false
+  	end
+
   	def qbwc_log_init(log_name)
 	    if Log.exists?(worker_name: log_name)
 	      	if Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1).nil? || Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1).empty?
@@ -13,17 +17,23 @@ module QbwcHelper
 	    end
 	end
 
-	def qbwc_log_create(worker, code, stat, msg)
+	def qbwc_log_end()
+		if initial_load == false
+			Date.today + (1.0)
+		end
+	end
+
+	def qbwc_log_create(worker, code, stat, msg, startd, endd)
 		if stat == "none" && code == 0 
-			Log.create(worker_name: worker, status: "Completed", log_msg: "No changes were made")
+			Log.create(worker_name: worker, status: "Completed", log_msg: "No changes were made", start_date: startd, end_date: endd)
 		elsif stat == "none" && code == 1
-			Log.create(worker_name: worker, status: "No Changes", log_msg: msg)
+			Log.create(worker_name: worker, status: "Completed", log_msg: msg, start_date: startd, end_date: endd)
 		elsif stat == "updates" && code == 0
-			Log.create(worker_name: worker, status: "Updates", log_msg: msg + " record(s) were updated or created")
+			Log.create(worker_name: worker, status: "Updates", log_msg: msg + " record(s) were updated or created", start_date: startd, end_date: endd)
 		elsif stat == "updates" && code == 1
-			Log.create(worker_name: worker, status: "Updates", log_msg: msg)
-		elsif stat == "completed"
-			Log.create(worker_name: worker, status: "Completed", log_msg: "Changes were made")
+			Log.create(worker_name: worker, status: "Updates", log_msg: msg, start_date: startd, end_date: endd)
+		elsif stat == "complete"
+			Log.create(worker_name: worker, status: "Completed", log_msg: "Changes were made", start_date: startd, end_date: endd)
 		end
 	end
 end

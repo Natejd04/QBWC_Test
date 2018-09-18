@@ -15,7 +15,7 @@ class CustomerUpdateWorker < QBWC::Worker
                 :xml_attributes => { "requestID" =>"1", 'iterator'  => "Start" },
                 :max_returned => 200, #required
                 :from_modified_date => qbwc_log_init(WorkerName),
-                :to_modified_date => Date.today + (1.0)          
+                :to_modified_date => qbwc_log_end()
             }
         }
     end
@@ -27,7 +27,7 @@ class CustomerUpdateWorker < QBWC::Worker
 
         if r['customer_ret'].nil? 
             # This will log if the data returned was empty and no updates occured, but it did run.
-            qbwc_log_create(WorkerName, 0, "none", nil)            
+            qbwc_log_create(WorkerName, 0, "none", nil, qbwc_log_init(WorkerName), qbwc_log_end())
         
         else
         
@@ -84,7 +84,7 @@ class CustomerUpdateWorker < QBWC::Worker
                        
                         # the customer didn't exists so we will create
                         Customer.create(customer_data)
-                        if InitialLoad == false
+                        if initial_load == false
                             customer_created = Customer.find_by(list_id: customer_data[:list_id])
                             admin = User.where(role: "admin").select("name, email, role, id")
                             combo = User.where("role = ? or role = ?", "admin", "sales").select("name, email, role, id")
@@ -103,7 +103,7 @@ class CustomerUpdateWorker < QBWC::Worker
                     end
                     i += 1
                 end
-                qbwc_log_create(WorkerName, 0, "updates", i.to_s)
+                qbwc_log_create(WorkerName, 0, "updates", i.to_s, qbwc_log_init(WorkerName), qbwc_log_end())
             # Now we will check to make sure the object isn't empty.   
             elsif !r['customer_ret'].blank? 
                 c = r['customer_ret']
@@ -172,9 +172,9 @@ class CustomerUpdateWorker < QBWC::Worker
                         end
                     end 
                 end
-                qbwc_log_create(WorkerName, 0, "updates", "1")
+                qbwc_log_create(WorkerName, 0, "updates", "1", qbwc_log_init(WorkerName), qbwc_log_end())
             end
-            qbwc_log_create(WorkerName, 0, "complete", nil)
+            qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
             # This is the end of the empty statement
         end
     end
