@@ -30,12 +30,12 @@
                                         <td><%= qbwc.worker_class %></td>
 										<td>
                                             <% if !log_dates[0].nil? %>
-                                            <%= log_dates[0].start_date.strftime("%m-%d-%Y") %> to <%= log_dates[0].end_date.strftime("%m-%d-%Y") %>
+                                            <%= log_dates[0].start_date.strftime("%m/%d/%Y") %> to <%= log_dates[0].end_date.strftime("%m/%d/%Y") %>
                                             <% end %>                                            
                                         </td>
                                         <td>
                                             <% if !log_status[0].nil? %>
-                                                <%= log_status[0].log_msg %>
+                                                <%= log_status[0].log_msg %> on <%= log_status[0].updated_at.strftime("%m/%d%Y") %>
                                             <% end %>
                                         </td>
                                         <td>
