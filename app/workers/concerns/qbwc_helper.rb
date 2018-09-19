@@ -4,22 +4,28 @@ module QbwcHelper
   	end
 
   	def qbwc_log_init(log_name)
-	    if Log.exists?(worker_name: log_name)
-	      	if Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1).nil? || Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1).empty?
-	            Log.where(worker_name: log_name).order(created_at: :desc).limit(1)[0][:created_at].strftime("%Y-%m-%d") 
-	        else
-	      		Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1)[0][:created_at].strftime("%Y-%m-%d")
-	      	end
-	    else
-	      # This is preloading data based on no records in the log table
-	      # This is arbitrary and a system for loading in batches from the start should be implemented.
-	      3.month.ago.strftime("%Y-%m-%d")
-	    end
+  		if initial_load == false
+		    if Log.exists?(worker_name: log_name)
+		      	if Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1).nil? || Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1).empty?
+		            Log.where(worker_name: log_name).order(created_at: :desc).limit(1)[0][:created_at].strftime("%Y-%m-%d") 
+		        else
+		      		Log.where(worker_name: log_name).where(status: 'Completed').order(created_at: :desc).limit(1)[0][:created_at].strftime("%Y-%m-%d")
+		      	end
+		    else
+		      # This is preloading data based on no records in the log table
+		      # This is arbitrary and a system for loading in batches from the start should be implemented.
+		      3.month.ago.strftime("%Y-%m-%d")
+		    end
+		else
+			"2016-12-01"
+		end
 	end
 
 	def qbwc_log_end()
 		if initial_load == false
 			Date.today + (1.0)
+		else
+			"2016-12-31"
 		end
 	end
 
