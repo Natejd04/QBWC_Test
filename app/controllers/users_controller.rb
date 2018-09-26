@@ -58,6 +58,7 @@ class UsersController < ApplicationController
   def qbwc_settings
     if current_user.role = "admin" && current_user.email = "nate@zingbars.com"
       @qbwc = QBWC.jobs
+      @initial = QbwcHelper.first
     else
       redirect_to users_path, notice: "You do not have access to this page."
     end
@@ -73,6 +74,13 @@ class UsersController < ApplicationController
       format.json {        
         render json: {qbwc_enabled: a, id: worker_name} }
     end
+  end
+
+  def qbwc_helper
+     @initial = QbwcHelper.first
+      if @initial.update(qbwc_helper)
+      end
+
   end
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:phone, :avatar, :role])

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180918203947) do
+ActiveRecord::Schema.define(version: 20180926000943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -325,6 +325,14 @@ ActiveRecord::Schema.define(version: 20180918203947) do
     t.datetime "qb_sent_time"
     t.datetime "confirmed_time"
     t.integer  "user_confirmed"
+  end
+
+  create_table "qbwc_helpers", force: :cascade do |t|
+    t.boolean  "initial_load", default: false
+    t.date     "start"
+    t.date     "end"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "qbwc_jobs", force: :cascade do |t|

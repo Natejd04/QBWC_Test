@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   get 'qbwc_settings' => 'users#qbwc_settings'
   put 'qbwc_enabled' => 'users#qbwc_enabled'
+  put 'qbwc_helper' => 'users#qbwc_helper'
 
   # resources :sessions
 

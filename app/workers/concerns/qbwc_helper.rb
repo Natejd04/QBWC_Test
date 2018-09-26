@@ -1,6 +1,6 @@
 module QbwcHelper
   	def initial_load()
-  		false
+  		true
   	end
 
   	def qbwc_log_init(log_name)
@@ -17,7 +17,8 @@ module QbwcHelper
 		      3.month.ago.strftime("%Y-%m-%d")
 		    end
 		else
-			"2016-12-01"
+			# We can force the start date range here, as long as initial_load is toggled to true
+			"2017-01-01"
 		end
 	end
 
@@ -25,7 +26,8 @@ module QbwcHelper
 		if initial_load == false
 			Date.today + (1.0)
 		else
-			"2016-12-31"
+			# we can set the end range date here, as long as initial_load is toggled to true
+			"2017-12-31"
 		end
 	end
 
