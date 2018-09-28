@@ -8,12 +8,15 @@
     </div>
     <div class="panel-body">
         <div class="row">
+           <div class="alert alert-info fade in qbwc-alert">
+                QBWC settings were successfully updated!
+            </div>
             <div class="col-lg-4">
-                  <%= simple_form_for @initial, :url => '/users/qbwc_helper', :method => :post do |f| %>
+                  <%= simple_form_for @initial, :url => '/qbwc_helper/', remote: true do |f| %>
                     <%= f.input :initial_load, as: :boolean, label: "Initial Load:" %>
                     <%= f.input :start, as: :date, label: "Start Date" %>
                     <%= f.input :end, as: :date, label: "End Date" %>
-                    <%= f.submit  %>
+                    <%= f.submit class: 'checkbox-qbwc-initial' %>
                 <% end %>
             </div>
         </div>

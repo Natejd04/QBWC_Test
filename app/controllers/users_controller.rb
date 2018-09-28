@@ -77,10 +77,20 @@ class UsersController < ApplicationController
   end
 
   def qbwc_helper
-     @initial = QbwcHelper.first
-      if @initial.update(qbwc_helper)
+    @initial = QbwcHelper.first
+    start_date = params[:start]
+    end_date = params[:end]
+    initial_tf = params[:initial_load]
+    @initial.start = start_date
+    @initial.end = end_date
+    @initial.initial_load = initial_tf    
+    @initial.save
+     respond_to do |format|
+        format.js
+        format.json {
+          render json: {initial_load: initial_tf, start: start_date, end: end_date}
+        }
       end
-
   end
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:phone, :avatar, :role])
