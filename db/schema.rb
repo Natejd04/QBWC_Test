@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180926000943) do
+ActiveRecord::Schema.define(version: 20180928231450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,12 +256,13 @@ ActiveRecord::Schema.define(version: 20180926000943) do
 
   create_table "logs", force: :cascade do |t|
     t.string   "worker_name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "status"
     t.text     "log_msg"
     t.date     "start_date"
     t.date     "end_date"
+    t.boolean  "initial_load", default: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -327,7 +328,7 @@ ActiveRecord::Schema.define(version: 20180926000943) do
     t.integer  "user_confirmed"
   end
 
-  create_table "qbwc_helpers", force: :cascade do |t|
+  create_table "qb_helpers", force: :cascade do |t|
     t.boolean  "initial_load", default: false
     t.date     "start"
     t.date     "end"

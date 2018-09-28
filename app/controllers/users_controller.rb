@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   def qbwc_settings
     if current_user.role = "admin" && current_user.email = "nate@zingbars.com"
       @qbwc = QBWC.jobs
-      @initial = QbwcHelper.first
+      @initial = QbHelper.first
     else
       redirect_to users_path, notice: "You do not have access to this page."
     end
@@ -76,8 +76,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def qbwc_helper
-    @initial = QbwcHelper.first
+  def qb_helper
+    @initial = QbHelper.first
     start_date = params[:start]
     end_date = params[:end]
     initial_tf = params[:initial_load]

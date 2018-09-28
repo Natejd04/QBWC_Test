@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class QbwcHelperTest < ActiveSupport::TestCase
+class QbHelperTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
