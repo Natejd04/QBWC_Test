@@ -12,7 +12,7 @@ class DashboardController < ApplicationController
 		@gs_account_id = "items.account_id = 152"
 		@prev_beg_month = 1.month.ago.beginning_of_month
 		@prev_end_month = 1.month.ago.end_of_month
-		# @prev_td_month = 1.month.ago.to_date
+		@prev_td_month = 1.month.ago.to_date
 		@homecurrency = "line_items.homecurrency_amount"
 		@account_amount = "account_line_items.amount"
 		@account_array = ["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]
@@ -26,7 +26,7 @@ class DashboardController < ApplicationController
 		@orders = Order.dash_orders.where.not(:c_class => classed_remove).order(sort_column + " " + sort_direction)
 		@order_total = @orders.sum(:c_total)
 		@invoices = Invoice.where(:c_date => @beg_month..@end_month)
-		@inv_temp = Invoice.where(:c_date => @prev_beg_month..@prev_end_month)
+		# @inv_temp = Invoice.where(:c_date => @prev_beg_month..@prev_end_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
 		@log_update = Log.where(:worker_name => "QBWC Updated").last
 

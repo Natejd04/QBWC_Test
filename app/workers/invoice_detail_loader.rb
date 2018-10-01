@@ -166,6 +166,7 @@ class InvoiceDetailLoader < QBWC::Worker
                             # before updating, lets find out if it's neccessary by filtering by modified
                             if invoiceupdate.c_edit != qb_inv['edit_sequence']
                                 invoiceupdate.update(invoice_data)
+                                invoice_updated = true
                             end
                     else
                         Invoice.create(invoice_data)
@@ -219,10 +220,10 @@ class InvoiceDetailLoader < QBWC::Worker
                            
                             # Now we need to record these line items
                             if LineItem.exists?(txn_id: li['txn_line_id'])
+                                # Line Items aren't unique, in order to alert an existing line item, we have to dump and add.
                                 lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
-                                # Has this LineItem actually been modified?
-
-                                if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                                # Has this LineItem actually been modified?                            
+                                if invoice_updated == true
                                     lineitemupdate.update(li_data)
                                 end
                             else
@@ -275,7 +276,7 @@ class InvoiceDetailLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                            if invoice_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -431,6 +432,7 @@ class InvoiceDetailLoader < QBWC::Worker
                         # before updating, lets find out if it's neccessary by filtering by modified
                         if invoiceupdate.c_edit != qb_inv['edit_sequence']
                             invoiceupdate.update(invoice_data)
+                            invoice_updated = true
                         end
                 else
                     Invoice.create(invoice_data)
@@ -491,7 +493,7 @@ class InvoiceDetailLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                            if invoice_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -546,7 +548,7 @@ class InvoiceDetailLoader < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                        if invoice_updated == true
                             lineitemupdate.update(li_data)
                         end
                     else
