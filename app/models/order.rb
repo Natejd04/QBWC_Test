@@ -137,8 +137,8 @@ class Order < ActiveRecord::Base
                     row += orderinfo
                     csv << row
                 end
-              end
             end
+        end
 
             # V1: Older method, probably not as uesful
             #     CSV.generate(headers: true) do |csv|

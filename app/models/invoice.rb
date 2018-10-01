@@ -29,7 +29,11 @@ include ReportsKit::Model
 
 
   def self.inv_csv(order)
-        attributes = %w{id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id tracking fob}
+        attributes = %w{c_invoicenumber id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id tracking fob c_subtotal}
+        li_attributes = %w{invoice_id qty description homecurrency_amount}
+        multi_header = %w{invoice_id qty description homecurrency_amount name code upc account_id c_invoicenumber id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate customer_id c_subtotal}
+
+
         #li_attributes = %w{order_id qty description}
         #multi_header = %w{order_id qty description name id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
         #if order.count < 2
@@ -45,21 +49,36 @@ include ReportsKit::Model
         #    end
         #end
         #else
-        CSV.generate(headers: true) do |csv|
-        csv << attributes
-        #csv << multi_header
-          order.each do |orders|
-            #orders.line_items.each do |items|
-                orderinfo = orders.attributes.values_at(*attributes)
-                # row1 = orderinfo.join(", ")
-                #row = items.attributes.values_at(*li_attributes)
-                #item_name = [items.item.name].join(", ")
-                #row << item_name
-                #row += orderinfo
-                csv << orderinfo
-            end
-          end
 
+        # TEMPORARY HIDE
+        # CSV.generate(headers: true) do |csv|
+        # csv << attributes
+        # #csv << multi_header
+        #   order.each do |orders|
+        #     #orders.line_items.each do |items|
+        #         orderinfo = orders.attributes.values_at(*attributes)
+        #         # row1 = orderinfo.join(", ")
+        #         #row = items.attributes.values_at(*li_attributes)
+        #         #item_name = [items.item.name].join(", ")
+        #         #row << item_name
+        #         #row += orderinfo
+        #         csv << orderinfo
+        #     end
+        #   end
+
+        CSV.generate(headers: true) do |csv|
+        csv << multi_header
+            order.each do |orders|
+                orders.line_items.each do |items|
+                    orderinfo = orders.attributes.values_at(*attributes)
+                    # row1 = orderinfo.join(", ")
+                    row = items.attributes.values_at(*li_attributes)
+                    row += [items.item.name, items.item.code, items.item.upc, items.item.account_id]
+                    row += orderinfo
+                    csv << row
+                end
+            end
+        end
             # V1: Older method, probably not as uesful
             #     CSV.generate(headers: true) do |csv|
             # order.each do |orders|
