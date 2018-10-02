@@ -109,6 +109,7 @@ class SalesOrderLoader < QBWC::Worker
                             # before updating, lets find out if it's neccessary by filtering by modified
                             if orderupdate.c_edit != qb_inv['edit_sequence']
                                 orderupdate.update(invoice_data)
+                                parent_updated = true
                             end
                     else
                         Order.create(invoice_data)
@@ -182,7 +183,7 @@ class SalesOrderLoader < QBWC::Worker
                                 lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                                 # Has this LineItem actually been modified?
 
-                                if order_id.c_edit != qb_inv['edit_sequence']
+                                if parent_updated == true
                                     lineitemupdate.update(li_data)
                                 end
                             else
@@ -234,7 +235,7 @@ class SalesOrderLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
                             
-                            if order_id.c_edit != qb_inv['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -329,6 +330,7 @@ class SalesOrderLoader < QBWC::Worker
                         # before updating, lets find out if it's neccessary by filtering by modified
                         if orderupdate.c_edit != qb_inv['edit_sequence']
                             orderupdate.update(invoice_data)
+                            parent_updated = true
                         end
                 else
                     Order.create(invoice_data)
@@ -403,7 +405,7 @@ class SalesOrderLoader < QBWC::Worker
                         if LineItem.exists?(txn_id: li['txn_line_id'])
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
-                            if order_id.c_edit != qb_inv['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -459,7 +461,7 @@ class SalesOrderLoader < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if order_id.c_edit != qb_inv['edit_sequence']
+                        if parent_updated == true
                                 lineitemupdate.update(li_data)
                         end
                     else

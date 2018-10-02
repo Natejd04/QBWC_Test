@@ -97,6 +97,7 @@ class SalesReceiptWorker < QBWC::Worker
                             # before updating, lets find out if it's neccessary by filtering by modified
                             if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                                 receiptupdate.update(receipt_data)
+                                parent_updated = true
                             end
                     else
                         SalesReceipt.create(receipt_data)
@@ -152,7 +153,7 @@ class SalesReceiptWorker < QBWC::Worker
                                 lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                                 # Has this LineItem actually been modified?
 
-                                if receiptupdate.qb_edit != qb_receipt['edit_sequence']
+                                if parent_updated == true
                                     lineitemupdate.update(li_data)
                                 end
                             else
@@ -205,7 +206,7 @@ class SalesReceiptWorker < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if receiptupdate.qb_edit != qb_receipt['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -290,6 +291,7 @@ class SalesReceiptWorker < QBWC::Worker
                             # before updating, lets find out if it's neccessary by filtering by modified
                             if receiptupdate.qb_edit != qb_receipt['edit_sequence']
                                 receiptupdate.update(receipt_data)
+                                parent_updated = true
                             end
                     else
                         SalesReceipt.create(receipt_data)
@@ -350,7 +352,7 @@ class SalesReceiptWorker < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if receiptupdate.qb_edit != qb_receipt['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -405,7 +407,7 @@ class SalesReceiptWorker < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if receiptupdate.qb_edit != qb_receipt['edit_sequence']
+                        if parent_updated == true
                             lineitemupdate.update(li_data)
                         end
                     else

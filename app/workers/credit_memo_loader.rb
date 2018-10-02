@@ -102,6 +102,7 @@ class CreditMemoLoader < QBWC::Worker
                             # before updating, lets find out if it's neccessary by filtering by modified
                             if invoiceupdate.c_edit != qb_inv['edit_sequence']
                                 invoiceupdate.update(invoice_data)
+                                parent_updated = true
                             end
                     else
                         CreditMemo.create(invoice_data)
@@ -173,7 +174,7 @@ class CreditMemoLoader < QBWC::Worker
                                 lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                                 # Has this LineItem actually been modified?
 
-                                if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                                if parent_updated == true
                                     lineitemupdate.update(li_data)
                                 end
                             else
@@ -225,7 +226,7 @@ class CreditMemoLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -313,6 +314,7 @@ class CreditMemoLoader < QBWC::Worker
                         # before updating, lets find out if it's neccessary by filtering by modified
                         if invoiceupdate.c_edit != qb_inv['edit_sequence']
                             invoiceupdate.update(invoice_data)
+                            parent_updated = true
                         end
                 else
                     CreditMemo.create(invoice_data)
@@ -388,7 +390,7 @@ class CreditMemoLoader < QBWC::Worker
                             lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -442,7 +444,7 @@ class CreditMemoLoader < QBWC::Worker
                         lineitemupdate = LineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if invoiceupdate.c_edit != qb_inv['edit_sequence']
+                        if parent_updated == true
                             lineitemupdate.update(li_data)
                         end
                     else

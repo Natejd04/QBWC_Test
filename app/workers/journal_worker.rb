@@ -54,6 +54,7 @@ class JournalWorker < QBWC::Worker
                         # We want to confirm that it's neccessary to update this record first.
                         if journalid.qb_edit != qb_journal['edit_sequence']
                             journalid.update(journal_data)
+                            parent_updated = true
                         end
                     
                     else
@@ -125,7 +126,7 @@ class JournalWorker < QBWC::Worker
                                 lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                                 # Has this LineItem actually been modified?
 
-                                if journalid.qb_edit != qb_journal['edit_sequence']
+                                if parent_updated == true
                                     lineitemupdate.update(li_data)
                                 end
                             else
@@ -191,7 +192,7 @@ class JournalWorker < QBWC::Worker
                             lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if journalid.qb_edit != qb_journal['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
 
@@ -261,7 +262,7 @@ class JournalWorker < QBWC::Worker
                                 lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                                 # Has this LineItem actually been modified?
 
-                                if journalid.qb_edit != qb_journal['edit_sequence']
+                                if parent_updated == true
                                     lineitemupdate.update(li_data)
                                 end
                             else
@@ -327,7 +328,7 @@ class JournalWorker < QBWC::Worker
                             lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if journalid.qb_edit != qb_journal['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -365,6 +366,7 @@ class JournalWorker < QBWC::Worker
                     # We want to confirm that it's neccessary to update this record first.
                     if journalid.qb_edit != qb_journal['edit_sequence']
                         journalid.update(journal_data)
+                        parent_updated = true
                     end
                 else
                     # the customer didn't exists so we will create
@@ -427,7 +429,7 @@ class JournalWorker < QBWC::Worker
                             lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if journalid.qb_edit != qb_journal['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -489,7 +491,7 @@ class JournalWorker < QBWC::Worker
                         lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if journalid.qb_edit != qb_journal['edit_sequence']
+                        if parent_updated == true
                             lineitemupdate.update(li_data)
                         end
                     else
@@ -554,7 +556,7 @@ class JournalWorker < QBWC::Worker
                             lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                             # Has this LineItem actually been modified?
 
-                            if journalid.qb_edit != qb_journal['edit_sequence']
+                            if parent_updated == true
                                 lineitemupdate.update(li_data)
                             end
                         else
@@ -616,7 +618,7 @@ class JournalWorker < QBWC::Worker
                         lineitemupdate = AccountLineItem.find_by(txn_id: li['txn_line_id'])
                         # Has this LineItem actually been modified?
 
-                        if journalid.qb_edit != qb_journal['edit_sequence']
+                        if parent_updated == true
                             lineitemupdate.update(li_data)
                         end
                     else
