@@ -1,0 +1,10 @@
+<div class="panel-body">
+    <%= render_report 'monthly_customers', context_params: { customer_id: Customer.where(:customer_type => "Distributor").pluck(:id) } do |report| %>     
+        <%= report.form do |f| %>
+            <div class="pull-right">
+                <%= f.date_range :c_date %>
+            </div>
+            <%= f.multi_autocomplete :customer, placeholder: 'Customer...' %>
+        <% end %>
+    <% end %>
+</div>

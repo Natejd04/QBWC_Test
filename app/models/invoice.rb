@@ -48,19 +48,14 @@ include ReportsKit::Model
     end
 
     def self.inv_chart_data(starting, ending, interval)
-        total_prices = amounts_by_interval(start, ending, interval)
-        (starting.to_date..ending.to_date).map do |date|
-        # (5.months.ago.to_date..Date.today).map do |date|
-            if !total_prices[date].nil?
-                {
-                    c_date: date,
-                    total_price: total_prices[date] || 0
-                }
-            else
-                {
-                    c_date: date
-                }
-            end
+        total_prices = amounts_by_interval(starting.to_date, ending.to_date, interval)
+        total_prices_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
+        total_prices = total_prices.merge(total_prices_py)
+        total_prices.map do |a, b|
+            {
+                date: a,
+                total: b || 0
+            }
         end
     end
 
@@ -69,7 +64,7 @@ include ReportsKit::Model
         orders = joins(:items).where(c_date: starting.beginning_of_day..ending.beginning_of_day)
         orders = orders.where("items.account_id = 152")
         orders = orders.group("date_trunc('#{interval}', c_date)")
-        qorders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")
+        orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")
         orders.each_with_object({}) do |order, prices|
             prices[order.c_date.to_date] = order.subtotal.round(2)
         end
