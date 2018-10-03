@@ -32,40 +32,6 @@ include ReportsKit::Model
         attributes = %w{c_invoicenumber id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id tracking fob c_subtotal}
         li_attributes = %w{invoice_id qty description homecurrency_amount}
         multi_header = %w{invoice_id qty description homecurrency_amount name code upc account_id c_invoicenumber id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate customer_id c_subtotal}
-
-
-        #li_attributes = %w{order_id qty description}
-        #multi_header = %w{order_id qty description name id c_name c_po c_date c_scac c_bol c_ship c_via c_ship1 c_ship2 c_ship3 c_ship4 c_ship5 c_shipcity c_shipstate invoice_number customer_id}
-        #if order.count < 2
-        #CSV.generate(headers: true) do |csv|
-        #    csv << attributes
-        #    csv << order[0].attributes.values_at(*attributes)
-        #    csv << li_header
-        #     order[0].line_items.each do |items|
-        #        row = items.attributes.values_at(*li_attributes)
-        #        item_name = [items.item.name].join(", ")
-        #        row << item_name
-        #        csv << row
-        #    end
-        #end
-        #else
-
-        # TEMPORARY HIDE
-        # CSV.generate(headers: true) do |csv|
-        # csv << attributes
-        # #csv << multi_header
-        #   order.each do |orders|
-        #     #orders.line_items.each do |items|
-        #         orderinfo = orders.attributes.values_at(*attributes)
-        #         # row1 = orderinfo.join(", ")
-        #         #row = items.attributes.values_at(*li_attributes)
-        #         #item_name = [items.item.name].join(", ")
-        #         #row << item_name
-        #         #row += orderinfo
-        #         csv << orderinfo
-        #     end
-        #   end
-
         CSV.generate(headers: true) do |csv|
         csv << multi_header
             order.each do |orders|
@@ -79,21 +45,33 @@ include ReportsKit::Model
                 end
             end
         end
-            # V1: Older method, probably not as uesful
-            #     CSV.generate(headers: true) do |csv|
-            # order.each do |orders|
-            # csv << attributes
-            # csv << orders.attributes.values_at(*attributes)
-            # csv << li_header
-            #     orders.line_items.each do |items|
-            #         row = items.attributes.values_at(*li_attributes)
-            #         item_name = [items.item.name].join(", ")
-            #         row << item_name
-            #         csv << row
-            #     end
-            #   end
-            # end
-        #end
     end
 
+    def self.inv_chart_data(starting, ending, interval)
+        total_prices = amounts_by_interval(start, ending, interval)
+        (starting.to_date..ending.to_date).map do |date|
+        # (5.months.ago.to_date..Date.today).map do |date|
+            if !total_prices[date].nil?
+                {
+                    c_date: date,
+                    total_price: total_prices[date] || 0
+                }
+            else
+                {
+                    c_date: date
+                }
+            end
+        end
+    end
+
+    # this interval chart cannot supports multiple customer grouping. 
+    def self.amounts_by_interval(starting, ending, interval)
+        orders = joins(:items).where(c_date: starting.beginning_of_day..ending.beginning_of_day)
+        orders = orders.where("items.account_id = 152")
+        orders = orders.group("date_trunc('#{interval}', c_date)")
+        qorders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")
+        orders.each_with_object({}) do |order, prices|
+            prices[order.c_date.to_date] = order.subtotal.round(2)
+        end
+    end
 end
