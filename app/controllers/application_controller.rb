@@ -54,6 +54,12 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    def ops_only
+    if  current_user.nil? || current_user.role != "operations"
+        no_access_notify
+        end 
+    end
+
     
     
 #  Authenticate the wds users definition(model)
