@@ -1,4 +1,4 @@
-<%= content_tag :div, "", id: "bar-chart-1", data: {invoices: Invoice.inv_chart_data("2018-09-01", "2018-09-30", "week")} %>
+<%= content_tag :div, "", id: "bar-chart-1", data: {invoices: Invoice.inv_chart_data("2018-09-01", "2018-09-30", "month")} %>
 
 <div id="top-customer-sales">
 </div>
@@ -19,11 +19,13 @@ new Morris.Bar({
   // chart.
   labels: ['Total Sales TY', 'Total Sales LY'],
   barColors: function (row, series, type) {
-    if (type === 'bar') {
-      return '#5cb85c';
+    if (series.label == 'Total Sales TY') {
+      // return '#337ab7';
+      return '#287bc1' ;
     }
     else {
-      return '#5cb85c';
+      return '#94c5ef';
+      // return '#f0ad4e';
     }
   }
 });
