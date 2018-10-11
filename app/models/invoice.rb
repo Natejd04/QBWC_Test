@@ -78,8 +78,8 @@ include ReportsKit::Model
         orders = joins(:items).where(c_date: starting.beginning_of_day..ending.beginning_of_day)
         orders = orders.where("items.account_id = 152")
         orders = orders.group("date_trunc('#{interval}', c_date)")
+        orders = orders.order("c_date asc")
         orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")
-        # orders = orders.order(c_date: :desc)
         orders.each_with_object({}) do |order, prices|
             # binding.pry
             prices[order.c_date.to_date] = order.subtotal.round(2)
