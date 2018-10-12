@@ -1,5 +1,5 @@
 measure: 
-  key: invoice
+  key: invoice  
   name: Invoices
   aggregation: sum_of_invoices
 filters:

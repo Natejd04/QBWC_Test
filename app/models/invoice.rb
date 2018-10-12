@@ -12,11 +12,12 @@ class Invoice < ActiveRecord::Base
 
 include ReportsKit::Model
   reports_kit do
-    aggregation :sum_of_invoices, [:sum, 'invoices.c_subtotal'] 
-    contextual_filter :for_customer, ->(relation, context_params) { relation.where(customer_id: context_params[:customer_id]) }
-    dimension :monthly_group, group: "to_char(date_trunc('month', invoices.c_date), 'MM-YY Mon')", order_by: "to_char_date_trunc_month_invoices_c_date_yy_mon DESC"
+    aggregation :sum_of_invoices, [:sum, 'line_items.homecurrency_amount'] 
+    contextual_filter :for_customer, ->(relation, context_params) { relation.where(customer_id: context_params[:customer_id])}
+    dimension :monthly_group, joins: :items, where: "items.account_id = 152", group: "to_char(date_trunc('month', invoices.c_date), 'MM-YY Mon')", order_by: "to_char_date_trunc_month_invoices_c_date_yy_mon DESC"
+    # contextual_filter :for_invoice_items, ->(relation, context_params) {relation.where("items.account_id = 152")}
     # dimension :customer_group, group: '(customers.name)'
-    # filter :is_published, :boolean, conditions: ->(relation) { relation.where(status: 'published') }
+    # filter :is_accounted, :boolean, conditions: ->(relation) { relation.where("items.account_id = 152") }
     # dimension :date_month, where: "date_trunc(month, invoices.c_date)"
   end
 
