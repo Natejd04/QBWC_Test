@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap
-//= require turbolinks
 //= require rails_autocomplete
 //= require twitter/typeahead
 //= require reports_kit/application

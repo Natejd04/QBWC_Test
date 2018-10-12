@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Importly 2.0</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 
       <!-- Bootstrap Core CSS -->
@@ -75,6 +75,18 @@
                             <a href="<%= dashboard_path %>">
                                 <div>
                                     <strong>Dashboard</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Sales</em>
+                                    </span>
+                                </div>
+                            </a>
+                            
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<%= reports_path %>">
+                                <div>
+                                    <strong>Reports</strong>
                                     <span class="pull-right text-muted">
                                         <em>Sales</em>
                                     </span>
