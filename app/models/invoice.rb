@@ -77,6 +77,7 @@ include ReportsKit::Model
     def self.amounts_by_interval(starting, ending, interval)
         orders = joins(:items).where(c_date: starting.beginning_of_day..ending.beginning_of_day)
         orders = orders.where("items.account_id = 152")
+        orders = orders.where({customer_id: ["2248", "2249", "2250", "2251", "2252", "2253", "2254"]})
         orders = orders.group("date_trunc('#{interval}', c_date)")
         orders = orders.order("c_date asc")
         orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")
