@@ -1,10 +1,73 @@
 <div class="panel-body">
-    <%= render_report 'monthly_customers', context_params: { customer_id: Customer.where(:customer_type => "Distributor").pluck(:id) } do |report| %>     
-        <%= report.form do |f| %>
-            <div class="pull-right">
-                <%= f.date_range :c_date %>
-            </div>
-            <%= f.multi_autocomplete :customer, placeholder: 'Customer...' %>
-        <% end %>
-    <% end %>
+	<div class="row">
+		<button type="button" id="unfi-west" class="btn btn-outline btn-primary btn-sm">UNFI West</button>
+		<button type="button" id="unfi-east" class="btn btn-outline btn-primary btn-sm">UNFI East</button>
+		<button type="button" id="kehe" class="btn btn-outline btn-primary btn-sm">Kehe</button>
+		<button type="button" id="lfy-td" class="btn btn-outline btn-info btn-sm pull-right">Last FY to Date</button>
+		<input type="hidden" value="<%= Time.now.strftime("%b %d, %Y") %>" id="date-now" />
+		<input type="hidden" value="<%= 1.year.ago.beginning_of_year.strftime("%b %d, %Y") %>" id="date-ly" />
+	</div>
 </div>
+<div class="panel-body">
+	<div class="row">
+	    <%= render_report 'monthly_customers', context_params: { customer_id: Customer.where(:customer_type => "Distributor").pluck(:id) } do |report| %>     
+	        <%= report.form do |f| %>
+	            <div class="pull-right">
+	                <%= f.date_range :c_date %>
+	            </div>
+	            <%= f.multi_autocomplete :customer, placeholder: 'Customer...' %>
+	        <% end %>
+	    <% end %>
+	</div>
+</div>
+<script>
+$(function(){
+  $('#unfi-west, #unfi-east, #kehe').click(function(event){
+  	CustomerSelect(event);
+  	// $('.reports_kit_report_form').submit();
+  });
+  $('#lfy-td').click(function(event){
+    var currently = $('#date-now').val();
+    var ly = $('#date-ly').val();
+  	var date_str = ly + ' - ' + currently
+    $('#c_date').val(date_str).change();
+  });
+});
+  	
+function CustomerSelect(e) {
+	var customers = [];
+	var unfi_west = [2248, 2249, 2250, 2251, 2252, 2253, 2254];
+	var unfi_east = [2235, 2236, 2237, 2238, 2239, 2240, 2241, 2242, 2243, 2244, 2245, 2246];
+	var kehe = [1217, 1218, 1219, 1220, 1221, 1222, 1223, 1224, 1225, 1226, 1227];
+	customers = [];
+  	$(e.currentTarget).toggleClass("checked");
+  	if ($('#unfi-west').hasClass("checked")) {
+  		customers = $.merge(customers, unfi_west);
+  		if (!$('#unfi-west').hasClass("updated")) {
+  			$.each(unfi_west, function(i , val) {
+  				$("#customer").append(new Option("UNFI West", val));
+  			});
+  			$('#unfi-west').addClass("updated");
+  		}
+  	} 
+  	if ($('#unfi-east').hasClass("checked")) {
+  		customers = $.merge(customers, unfi_east);
+  		if (!$('#unfi-east').hasClass("updated")) {
+  			$.each(unfi_east, function(i , l) {
+  				$("#customer").append(new Option("UNFI East", l));
+  			});
+  			$('#unfi-east').addClass("updated");
+  		}
+  	}
+  	if ($('#kehe').hasClass("checked")) {
+  		customers = $.merge(customers, kehe);
+  		if (!$('#kehe').hasClass("updated")) {
+  			$.each(kehe, function(i , l) {
+  				$("#customer").append(new Option("Kehe", l));
+  			});
+  			$('#kehe').addClass("updated");	
+  		}
+  	}
+  	$('#customer').val(customers).change();
+  }
+</script>
