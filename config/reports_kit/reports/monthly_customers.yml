@@ -6,6 +6,9 @@ filters:
 - key: customer
   contextual_filters:
     - for_customer
+- key: is_accounted
+  criteria:
+    value: true
 - c_date
 dimensions:
 - monthly_group
