@@ -28,7 +28,7 @@ class DashboardController < ApplicationController
 		@invoices = Invoice.where(:c_date => @beg_month..@end_month)
 		# @inv_temp = Invoice.where(:c_date => @prev_beg_month..@prev_end_month)
 		@inv_dist = @invoices.where(:c_class => "Distributor Channel").where.not(:c_subtotal => 0)
-		@log_update = Log.where(:worker_name => "QBWC Updated").last
+		@log_update = Log.last
 
 	# Channel calculations
 		@orders_cw = Order.where(:c_date => @t_now.beginning_of_week..@t_now.end_of_week).where.not(:c_name => "Nate2 Davis").sum(:c_total)

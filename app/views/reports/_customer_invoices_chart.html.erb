@@ -1,4 +1,4 @@
-<%= content_tag :div, "", id: "bar-chart-1", data: {invoices: Invoice.inv_chart_data("2018-01-01", "2018-09-30", "month")} %>
+<%= content_tag :div, "", id: "bar-chart-1", data: {invoices: Invoice.inv_chart_data(Time.now.beginning_of_year.strftime("%Y-%m-%d"), 1.month.ago.end_of_month.strftime("%Y-%m-%d"), "month")} %>
 
 <div id="top-customer-sales">
 </div>
@@ -14,10 +14,10 @@ new Morris.Bar({
   // The name of the data record attribute that contains x-values.
   xkey: 'date',
   // A list of names of data record attributes that contain y-values.
-  ykeys: ['total', 'total_ly'],
+  ykeys: ['total_ly', 'total'],
   // Labels for the ykeys -- will be displayed when you hover over the
   // chart.
-  labels: ['Total Sales TY', 'Total Sales LY'],
+  labels: ['Total Sales LY', 'Total Sales TY'],
   barColors: function (row, series, type) {
     if (series.label == 'Total Sales TY') {
       // return '#337ab7';

@@ -49,19 +49,57 @@ include ReportsKit::Model
     end
 
     def self.inv_chart_data(starting, ending, interval)
-        total_prices = amounts_by_interval(starting.to_date, ending.to_date, interval)
-        total_prices_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
-        total_prices1 = total_prices.merge(total_prices_py)
-
-        total_prices.map do |c, d|
+        total_invoices = amounts_by_interval(starting.to_date, ending.to_date, interval)
+        total_invoices_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
+        total_srs = SalesReceipt.amounts_by_interval(starting.to_date, ending.to_date, interval)
+        total_srs_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
+        total_credits = CreditMemo.amounts_by_interval(starting.to_date, ending.to_date, interval)
+        total_credits_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
+        total_journals = Journal.amounts_by_interval(starting.to_date, ending.to_date, interval)
+        total_journals_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
+        total_cy = total_invoices.each do |date, amount|            
+            total_srs.each do |date2, amount2|
+                if date.between?(date2-1.day, date2+1.day)
+                    amount = amount + amount2
+                end
+            end
+            total_credits.each do |date2, amount2|
+                if date.between?(date2-1.day, date2+1.day)
+                    amount = amount - amount2
+                end
+            end
+            total_journals.each do |date2, amount2|
+                if date.between?(date2-1.day, date2+1.day)
+                    amount = amount + amount2
+                end
+            end
+        end        
+        total_py = total_invoices_py.each do |date, amount|
+            total_srs_py.each do |date2, amount2|
+                if date.between?(date2-1.day, date2+1.day)
+                    amount = amount + amount2
+                end
+            end
+            total_credits_py.each do |date2, amount2|
+                if date.between?(date2-1.day, date2+1.day)
+                    amount = amount - amount2
+                end
+            end
+            total_journals_py.each do |date2, amount2|
+                if date.between?(date2-1.day, date2+1.day)
+                    amount = amount + amount2
+                end
+            end
+        end     
+        total_cy.map do |c, d|
             ly = 0
-            total_prices_py.each do |e, f|
+            total_py.each do |e, f|
            
                 if c.strftime("%m") == e.strftime("%m")
                     ly = f
                 end
             end
-            {date: c, total: d, total_ly: ly}
+            {date: c+1.day, total: d, total_ly: ly}
         end
 
 
@@ -78,7 +116,6 @@ include ReportsKit::Model
     def self.amounts_by_interval(starting, ending, interval)
         orders = joins(:items).where(c_date: starting.beginning_of_day..ending.beginning_of_day)
         orders = orders.where("items.account_id = 152")
-        orders = orders.where({customer_id: ["2248", "2249", "2250", "2251", "2252", "2253", "2254"]})
         orders = orders.group("date_trunc('#{interval}', c_date)")
         orders = orders.order("c_date asc")
         orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")

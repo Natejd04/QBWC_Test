@@ -1,0 +1,24 @@
+<div class="panel-body">
+	<div class="row">
+    <h5>Auto Customer Groups</h5>
+  	<button type="button" id="amazon" class="btn btn-outline btn-primary btn-sm">Amazon</button>
+    <button type="button" id="unfi-west" class="btn btn-outline btn-primary btn-sm">UNFI West</button>
+  	<button type="button" id="unfi-east" class="btn btn-outline btn-primary btn-sm">UNFI East</button>
+  	<button type="button" id="kehe" class="btn btn-outline btn-primary btn-sm">Kehe</button>
+		<button type="button" id="lfy-td" class="btn btn-outline btn-info btn-sm pull-right">Last FY to Date</button>
+		<input type="hidden" value="<%= Time.now.strftime("%b %d, %Y") %>" id="date-now" />
+		<input type="hidden" value="<%= 1.year.ago.beginning_of_year.strftime("%b %d, %Y") %>" id="date-ly" />
+  </div>
+</div>
+
+<div class="panel-body">
+	<div class="row">
+	    <%= render_report 'roll_up_sales' do |report| %>     
+	        <%= report.form do |f| %>
+	            <div class="pull-right">
+	                <%= f.date_range :c_date %>
+	            </div>
+	        <% end %>
+	    <% end %>
+	</div>
+</div>
