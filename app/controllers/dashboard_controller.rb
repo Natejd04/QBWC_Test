@@ -10,9 +10,9 @@ class DashboardController < ApplicationController
 		@beg_month = @t_now.beginning_of_month
 		@end_month = @t_now.end_of_month
 		@gs_account_id = "items.account_id = 152"
-		@prev_beg_month = 1.month.ago.beginning_of_month
-		@prev_end_month = 1.month.ago.end_of_month
-		@prev_td_month = 1.month.ago.to_date
+		@prev_beg_month = 1.year.ago.beginning_of_month
+		@prev_end_month = 1.year.ago.end_of_month
+		@prev_td_month = 1.year.ago.to_date
 		@homecurrency = "line_items.homecurrency_amount"
 		@account_amount = "account_line_items.amount"
 		@account_array = ["account_line_items.account_type = ? and account_line_items.account_id = ?", "debit", "152"]
