@@ -19,4 +19,4 @@ uploads/*
 /log/*
 !/log/.keep
 
-/public/images/*
+/public/*
