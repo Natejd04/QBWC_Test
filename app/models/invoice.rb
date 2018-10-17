@@ -57,7 +57,7 @@ include ReportsKit::Model
         total_credits_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
         total_journals = Journal.amounts_by_interval(starting.to_date, ending.to_date, interval)
         total_journals_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
-        total_cy = total_invoices.each do |date, amount|            
+        total_cy = total_invoices.map do |date, amount|            
             total_srs.each do |date2, amount2|
                 if date.between?(date2-1.day, date2+1.day)
                     amount = amount + amount2
@@ -73,7 +73,7 @@ include ReportsKit::Model
                     amount = amount + amount2
                 end
             end
-        end        
+        end    
         total_py = total_invoices_py.each do |date, amount|
             total_srs_py.each do |date2, amount2|
                 if date.between?(date2-1.day, date2+1.day)
