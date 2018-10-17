@@ -30,7 +30,11 @@ class ReportsController < ApplicationController
 	end
 
 	def render_video_demo
+		# @video = Rails.root.join('private/Animations.mp4')
+		@video = File.join([Rails.root, "/private/", "Animations.mp4"])
 		render 'reports/video_demo'
+		# @video = "Animations.mp4"
+		# @video = File.join([Rails.root, "private/", "Animations.mp4"])
+
 	end
-	
 end

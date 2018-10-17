@@ -20,4 +20,4 @@ uploads/*
 !/log/.keep
 
 /public/*
-/private/*
+/app/private/*
