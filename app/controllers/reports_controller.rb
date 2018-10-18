@@ -11,8 +11,9 @@ class ReportsController < ApplicationController
 		when "gross_sales"
 			render_gross_sales
 		when "video_demo"
-	
 			render_video_demo
+		when "item_sales"
+			render_item_sales
 		else
 			redirect_to reports_path, alert: "This report doesn't exist."
 		end
@@ -32,5 +33,9 @@ class ReportsController < ApplicationController
 
 	def render_video_demo
 		render 'reports/video_demo'
+	end
+
+	def render_item_sales
+		render 'reports/item_sales'
 	end
 end

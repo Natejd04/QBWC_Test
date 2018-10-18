@@ -1,0 +1,25 @@
+series:
+measure: 
+  key: invoice  
+  name: Invoices
+  aggregation: sum_of_invoices
+filters:
+- key: items
+- key: customer
+  contextual_filters:
+    - for_customer
+- key: is_accounted
+  criteria:
+    value: true
+- c_date
+dimensions:
+- monthly_group
+- items
+order: dimension1.label asc
+chart:
+  options:
+    scales:
+      xAxes:
+        - stacked: true
+      yAxes:
+        - stacked: true

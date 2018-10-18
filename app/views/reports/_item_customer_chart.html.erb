@@ -13,12 +13,15 @@
 
 <div class="panel-body">
 	<div class="row">
-	    <%= render_report 'monthly_customers', context_params: { customer_id: Customer.where(:customer_type => "Distributor").pluck(:id) } do |report| %>     
+	    <%= render_report 'item_sales', context_params: { item_id: Item.where("id = 14").pluck(:id) } do |report| %>         
 	        <%= report.form do |f| %>
 	            <div class="pull-right">
+
 	                <%= f.date_range :c_date %>
 	            </div>
 	            <%= f.multi_autocomplete :customer, placeholder: 'Customer...' %>
+              <%= f.multi_autocomplete :items, placeholder: 'Items...' %>
+              
 	        <% end %>
 	    <% end %>
 	</div>
