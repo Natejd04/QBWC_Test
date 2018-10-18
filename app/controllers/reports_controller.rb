@@ -11,6 +11,7 @@ class ReportsController < ApplicationController
 		when "gross_sales"
 			render_gross_sales
 		when "video_demo"
+	
 			render_video_demo
 		else
 			redirect_to reports_path, alert: "This report doesn't exist."
@@ -30,14 +31,6 @@ class ReportsController < ApplicationController
 	end
 
 	def render_video_demo
-		# @video = Rails.root.join('private/Animations.mp4')
-		@image = "Animations.mp4"
-		@video = send_file File.join([Rails.root, "private/", @image]), 
-      :disposition => :inline, :stream => true
-		# @video = File.join([Rails.root, "private/", "Animations.mp4"])
 		render 'reports/video_demo'
-		# @video = "Animations.mp4"
-		# @video = File.join([Rails.root, "private/", "Animations.mp4"])
-
 	end
 end

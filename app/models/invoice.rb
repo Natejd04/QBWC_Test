@@ -14,10 +14,13 @@ include ReportsKit::Model
   reports_kit do
     aggregation :sum_of_invoices, [:sum, 'line_items.homecurrency_amount']
     contextual_filter :for_customer, ->(relation, context_params) { relation.where(customer_id: context_params[:customer_id])}
+    contextual_filter :for_item, ->(relation, context_params) { relation.where(item_id: context_params[:item_id])}
     dimension :monthly_group, joins: :items, group: "to_char(date_trunc('month', invoices.c_date), 'MM-YY Mon')", order_by: "to_char_date_trunc_month_invoices_c_date_yy_mon DESC"
     # contextual_filter :for_invoice_items, ->(relation, context_params) {relation.where("items.account_id = 152")}
     # dimension :customer_group, group: '(customers.name)'
     filter :is_accounted, :boolean, conditions: ->(relation) { relation.where("items.account_id = 152") }
+    filter :is_an_item, :boolean, conditions: ->(relation) { relation.where("items.name LIKE ?", "%FG:12/12ct Master%") }
+    # filter :for_item, conditions: ->(relation) { relation.where("items.account_id = 152") }
     # dimension :date_month, where: "date_trunc(month, invoices.c_date)"
   end
 

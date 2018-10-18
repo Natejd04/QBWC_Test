@@ -10,6 +10,12 @@ class Item < ActiveRecord::Base
 
     default_scope {where(:deleted => nil)}
 
+
+    include ReportsKit::Model
+    reports_kit do
+        contextual_filter :for_item, ->(relation, context_params) { relation.where(id: context_params[:item_id])}
+    end
+
     def self.inv_chart_data(starting, ending, interval)
         total_prices = amounts_by_interval(starting.to_date, ending.to_date, interval)
         total_prices_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
