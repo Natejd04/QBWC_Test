@@ -13,7 +13,8 @@ class Item < ActiveRecord::Base
 
     include ReportsKit::Model
     reports_kit do
-        contextual_filter :for_item, ->(relation, context_params) { relation.where(id: context_params[:item_id])}
+        # contextual_filter :for_item, ->(relation, context_params) { relation.where(id: context_params[:item_id])}
+        # contextual_filter :for_customer, ->(relation, context_params) { relation.where(customer_id: context_params[:id]) }
     end
 
     def self.inv_chart_data(starting, ending, interval)

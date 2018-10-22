@@ -14,13 +14,14 @@ include ReportsKit::Model
   reports_kit do
     aggregation :sum_of_invoices, [:sum, 'line_items.homecurrency_amount']
     contextual_filter :for_customer, ->(relation, context_params) { relation.where(customer_id: context_params[:customer_id])}
-    contextual_filter :for_item, ->(relation, context_params) { relation.where(item_id: context_params[:item_id])}
+    contextual_filter :for_item, ->(relation, context_params) { relation.joins(:line_items).where(item_id: context_params[:item_id])}
+    # contextual_filter :for_item, ->(relation, context_params) { relation.where(item_id: context_params[:item_id]) }
     dimension :monthly_group, joins: :items, group: "to_char(date_trunc('month', invoices.c_date), 'MM-YY Mon')", order_by: "to_char_date_trunc_month_invoices_c_date_yy_mon DESC"
     # contextual_filter :for_invoice_items, ->(relation, context_params) {relation.where("items.account_id = 152")}
     # dimension :customer_group, group: '(customers.name)'
     filter :is_accounted, :boolean, conditions: ->(relation) { relation.where("items.account_id = 152") }
-    filter :is_an_item, :boolean, conditions: ->(relation) { relation.where("items.name LIKE ?", "%FG:12/12ct Master%") }
-    # filter :for_item, conditions: ->(relation) { relation.where("items.account_id = 152") }
+    # filter :is_an_item, :boolean, conditions: ->(relation) { relation.where("items.name LIKE ?", "%FG:12/12ct Master%") }
+    # filter :for_item, :boolean, conditions: ->(relation) { relation.where("items.account_id = 152") }
     # dimension :date_month, where: "date_trunc(month, invoices.c_date)"
   end
 
@@ -60,43 +61,43 @@ include ReportsKit::Model
         total_credits_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
         total_journals = Journal.amounts_by_interval(starting.to_date, ending.to_date, interval)
         total_journals_py = amounts_by_interval(starting.to_date.prev_year, ending.to_date.prev_year, interval)
-        total_cy = total_invoices.map do |date, amount|            
-            total_srs.each do |date2, amount2|
-                if date.between?(date2-1.day, date2+1.day)
-                    amount = amount + amount2
-                end
-            end
-            total_credits.each do |date2, amount2|
-                if date.between?(date2-1.day, date2+1.day)
-                    amount = amount - amount2
-                end
-            end
-            total_journals.each do |date2, amount2|
-                if date.between?(date2-1.day, date2+1.day)
-                    amount = amount + amount2
-                end
-            end
-        end    
-        total_py = total_invoices_py.each do |date, amount|
-            total_srs_py.each do |date2, amount2|
-                if date.between?(date2-1.day, date2+1.day)
-                    amount = amount + amount2
-                end
-            end
-            total_credits_py.each do |date2, amount2|
-                if date.between?(date2-1.day, date2+1.day)
-                    amount = amount - amount2
-                end
-            end
-            total_journals_py.each do |date2, amount2|
-                if date.between?(date2-1.day, date2+1.day)
-                    amount = amount + amount2
-                end
-            end
-        end     
-        total_cy.map do |c, d|
+        # total_cy = total_invoices.map do |date, amount|
+        #     amount += total_srs.map do |date2, amount2|
+        #         if date.between?(date2-1.day, date2+1.day) ? amount2 : 0
+        #             amount = amount + amount2
+        #         end.sum
+        #     end
+        #     amount += total_credits.each do |date2, amount2|
+        #         if date.between?(date2-1.day, date2+1.day) ? amount2 : 0
+        #             amount = amount - amount2
+        #         end.sum
+        #     end
+        #     amount+= total_journals.each do |date2, amount2|
+        #         if date.between?(date2-1.day, date2+1.day) ? amount2 : 0
+        #             amount = amount + amount2
+        #         end.sum
+        #     end
+        # end    
+        # total_py = total_invoices_py.map do |date, amount|
+        #     total_srs_py.each do |date2, amount2|
+        #         if date.between?(date2-1.day, date2+1.day)
+        #             amount = amount + amount2
+        #         end
+        #     end
+        #     total_credits_py.each do |date2, amount2|
+        #         if date.between?(date2-1.day, date2+1.day)
+        #             amount = amount - amount2
+        #         end
+        #     end
+        #     total_journals_py.each do |date2, amount2|
+        #         if date.between?(date2-1.day, date2+1.day)
+        #             amount = amount + amount2
+        #         end
+        #     end
+        # end     
+        total_invoices.map do |c, d|
             ly = 0
-            total_py.each do |e, f|
+            total_invoices_py.each do |e, f|
            
                 if c.strftime("%m") == e.strftime("%m")
                     ly = f
@@ -122,9 +123,8 @@ include ReportsKit::Model
         orders = orders.group("date_trunc('#{interval}', c_date)")
         orders = orders.order("c_date asc")
         orders = orders.select("date_trunc('#{interval}', c_date) as c_date, sum(line_items.homecurrency_amount) as subtotal")
-        orders.each_with_object({}) do |order, prices|
-            # binding.pry
-            prices[order.c_date.to_date] = order.subtotal.round(2)
+        orders.each_with_object({}) do |order, prices|            
+            prices[order.c_date.to_date] = order.subtotal.round(2)           
         end
     end
 end
