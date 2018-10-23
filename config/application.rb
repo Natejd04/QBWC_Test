@@ -25,7 +25,12 @@ module Qbwc3
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    
+    config.action_dispatch.default_headers = {
+    'Access-Control-Allow-Origin' => 'https://zingbars.com',
+    'Access-Control-Request-Method' => %w{POST OPTIONS}.join(","),
+    'Access-Ctonrol-Max-Age' => '1000',
+    'Access-Control-Allow-Headers' => %w{Content-Type Authorization X-Requested-With},
+  }
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.assets.paths << Rails.root.join("app", "assets", "fonts")

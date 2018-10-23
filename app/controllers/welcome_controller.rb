@@ -17,21 +17,21 @@ class WelcomeController < ApplicationController
 			@token = params[:token]
 			@auth_key = params[:auth_key]		
 			@db = ApiHook.last
-			@ip = request.remote_addr
+			@ip = request.remote_ip
 			@user_auth = params[:auth_key].concat(@ip)
 			@db_auth = @db.auth_key.concat(@db.url)
 			@user_token = Digest::SHA2.hexdigest("#{@db.salt}#{@token}")
 			if @user_token == @db.token && @user_auth == @db_auth
 				render :json => {:validated => "webhook-true", :requested => @ip} and return
 			else
-				error_message(1)
+				error_message(1, @ip)
 			end
 		else
-				error_message(2)
+				error_message(2, @ip)
 		end
 	end
 
-	def error_message(er)
-		render :json => {:error => er} and return
+	def error_message(er, ip)
+		render :json => {:error => er, :uri => ip} and return
 	end
 end

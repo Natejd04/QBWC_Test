@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   wash_out :qbwc
 
   constraints defaults: { format: :json } do
-    post '/:webhook_token' => 'welcome#api', as: :subscription_webhook
+    match '/:webhook_token' => 'welcome#api', as: :subscription_webhook, via: [:options, :post]
   end
   
 
