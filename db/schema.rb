@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180928231450) do
+ActiveRecord::Schema.define(version: 20181023204012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 20180928231450) do
     t.string   "account_type"
     t.integer  "sublevel"
     t.datetime "deleted"
+  end
+
+  create_table "api_hooks", force: :cascade do |t|
+    t.string   "token"
+    t.string   "auth_key"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "salt"
   end
 
   create_table "bills", force: :cascade do |t|
