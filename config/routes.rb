@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get 'qbwc/qwc' => 'qbwc#qwc'
   wash_out :qbwc
 
-  constraints subdomain: 'api', defaults: { format: :json } do
+  constraints defaults: { format: :json } do
     post '/:webhook_token' => 'welcome#api', as: :subscription_webhook
   end
   
