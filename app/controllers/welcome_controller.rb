@@ -18,7 +18,7 @@ class WelcomeController < ApplicationController
 			@auth_key = params[:auth_key]		
 			@db = ApiHook.last
 			@ip = request.remote_ip
-			@user_auth = params[:auth_key].concat(@ip)
+			@user_auth = params[:auth_key].concat(@db.url)
 			@db_auth = @db.auth_key.concat(@db.url)
 			@user_token = Digest::SHA2.hexdigest("#{@db.salt}#{@token}")
 			if @user_token == @db.token && @user_auth == @db_auth
