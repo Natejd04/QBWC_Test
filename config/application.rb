@@ -29,7 +29,7 @@ module Qbwc3
     'Access-Control-Allow-Origin' => 'https://zingbars.com',
     'Access-Control-Request-Method' => %w{POST OPTIONS}.join(","),
     'Access-Ctonrol-Max-Age' => '1000',
-    'Access-Control-Allow-Headers' => %w{Content-Type Authorization X-Requested-With},
+    'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept',
   }
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
