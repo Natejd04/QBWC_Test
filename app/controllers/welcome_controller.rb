@@ -14,7 +14,7 @@ class WelcomeController < ApplicationController
 
 	def validate_webhook
 		@ip = request.remote_ip
-		@log = Log.where("ip = ? and created_at > ?", @ip, 1.minutes.ago)
+		@log = Log.where("ip = ? and created_at > ?", @ip, 2.minutes.ago)
 		if @log.count > 3
 			error_message(3, @ip, "Too many attempts too often")
 		else
