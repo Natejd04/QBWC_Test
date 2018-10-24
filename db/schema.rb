@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181023204012) do
+ActiveRecord::Schema.define(version: 20181024194047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,6 +272,7 @@ ActiveRecord::Schema.define(version: 20181023204012) do
     t.date     "start_date"
     t.date     "end_date"
     t.boolean  "initial_load", default: false
+    t.string   "ip"
   end
 
   create_table "notifications", force: :cascade do |t|
