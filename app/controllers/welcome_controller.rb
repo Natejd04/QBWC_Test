@@ -17,22 +17,23 @@ class WelcomeController < ApplicationController
 		@log = Log.where("ip = ? and created_at > ?", @ip, 1.minutes.ago)
 		if @log.count > 2
 			error_message(3, @ip, "Too many attempts too often")
-		end
-		if (params.has_key?(:token) && params.has_key?(:auth_key))
-			@token = params[:token]
-			@auth_key = params[:auth_key]		
-			@db = ApiHook.last
-			@user_auth = @auth_key.concat(@db.url)
-			@db_auth = @db.auth_key.concat(@db.url)
-			@user_token = Digest::SHA2.hexdigest("#{@db.salt}#{@token}")
-			if @user_token == @db.token && @user_auth == @db_auth
-				Log.create(:worker_name => "Webhook", :status => "Success", :log_msg => "Sucessful validation of webhook parameters.", :ip => @ip)
-				render :json => {:validated => "webhook-true", :requested => @ip} and return
-			else
-				error_message(1, @ip, "Password was not valid")
-			end
 		else
-				error_message(2, @ip, "Incorrect parameters provided")
+			if (params.has_key?(:token) && params.has_key?(:auth_key))
+				@token = params[:token]
+				@auth_key = params[:auth_key]		
+				@db = ApiHook.last
+				@user_auth = @auth_key.concat(@db.url)
+				@db_auth = @db.auth_key.concat(@db.url)
+				@user_token = Digest::SHA2.hexdigest("#{@db.salt}#{@token}")
+				if @user_token == @db.token && @user_auth == @db_auth
+					Log.create(:worker_name => "Webhook", :status => "Success", :log_msg => "Sucessful validation of webhook parameters.", :ip => @ip)
+					render :json => {:validated => "webhook-true", :requested => @ip} and return
+				else
+					error_message(1, @ip, "Password was not valid")
+				end
+			else
+					error_message(2, @ip, "Incorrect parameters provided")
+			end
 		end
 	end
 
