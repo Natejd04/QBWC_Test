@@ -38,7 +38,6 @@ class WelcomeController < ApplicationController
 
 	def error_message(er, ip, msg)
 		Log.create(:worker_name => "Webhook", :status => "Error", :log_msg => msg, :ip => ip)
-		Log.create(:worker_name => "Webhook", :status => "Error", :log_msg => "test", :ip => @ip)
 		render :json => {:error => er, :uri => ip} and return
 	end
 end
