@@ -14,8 +14,8 @@ class WelcomeController < ApplicationController
 
 	def validate_webhook
 		@ip = request.remote_ip
-		@log = Log.where(:ip => @ip)
-		if @log.last.created_at > 30.seconds.ago
+		@log = Log.where("ip = ? and created_at > ?", @ip, 1.minutes.ago)
+		if @log.count > 2
 			error_message(3, @ip, "Too many attempts too often")
 		end
 		if (params.has_key?(:token) && params.has_key?(:auth_key))
