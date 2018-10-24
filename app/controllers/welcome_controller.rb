@@ -14,8 +14,8 @@ class WelcomeController < ApplicationController
 
 	def validate_webhook
 		@ip = request.remote_ip
-		@log = Log.last
-		if @log.created_at < 1.min.ago && @log.ip == @ip
+		@log = Log.where(:ip => @ip)
+		if @log.last.created_at > 30.seconds.ago
 			error_message(3, @ip, "Too many attempts too often")
 		end
 		if (params.has_key?(:token) && params.has_key?(:auth_key))
@@ -38,6 +38,7 @@ class WelcomeController < ApplicationController
 
 	def error_message(er, ip, msg)
 		Log.create(:worker_name => "Webhook", :status => "Error", :log_msg => msg, :ip => ip)
+		Log.create(:worker_name => "Webhook", :status => "Error", :log_msg => "test", :ip => @ip)
 		render :json => {:error => er, :uri => ip} and return
 	end
 end
