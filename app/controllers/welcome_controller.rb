@@ -27,7 +27,7 @@ class WelcomeController < ApplicationController
 				@user_token = Digest::SHA2.hexdigest("#{@db.salt}#{@token}")
 				if @user_token == @db.token && @user_auth == @db_auth
 					Log.create(:worker_name => "Webhook", :status => "Success", :log_msg => "Sucessful validation of webhook parameters.", :ip => @ip)
-					render :html => '<input type="hidden" id="customer_tags" name="customer[tags]" value="wholesale" />'.html_safe and return
+					render :text => '<input type="hidden" id="customer_tags" name="customer[tags]" value="wholesale" />'.html_safe and return
 				else
 					error_message(1, @ip, "Password was not valid")
 				end
