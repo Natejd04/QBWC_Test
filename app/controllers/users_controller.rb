@@ -50,6 +50,8 @@ class UsersController < ApplicationController
   def homepages
      if current_user.homepage == nil
       redirect_to dashboard_path
+     elsif current_user.homepage == "fulfillment"
+      redirect_to fulfillment_index_path
      else
       redirect_to dashboard_consumer_path
      end

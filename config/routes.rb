@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   resources :accounts
   resources :credit_memos
   resources :reports
+  resources :fulfillment
   # resources :welcome
   
   resources :notifications do

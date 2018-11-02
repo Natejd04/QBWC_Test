@@ -1,0 +1,199 @@
+
+
+
+        <div id="page-wrapper" style="min-height: 629px;">
+            <div class="row">
+                <div class="col-lg-9 col-md-8">
+                    <h1 class="page-header">Fulfillment</h1>                  
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-3 col-md-4" style="text-align:right;"">
+                    <span class="page-header" style="border-bottom:unset;line-height:4em;font-size:12px;">
+                        <i class="btn <% if @log_update.nil? or @log_update.updated_at < (Time.now - 1.day) %>btn-danger<% else %>btn-success<% end %> btn-circle" style="width:20px;height:20px;padding:2px 0;font-size: 10px;"><i class="fa fa-check"></i>
+                        </i>
+                        Last Updated: DATE
+                    </span>
+                </div>
+                
+            </div>
+
+            <!-- Nate's Row -->
+               <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-dollar"></i> Sales Figures
+                    </div>
+                </div>
+
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-tasks fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                    	$1.25MM
+                                    </div>
+                                    <div>Sales to Date</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-tasks fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                    10.05%
+                                    </div>
+                                    <div>Stuff</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-shopping-cart fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                    $1.00MM
+                                    
+                                    </div>
+                                    <div>Info</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-support fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">
+                                        10
+                                    </div>
+                                    <div>Open Orders!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Order Table
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        <span id="type-of-orders">Sales Orders</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" id="sorting" role="menu">
+                                        <li><a class="append-sales-orders" href="#">Sales Orders</a>
+                                        </li>
+                                        <li><a class="append-invoices" href="#">Invoices</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><%= remove_class "nil", "Add Wholesale" %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                       
+                                  
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped" id="order-sales-table">
+                                            <%= render :partial => 'sales_orders' %>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>                               
+                    		</div>
+                	    </div>
+                    </div>
+                </div>
+            </div>
+
+             
+        <!-- /#page-wrapper -->
+
+    <script>
+    	$(function() {
+        
+      $('[data-toggle="popover"]').popover({
+        trigger: 'focus'
+    })
+      
+      $("#order-table").hide();
+      
+    
+      $('.append-invoices').on('click', function(e) {
+        e.preventDefault();
+        $("#order-sales-table").hide();       
+        $("#order-table").show();
+        $("#type-of-orders").text("Invoices");    
+    });
+    $('.append-sales-orders').on('click', function(e) {
+        e.preventDefault();
+        $("#order-sales-table").show();       
+        $("#order-table").hide();
+        $("#type-of-orders").text("Sales Orders");
+    });
+});
+	</script>    

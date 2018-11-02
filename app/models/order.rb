@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
     
     scope :uninvoiced, -> {Order.where(c_invoiced: nil)}
     scope :dash_orders, -> {Order.where(c_invoiced: nil).where.not(:c_total => 0).where.not(:c_class => nil).where.not(:c_class => "Consumer Direct").where.not(:c_name => "Nate2 Davis")}
+    scope :fulfill_orders, -> {Order.where(c_invoiced: nil)}
 
     default_scope {where(:deleted => nil)}
     
