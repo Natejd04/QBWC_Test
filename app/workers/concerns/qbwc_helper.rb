@@ -14,11 +14,11 @@ module QbwcHelper
 		    else
 		      # This is preloading data based on no records in the log table
 		      # This is arbitrary and a system for loading in batches from the start should be implemented.
-		      3.month.ago.strftime("%Y-%m-%d")
+		      3.month.ago.strftime('%Y-%m-%d')
 		    end
 		else
 			# We can force the start date range here, as long as initial_load is toggled to true
-			QbHelper.first.start.strftime("%Y-%m-%d")
+			QbHelper.first.start.strftime('%Y-%m-%d')
 		end
 	end
 
@@ -27,7 +27,7 @@ module QbwcHelper
 			Date.today + (1.0)
 		else
 			# we can set the end range date here, as long as initial_load is toggled to true
-			QbHelper.first.end.strftime("%Y-%m-%d")
+			QbHelper.first.end.strftime('%Y-%m-%d')
 		end
 	end
 
