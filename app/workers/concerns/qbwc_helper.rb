@@ -24,7 +24,7 @@ module QbwcHelper
 
 	def qbwc_log_end()
 		if initial_load == false
-			Date.today + (1.0)
+			Date.today
 		else
 			# we can set the end range date here, as long as initial_load is toggled to true
 			QbHelper.first.end.strftime('%Y-%m-%d')
