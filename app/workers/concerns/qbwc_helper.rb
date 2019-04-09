@@ -44,4 +44,4 @@ module QbwcHelper
 			Log.create(worker_name: worker, status: "Completed", log_msg: "Changes were made", start_date: startd, end_date: endd, initial_load: initial_load())
 		end
 	end
-end
+end 
