@@ -21,3 +21,4 @@ uploads/*
 
 /public/*
 /private/*
+.DS_Store
