@@ -1,4 +1,4 @@
-<% @customer.order(c_date: :desc).orders.each do |f| %>
+<% @customer.orders.each do |f| %>
 <tr>
 	<td><%= f.c_name %></td>
 	<td><%= link_to f.invoice_number, order_path(f.id) %></td>
