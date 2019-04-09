@@ -1,4 +1,4 @@
-<% @customer.credit_memos.each do |f| %>
+<% @customer.credit_memos.order(c_date: :desc).each do |f| %>
 <tr>
 	<td><%= f.c_name %></td>
 	<td><%= link_to f.c_invoicenumber, credit_memo_path(f.id) %></td>
