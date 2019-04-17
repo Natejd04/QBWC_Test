@@ -1,0 +1,54 @@
+<thead>
+    <tr>
+        <th><%= sortable "c_name", "Name" %></th>
+        <th>Order #</th>
+        <th><%= sortable "c_date", "Order Date" %></th>
+        <th><%= sortable "c_ship", "Ship Date" %></th>
+        <th>PO#</th>
+        <th><%= sortable "c_total", "Amount" %></th>
+        <th>Status</th>
+    </tr>
+</thead>                                           
+<tbody>                                            
+<% @orders.each do |f| %>
+<tr>
+	<td><%= link_to f.c_name, customer_path(f.customer_id) %></td>
+	<td><%= link_to f.c_invoicenumber, invoice_path(f.id) %></td>
+	<td><%= f.c_date.strftime("%m/%d/%Y") %></td>
+	<td><%= f.c_ship.strftime("%m/%d/%Y") %></td>
+	<td><%= f.c_po %></td>
+	<td>
+		<% if f.c_total.nil? %>
+			$0.00
+		<% else %>
+			<%= f.c_total %>
+		<% end %>
+	</td>
+	<td style="text-align:center;">
+		<% if f.c_ack.nil? %>
+			<% if f.c_class == "Distributor Channel" || f.c_class == "Amazon VC" %>
+				<button type="button" class="btn btn-default btn-circle-2" data-container="body" data-toggle="popover" data-placement="left" data-content="" title="Pending Confirmation">
+					<i class="fa fa-question"></i>
+	            </button>
+	          <% else %>
+	          <button type="button" class="btn btn-disabled btn-circle-2">
+					<i class="fa fa-minus"></i>
+	            </button>
+	           <% end %>
+        <% elsif f.c_ack == "OK" %>
+        	<button type="button" class="btn btn-success btn-circle-2" data-container="body">
+				<i class="fa fa-check"></i>
+			</button>
+		<% else %>
+			<button type="button" class="btn btn-warning btn-circle-2" data-container="body" data-toggle="popover" data-placement="left" data-content="<%= f.c_memo %>" title="<%= f.c_ack %>">
+				<i class="fa fa-exclamation"></i> 
+			</button>
+		<% end %>
+	</td>
+
+</tr>
+<% end %>	
+<tr> 
+	<td colspan="6"><b>TOTAL<div class="pull-right"></div></b></td>
+</tr>
+</tbody>

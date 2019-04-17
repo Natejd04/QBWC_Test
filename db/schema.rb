@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181024194047) do
+ActiveRecord::Schema.define(version: 20190417210250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,6 +403,13 @@ ActiveRecord::Schema.define(version: 20181024194047) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.datetime "deleted"
+    t.string   "order_status"
+    t.integer  "site_id"
+    t.integer  "user_lock"
+    t.boolean  "shipped"
+    t.boolean  "qb_process"
+    t.datetime "qb_sent_time"
+    t.boolean  "sent_to_qb"
   end
 
   create_table "site_inventories", force: :cascade do |t|

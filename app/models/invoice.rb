@@ -5,6 +5,9 @@ class Invoice < ActiveRecord::Base
     has_many :comments, :dependent => :destroy, foreign_key: "invoice_id"
     belongs_to :customer
 
+
+scope :fulfill_invoice, -> {Invoice.where(tracking: nil).where(:c_class => "Wholesale Direct").where("c_date > ?", Time.now.beginning_of_year)}
+
     default_scope {where(:deleted => nil)}
 
 

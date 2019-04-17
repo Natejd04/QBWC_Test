@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_only, except:[:show, :new]
-    #checks to make sure a user is logged in before allowing access to files
-    #before_filter :authenticate_user
+  helper_method :sort_column, :sort_direction, :classed_remove
     
 
   def create
@@ -34,27 +32,32 @@ class OrdersController < ApplicationController
   #     end
   # end
   
-  def index
-#      Need to create a better way to redirect users.
-#      If you are a WDS user, you only see the WDS page.
-#      This is not quite what I am looking for, this means I will need three
-#      template pages, one for each location and an admin (all) view. 
-      @orders = Order.where('c_via=? OR c_via=?', 'LTL from WDS', 'UPS from WDS').where(c_invoiced: nil)
-      @order_zing = Order.where('c_via=? OR c_via=?', 'UPS from Zing', 'USPS from Zing').where(c_invoiced: nil)
-      @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART').where(c_invoiced: nil)
+#   def old_index
+# #      Need to create a better way to redirect users.
+# #      If you are a WDS user, you only see the WDS page.
+# #      This is not quite what I am looking for, this means I will need three
+# #      template pages, one for each location and an admin (all) view. 
+#       @orders = Order.where('c_via=? OR c_via=?', 'LTL from WDS', 'UPS from WDS').where(c_invoiced: nil)
+#       @order_zing = Order.where('c_via=? OR c_via=?', 'UPS from Zing', 'USPS from Zing').where(c_invoiced: nil)
+#       @order_art = Order.where('c_via=? OR c_via=?', 'LTL from ART', 'UPS from ART').where(c_invoiced: nil)
       
-#      Now we need to grab the inventory data
-#      Thanks to @timhugh for coming up with the map solution to this. 
-     @inventory_wds = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
-    @inventory_art = Hash[SiteInventory.select("item_id, qty").where(site_id: 21).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]  
-    @inventory_zing = Hash[SiteInventory.select("item_id, qty").where(site_id: 22).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]  
+# #      Now we need to grab the inventory data
+# #      Thanks to @timhugh for coming up with the map solution to this. 
+#       @inventory_wds = Hash[SiteInventory.select("item_id, qty").where(site_id: 20).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]
+#       @inventory_art = Hash[SiteInventory.select("item_id, qty").where(site_id: 21).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]  
+#       @inventory_zing = Hash[SiteInventory.select("item_id, qty").where(site_id: 22).order("item_id").group('item_id').sum("qty").map { |k,v| [Item.find(k), v] }]  
      
-#      These queries are to be used for sales order uninvoiced items
-      @inventory_so_wds = Hash[LineItem.uninvoiced.where(site_id: 20).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
-      @inventory_so_art = Hash[LineItem.uninvoiced.where(site_id: 21).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
-      @inventory_so_zing = Hash[LineItem.uninvoiced.where(site_id: 22).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+# #      These queries are to be used for sales order uninvoiced items
+#       @inventory_so_wds = Hash[LineItem.uninvoiced.where(site_id: 20).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+#       @inventory_so_art = Hash[LineItem.uninvoiced.where(site_id: 21).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
+#       @inventory_so_zing = Hash[LineItem.uninvoiced.where(site_id: 22).order("item_id").group("item_id").sum("qty").map { |k,v| [Item.find(k), v] }]
       
       
+#   end
+
+  def index
+    @orders = Invoice.fulfill_invoice
+
   end
     
   def edit
@@ -136,9 +139,16 @@ class OrdersController < ApplicationController
     end
     
   private
-    
-  def order_params
-      params.require(:order).permit(:c_name, :c_memo, :c_ack, :docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, :qb_process, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id])
-  end
+    def sort_column
+      %w[c_ship c_date c_total c_name].include?(params[:sort]) ? params[:sort] : "c_date"
+    end
 
-end
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+    end
+    
+    def order_params
+        params.require(:order).permit(:c_name, :c_memo, :c_ack, :docs, :remove_docs, :customer_id, :id, :c_ship, :c_total, :c_po, :c_date, :c_deliver, :c_via, :c_ship1, :c_ship2, :c_ship3, :c_ship4, :c_ship5, :c_shipcity, :c_shipstate, :c_shippostal, :qb_process, line_items_attributes: [ :id, :item_id, :order_id, :qty, :amount, :site_id])
+    end
+
+  end

@@ -1,0 +1,38 @@
+<table class="inv">
+    <th colspan="16">Masters - WDS</th>
+    <tr id="wds">
+        <%= render :partial => 'wdsmast' %> 
+    </tr>
+    <tr class="salesorder" id="wds_so">
+        <%= render :partial => 'wdssomast' %>
+    </tr>
+</table>
+        
+<%= render :partial => 'shipwds' %>
+
+<table class="inv">
+    <th colspan="10">Masters - ART</th>
+    <tr id="art">
+        <%= render :partial => 'artmast' %>
+    </tr>
+    <tr class="salesorder" id="art_so">
+        <%= render :partial => 'artsomast' %>
+    </tr>
+</table>
+
+<%= render :partial => 'shipart' %>
+
+<table class="inv">
+    <th colspan="16">Masters/Caddies - Zing</th>
+    <tr id="zing_mast">
+        <%= render :partial => 'zingmast' %>
+    </tr>
+    <tr id="zing_cad">
+        <%= render :partial => 'zingcad' %>
+    </tr>
+    <tr class="salesorder" id="zing_so">
+        <%= render :partial => 'zingsomast' %>
+    </tr>
+</table>
+
+<%= render :partial => 'shipzing' %>

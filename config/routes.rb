@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations'}, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
-  get 'order/index'
+  # get 'order/index'
 
   get '/health-check/' => 'auth#sign_in'
 #  get 'users/new'
@@ -34,12 +34,12 @@ Rails.application.routes.draw do
 
   get :search, controller: :dashboard
     
-  resources :orders do resources :comments end
-  get 'wds' => 'orders#wds'
-  get 'art' => 'orders#art'
-  get 'admin' => 'orders#admin'
+  # resources :orders do resources :comments end
+  # get 'wds' => 'orders#wds'
+  # get 'art' => 'orders#art'
+  # get 'admin' => 'orders#admin'
 
-  
+  resources :orders
   resources :items
   resources :sites
   resources :site_inventories
