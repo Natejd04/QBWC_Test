@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   get :search, controller: :dashboard
     
-  # resources :orders do resources :comments end
+  resources :orders do resources :comments end
   # get 'wds' => 'orders#wds'
   # get 'art' => 'orders#art'
   # get 'admin' => 'orders#admin'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510161011) do
+ActiveRecord::Schema.define(version: 20190510170832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,13 +302,13 @@ ActiveRecord::Schema.define(version: 20190510161011) do
     t.date     "c_deliver"
     t.string   "c_via"
     t.string   "c_memo"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "docs_file_name"
     t.string   "docs_content_type"
     t.integer  "docs_file_size"
     t.datetime "docs_updated_at"
-    t.boolean  "remove_docs",         default: false
+    t.boolean  "remove_docs",          default: false
     t.string   "c_class"
     t.string   "c_ship1"
     t.string   "c_ship2"
@@ -337,7 +337,8 @@ ActiveRecord::Schema.define(version: 20190510161011) do
     t.datetime "confirmed_time"
     t.integer  "user_confirmed"
     t.string   "address_type_code"
-    t.boolean  "address_resedential"
+    t.boolean  "address_residential"
+    t.string   "amazon_df_cust_order"
   end
 
   create_table "qb_helpers", force: :cascade do |t|
