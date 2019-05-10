@@ -68,12 +68,13 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
             doc.xpath('//LineItem').each_with_index do |li, index|
               li_data = {}
               li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
-              upc_raw = doc.xpath('/Order/LineItem/OrderLine/BuyerPartNumber').text
+              upc_raw = li.xpath('OrderLine/BuyerPartNumber').text
               upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
               if li_data[:item_id] = Item.find_by(upc: upc_edit).id
-                li_data[:qty] = doc.xpath('/Order/LineItem/OrderLine/OrderQty').text.to_i
-                li_data[:description] = doc.xpath('/Order/LineItem/ProductOrItemDescription/ProductDescription').text
+                li_data[:qty] = li.xpath('OrderLine/OrderQty').text.to_i
+                li_data[:description] = li.xpath('ProductOrItemDescription/ProductDescription').text
                 li_data[:site_id] = Site.find_by(list_id: "80000023-1502919044").id
+                li_data[:order_id] = Order.find_by(c_po: sales_order[:c_po]).id
                 
                 # SAVE ME
                 if LineItem.exists?(txn_id: li_data[:txn_id])
@@ -100,6 +101,7 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
               li_data[:qty] = doc.xpath('/Order/LineItem/OrderLine/OrderQty').text.to_i
               li_data[:description] = doc.xpath('/Order/LineItem/ProductOrItemDescription/ProductDescription').text
               li_data[:site_id] = Site.find_by(list_id: "80000023-1502919044").id
+              li_data[:order_id] = Order.find_by(c_po: sales_order[:c_po]).id
               
             # SAVE ME
               if LineItem.exists?(txn_id: li_data[:txn_id])
