@@ -7,7 +7,7 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
   # capture all stderr and stdout output from a remote process
   sftp.connect do
     puts "open!"
-    xml_file = sftp.file.open("testout/PO13006207965.xml")
+    xml_file = sftp.file.open("testout/single-test2.xml")
     doc = Nokogiri::XML.parse(xml_file)
     
     if doc.xpath('/Order/Meta/IsDropShip[last()]').text == "true"
