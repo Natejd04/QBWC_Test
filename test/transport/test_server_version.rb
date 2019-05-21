@@ -4,7 +4,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../../config/environment", __FILE__)
 
 # Instance Variables to Control directory
-@completed_dir = 'testout/archive/'
+# @completed_dir = 'testout/archive/'
+@completed_dir = 'testout/'
 @start_dir = 'testout/'
 
 Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, password: ENV["SPS_SFTP_PASS"] ) do |sftp|
@@ -81,6 +82,7 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
                 upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
                 if li_data[:item_id] = Item.find_by(upc: upc_edit).id
                   li_data[:qty] = li.xpath('OrderLine/OrderQty').text.to_i
+                  li_data[:amount] = li.xpath('OrderLine/PurchasePrice').text.to_f
                   li_data[:description] = li.xpath('ProductOrItemDescription/ProductDescription').text
                   li_data[:site_id] = Site.find_by(list_id: "80000023-1502919044").id
                   li_data[:order_id] = Order.find_by(c_po: sales_order[:c_po]).id
@@ -108,6 +110,7 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
               upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
               if li_data[:item_id] = Item.find_by(upc: upc_edit).id
                 li_data[:qty] = doc.xpath('/Order/LineItem/OrderLine/OrderQty').text.to_i
+                li_data[:amount] = doc.xpath('/Order/LineItem/OrderLine/PurchasePrice').text.to_f
                 li_data[:description] = doc.xpath('/Order/LineItem/ProductOrItemDescription/ProductDescription').text
                 li_data[:site_id] = Site.find_by(list_id: "80000023-1502919044").id
                 li_data[:order_id] = Order.find_by(c_po: sales_order[:c_po]).id
