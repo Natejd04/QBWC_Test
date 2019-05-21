@@ -70,6 +70,8 @@ gem 'puma'
 # Adding reports Kit, which will hopefully allow easy reporting
 gem 'reports_kit', :git => "git@github.com:Natejd04/reports_kit.git"
 
+gem 'net-sftp'
+
 #Attempting SSL
 #gem 'thin'
 

@@ -61,6 +61,7 @@ class UsersController < ApplicationController
     if current_user.role = "admin" && current_user.email = "nate@zingbars.com"
       @qbwc = QBWC.jobs
       @initial = QbHelper.first
+      @logs = Log.all.order(:created_at => "DESC").limit(5)
     else
       redirect_to users_path, notice: "You do not have access to this page."
     end
