@@ -1,10 +1,12 @@
 require 'qbwc'
-
+require 'concerns/qbwc_helper'
 class OrderPushWorker < QBWC::Worker
+    include QbwcHelper
 
     multiline_push = {}
     singleline_push = {}       
-    QBPush = Order.where(qb_process: true, qb_sent_time: nil)
+    WorkerName = "OrderPushWorker"
+    QBPush = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
 
     def requests(job)    
     
@@ -13,7 +15,6 @@ class OrderPushWorker < QBWC::Worker
                     { :sales_order_add_rq => {
                         :xml_attributes => { "requestID" =>"1"},
                         :sales_order_add => {
-                            :ref_number => op.invoice_number,
                             :customer_ref => {"list_id" => op.customer.list_id},
                             :ship_address => {
                                 "addr1" => op.c_ship1,
@@ -24,12 +25,15 @@ class OrderPushWorker < QBWC::Worker
                                 "postal_code" => op.c_shippostal,
                                 "country" => op.c_shipcountry 
                             },
-                             :sales_order_line_add => op.line_items.map do |li|
-                                {
-                                    :item_ref => {:list_id => li.item.list_id},
-                                    :desc => li.description
-                                }
-                            end
+                            :po_number => op.c_po,
+                            :sales_order_line_add => op.line_items.map do |li|
+                                    {
+                                        :item_ref => {:list_id => li.item.list_id},
+                                        :desc => li.description,
+                                        :quantity => li.qty,
+                                        :amount =>  '%.2f' % li.amount
+                                    }
+                                end
                         }
                     }
                 }
@@ -40,7 +44,6 @@ class OrderPushWorker < QBWC::Worker
                 :sales_order_add_rq => {
                     :xml_attributes => { "requestID" =>"1"},
                     :sales_order_add => {
-                        :ref_number => op.invoice_number,
                         :customer_ref => {"list_id" => QBPush.customer.list_id},
                         :ship_address => {
                             "addr1" => QBPush.c_ship1,
@@ -51,10 +54,15 @@ class OrderPushWorker < QBWC::Worker
                             "postal_code" => QBPush.c_shippostal,
                             "country" => QBPush.c_shipcountry 
                         },
-                        :sales_order_line_add => {
-                            :item_ref => {"list_id" => QBPush.line_items[0].item.list_id},
-                            "desc" => QBPush.line_items[0].description
-                        } 
+                        :po_number => QBPush.c_po,
+                        :sales_order_line_add => QBPush.line_items.map do |li|
+                            {
+                                :item_ref => {:list_id => li.item.list_id},
+                                :desc => li.description,
+                                :quantity => li.qty,
+                                :amount => '%.2f' % li.amount
+                            }
+                        end
                     }
                 }
             }
@@ -68,13 +76,16 @@ class OrderPushWorker < QBWC::Worker
                 invoice_data = {}
                 invoice_data[:txn_id] = qb_inv['txn_id']
                 invoice_data[:qb_process] = false
-                invoice_data[:c_edit] = qb_inv['edit_sequence']                
+                invoice_data[:c_edit] = qb_inv['edit_sequence']
+                invoice_data[:invoice_number] = qb_inv['ref_number']
+                invoice_data[:c_total] = qb_inv['subtotal'].to_f
 
-                if Order.exists?(invoice_number: qb_inv[:ref_number])
-                    orderupdate = Order.find_by(invoice_number: qb[:ref_number])
+                if Order.exists?(c_po: qb_inv['po_number'])
+                    orderupdate = Order.find_by(c_po: qb['po_number'])
                     # before updating, lets find out if it's neccessary by filtering by modified
                     if orderupdate.c_edit != qb_inv['edit_sequence']
                         invoice_data[:qb_sent_time] = Time.now
+                        invoice_data[:send_to_qb] = false
                         orderupdate.update(invoice_data)
                     end
                 end
@@ -84,20 +95,23 @@ class OrderPushWorker < QBWC::Worker
     	    qb_inv = r['sales_order_ret']
             invoice_data = {}
             invoice_data[:txn_id] = qb_inv['txn_id']
-            invoice_data[:qb_process] = false
+            # invoice_data[:qb_process] = false
             invoice_data[:c_edit] = qb_inv['edit_sequence']
-
-            if Order.exists?(invoice_number: qb_inv[:ref_number])
-                orderupdate = Order.find_by(invoice_number: qb[:ref_number])
+            invoice_data[:invoice_number] = qb_inv['ref_number']
+            invoice_data[:c_total] = qb_inv['subtotal'].to_f
+            
+            if Order.exists?(c_po: qb_inv['po_number'])
+                orderupdate = Order.find_by(c_po: qb_inv['po_number'])
                 # before updating, lets find out if it's neccessary by filtering by modified
                 if orderupdate.c_edit != qb_inv['edit_sequence']
-                    invoice_data[:qb_sent_time] = Time.now
+                    # invoice_data[:qb_sent_time] = Time.now
+                    # invoice_data[:send_to_qb] = false
                     orderupdate.update(invoice_data)
                 end
             end
         end
-
-    	Log.create(worker_name: "OrderPushWorker")
+        qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
+    	# Log.create(worker_name: "OrderPushWorker")
 
 
     end

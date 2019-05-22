@@ -51,7 +51,7 @@ require 'nokogiri'
 	        end
 
 	        #buyer info - Do we need this?
-	        sales_order[:customer_id] = Customer.find_by(name: sales_order[:c_name]).id
+	        sales_order[:customer_id] = Customer.find_by(list_id: "80001601-1557337814").id
 	        
 
 	        #carrier info
