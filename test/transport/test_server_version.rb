@@ -75,6 +75,10 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
           if Order.create(sales_order)
             
             puts "order create was successful"
+            
+            # Variable to save total amount of order
+            order_id = Order.find_by(c_po: sales_order[:c_po]).id
+            amount = 0.00
             # Line Item Loop
             if doc.xpath('/Order/Summary/TotalLineItemNumber').text.to_i > 1
               puts "line item is greater than 1"
@@ -86,9 +90,10 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
                 if li_data[:item_id] = Item.find_by(upc: upc_edit).id
                   li_data[:qty] = li.xpath('OrderLine/OrderQty').text.to_i
                   li_data[:amount] = li_data[:qty] * li.xpath('OrderLine/PurchasePrice').text.to_f
+                  amount = amount + li_data[:amount]
                   li_data[:description] = li.xpath('ProductOrItemDescription/ProductDescription').text
                   li_data[:site_id] = Site.find_by(list_id: "80000023-1502919044").id
-                  li_data[:order_id] = Order.find_by(c_po: sales_order[:c_po]).id
+                  li_data[:order_id] = order_id
                   
                   # SAVE ME
                   if LineItem.exists?(txn_id: li_data[:txn_id])
@@ -113,10 +118,11 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
               upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
               if li_data[:item_id] = Item.find_by(upc: upc_edit).id
                 li_data[:qty] = doc.xpath('/Order/LineItem/OrderLine/OrderQty').text.to_i
-                li_data[:amount] = li_data[:qty] * doc.xpath('OrderLine/PurchasePrice').text.to_f
+                li_data[:amount] = li_data[:qty] * doc.xpath('/Order/LineItem/OrderLine/PurchasePrice').text.to_f
+                amount = amount + li_data[:amount]
                 li_data[:description] = doc.xpath('/Order/LineItem/ProductOrItemDescription/ProductDescription').text
                 li_data[:site_id] = Site.find_by(list_id: "80000023-1502919044").id
-                li_data[:order_id] = Order.find_by(c_po: sales_order[:c_po]).id
+                li_data[:order_id] = order_id
                 
               # SAVE ME
                 if LineItem.exists?(txn_id: li_data[:txn_id])
@@ -133,6 +139,10 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
                 Log.create(worker_name: "Amazon API", status: "Error", log_msg: "Item ID couldn't be found from UPC on PO " + sales_order[:c_po] + "item upc = " + upc_raw)
               end
             end
+            # Lets save the new total amount for all the line items in the order
+            previous_order = Order.find(order_id)
+            previous_order.c_total = amount
+            previous_order.save
           else
             puts "order create has failed"
             Log.create(worker_name: "Amazon API", status: "Error", log_msg: "Order create failed on PO " + sales_order[:c_po])
