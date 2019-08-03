@@ -5,8 +5,8 @@ require File.expand_path("../../../config/environment", __FILE__)
 
 # Instance Variables to Control directory
 # @completed_dir = 'testout/archive/'
-@completed_dir = 'testout/'
-@start_dir = 'testout/'
+@completed_dir = 'out/'
+@start_dir = 'out/'
 
 Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, password: ENV["SPS_SFTP_PASS"] ) do |sftp|
   # capture all stderr and stdout output from a remote process
@@ -84,10 +84,13 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
               puts "line item is greater than 1"
               doc.xpath('//LineItem').each_with_index do |li, index|
                 li_data = {}
-                li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
+                #li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
+                #TESTING NON-UNIQUE ID
+                li_data[:txn_id] = sales_order[:c_po]
                 upc_raw = li.xpath('OrderLine/BuyerPartNumber').text
-                upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
-                if li_data[:item_id] = Item.find_by(upc: upc_edit).id
+                # upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
+
+                if li_data[:item_id] = Item.find_by(code: upc_raw, unit: "By the Caddy").id
                   li_data[:qty] = li.xpath('OrderLine/OrderQty').text.to_i
                   li_data[:amount] = li_data[:qty] * li.xpath('OrderLine/PurchasePrice').text.to_f
                   amount = amount + li_data[:amount]
@@ -113,10 +116,13 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
             else
               puts "line item is equal to 1"
               li_data = {}
-              li_data[:txn_id] = sales_order[:c_po] + "-0"
-              upc_raw = doc.xpath('/Order/LineItem/OrderLine/BuyerPartNumber').text
-              upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
-              if li_data[:item_id] = Item.find_by(upc: upc_edit).id
+             #li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
+                #TESTING NON-UNIQUE ID
+                li_data[:txn_id] = sales_order[:c_po]
+              upc_raw = doc.xpath('/Order/LineItem/OrderLine/BuyerPartNumber').text              
+              # upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
+               # Item.find_by(code: "MOCA", unit: "By the Caddy")
+              if li_data[:item_id] = Item.find_by(code: upc_raw, unit: "By the Caddy").id
                 li_data[:qty] = doc.xpath('/Order/LineItem/OrderLine/OrderQty').text.to_i
                 li_data[:amount] = li_data[:qty] * doc.xpath('/Order/LineItem/OrderLine/PurchasePrice').text.to_f
                 amount = amount + li_data[:amount]

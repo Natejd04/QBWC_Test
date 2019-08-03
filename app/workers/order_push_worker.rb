@@ -71,6 +71,7 @@ class OrderPushWorker < QBWC::Worker
     end
 
     def handle_response(r, session, job, request, data)
+        
         if r['sales_order_ret'].is_a? Array
             r['sales_order_ret'].each do |qb_inv|
                 invoice_data = {}
@@ -85,8 +86,17 @@ class OrderPushWorker < QBWC::Worker
                     # before updating, lets find out if it's neccessary by filtering by modified
                     if orderupdate.c_edit != qb_inv['edit_sequence']
                         invoice_data[:qb_sent_time] = Time.now
-                        invoice_data[:send_to_qb] = false
+                        invoice_data[:send_to_qb] = false                        
                         orderupdate.update(invoice_data)
+                    end
+
+                         # START LINE ITEM MULTI/SINGLE                                   
+                    if LineItem.exists?(txn_id: qb_inv['po_number'])
+                        lineupdate = LineItem.where(txn_id: qb_inv['po_number'])
+                        lineupdate.each do |li|
+                            li.txn_id = qb_inv['txn_id']
+                            li.save
+                        end
                     end
                 end
             end
@@ -101,12 +111,22 @@ class OrderPushWorker < QBWC::Worker
             invoice_data[:c_total] = qb_inv['subtotal'].to_f
             
             if Order.exists?(c_po: qb_inv['po_number'])
+
                 orderupdate = Order.find_by(c_po: qb_inv['po_number'])
                 # before updating, lets find out if it's neccessary by filtering by modified
                 if orderupdate.c_edit != qb_inv['edit_sequence']
                     # invoice_data[:qb_sent_time] = Time.now
                     # invoice_data[:send_to_qb] = false
                     orderupdate.update(invoice_data)
+                end
+
+                # START LINE ITEM MULTI/SINGLE                                                   
+                if LineItem.exists?(txn_id: qb_inv['po_number'])
+                    lineupdate = LineItem.where(txn_id: qb_inv['po_number'])
+                    lineupdate.each do |li|
+                        li.txn_id = qb_inv['txn_id']
+                        li.save
+                    end
                 end
             end
         end
