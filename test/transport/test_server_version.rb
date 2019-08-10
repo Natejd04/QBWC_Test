@@ -27,6 +27,13 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
         sales_order[:c_date] = doc.xpath('/Order/Header/OrderHeader/PurchaseOrderDate').text
         sales_order[:amazon_df_cust_order] = doc.xpath('/Order/Header/OrderHeader/CustomerOrderNumber').text
 
+        #lets pull the shipping date
+        doc.xpath('/Order/Header/Dates').each do |sd|
+          if sd.xpath('DateTimeQualifier').text == "010"
+            sales_order[:c_ship] = sd.xpath('Date').text
+          end
+        end
+
         # Ship To Info (we hope)
         doc.xpath('/Order/Header/Address').each do |ad|
           if ad.xpath('AddressTypeCode').text == "ST"
@@ -64,6 +71,9 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
         # Lets make sure this is prepared to send
         sales_order[:send_to_qb] = true
         sales_order[:qb_process] = true
+
+        # Adding a default class
+        sales_order[:c_class] = "Amazon VC"
         
         # Need to save order info, so we can reference for line item info
         puts "This is the info you need to save"
@@ -78,7 +88,7 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
             
             puts "order create was successful"
             
-            # Variable to save total amount of order
+          # Variable to save total amount of order
             order_id = Order.find_by(c_po: sales_order[:c_po]).id
             amount = 0.00
             # Line Item Loop
