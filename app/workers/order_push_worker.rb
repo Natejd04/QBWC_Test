@@ -5,8 +5,11 @@ class OrderPushWorker < QBWC::Worker
 
     multiline_push = {}
     singleline_push = {}       
+    
+    #Was asked to send Amazon DF orders direct to invoice. This naming convention is misleading
     WorkerName = "OrderPushWorker"
     QBPush = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
+
 
     def requests(job)    
     
@@ -16,6 +19,7 @@ class OrderPushWorker < QBWC::Worker
                         :xml_attributes => { "requestID" =>"1"},
                         :sales_order_add => {
                             :customer_ref => {"list_id" => op.customer.list_id},
+                            :txn_date => op.c_date,
                             :ship_address => {
                                 "addr1" => op.c_ship1,
                                 "addr2" => op.c_ship2,
@@ -45,6 +49,7 @@ class OrderPushWorker < QBWC::Worker
                     :xml_attributes => { "requestID" =>"1"},
                     :sales_order_add => {
                         :customer_ref => {"list_id" => QBPush.customer.list_id},
+                        :txn_date => QBPush.c_date,
                         :ship_address => {
                             "addr1" => QBPush.c_ship1,
                             "addr2" => QBPush.c_ship2,

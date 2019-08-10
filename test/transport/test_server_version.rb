@@ -6,6 +6,7 @@ require File.expand_path("../../../config/environment", __FILE__)
 # Instance Variables to Control directory
 # @completed_dir = 'testout/archive/'
 @completed_dir = 'out/'
+#@completed_dir = 'out/archived'
 @start_dir = 'out/'
 
 Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, password: ENV["SPS_SFTP_PASS"] ) do |sftp|
@@ -62,6 +63,7 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
 
         # Lets make sure this is prepared to send
         sales_order[:send_to_qb] = true
+        sales_order[:qb_process] = true
         
         # Need to save order info, so we can reference for line item info
         puts "This is the info you need to save"
