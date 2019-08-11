@@ -136,8 +136,8 @@ class OrderPushWorker < QBWC::Worker
                 orderupdate = Order.find_by(c_po: qb_inv['po_number'])
                 # before updating, lets find out if it's neccessary by filtering by modified
                 if orderupdate.c_edit != qb_inv['edit_sequence']
-                    # invoice_data[:qb_sent_time] = Time.now
-                    # invoice_data[:send_to_qb] = false
+                    invoice_data[:qb_sent_time] = Time.now
+                    invoice_data[:send_to_qb] = false
                     orderupdate.update(invoice_data)
                 end
 
