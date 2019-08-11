@@ -1,6 +1,5 @@
 require 'qbwc'
 require 'concerns/qbwc_helper'
-#qb_send = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
 class OrderPushWorker < QBWC::Worker
     include QbwcHelper
 
