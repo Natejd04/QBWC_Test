@@ -3,10 +3,6 @@ require 'concerns/qbwc_helper'
 class OrderPushWorker < QBWC::Worker
     include QbwcHelper
 
-
-     multiline_push = {}
-    singleline_push = {}       
-    
     #Was asked to send Amazon DF orders direct to invoice. This naming convention is misleading
     WorkerName = "OrderPushWorker"
     QBSend = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
@@ -154,7 +150,7 @@ class OrderPushWorker < QBWC::Worker
         # Log.create(worker_name: "OrderPushWorker")
 
     end
-QBSend = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
+# QBSend = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
 end
 
 
