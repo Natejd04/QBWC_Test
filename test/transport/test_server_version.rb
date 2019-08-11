@@ -1,6 +1,6 @@
 require 'net/sftp'
 require 'nokogiri'
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= 'production'
 require File.expand_path("../../../config/environment", __FILE__)
 
 # Instance Variables to Control directory
