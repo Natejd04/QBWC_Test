@@ -12,7 +12,6 @@ class OrderPushWorker < QBWC::Worker
             }
         }
         qbsend = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
-        binding.pry
         if !qbsend.blank?           
             qbsend.map do |op|
                     { :invoice_add_rq => {
