@@ -9,11 +9,11 @@ class OrderPushWorker < QBWC::Worker
     
     #Was asked to send Amazon DF orders direct to invoice. This naming convention is misleading
     WorkerName = "OrderPushWorker"
-    qb_send = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
+    QBSend = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
     def requests(job)    
     
-        if !qb_send.blank?
-            qb_send.map do |op|
+        if !QBSend.blank?
+            QBSend.map do |op|
                     { :invoice_add_rq => {
                         :xml_attributes => { "requestID" =>"1"},
                         :invoice_add => {
@@ -47,32 +47,32 @@ class OrderPushWorker < QBWC::Worker
                 }
             end      
 
-        elsif qb_send.is_a? Array
+        elsif QBSend.is_a? Array
             {
                 :invoice_add_rq => {
                     :xml_attributes => { "requestID" =>"1"},
                     :invoice_add => {
-                        :customer_ref => {"list_id" => qb_send.customer.list_id},
-                        :class_ref => {"full_name" => qb_send.c_class},
-                        :txn_date => qb_send.c_date,
+                        :customer_ref => {"list_id" => QBSend.customer.list_id},
+                        :class_ref => {"full_name" => QBSend.c_class},
+                        :txn_date => QBSend.c_date,
                         :ship_address => {
-                            "addr1" => qb_send.c_ship1,
-                            "addr2" => qb_send.c_ship2,
-                            "addr3" => qb_send.c_ship3,                            
-                            "city" => qb_send.c_shipcity,
-                            "state" => qb_send.c_shipstate,
-                            "postal_code" => qb_send.c_shippostal,
-                            "country" => qb_send.c_shipcountry 
+                            "addr1" => QBSend.c_ship1,
+                            "addr2" => QBSend.c_ship2,
+                            "addr3" => QBSend.c_ship3,                            
+                            "city" => QBSend.c_shipcity,
+                            "state" => QBSend.c_shipstate,
+                            "postal_code" => QBSend.c_shippostal,
+                            "country" => QBSend.c_shipcountry 
                         },
-                        :po_number => qb_send.c_po,
+                        :po_number => QBSend.c_po,
                         :due_date => op.c_ship.strftime("%Y-%m-%d"),
                         :ship_date => op.c_ship.strftime("%Y-%m-%d"),
-                        :invoice_line_add => qb_send.line_items.map do |li|
+                        :invoice_line_add => QBSend.line_items.map do |li|
                             {
                                 :item_ref => {:list_id => li.item.list_id},
                                 :desc => li.description,
                                 :quantity => li.qty,
-                                :class_ref => {:full_name => qb_send.c_class},
+                                :class_ref => {:full_name => QBSend.c_class},
                                 :amount => '%.2f' % li.amount,
                                 :inventory_site_ref => {:list_id => li.site.list_id}
                             }
@@ -154,7 +154,7 @@ class OrderPushWorker < QBWC::Worker
         # Log.create(worker_name: "OrderPushWorker")
 
     end
-qb_send = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
+QBSend = Order.where(send_to_qb: true, qb_process: true, qb_sent_time: nil)
 end
 
 
