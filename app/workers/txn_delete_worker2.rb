@@ -1,9 +1,9 @@
 require 'qbwc'
 require 'concerns/qbwc_helper'
-class OrderPushWorker < QBWC::Worker
+class TransactionDeleteWorker < QBWC::Worker
     include QbwcHelper
 
-QBPush = Order.where("id > 8190 AND id < 8262")
+QBPush = Order.where("id > 8191 AND id < 8191")
 
     def requests(job)            
         QBPush.map do |op|
