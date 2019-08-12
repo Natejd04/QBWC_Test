@@ -6,7 +6,7 @@ require File.expand_path("../../../config/environment", __FILE__)
 # Instance Variables to Control directory
 # @completed_dir = 'testout/archive/'
 #testing @completed_dir = 'out/'
-@completed_dir = 'out/archived'
+@completed_dir = 'out/archived/'
 @start_dir = 'out/'
 
 Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, password: ENV["SPS_SFTP_PASS"] ) do |sftp|
