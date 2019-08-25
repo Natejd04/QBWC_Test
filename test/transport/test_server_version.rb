@@ -1,11 +1,13 @@
 require 'net/sftp'
 require 'nokogiri'
+# require 'pry-rails'
 ENV["RAILS_ENV"] ||= 'production'
 require File.expand_path("../../../config/environment", __FILE__)
 
 # Instance Variables to Control directory
-# @completed_dir = 'testout/archive/'
-#testing @completed_dir = 'out/'
+#testing 
+#@completed_dir = 'testin/'
+#@start_dir = 'testin/'
 @completed_dir = 'out/archived/'
 @start_dir = 'out/'
 
@@ -96,9 +98,9 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
               puts "line item is greater than 1"
               doc.xpath('//LineItem').each_with_index do |li, index|
                 li_data = {}
-                #li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
+                li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
                 #TESTING NON-UNIQUE ID
-                li_data[:txn_id] = sales_order[:c_po]
+                # li_data[:txn_id] = sales_order[:c_po]?\
                 upc_raw = li.xpath('OrderLine/BuyerPartNumber').text
                 # upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
 
@@ -128,9 +130,9 @@ Net::SFTP.start('sftp.spscommerce.com', ENV["SPS_SFTP_USER"], port: 10022, passw
             else
               puts "line item is equal to 1"
               li_data = {}
-             #li_data[:txn_id] = sales_order[:c_po] + "-" + index.to_s
+              li_data[:txn_id] = sales_order[:c_po] + "-" + 0.to_s
                 #TESTING NON-UNIQUE ID
-                li_data[:txn_id] = sales_order[:c_po]
+                # li_data[:txn_id] = sales_order[:c_po]
               upc_raw = doc.xpath('/Order/LineItem/OrderLine/BuyerPartNumber').text              
               # upc_edit = upc_raw[0] + "-" + upc_raw[1..5] + "-" + upc_raw[6..10] + "-" + upc_raw[11]
                # Item.find_by(code: "MOCA", unit: "By the Caddy")

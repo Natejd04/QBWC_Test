@@ -106,15 +106,30 @@ class OrderPushWorker < QBWC::Worker
                         invoice_data[:send_to_qb] = false                        
                         orderupdate.update(invoice_data)
                     end
-
-                         # START LINE ITEM MULTI/SINGLE                                   
-                    if LineItem.exists?(txn_id: qb_inv['po_number'])
-                        lineupdate = LineItem.where(txn_id: qb_inv['po_number'])
-                        lineupdate.each do |li|
-                            li.txn_id = qb_inv['txn_id']
-                            li.save
+                    # START LINE ITEM MULTI/SINGLE                                                   
+                    #MULTI-LINE
+                    if qb_inv['invoice_line_ret'].count > 1
+                        qb_inv['invoice_line_ret'].each_with_index do |li, index|
+                            multi_id =  qb_inv['po_number'] + "-" + index.to_s
+                            if LineItem.exists?(txn_id: multi_id)
+                                lineupdate = LineItem.where(txn_id: multi_id)
+                                lineupdate.each do |li|
+                                    li.txn_id = qb_inv['txn_id']
+                                    li.save
+                                end
+                            end
                         end
-                    end
+                    else
+                        #SINGLE-LINE
+                        multi_id = qb_inv['po_number'] = "-" + 0.to_s
+                        if LineItem.exists?(txn_id: qb_inv['po_number'])
+                            lineupdate = LineItem.where(txn_id: qb_inv['po_number'])
+                            lineupdate.each do |li|
+                                li.txn_id = qb_inv['txn_id']
+                                li.save
+                            end
+                        end
+                    end 
                 end
             end
  
@@ -141,13 +156,29 @@ class OrderPushWorker < QBWC::Worker
                 end
 
                 # START LINE ITEM MULTI/SINGLE                                                   
-                if LineItem.exists?(txn_id: qb_inv['po_number'])
-                    lineupdate = LineItem.where(txn_id: qb_inv['po_number'])
-                    lineupdate.each do |li|
-                        li.txn_id = qb_inv['txn_id']
-                        li.save
+                #MULTI-LINE
+                if qb_inv['invoice_line_ret'].count > 1
+                    qb_inv['invoice_line_ret'].each_with_index do |li, index|
+                        multi_id =  qb_inv['po_number'] + "-" + index.to_s
+                        if LineItem.exists?(txn_id: multi_id)
+                            lineupdate = LineItem.where(txn_id: multi_id)
+                            lineupdate.each do |li|
+                                li.txn_id = qb_inv['txn_id']
+                                li.save
+                            end
+                        end
                     end
-                end
+                else
+                    #SINGLE-LINE
+                    multi_id = qb_inv['po_number'] = "-" + 0.to_s
+                    if LineItem.exists?(txn_id: qb_inv['po_number'])
+                        lineupdate = LineItem.where(txn_id: qb_inv['po_number'])
+                        lineupdate.each do |li|
+                            li.txn_id = qb_inv['txn_id']
+                            li.save
+                        end
+                    end
+                end 
             end
         end
         qbwc_log_create(WorkerName, 0, "complete", nil, qbwc_log_init(WorkerName), qbwc_log_end())
