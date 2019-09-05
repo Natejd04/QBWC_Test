@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
-  prepend_before_filter :admin_only, except:[:edit, :update]
+  # prepend_before_filter :admin_only, except:[:edit, :update]
 
   # GET /resource/sign_up
   def new
@@ -56,7 +56,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #remember to call the super
     #then put our own check to determine "active" state using 
     #our own "is_active" column
-    super and current_user.role == 'admin'
+    # super and current_user.role == 'admin'
   end
 
   # The path used after sign up.
