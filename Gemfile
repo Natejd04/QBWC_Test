@@ -58,7 +58,7 @@ gem 'will_paginate-bootstrap'
 # using with rails-html-sanitizer
 gem 'loofah', '~> 2.2', '>= 2.2.1'
 # dependency of loofah
-gem 'nokogiri', '~> 1.8.2', '>= 1.8.0'
+gem 'nokogiri', '~> 1.10.8'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4'
 
 # Making the switch to devise for public use
