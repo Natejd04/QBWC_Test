@@ -56,7 +56,7 @@ gem 'will_paginate-bootstrap'
 # gem 'alphabetical_paginate'
 
 # using with rails-html-sanitizer
-gem 'loofah', '~> 2.2', '>= 2.2.1'
+gem 'loofah', '~> 2.19'
 # dependency of loofah
 gem 'nokogiri', '~> 1.8.2', '>= 1.8.0'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4'
